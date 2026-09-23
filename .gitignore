@@ -1,0 +1,51 @@
+# ---------------------------------------------------------
+# .gitignore — Admin Panel PPDB Online
+# Lihat docs/checklist_work.md (T0-05) untuk alasan tiap entri
+# ---------------------------------------------------------
+
+# Bahan referensi desain mentah dari Google Stitch (ukuran besar, bukan kode proyek).
+# Screenshot referensinya sudah disalin ke docs/img/referensi-stitch/
+stitch_enterprise_admin_panel_ui/
+stitch_enterprise_admin_panel_ui.zip
+
+# Rahasia & kredensial (jangan pernah di-commit ke repo publik)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+credentials*.json
+secrets/
+*.secret
+
+# Arsip & ekspor data lokal (bisa berisi data pribadi)
+*.zip
+*.rar
+*.7z
+*.csv
+*.xlsx
+
+# Editor & IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Sistem operasi
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Dependensi & hasil build (jika kelak dipakai)
+node_modules/
+dist/
+
+# Deploy
+.vercel/
+
+# Log & file sementara
+*.log
+*.tmp
+~$*
