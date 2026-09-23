@@ -28,7 +28,7 @@
 | | |
 |---|---|
 | **Tahap aktif** | **T1 — Dokumen perancangan** (belum dimulai) |
-| **Tahap terakhir selesai** | T0 — disetujui, diaudit, di-push ke `origin/main` (commit `dd57340`) 23 Sep 2026 |
+| **Tahap terakhir selesai** | T0 — disetujui, diaudit, di-push ke `origin/main` (commit `1a0d182`, `fb8bf8e`) 23 Sep 2026 |
 | **Menunggu dari pengembang** | Aba-aba untuk mulai T1 |
 
 ## Ringkasan Progres
@@ -66,14 +66,14 @@ Ref: [perencanaan §3](perencanaan.md#3-keputusan--asumsi), [§10](perencanaan.m
 | T0-04 | Buat `docs/checklist_work.md` | – | ✅ | v0.1 → v0.2 |
 | T0-05 | Buat `.gitignore` | §10.3 | ✅ | Bahan Stitch mentah tidak ikut di-commit |
 | T0-06 | Buat repository di GitHub & hubungkan `origin` | D-09 | ✅ | 👤 `origin` = `nurdinrhk-design/PROGRAMWEB_2` (publik, kosong). Akun `fahrizal-tech` ditambahkan sebagai collaborator (B-03 selesai) |
-| T0-07 | Commit pertama (lingkungan bersih + dokumen v0.2.1) & push | §10.3 | ✅ | `dd57340` di-push ke `origin/main` (setelah B-03 selesai) |
+| T0-07 | Commit pertama (lingkungan bersih + dokumen v0.2.1) & push | §10.3 | ✅ | `1a0d182` di `origin/main` (sebelumnya `dd57340`, ditulis ulang untuk ganti identitas, F-24) |
 | T0-08 | Tetapkan keputusan D-01…D-17 | §3 | ✅ | Mengikuti rekomendasi, disetujui pengembang 23 Sep 2026 |
 | T0-09 | Hapus 11 file kode draf bertema kaca | D-10 | ✅ | F-01…F-12 |
 | T0-10 | Salin 8 screenshot referensi Stitch ke `docs/img/referensi-stitch/` | §4.2 | ✅ | F-14 |
 | T0-11 | Revisi perencanaan ke v0.2 (M3, anti-slop, menu & halaman baru, T0–T13) | §16 | ✅ | F-17 |
 | T0-12 | Susun ulang checklist ke v0.2 | §15 | ✅ | F-18 |
 | T0-13 | Audit keamanan sebelum push (S-01…S-07) + perkuat `.gitignore` | D-18, §15.1 | ✅ | Temuan: email pribadi di identitas commit. Diganti noreply. F-19 |
-| T0-14 | Atur email commit ke noreply GitHub (lokal repo, bukan global) | D-18 | ✅ | Final: `214245399+fahrizal-tech@users.noreply.github.com` (akun yang terhubung di VS Code) |
+| T0-14 | Atur identitas commit: noreply GitHub (lokal repo, bukan global) | D-18 | ✅ | Final: `nurdinrhk-design <237171232+nurdinrhk-design@users.noreply.github.com>`. Push tetap memakai login `fahrizal-tech` (collaborator) |
 | T0-R1 | Uji tahap: konsistensi ID antara kedua dokumen | §14 | ✅ | Dicek dengan skrip: semua tahap & ID rujukan ditemukan |
 | T0-R2 | Catat log & ringkasan progres | §15 | ✅ | |
 | T0-R3 | Review pengembang → audit → commit & push | D-16, §15.1 | ✅ | Disetujui, diaudit, di-push 23 Sep 2026 |
@@ -420,6 +420,7 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-21 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T0-R3 | T0 ditutup (17/17), T0-13 & T0-14 ditambah, posisi saat ini → T1 |
 | F-22 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T0-07, T0-R3 | Koreksi setelah push gagal: T0 15/17, B-03 ditambah, posisi saat ini dikembalikan ke T0 |
 | F-23 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T0-R3 | T0 ditutup (17/17) setelah push berhasil, B-03 selesai, email commit final dicatat, posisi saat ini → T1 |
+| F-24 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T0-14 | Identitas commit diganti ke `nurdinrhk-design`. Hash commit T0 diperbarui (`dd57340` → `1a0d182`, `0188e14` → `fb8bf8e`) |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -471,3 +472,4 @@ Satu baris per sesi kerja.
 | 23 Sep 2026 | T0-13, T0-14, T0-R3 | Pengembang menyetujui v0.2. **Audit keamanan** 15 file: tanpa kunci/token/kata sandi nyata, tanpa email/no. HP/path lokal di file, PNG tanpa metadata, kredensial demo sengaja publik. **Temuan:** email pribadi akan tercatat di commit publik → diganti email noreply (config lokal repo; bukan file, jadi tidak ada nomor F). Commit pertama lokal | ✅ (F-19…F-21) |
 | 23 Sep 2026 | T0-07, T0-R3 | `git push -u origin main` **ditolak 403**: "Permission denied to fahrizal-tech". Tidak ada data yang terkirim ke GitHub. Checklist dikoreksi (T0-07 & T0-R3 → 🟡), blocker B-03 dibuat | ⛔ Diputuskan tetap repo `nurdinrhk-design`. Menunggu hak akses (F-22) |
 | 23 Sep 2026 | T0-14, T0-07, T0-R3 | Pengembang mengonfirmasi `nurdinrhk-design` & `fahrizal-tech` sama-sama akunnya, dan `fahrizal-tech` sudah jadi collaborator. Identitas commit diganti ke noreply `fahrizal-tech` (commit lokal di-amend `--reset-author` sebelum push). Audit ulang S-01/S-04/S-07: bersih. **Push berhasil** `dd57340` → `origin/main` | ✅ T0 selesai (F-23) |
+| 23 Sep 2026 | T0-14 | Atas permintaan pengembang, identitas commit diganti ke akun kedua miliknya, `nurdinrhk-design` (noreply). 2 commit yang sudah di-push ditulis ulang (`rebase --root --reset-author`), lalu `push --force-with-lease`. Aman karena repo baru dan hanya dipakai pengembang | ✅ (F-24) |
