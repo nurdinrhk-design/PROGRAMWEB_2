@@ -2,7 +2,7 @@
 
 > **Dokumen induk (master plan).** Dokumen ini menjelaskan **apa** yang dibangun, **mengapa**, dan **aturannya**.
 > Progres pekerjaan dilacak di **[checklist_work.md](checklist_work.md)**. Keduanya terhubung lewat ID:
-> - Tahap `T0`–`T13` (§11) = heading tahap di checklist.
+> - Tahap `T0`–`T14` (§11) = heading tahap di checklist.
 > - Tugas di checklist (mis. `T7-04`) menunjuk balik ke ID di dokumen ini: kebutuhan `FR-xx`/`NFR-xx`, aturan `BR-xx`, prinsip `AS-xx`, halaman `P-xx`, keputusan `D-xx`, kasus uji `TC-xx`.
 
 | Atribut | Keterangan |
@@ -10,7 +10,7 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **0.2.2** |
+| Versi dokumen | **0.2.4** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1, dibuat di T1) · [referensi Stitch](img/referensi-stitch/) |
 | Status | ✅ Disetujui pengembang (23 Sep 2026). Tahap aktif: T1 |
@@ -65,7 +65,7 @@ Proyek ini membangun **Admin Panel (Back-Office)** untuk pekerjaan tersebut. Fok
 **Tidak termasuk (dengan alasan):**
 | Fitur | Alasan dikeluarkan |
 |---|---|
-| Server, database, API | Tugas client-side |
+| Server, database, API | Tugas client-side. **Ditambahkan di Fase 2** setelah tugas dikumpulkan (D-21, T14) |
 | Integrasi Dapodik/Dukcapil, OCR, sinkronisasi | Tidak bisa dibuat nyata tanpa back-end. Menampilkannya berarti memalsukan (AS-01) |
 | Peta GPS & hitung jarak otomatis | Butuh layanan peta. Jarak diinput petugas dalam meter |
 | Blast WhatsApp/SMS | Butuh gateway eksternal |
@@ -80,14 +80,14 @@ Proyek ini membangun **Admin Panel (Back-Office)** untuk pekerjaan tersebut. Fok
 ### 2.1 Milestone resmi → tahap internal
 | Milestone | Tenggat | Output wajib | Tahap |
 |---|---|---|---|
-| **M1**: Perencanaan & wireframe | Pekan ke-3 | `docs/perancangan.md` (menu, ERD Mermaid, link Figma, screenshot Stitch) | T0, T1 |
+| **M1**: Perencanaan & wireframe | Pekan ke-3 | `docs/perancangan.md` (menu, ERD Mermaid, link Stitch (pengganti Figma, D-20), screenshot Stitch) | T0, T1 |
 | **M2**: Slicing & layouting | Pekan ke-5 | CSS hasil slicing + `layout.html` | T2, T3 |
 | **M3**: Komponen & interaktivitas | Pekan ke-7 | Source code lengkap + deploy | T4 – T13 |
 
 ### 2.2 Kriteria penilaian → pekerjaan
 | Komponen | Bobot | Dipenuhi oleh | Bukti saat presentasi |
 |---|---|---|---|
-| Milestone 1 (dokumentasi, Stitch, Figma) | 20% | T1 | `perancangan.md`, link Figma, screenshot |
+| Milestone 1 (dokumentasi, Stitch, Figma) | 20% | T1 | `perancangan.md`, link Stitch, screenshot. Tanpa Figma (D-20): design system dibuktikan lewat §9 + `styleguide.html` |
 | Kualitas HTML & CSS | 30% | T2, T3, T5–T11, T12 | Tag semantik, CSS modular bertoken, validator W3C, uji responsif |
 | Interaktivitas JavaScript | 20% | T3–T11 | Drawer/rail, dialog, validasi stepper, Chart.js, verifikasi yang mengubah peringkat |
 | Kesesuaian UI/UX topik | 20% | T6, T9, T10, T11 | Keketatan per jalur, antrean verifikasi FIFO, garis batas kuota |
@@ -106,7 +106,7 @@ Status: ✅ Disepakati · 🔄 Bisa ditinjau ulang
 |---|---|---|---|---|
 | D-01 | Tema visual | **Material Design 3** (M3) | ✅ | Sesuai arah desain Stitch. Cocok untuk aplikasi kerja yang padat data |
 | D-02 | Identitas | **SMA Negeri 1 Harapan Bangsa**, Kota Nusantara (fiktif). TA **2026/2027** | ✅ | Satu identitas konsisten. Tidak meniru sekolah/instansi nyata |
-| D-03 | Penyimpanan data | `localStorage` + data simulasi deterministik (seed tetap) | ✅ | Sederhana, bekerja offline, hasil demo selalu sama |
+| D-03 | Penyimpanan data | **Fase 1 (tugas):** `localStorage` + data simulasi deterministik (seed tetap). **Fase 2:** Supabase (D-21) | ✅ | Sederhana, bekerja offline, hasil demo selalu sama |
 | D-04 | CSS | **CSS3 murni, modular** (`main.css` meng-`@import` token, base, layout, komponen, halaman, print) | ✅ | Mudah dijelaskan. Kelas semantik, bukan utility soup |
 | D-05 | JavaScript | Vanilla JS, pola IIFE + namespace global, tanpa build tool | ✅ | Bisa dibuka lewat `file://` dan di-deploy statis |
 | D-06 | Grafik | Chart.js 4 (jsDelivr, versi dipatok) | ✅ | Sesuai panduan |
@@ -122,7 +122,9 @@ Status: ✅ Disepakati · 🔄 Bisa ditinjau ulang
 | D-16 | Alur kerja | Satu tahap per sesi. Berhenti untuk **review pengembang** di akhir tiap tahap | ✅ | Permintaan pengembang |
 | D-17 | Kejujuran konten | Tanpa logo pemerintah, tanpa tanda tangan/stempel/QR palsu. Label "Data simulasi" | ✅ | Etika & AS-06 |
 | D-18 | Keamanan repo publik | Commit memakai **email noreply GitHub** (diatur lokal per repo). `.gitignore` memblokir file rahasia & ekspor data. **Audit keamanan wajib sebelum setiap push** (§15.1) | ✅ | Repo `nurdinrhk-design/PROGRAMWEB_2` bersifat publik |
-| D-19 | Hosting lanjutan | Setelah T13 stabil: **domain kustom** di Vercel (HTTPS otomatis) + **header keamanan** lewat `vercel.json` (CSP, `X-Frame-Options`, `Referrer-Policy`). Label "Data simulasi" tetap tampil selama tidak memakai data asli | 🔄 | Keinginan pengembang. Opsional, dikerjakan di T13-10…T13-12 |
+| D-19 | Hosting lanjutan | Setelah T14 (database sungguhan) selesai: **domain kustom** di Vercel (HTTPS otomatis) + **header keamanan** lewat `vercel.json` (CSP, `X-Frame-Options`, `Referrer-Policy`). Label "Data simulasi" tetap tampil selama tidak memakai data asli | 🔄 | Keinginan pengembang. Opsional, dikerjakan di T14-11…T14-13 |
+| D-20 | Figma | **Tidak memakai Figma.** `perancangan.md` memuat link publik Google Stitch sebagai gantinya. Design system dibuktikan lewat `perancangan.md` §7 dan `docs/styleguide.html` | ✅ | Keputusan pengembang 23 Sep 2026. Fokus ke kualitas web akhir. Risiko: R-01 |
+| D-21 | Database | **Dua fase.** Fase 1 (versi tugas): `localStorage` lewat **lapisan adapter** + ekspor/impor cadangan JSON. Versi ini ditandai rilis `v1.0-tugas`. Fase 2 (sebelum hosting ke domain): **Supabase** (PostgreSQL, Auth, RLS, Storage, region Singapura) dengan data simulasi | ✅ | Keputusan pengembang 23 Sep 2026. Adapter membuat migrasi cukup mengganti satu file. Data tetap simulasi (bukan data siswa asli) |
 
 **Asumsi:**
 - A-01: Satu peran pengguna: **Panitia PPDB** (akun demo `panitia` / `ppdb2026`).
@@ -438,7 +440,7 @@ Berkas wajib **semua jalur**: Kartu Keluarga, Akta Kelahiran, Rapor semester 1�
 
 ## 8. Spesifikasi Halaman
 
-Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konten · Interaksi · Catatan anti-slop.** Tata letak detail dirancang di Figma/Stitch (T1) dan diimplementasikan di tahapnya.
+Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konten · Interaksi · Catatan anti-slop.** Tata letak detail ada di wireframe `perancangan.md` §6 (T1) dan diimplementasikan di tahapnya.
 
 ### P-00 · `layout.html` — Template master (M2, tahap T3)
 - **Tujuan:** kerangka yang dipakai semua halaman admin.
@@ -503,7 +505,7 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 ## 9. Design System (Material Design 3)
 
 > **Sumber:** `stitch_enterprise_admin_panel_ui/sistem_informasi_ppdb_terpadu/DESIGN.md`, disesuaikan ke kaidah M3.
-> **Tabel ini adalah acuan token untuk Figma (T1) dan `tokens.css` (T2).** Nilai boleh disesuaikan di T2 jika uji kontras gagal. Setiap perubahan dicatat di Riwayat Perubahan.
+> **Tabel ini adalah acuan token untuk `tokens.css` (T2).** Nilai boleh disesuaikan di T2 jika uji kontras gagal. Setiap perubahan dicatat di Riwayat Perubahan.
 
 ### 9.1 Warna (peran M3)
 | Token CSS | Peran | Nilai |
@@ -602,7 +604,7 @@ PROGRAMWEB_2/
 │   ├── styleguide.html           # etalase komponen (M2, T2)
 │   └── img/
 │       ├── referensi-stitch/     # screenshot referensi (bukan desain final)
-│       └── ...                   # screenshot Figma & hasil akhir
+│       └── ...                   # screenshot hasil akhir
 ├── assets/
 │   ├── css/
 │   │   ├── main.css              # hanya @import, urutan tetap
@@ -614,7 +616,10 @@ PROGRAMWEB_2/
 │   │   └── print.css             # @media print (laporan, bukti)
 │   ├── js/
 │   │   ├── core/
-│   │   │   ├── store.js          # PPDB.store: localStorage, CRUD, log
+│   │   │   ├── store.js          # PPDB.store: antarmuka data (CRUD, log, cadangan JSON)
+│   │   │   ├── adapters/
+│   │   │   │   ├── local.js      # Fase 1: localStorage
+│   │   │   │   └── supabase.js   # Fase 2 (T14): database sungguhan
 │   │   │   ├── seed.js           # PPDB.seed: generator data simulasi
 │   │   │   ├── rules.js          # PPDB.rules: konstanta, validasi BR, peringkat
 │   │   │   ├── ui.js             # PPDB.ui: snackbar, dialog, format, escape
@@ -656,7 +661,7 @@ Satu tahap dikerjakan per sesi. Setelah tahap selesai, jalankan **rutinitas penu
 | Tahap | Nama | Milestone | Output utama | Prasyarat |
 |---|---|---|---|---|
 | **T0** | Persiapan & revisi rencana | M1 | Dokumen perencanaan v0.2, checklist, repo bersih | – |
-| **T1** | Dokumen perancangan | M1 | `docs/perancangan.md` + Figma 👤 | T0 |
+| **T1** | Dokumen perancangan | M1 | `docs/perancangan.md` + link Stitch 👤 | T0 |
 | **T2** | Design system → CSS fondasi & komponen | M2 | `assets/css/*`, `docs/styleguide.html`, logo | T1 |
 | **T3** | Layout master (app shell) | M2 | `layout.html` + `core/shell.js` (drawer/rail) | T2 |
 | **T4** | Lapisan data & modul inti | M3 | `core/rules.js`, `seed.js`, `store.js`, `ui.js`, auth di `shell.js` | T3 |
@@ -669,6 +674,7 @@ Satu tahap dikerjakan per sesi. Setelah tahap selesai, jalankan **rutinitas penu
 | **T11** | Laporan & Bukti Pendaftaran | M3 | `pages/laporan.html`, `pages/bukti.html` + JS, `print.css` | T10 |
 | **T12** | QA menyeluruh | M3 | Semua uji lulus (§12) | T5–T11 |
 | **T13** | README, deploy & presentasi | M3 | Link GitHub & Vercel, naskah demo | T12 |
+| **T14** | Database & hosting produksi (Fase 2) | Setelah M3 | Supabase (skema, RLS, auth, storage), adapter data, domain & header keamanan | T13 |
 
 ```mermaid
 flowchart LR
@@ -676,11 +682,11 @@ flowchart LR
     T4 --> T5 & T6 & T7
     T7 --> T8 & T9
     T9 --> T10 --> T11
-    T5 & T6 & T8 & T11 --> T12 --> T13
+    T5 & T6 & T8 & T11 --> T12 --> T13 --> T14
 ```
 
 ### 11.1 Gerbang kualitas antartahap
-- **T1 → T2:** `perancangan.md` lengkap. Link Figma boleh menyusul (👤), tetapi token §9 harus sudah final.
+- **T1 → T2:** `perancangan.md` lengkap. Link Stitch boleh menyusul (👤), tetapi token §9 harus sudah final.
 - **T2 → T3:** `styleguide.html` menampilkan semua komponen §9.7, dan kontras warna lolos.
 - **T3 → T4:** `layout.html` rapi di 5 breakpoint (NFR-01).
 - **T4 → T5+:** data simulasi terbentuk, peringkat terhitung, tidak ada error di console.
@@ -693,6 +699,7 @@ flowchart LR
 | Pekan 4–5 (tenggat M2) | T2, T3 |
 | Pekan 6 | T4, T5, T6, T7 |
 | Pekan 7 (tenggat M3) | T8 – T13 |
+| Setelah pekan 7 (Fase 2) | T14: database sungguhan, lalu domain & hosting produksi |
 
 ### 11.3 Rutinitas penutupan setiap tahap
 Setiap tahap di checklist diakhiri tiga tugas berkode `R`:
@@ -748,13 +755,14 @@ Setiap tahap di checklist diakhiri tiga tugas berkode `R`:
 
 | ID | Risiko | Mitigasi |
 |---|---|---|
-| R-01 | Figma belum dibuat pengembang saat T2 | Token §9 sudah final, jadi T2 bisa jalan. Figma menyusul memakai token yang sama |
+| R-01 | Nilai M1 berkurang karena tidak ada Figma (D-20) | Design system lengkap di `perancangan.md` §7, diwujudkan di `docs/styleguide.html` (T2) sebagai bukti "desain ke kode". Siapkan penjelasan saat presentasi |
 | R-02 | Hasil terlihat generik lagi | Uji Anti-Slop di setiap tahap halaman |
 | R-03 | CDN gagal dimuat | Fallback font sistem. Pesan jelas di area grafik |
 | R-04 | `localStorage` diblokir | Fallback ke memori + snackbar peringatan |
 | R-05 | Tabel lebar di mobile | Pola kartu di compact + kolom prioritas |
 | R-06 | ±900 data terasa lambat | Paginasi, debounce pencarian, render hanya halaman aktif |
 | R-07 | Lingkup melebar | Fitur di luar §1.3 harus melalui keputusan baru (D-xx) terlebih dulu |
+| R-08 | Kunci rahasia database bocor ke repo publik (Fase 2) | Hanya URL + kunci publik (anon) di klien, akses dijaga RLS. Kunci `service_role` tidak pernah masuk repo atau kode klien. Audit S-02 memeriksanya |
 
 ---
 
@@ -798,7 +806,7 @@ Repo bersifat **publik**. Sebelum setiap `git push`, periksa semua file yang aka
 | No | Pemeriksaan | Cara | Lolos jika |
 |---|---|---|---|
 | S-01 | Daftar file | `git status` / `git diff --cached --name-only` | Hanya file proyek. Tidak ada bahan Stitch, zip, CSV, `.env` |
-| S-02 | Kata kunci rahasia | grep: `api key`, `secret`, `token`, `password`, `BEGIN … KEY`, `ghp_`, `github_pat`, `AKIA` | Hanya kata UI/dokumen (mis. token desain, kolom password), bukan nilai rahasia |
+| S-02 | Kata kunci rahasia | grep: `api key`, `secret`, `token`, `password`, `BEGIN … KEY`, `ghp_`, `github_pat`, `AKIA`, `service_role`, `sb_secret_` | Hanya kata UI/dokumen (mis. token desain, kolom password), bukan nilai rahasia |
 | S-03 | Data pribadi | grep email, nomor 10–16 digit, path lokal (`C:/Users`, `D:/PERKULIAHAN`) | Tidak ada. Data simulasi harus fiktif |
 | S-04 | Identitas commit | `git config user.email` | Email noreply GitHub |
 | S-05 | Metadata gambar | Cek chunk `tEXt/iTXt/eXIf` pada PNG/JPG | Tidak ada metadata pribadi/GPS |
@@ -818,3 +826,5 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | **0.2** | 23 Sep 2026 | **Revisi besar setelah review desain Stitch:** tema **Material Design 3** (D-01). Identitas fiktif tetap (D-02). CSS modular (D-04). Istilah PPDB + 4 jalur (D-11). Tanggal simulasi 18 Juni 2026 (D-12). Status verifikasi manual vs seleksi otomatis (D-14). Kuota 432 (D-15). Review per tahap (D-16). Tambah §4 Prinsip Anti-"AI Slop". Menu 7 item. Halaman bertambah menjadi P-00…P-08 (Verifikasi, Hasil Seleksi, Bukti). Aturan zonasi diganti dari "jarak ≤ 5 km" menjadi "KK ≥ 1 tahun" (BR-03) agar sesuai aturan PPDB. Tahap dipecah menjadi T0–T13 (satu tahap per sesi). Design system M3 (§9). ID tugas checklist disusun ulang | Nurdin & Claude |
 | 0.2.1 | 23 Sep 2026 | Tambah D-18 (keamanan repo publik: email noreply, `.gitignore` rahasia, audit sebelum push). Tambah §15.1 Audit keamanan S-01…S-07. R3 kini mencakup audit + push | Nurdin & Claude |
 | 0.2.2 | 23 Sep 2026 | Nama pengembang diganti menjadi **Nurdin** (akun `nurdinrhk-design`). Tambah D-19: rencana domain kustom & header keamanan setelah T13 (opsional) | Nurdin & Claude |
+| 0.2.3 | 23 Sep 2026 | Tambah D-20: tanpa Figma, diganti link Google Stitch. Rujukan Figma di §2, §8, §9, §10.1, §11, R-01 disesuaikan | Nurdin & Claude |
+| 0.2.4 | 23 Sep 2026 | Tambah D-21: database dua fase (localStorage + adapter → Supabase). Tahap baru T14 (database & hosting produksi). D-19 dipindah ke T14. Tambah R-08 (kebocoran kunci), pola `service_role`/`sb_secret_` di audit S-02. Struktur `adapters/` di §10.1 | Nurdin & Claude |
