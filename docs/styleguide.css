@@ -1,0 +1,164 @@
+/* =====================================================================
+   styleguide.css — Tata letak khusus halaman etalase (docs/styleguide.html)
+   Hanya memakai token dari assets/css/tokens.css
+   ===================================================================== */
+
+.sg-page {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4) var(--space-7);
+}
+
+.sg-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--md-outline-variant);
+}
+
+.sg-header__logo {
+  width: 3rem;
+  height: 3rem;
+}
+
+.sg-header__text {
+  flex: 1;
+  min-width: 16rem;
+}
+
+.sg-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  padding: var(--space-4) 0;
+}
+
+.sg-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: var(--space-6);
+  scroll-margin-top: var(--space-4);
+}
+
+.sg-section__lead {
+  max-width: 48rem;
+  color: var(--md-on-surface-variant);
+}
+
+.sg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: var(--space-4);
+}
+
+.sg-grid--wide {
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+}
+
+.sg-demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border: 1px dashed var(--md-outline-variant);
+  border-radius: var(--radius-md);
+  background-color: var(--md-surface-container-lowest);
+}
+
+.sg-demo__label {
+  color: var(--md-on-surface-muted);
+  font-size: var(--type-label-md-size);
+  font-weight: var(--weight-semibold);
+}
+
+/* Swatch warna (diisi oleh styleguide.js) */
+.sg-swatch {
+  overflow: hidden;
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--radius-md);
+  background-color: var(--md-surface-container-lowest);
+}
+
+.sg-swatch__color {
+  height: 4.5rem;
+  border-bottom: 1px solid var(--md-outline-variant);
+}
+
+.sg-swatch__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  padding: var(--space-3);
+}
+
+.sg-swatch__name {
+  font-weight: var(--weight-semibold);
+}
+
+.sg-swatch__token,
+.sg-swatch__value {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Contoh tipografi */
+.sg-type-row {
+  display: grid;
+  grid-template-columns: 11rem 1fr;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--md-outline-variant);
+}
+
+.sg-type-row__meta {
+  color: var(--md-on-surface-muted);
+  font-size: var(--type-body-sm-size);
+}
+
+/* Bentuk & elevasi */
+.sg-shape {
+  display: grid;
+  place-items: center;
+  height: 5rem;
+  border: 1px solid var(--md-outline-variant);
+  background-color: var(--md-surface-container-lowest);
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+}
+
+.sg-shape--sm { border-radius: var(--radius-sm); }
+.sg-shape--md { border-radius: var(--radius-md); }
+.sg-shape--lg { border-radius: var(--radius-lg); }
+.sg-shape--full { border-radius: var(--radius-full); }
+.sg-shape--e1 { border-radius: var(--radius-md); box-shadow: var(--elevation-1); }
+.sg-shape--e2 { border-radius: var(--radius-md); box-shadow: var(--elevation-2); }
+.sg-shape--e3 { border-radius: var(--radius-md); box-shadow: var(--elevation-3); }
+
+/* Tabel hasil uji kontras */
+.sg-pass { color: var(--status-success-text); font-weight: var(--weight-semibold); }
+.sg-fail { color: var(--status-danger-text); font-weight: var(--weight-semibold); }
+
+.sg-menu-demo {
+  position: static;
+  width: 16rem;
+}
+
+.sg-footer {
+  margin-top: var(--space-7);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--md-outline-variant);
+  color: var(--md-on-surface-muted);
+  font-size: var(--type-body-sm-size);
+}
+
+@media (max-width: 599px) {
+  .sg-type-row {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+}

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Etalase design system Material Design 3 untuk Admin Panel PPDB Online (data simulasi).">
+  <title>Styleguide · PPDB Online</title>
+  <link rel="icon" href="../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,400,0..1,0&amp;display=block">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="styleguide.css">
+</head>
+<body>
+  <div class="sg-page">
+
+    <header class="sg-header">
+      <img class="sg-header__logo" src="../assets/img/logo.svg" alt="">
+      <div class="sg-header__text">
+        <h1>Styleguide</h1>
+        <p class="text-variant">Etalase design system Material Design 3 untuk Admin Panel PPDB Online · SMA Negeri 1 Harapan Bangsa (fiktif). Setiap warna dan rasio kontras di halaman ini dibaca langsung dari <code>assets/css/tokens.css</code>.</p>
+      </div>
+      <span class="badge badge--menunggu">Data simulasi</span>
+    </header>
+
+    <nav class="sg-toc" aria-label="Daftar isi styleguide">
+      <a class="chip" href="#warna">Warna</a>
+      <a class="chip" href="#kontras">Kontras</a>
+      <a class="chip" href="#tipografi">Tipografi</a>
+      <a class="chip" href="#bentuk">Bentuk &amp; elevasi</a>
+      <a class="chip" href="#tombol">Tombol</a>
+      <a class="chip" href="#input">Input</a>
+      <a class="chip" href="#chip-badge">Chip &amp; badge</a>
+      <a class="chip" href="#kartu">Kartu</a>
+      <a class="chip" href="#tabel">Tabel</a>
+      <a class="chip" href="#navigasi">Tabs, stepper, progress</a>
+      <a class="chip" href="#umpan-balik">Dialog &amp; snackbar</a>
+      <a class="chip" href="#lainnya">Menu, empty, skeleton</a>
+    </nav>
+
+    <main>
+
+      <!-- ============================ WARNA ============================ -->
+      <section class="sg-section" id="warna" aria-labelledby="warna-judul">
+        <h2 id="warna-judul">Warna</h2>
+        <p class="sg-section__lead">Peran warna Material Design 3. Warna status (hijau, kuning, merah, biru) hanya dipakai untuk status, tidak untuk hiasan.</p>
+        <h3>Peran utama</h3>
+        <div class="sg-grid" data-swatches="peran"></div>
+        <h3>Status</h3>
+        <div class="sg-grid" data-swatches="status"></div>
+        <h3>Grafik per jalur</h3>
+        <div class="sg-grid" data-swatches="grafik"></div>
+        <noscript><p class="text-variant">Aktifkan JavaScript untuk melihat contoh warna.</p></noscript>
+      </section>
+
+      <!-- ============================ KONTRAS ============================ -->
+      <section class="sg-section" id="kontras" aria-labelledby="kontras-judul">
+        <h2 id="kontras-judul">Uji kontras (WCAG 2.1)</h2>
+        <p class="sg-section__lead">Rasio dihitung langsung di browser dari nilai token. Teks minimal 4,5:1. Batas kontrol dan grafik minimal 3:1.</p>
+        <div class="card card--flush">
+          <div class="table-wrap">
+            <table class="table">
+              <caption class="sr-only">Hasil uji kontras pasangan warna</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Pasangan</th>
+                  <th scope="col">Contoh</th>
+                  <th scope="col" class="table__num">Rasio</th>
+                  <th scope="col" class="table__num">Syarat</th>
+                  <th scope="col">Hasil</th>
+                </tr>
+              </thead>
+              <tbody data-contrast></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ TIPOGRAFI ============================ -->
+      <section class="sg-section" id="tipografi" aria-labelledby="tipografi-judul">
+        <h2 id="tipografi-judul">Tipografi · Plus Jakarta Sans</h2>
+        <div class="card">
+          <div class="sg-type-row"><span class="sg-type-row__meta">Display Small · 28/36 · 700</span><span class="text-display-sm num">1.204</span></div>
+          <div class="sg-type-row"><span class="sg-type-row__meta">Headline Large · 24/32 · 700</span><span class="text-headline-lg">Data Pendaftar</span></div>
+          <div class="sg-type-row"><span class="sg-type-row__meta">Headline Small · 18/26 · 600</span><span class="text-headline-sm">Keterisian kuota per jalur</span></div>
+          <div class="sg-type-row"><span class="sg-type-row__meta">Title Medium · 16/24 · 600</span><span class="text-title-md">Hapus data pendaftar?</span></div>
+          <div class="sg-type-row"><span class="sg-type-row__meta">Body Medium · 14/20 · 400</span><span>Berkas Kartu Keluarga diperiksa sebelum pendaftar ikut peringkat.</span></div>
+          <div class="sg-type-row"><span class="sg-type-row__meta">Body Small · 12/16 · 400</span><span class="text-body-sm text-variant">Jarak diukur dari alamat pada KK ke gerbang sekolah.</span></div>
+          <div class="sg-type-row"><span class="sg-type-row__meta">Label Large · 14/20 · 600</span><span class="text-label-lg">Simpan pendaftar</span></div>
+          <div class="sg-type-row"><span class="sg-type-row__meta">Label Medium · 12/16 · 600</span><span class="text-label-md">NISN · JALUR · STATUS</span></div>
+          <div class="sg-type-row"><span class="sg-type-row__meta">Angka tabular</span><span class="num">0081234567 · 1.240 m · 91,50</span></div>
+        </div>
+      </section>
+
+      <!-- ============================ BENTUK ============================ -->
+      <section class="sg-section" id="bentuk" aria-labelledby="bentuk-judul">
+        <h2 id="bentuk-judul">Bentuk &amp; elevasi</h2>
+        <div class="sg-grid">
+          <div class="sg-shape sg-shape--sm">8px · chip, input</div>
+          <div class="sg-shape sg-shape--md">12px · kartu</div>
+          <div class="sg-shape sg-shape--lg">16px · dialog, menu</div>
+          <div class="sg-shape sg-shape--full">Pil · tombol</div>
+          <div class="sg-shape sg-shape--e1">Elevasi 1 · kartu</div>
+          <div class="sg-shape sg-shape--e2">Elevasi 2 · menu</div>
+          <div class="sg-shape sg-shape--e3">Elevasi 3 · dialog</div>
+        </div>
+      </section>
+
+      <!-- ============================ TOMBOL ============================ -->
+      <section class="sg-section" id="tombol" aria-labelledby="tombol-judul">
+        <h2 id="tombol-judul">Tombol</h2>
+        <p class="sg-section__lead">Satu halaman hanya punya satu tombol <em>filled</em>. Aksi lain memakai tonal, outlined, atau text.</p>
+        <div class="sg-grid sg-grid--wide">
+          <div class="sg-demo">
+            <span class="sg-demo__label">Hierarki</span>
+            <div class="cluster">
+              <button type="button" class="btn btn--filled">Simpan</button>
+              <button type="button" class="btn btn--tonal">Perlu perbaikan</button>
+              <button type="button" class="btn btn--outlined">Ekspor CSV</button>
+              <button type="button" class="btn btn--text">Batal</button>
+            </div>
+          </div>
+          <div class="sg-demo">
+            <span class="sg-demo__label">Dengan ikon &amp; bahaya</span>
+            <div class="cluster">
+              <button type="button" class="btn btn--filled"><span class="icon" aria-hidden="true">person_add</span>Tambah pendaftar</button>
+              <button type="button" class="btn btn--danger">Tolak</button>
+              <button type="button" class="btn btn--danger-outlined">Hapus</button>
+            </div>
+          </div>
+          <div class="sg-demo">
+            <span class="sg-demo__label">Kecil &amp; nonaktif</span>
+            <div class="cluster">
+              <button type="button" class="btn btn--filled btn--sm">Lihat semua</button>
+              <button type="button" class="btn btn--filled" disabled>Terverifikasi</button>
+              <button type="button" class="btn btn--outlined" disabled>Ekspor</button>
+            </div>
+          </div>
+          <div class="sg-demo">
+            <span class="sg-demo__label">Icon button</span>
+            <div class="cluster">
+              <button type="button" class="icon-btn" aria-label="Buka menu"><span class="icon" aria-hidden="true">menu</span></button>
+              <button type="button" class="icon-btn" aria-label="Edit"><span class="icon" aria-hidden="true">edit</span></button>
+              <button type="button" class="icon-btn icon-btn--danger" aria-label="Hapus"><span class="icon" aria-hidden="true">delete</span></button>
+              <button type="button" class="icon-btn" aria-label="Tutup" disabled><span class="icon" aria-hidden="true">close</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ INPUT ============================ -->
+      <section class="sg-section" id="input" aria-labelledby="input-judul">
+        <h2 id="input-judul">Input</h2>
+        <div class="sg-grid sg-grid--wide">
+          <div class="sg-demo">
+            <div class="field">
+              <label class="field__label" for="sg-nama">Nama lengkap <span class="field__required" aria-hidden="true">*</span></label>
+              <div class="field__box">
+                <input class="field__control" id="sg-nama" type="text" placeholder="Sesuai akta kelahiran" aria-describedby="sg-nama-hint" required>
+              </div>
+              <p class="field__hint" id="sg-nama-hint">Tanpa gelar dan singkatan.</p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="sg-cari">Cari pendaftar</label>
+              <div class="field__box">
+                <span class="icon field__icon" aria-hidden="true">search</span>
+                <input class="field__control" id="sg-cari" type="search" placeholder="Nama, NISN, atau no. daftar">
+              </div>
+            </div>
+          </div>
+          <div class="sg-demo">
+            <div class="field field--error">
+              <label class="field__label" for="sg-nisn">NISN <span class="field__required" aria-hidden="true">*</span></label>
+              <div class="field__box">
+                <input class="field__control num" id="sg-nisn" type="text" inputmode="numeric" value="00812345" aria-invalid="true" aria-describedby="sg-nisn-error">
+              </div>
+              <p class="field__error" id="sg-nisn-error">NISN harus 10 digit angka.</p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="sg-jalur">Jalur</label>
+              <div class="field__box field__box--select">
+                <select class="field__control" id="sg-jalur">
+                  <option>Semua jalur</option>
+                  <option>Zonasi</option>
+                  <option>Afirmasi</option>
+                  <option>Perpindahan Tugas Orang Tua</option>
+                  <option>Prestasi</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field__label" for="sg-nonaktif">No. pendaftaran</label>
+              <div class="field__box">
+                <input class="field__control num" id="sg-nonaktif" type="text" value="PPDB-2026-0142" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="sg-demo">
+            <div class="field">
+              <label class="field__label" for="sg-catatan">Catatan verifikasi</label>
+              <div class="field__box">
+                <textarea class="field__control" id="sg-catatan" placeholder="Wajib diisi jika berkas perlu perbaikan"></textarea>
+              </div>
+            </div>
+            <fieldset class="stack">
+              <legend class="field__label">Hasil cek berkas KK</legend>
+              <div class="cluster">
+                <label class="check"><input type="radio" name="sg-kk" checked> <span>Sesuai</span></label>
+                <label class="check"><input type="radio" name="sg-kk"> <span>Tidak sesuai</span></label>
+              </div>
+            </fieldset>
+            <label class="check"><input type="checkbox" checked> <span>Ingat saya</span></label>
+          </div>
+        </div>
+        <fieldset class="sg-grid">
+          <legend class="field__label">Kartu pilihan jalur</legend>
+          <label class="choice-card">
+            <input type="radio" name="sg-jalur-card" checked>
+            <span><span class="choice-card__title">Zonasi</span><span class="choice-card__meta">Kuota 216 · KK terbit ≥ 1 tahun</span></span>
+          </label>
+          <label class="choice-card">
+            <input type="radio" name="sg-jalur-card">
+            <span><span class="choice-card__title">Afirmasi</span><span class="choice-card__meta">Kuota 65 · wajib kartu KIP/PKH/KKS</span></span>
+          </label>
+          <label class="choice-card">
+            <input type="radio" name="sg-jalur-card">
+            <span><span class="choice-card__title">Prestasi</span><span class="choice-card__meta">Kuota 130 · skor tertinggi</span></span>
+          </label>
+        </fieldset>
+      </section>
+
+      <!-- ============================ CHIP & BADGE ============================ -->
+      <section class="sg-section" id="chip-badge" aria-labelledby="chip-judul">
+        <h2 id="chip-judul">Chip &amp; badge status</h2>
+        <div class="sg-grid sg-grid--wide">
+          <div class="sg-demo">
+            <span class="sg-demo__label">Filter chip (klik untuk memilih)</span>
+            <div class="cluster" data-chip-group>
+              <button type="button" class="chip chip--filter" aria-pressed="true"><span class="icon" aria-hidden="true">check</span>Zonasi</button>
+              <button type="button" class="chip chip--filter" aria-pressed="false">Afirmasi</button>
+              <button type="button" class="chip chip--filter" aria-pressed="false">Prestasi</button>
+            </div>
+          </div>
+          <div class="sg-demo">
+            <span class="sg-demo__label">Filter aktif &amp; tag jalur</span>
+            <div class="cluster">
+              <span class="chip chip--input">Jalur: Zonasi <button type="button" class="chip__remove" aria-label="Hapus filter jalur Zonasi"><span class="icon icon--sm" aria-hidden="true">close</span></button></span>
+              <span class="chip chip--jalur">Zonasi</span>
+              <span class="chip chip--jalur">Perpindahan</span>
+            </div>
+          </div>
+          <div class="sg-demo">
+            <span class="sg-demo__label">Status verifikasi</span>
+            <div class="cluster">
+              <span class="badge badge--menunggu">Menunggu</span>
+              <span class="badge badge--perbaikan">Perlu perbaikan</span>
+              <span class="badge badge--terverifikasi">Terverifikasi</span>
+              <span class="badge badge--ditolak">Ditolak</span>
+            </div>
+          </div>
+          <div class="sg-demo">
+            <span class="sg-demo__label">Status seleksi &amp; penghitung</span>
+            <div class="cluster">
+              <span class="badge badge--masuk">Masuk kuota</span>
+              <span class="badge badge--tergeser">Tergeser</span>
+              <span class="count">12</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ KARTU ============================ -->
+      <section class="sg-section" id="kartu" aria-labelledby="kartu-judul">
+        <h2 id="kartu-judul">Kartu &amp; KPI</h2>
+        <p class="sg-section__lead">Satu KPI = satu angka + satu keterangan. Angka di aplikasi dihitung dari data. Angka di bawah ini hanya contoh isi.</p>
+        <div class="sg-grid">
+          <article class="card kpi">
+            <h3 class="kpi__label"><span class="icon" aria-hidden="true">groups</span>Total pendaftar</h3>
+            <p class="kpi__value">1.204</p>
+            <p class="kpi__meta">+38 hari ini</p>
+          </article>
+          <article class="card kpi">
+            <h3 class="kpi__label"><span class="icon" aria-hidden="true">pending_actions</span>Menunggu verifikasi</h3>
+            <p class="kpi__value">142</p>
+            <p class="kpi__meta">Terlama menunggu 3 hari</p>
+          </article>
+          <article class="card">
+            <header class="card__header">
+              <div>
+                <h3 class="card__title">Keterisian kuota</h3>
+                <p class="card__subtitle">Terverifikasi dibanding kuota</p>
+              </div>
+            </header>
+            <label class="text-body-sm text-variant" for="sg-progress">Zonasi · 198 dari 216</label>
+            <progress class="progress" id="sg-progress" max="216" value="198">198 dari 216</progress>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============================ TABEL ============================ -->
+      <section class="sg-section" id="tabel" aria-labelledby="tabel-judul">
+        <h2 id="tabel-judul">Tabel data</h2>
+        <p class="sg-section__lead">Header bisa diurutkan (klik "Jarak"). Baris garis batas kuota memisahkan yang masuk dan yang tergeser. Di layar &lt; 600px, tabel berubah menjadi kartu.</p>
+        <div class="card card--flush">
+          <div class="table-wrap">
+            <table class="table table--stack">
+              <caption class="sr-only">Contoh tabel peringkat jalur zonasi</caption>
+              <thead>
+                <tr>
+                  <th scope="col" class="table__num">Peringkat</th>
+                  <th scope="col">Pendaftar</th>
+                  <th scope="col">Asal sekolah</th>
+                  <th scope="col" class="table__num" aria-sort="ascending" data-sort-demo>
+                    <button type="button" class="table__sort">Jarak <span class="icon" aria-hidden="true">arrow_upward</span></button>
+                  </th>
+                  <th scope="col">Status</th>
+                  <th scope="col"><span class="sr-only">Aksi</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="table__num" data-label="Peringkat">215</td>
+                  <td data-label="Pendaftar"><span class="table__primary">Rahma Aulia</span><span class="table__secondary">PPDB-2026-0418</span></td>
+                  <td data-label="Asal sekolah">SMP Negeri 3 Nusantara</td>
+                  <td class="table__num" data-label="Jarak">1.812 m</td>
+                  <td data-label="Status"><span class="badge badge--masuk">Masuk kuota</span></td>
+                  <td data-label="Aksi"><div class="table__actions"><button type="button" class="icon-btn icon-btn--sm" aria-label="Lihat detail Rahma Aulia"><span class="icon icon--sm" aria-hidden="true">visibility</span></button></div></td>
+                </tr>
+                <tr>
+                  <td class="table__num" data-label="Peringkat">216</td>
+                  <td data-label="Pendaftar"><span class="table__primary">Bima Pratama</span><span class="table__secondary">PPDB-2026-0233</span></td>
+                  <td data-label="Asal sekolah">MTs Negeri 1 Nusantara</td>
+                  <td class="table__num" data-label="Jarak">1.840 m</td>
+                  <td data-label="Status"><span class="badge badge--masuk">Masuk kuota</span></td>
+                  <td data-label="Aksi"><div class="table__actions"><button type="button" class="icon-btn icon-btn--sm" aria-label="Lihat detail Bima Pratama"><span class="icon icon--sm" aria-hidden="true">visibility</span></button></div></td>
+                </tr>
+                <tr class="table__cutoff">
+                  <td colspan="6" class="table__cell--full">Garis batas kuota zonasi (216) · jarak terjauh yang masuk: 1.840 m</td>
+                </tr>
+                <tr>
+                  <td class="table__num" data-label="Peringkat">217</td>
+                  <td data-label="Pendaftar"><span class="table__primary">Salsa Nabila</span><span class="table__secondary">PPDB-2026-0907</span></td>
+                  <td data-label="Asal sekolah">SMP Taman Siswa</td>
+                  <td class="table__num" data-label="Jarak">1.855 m</td>
+                  <td data-label="Status"><span class="badge badge--tergeser">Tergeser</span></td>
+                  <td data-label="Aksi"><div class="table__actions"><button type="button" class="icon-btn icon-btn--sm" aria-label="Lihat detail Salsa Nabila"><span class="icon icon--sm" aria-hidden="true">visibility</span></button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <nav class="pagination" aria-label="Halaman tabel">
+            <p>Menampilkan 215–217 dari 312</p>
+            <div class="pagination__pages">
+              <button type="button" class="pagination__page" aria-label="Halaman sebelumnya"><span class="icon icon--sm" aria-hidden="true">chevron_left</span></button>
+              <button type="button" class="pagination__page">10</button>
+              <button type="button" class="pagination__page" aria-current="page">11</button>
+              <button type="button" class="pagination__page">12</button>
+              <button type="button" class="pagination__page" aria-label="Halaman berikutnya"><span class="icon icon--sm" aria-hidden="true">chevron_right</span></button>
+            </div>
+          </nav>
+        </div>
+      </section>
+
+      <!-- ============================ NAVIGASI ============================ -->
+      <section class="sg-section" id="navigasi" aria-labelledby="navigasi-judul">
+        <h2 id="navigasi-judul">Tabs, stepper, progress</h2>
+        <div class="sg-demo">
+          <span class="sg-demo__label">Tabs (klik untuk berpindah)</span>
+          <div class="tabs" role="tablist" aria-label="Filter status" data-tabs>
+            <button type="button" class="tab" role="tab" id="sg-tab-1" aria-controls="sg-tabpanel" aria-selected="true">Semua <span class="tab__count">1.204</span></button>
+            <button type="button" class="tab" role="tab" id="sg-tab-2" aria-controls="sg-tabpanel" aria-selected="false" tabindex="-1">Menunggu <span class="tab__count">142</span></button>
+            <button type="button" class="tab" role="tab" id="sg-tab-3" aria-controls="sg-tabpanel" aria-selected="false" tabindex="-1">Perbaikan <span class="tab__count">37</span></button>
+            <button type="button" class="tab" role="tab" id="sg-tab-4" aria-controls="sg-tabpanel" aria-selected="false" tabindex="-1">Terverifikasi <span class="tab__count">961</span></button>
+            <button type="button" class="tab" role="tab" id="sg-tab-5" aria-controls="sg-tabpanel" aria-selected="false" tabindex="-1">Ditolak <span class="tab__count">64</span></button>
+          </div>
+          <div class="text-body-sm text-variant" role="tabpanel" id="sg-tabpanel" aria-labelledby="sg-tab-1" tabindex="0">Tabel akan menampilkan pendaftar dengan status: <strong data-tab-label>Semua</strong>.</div>
+        </div>
+        <div class="sg-demo">
+          <span class="sg-demo__label">Stepper form (langkah 2 aktif)</span>
+          <ol class="stepper" aria-label="Langkah pengisian">
+            <li class="stepper__item is-done"><button type="button" class="stepper__button"><span class="stepper__index" aria-hidden="true"></span><span class="stepper__label">Identitas</span></button></li>
+            <li class="stepper__item is-active" aria-current="step"><span class="stepper__button"><span class="stepper__index" aria-hidden="true"></span><span class="stepper__label">Domisili &amp; jalur</span></span></li>
+            <li class="stepper__item"><span class="stepper__button"><span class="stepper__index" aria-hidden="true"></span><span class="stepper__label">Akademik</span></span></li>
+            <li class="stepper__item"><span class="stepper__button"><span class="stepper__index" aria-hidden="true"></span><span class="stepper__label">Berkas</span></span></li>
+          </ol>
+        </div>
+        <div class="sg-grid">
+          <div class="sg-demo">
+            <label class="sg-demo__label" for="sg-p1">Keterisian &lt; 70%</label>
+            <progress class="progress" id="sg-p1" max="100" value="45">45%</progress>
+          </div>
+          <div class="sg-demo">
+            <label class="sg-demo__label" for="sg-p2">Keterisian ≥ 70% (peringatan)</label>
+            <progress class="progress progress--warning" id="sg-p2" max="100" value="78">78%</progress>
+          </div>
+          <div class="sg-demo">
+            <label class="sg-demo__label" for="sg-p3">Keterisian ≥ 90% (hampir penuh)</label>
+            <progress class="progress progress--danger" id="sg-p3" max="100" value="96">96%</progress>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================ UMPAN BALIK ============================ -->
+      <section class="sg-section" id="umpan-balik" aria-labelledby="umpan-judul">
+        <h2 id="umpan-judul">Dialog &amp; snackbar</h2>
+        <div class="cluster">
+          <button type="button" class="btn btn--outlined" data-open-dialog="sg-dialog">Buka dialog konfirmasi</button>
+          <button type="button" class="btn btn--outlined" data-show-snackbar>Tampilkan snackbar</button>
+        </div>
+      </section>
+
+      <!-- ============================ LAINNYA ============================ -->
+      <section class="sg-section" id="lainnya" aria-labelledby="lainnya-judul">
+        <h2 id="lainnya-judul">Menu, empty state, skeleton</h2>
+        <div class="sg-grid sg-grid--wide">
+          <div class="sg-demo">
+            <span class="sg-demo__label">Menu akun</span>
+            <div class="menu sg-menu-demo">
+              <div class="menu__header">
+                <p class="text-label-lg">Rina Kartika</p>
+                <p class="text-body-sm text-variant">Panitia PPDB · Verifikator</p>
+              </div>
+              <button type="button" class="menu__item"><span class="icon" aria-hidden="true">logout</span>Keluar</button>
+            </div>
+          </div>
+          <div class="sg-demo">
+            <span class="sg-demo__label">Empty state</span>
+            <div class="empty">
+              <span class="icon" aria-hidden="true">task_alt</span>
+              <p class="empty__title">Antrean verifikasi kosong</p>
+              <p>Semua berkas sudah diperiksa.</p>
+            </div>
+          </div>
+          <div class="sg-demo" aria-busy="true">
+            <span class="sg-demo__label">Skeleton (saat grafik dimuat)</span>
+            <span class="skeleton"></span>
+            <span class="skeleton"></span>
+            <span class="skeleton"></span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="sg-footer">
+      <p>PPDB Online · SMA Negeri 1 Harapan Bangsa (fiktif) · Data simulasi · Design system Material Design 3</p>
+    </footer>
+  </div>
+
+  <dialog class="dialog" id="sg-dialog" aria-labelledby="sg-dialog-title" aria-describedby="sg-dialog-body">
+    <div class="dialog__container">
+      <span class="icon dialog__icon dialog__icon--danger" aria-hidden="true">delete</span>
+      <h2 class="dialog__title" id="sg-dialog-title">Hapus data pendaftar?</h2>
+      <p class="dialog__body" id="sg-dialog-body">Data Rahma Aulia (PPDB-2026-0418) akan dihapus. Anda masih bisa mengurungkannya lewat snackbar.</p>
+      <div class="dialog__actions">
+        <button type="button" class="btn btn--text" data-close-dialog>Batal</button>
+        <button type="button" class="btn btn--danger" data-close-dialog>Hapus</button>
+      </div>
+    </div>
+  </dialog>
+
+  <div class="snackbar-host" role="status" aria-live="polite" data-snackbar-host></div>
+
+  <script src="styleguide.js"></script>
+</body>
+</html>

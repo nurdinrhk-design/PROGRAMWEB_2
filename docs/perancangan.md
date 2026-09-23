@@ -10,7 +10,7 @@
 | **Topik** | Sistem Penerimaan Peserta Didik Baru (PPDB Online), sisi admin |
 | **Sekolah (fiktif)** | SMA Negeri 1 Harapan Bangsa, Kota Nusantara · Tahun Ajaran 2026/2027 |
 | **Tema visual** | **Material Design 3** |
-| **Desain (Google Stitch)** | _Tautan publik menyusul (T1-17), lihat [§8.2](#82-dari-desain-ke-kode)_ |
+| **Desain (Google Stitch)** | [Proyek Stitch](https://stitch.withgoogle.com/projects/7419386921328695791) · lihat [§8](#8-proses-desain) |
 | **Repositori** | [github.com/nurdinrhk-design/PROGRAMWEB_2](https://github.com/nurdinrhk-design/PROGRAMWEB_2) |
 
 > Semua nama sekolah, siswa, dan angka di dokumen ini adalah **data simulasi**. Aturan kerja dan keputusan teknis yang lebih rinci ada di [perencanaan.md](perencanaan.md).
@@ -549,14 +549,15 @@ Sumber awal: `DESIGN.md` dari Google Stitch (varian PPDB), lalu disesuaikan ke k
 | `on-primary` | `#FFFFFF` | Teks di atas primary |
 | `primary-container` | `#D6E3FF` | Latar tombol tonal, menu aktif |
 | `on-primary-container` | `#001B3E` | Teks di atas primary-container |
-| `secondary` | `#0D9488` | Aksen jalur & kuota (hemat) |
+| `secondary` | `#0D9488` | Aksen jalur, kuota & grafik. Tidak dipakai sebagai latar teks |
 | `secondary-container` | `#CCFBF1` | Latar chip jalur |
 | `surface` | `#F8FAFC` | Kanvas halaman |
 | `surface-container-lowest` | `#FFFFFF` | Kartu, tabel, dialog |
 | `surface-container` | `#F1F5F9` | Header tabel, area input |
 | `on-surface` | `#0F172A` | Teks utama |
 | `on-surface-variant` | `#475569` | Teks sekunder |
-| `outline` | `#CBD5E1` | Garis input |
+| `on-surface-muted` | `#64748B` | Placeholder & keterangan kecil |
+| `outline` | `#8391A7` | Batas input & kontrol (kontras 3,19:1) |
 | `outline-variant` | `#E2E8F0` | Garis pemisah, tepi kartu |
 
 **Warna status** (hanya untuk status):
@@ -569,6 +570,8 @@ Sumber awal: `DESIGN.md` dari Google Stitch (varian PPDB), lalu disesuaikan ke k
 | Tergeser (netral) | `#475569` | `#F1F5F9` | `#CBD5E1` |
 
 **Grafik per jalur:** Zonasi `#0F3F7A` · Prestasi `#0D9488` · Afirmasi `#0284C7` · Perpindahan `#B45309`.
+
+**Uji kontras (WCAG 2.1):** semua 17 pasangan warna lolos (teks ≥ 4,5:1, batas kontrol & grafik ≥ 3:1). Hasil uji tampil langsung di `docs/styleguide.html`. Tiga nilai dari Stitch diganti karena gagal uji: garis input `#CBD5E1` (1,48:1) → `#8391A7`, placeholder `#94A3B8` (2,56:1) → `#64748B`, dan teks putih di atas `secondary` (3,74:1) tidak dipakai.
 
 ### 7.2 Tipografi: Plus Jakarta Sans
 | Gaya | Ukuran / tinggi baris / bobot | Dipakai untuk |
@@ -651,4 +654,4 @@ Proyek ini **tidak memakai Figma**. Desain berjalan dalam tiga lapis:
 2. **Dokumen ini:** wireframe low-fidelity (§6) dan design system (§7) hasil peninjauan Stitch.
 3. **`docs/styleguide.html`** (Milestone 2): semua token dan komponen §7 diwujudkan langsung dalam HTML/CSS sebagai acuan visual final.
 
-**Tautan publik proyek Google Stitch:** _menyusul (T1-17)_
+**Tautan publik proyek Google Stitch:** <https://stitch.withgoogle.com/projects/7419386921328695791>
