@@ -1,0 +1,646 @@
+/* =====================================================================
+   layout.css — App shell: navigation drawer/rail, top app bar,
+   area konten, page header, grid, footer
+   Navigasi adaptif M3 (perencanaan §9.5):
+     compact  < 600px     : drawer modal (tersembunyi, dibuka tombol menu)
+     medium   600–1199px  : rail ikon; tombol menu membuka drawer overlay
+     large    ≥ 1200px    : drawer permanen; bisa diciutkan menjadi rail
+   State dari shell.js:  .app.is-nav-open (modal/overlay terbuka)
+                         .app.is-nav-collapsed (large: pilihan rail)
+   ===================================================================== */
+
+/* ---------- Tautan lompat ke konten (aksesibilitas) ---------- */
+.skip-link {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: var(--z-snackbar);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform var(--duration-short) var(--easing-standard);
+}
+
+.skip-link:focus {
+  transform: none;
+  color: var(--md-on-primary);
+}
+
+/* ---------- Kerangka ---------- */
+.app {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.app__main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+/* =====================================================================
+   NAVIGATION DRAWER (tampilan dasar = drawer penuh)
+   ===================================================================== */
+.nav-drawer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: var(--layout-drawer-width);
+  height: 100vh;
+  padding: var(--space-3);
+  border-right: 1px solid var(--md-outline-variant);
+  background-color: var(--md-surface-container-lowest);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.nav-drawer__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--layout-appbar-height);
+  margin-top: -0.75rem;               /* = -var(--space-3), menyatu dengan padding drawer */
+  padding: 0 var(--space-2);
+  color: var(--md-on-surface);
+  text-decoration: none;
+}
+
+.nav-drawer__logo {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+}
+
+.nav-drawer__brand-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.nav-drawer__brand-text strong {
+  font-size: var(--type-title-md-size);
+  line-height: var(--type-title-md-line);
+}
+
+.nav-drawer__brand-text small {
+  overflow: hidden;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-drawer__nav {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.nav-section {
+  margin-top: var(--space-3);
+  padding: 0 var(--space-4);
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-label-md-size);
+  line-height: var(--type-label-md-line);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 3rem;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-label-lg-size);
+  line-height: var(--type-label-lg-line);
+  font-weight: var(--weight-semibold);
+  text-align: start;
+  text-decoration: none;
+  isolation: isolate;
+}
+
+.nav-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background-color: currentColor;
+  opacity: 0;
+  transition: opacity var(--duration-short) var(--easing-standard);
+}
+
+.nav-item:hover {
+  color: var(--md-on-surface);
+}
+
+.nav-item:hover::before { opacity: var(--state-hover); }
+.nav-item:focus-visible::before { opacity: var(--state-focus); }
+
+.nav-item[aria-current="page"] {
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+}
+
+.nav-item[aria-current="page"] .nav-item__icon {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.nav-item__label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-item__badge {
+  margin-inline-start: auto;
+}
+
+/* Label pendek hanya tampil di mode rail (AS-08: tidak ada teks terpotong) */
+.nav-item__short {
+  display: none;
+}
+
+.nav-drawer__footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--md-outline-variant);
+}
+
+.nav-drawer__note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  color: var(--md-on-surface-muted);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.nav-drawer__note .icon {
+  font-size: var(--icon-size-sm);
+}
+
+/* ---------- Scrim (latar gelap drawer modal) ---------- */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-scrim);
+  background-color: var(--md-scrim);
+  animation: scrim-in var(--duration-medium) var(--easing-standard);
+}
+
+@keyframes scrim-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* =====================================================================
+   TOP APP BAR
+   ===================================================================== */
+.top-app-bar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-appbar);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--layout-appbar-height);
+  padding: var(--space-2) var(--layout-margin-compact);
+  border-bottom: 1px solid var(--md-outline-variant);
+  background-color: var(--md-surface);
+}
+
+.top-app-bar__heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.breadcrumb li + li::before {
+  content: "/";
+  margin-inline: var(--space-2);
+  color: var(--md-on-surface-muted);
+}
+
+.breadcrumb a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--md-primary);
+  text-decoration: underline;
+}
+
+.top-app-bar__title {
+  overflow: hidden;
+  font-size: var(--type-title-md-size);
+  line-height: var(--type-title-md-line);
+  font-weight: var(--weight-semibold);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.top-app-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.phase-chip {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-sm);
+  background-color: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+  font-size: var(--type-label-md-size);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.phase-chip .icon {
+  font-size: var(--icon-size-sm);
+}
+
+/* ---------- Menu akun (pola disclosure) ---------- */
+.account {
+  position: relative;
+}
+
+.account__button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.5rem;
+  padding: var(--space-1);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--md-on-surface);
+  isolation: isolate;
+}
+
+.account__button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background-color: currentColor;
+  opacity: 0;
+  transition: opacity var(--duration-short) var(--easing-standard);
+}
+
+.account__button:hover::before { opacity: var(--state-hover); }
+.account__button:focus-visible::before { opacity: var(--state-focus); }
+
+.avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+  font-size: var(--type-label-md-size);
+  font-weight: var(--weight-bold);
+}
+
+.account__name {
+  display: none;
+  font-size: var(--type-label-lg-size);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.account__menu {
+  position: absolute;
+  top: calc(100% + 0.25rem);          /* 0.25rem = --space-1 */
+  right: 0;
+  z-index: var(--z-drawer);
+}
+
+/* =====================================================================
+   KONTEN, PAGE HEADER, GRID, FOOTER
+   ===================================================================== */
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: var(--layout-content-max);
+  margin-inline: auto;
+  padding: var(--space-5) var(--layout-margin-compact) var(--space-6);
+}
+
+.content:focus {
+  outline: none;
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.page-header__desc {
+  margin-top: var(--space-1);
+  color: var(--md-on-surface-variant);
+}
+
+.page-header__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.app-footer {
+  padding: var(--space-4) var(--layout-margin-compact);
+  border-top: 1px solid var(--md-outline-variant);
+  color: var(--md-on-surface-muted);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+/* =====================================================================
+   COMPACT (< 600px): drawer modal
+   ===================================================================== */
+@media (max-width: 599.98px) {
+  .nav-drawer {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: var(--z-drawer);
+    max-width: calc(100vw - 3.5rem);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    box-shadow: var(--elevation-3);
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform var(--duration-medium) var(--easing-standard),
+                visibility 0s linear var(--duration-medium);
+  }
+
+  .app.is-nav-open .nav-drawer {
+    transform: none;
+    visibility: visible;
+    transition: transform var(--duration-medium) var(--easing-standard);
+  }
+
+  .page-header__actions {
+    width: 100%;
+  }
+
+  .page-header__actions .btn {
+    flex: 1;
+  }
+}
+
+/* =====================================================================
+   MEDIUM & EXPANDED (≥ 600px)
+   ===================================================================== */
+@media (min-width: 600px) {
+  .app {
+    grid-template-columns: var(--layout-rail-width) minmax(0, 1fr);
+  }
+
+  .nav-drawer {
+    position: sticky;
+    top: 0;
+    width: var(--layout-rail-width);
+  }
+
+  .top-app-bar,
+  .app-footer {
+    padding-inline: var(--layout-margin-medium);
+  }
+
+  .content {
+    padding-inline: var(--layout-margin-medium);
+  }
+
+  .account__name {
+    display: inline;
+  }
+
+  .grid--kpi {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Rail (medium saat drawer tidak dibuka) */
+@media (min-width: 600px) and (max-width: 1199.98px) {
+  .app:not(.is-nav-open) .nav-drawer {
+    align-items: center;
+    padding-inline: var(--space-2);
+  }
+
+  .app:not(.is-nav-open) .nav-drawer__brand {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .app:not(.is-nav-open) .nav-drawer__brand-text,
+  .app:not(.is-nav-open) .nav-section,
+  .app:not(.is-nav-open) .nav-drawer__note span:not(.icon) {
+    display: none;
+  }
+
+  .app:not(.is-nav-open) .nav-item {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.125rem;
+    width: 100%;
+    min-height: 3.5rem;
+    padding: var(--space-1) 0;
+    border-radius: var(--radius-md);
+    font-size: var(--type-label-md-size);
+    line-height: var(--type-label-md-line);
+  }
+
+  /* Label penuh tetap ada untuk pembaca layar, label pendek yang tampil */
+  .app:not(.is-nav-open) .nav-item__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .app:not(.is-nav-open) .nav-item__short {
+    display: block;
+  }
+
+  .app:not(.is-nav-open) .nav-item__badge {
+    position: absolute;
+    top: 0.125rem;
+    right: 0.25rem;
+    margin: 0;
+  }
+
+  .app:not(.is-nav-open) .nav-drawer__note {
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  /* Drawer overlay di medium */
+  .app.is-nav-open .nav-drawer {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: var(--z-drawer);
+    width: var(--layout-drawer-width);
+    box-shadow: var(--elevation-3);
+  }
+}
+
+/* =====================================================================
+   EXPANDED (≥ 840px)
+   ===================================================================== */
+@media (min-width: 840px) {
+  .top-app-bar,
+  .app-footer {
+    padding-inline: var(--layout-margin-expanded);
+  }
+
+  .content {
+    padding-inline: var(--layout-margin-expanded);
+  }
+
+  .phase-chip {
+    display: inline-flex;
+  }
+
+  .grid--halves {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =====================================================================
+   LARGE (≥ 1200px): drawer permanen, bisa diciutkan menjadi rail
+   ===================================================================== */
+@media (min-width: 1200px) {
+  .app {
+    grid-template-columns: var(--layout-drawer-width) minmax(0, 1fr);
+  }
+
+  .nav-drawer {
+    width: var(--layout-drawer-width);
+  }
+
+  .app.is-nav-collapsed {
+    grid-template-columns: var(--layout-rail-width) minmax(0, 1fr);
+  }
+
+  .app.is-nav-collapsed .nav-drawer {
+    align-items: center;
+    width: var(--layout-rail-width);
+    padding-inline: var(--space-2);
+  }
+
+  .app.is-nav-collapsed .nav-drawer__brand {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .app.is-nav-collapsed .nav-drawer__brand-text,
+  .app.is-nav-collapsed .nav-section,
+  .app.is-nav-collapsed .nav-drawer__note span:not(.icon) {
+    display: none;
+  }
+
+  .app.is-nav-collapsed .nav-item {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.125rem;
+    width: 100%;
+    min-height: 3.5rem;
+    padding: var(--space-1) 0;
+    border-radius: var(--radius-md);
+    font-size: var(--type-label-md-size);
+    line-height: var(--type-label-md-line);
+  }
+
+  .app.is-nav-collapsed .nav-item__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .app.is-nav-collapsed .nav-item__short {
+    display: block;
+  }
+
+  .app.is-nav-collapsed .nav-item__badge {
+    position: absolute;
+    top: 0.125rem;
+    right: 0.25rem;
+    margin: 0;
+  }
+
+  .app.is-nav-collapsed .nav-drawer__note {
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  .grid--kpi {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .grid--main-side {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+}
+
+/* Kunci gulir halaman saat drawer modal terbuka */
+.is-scroll-locked {
+  overflow: hidden;
+}
