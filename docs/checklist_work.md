@@ -20,6 +20,7 @@
 | ⛔ | Terblokir (lihat [Blocker](#blocker--pertanyaan-terbuka)) |
 | 👤 | Dikerjakan pengembang sendiri (akun Figma/GitHub/Vercel/LMS) |
 | ➖ | Opsional |
+| 🚫 | Dibatalkan berdasarkan keputusan (tidak dihitung dalam total) |
 
 ---
 
@@ -27,19 +28,21 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **T1 — Dokumen perancangan** (belum dimulai) |
-| **Tahap terakhir selesai** | T0 — disetujui, diaudit, di-push ke `origin/main` (commit `1a0d182`, `fb8bf8e`) 23 Sep 2026 |
-| **Menunggu dari pengembang** | Aba-aba untuk mulai T1 |
+| **Tahap aktif** | **T2 — Design system → CSS** (siap dimulai) |
+| **Tahap terakhir selesai** | T1 — disetujui & di-push 23 Sep 2026. Sisa 👤: link Stitch (T1-17), kirim ke LMS (T1-19) |
+| **Menunggu dari pengembang** | Link publik Google Stitch (T1-17, boleh menyusul) · aba-aba mulai T2 |
 
 ## Ringkasan Progres
+
+> Kolom **Total** tidak menghitung tugas 🚫 (dibatalkan).
 
 | Tahap | Nama | Milestone | Total | ✅ | ⬜/🔄/⛔ | Progres |
 |---|---|---|---|---|---|---|
 | [T0](#t0--persiapan--revisi-rencana) | Persiapan & revisi rencana | M1 | 17 | 17 | 0 | 100% |
-| [T1](#t1--dokumen-perancangan) | Dokumen perancangan | M1 | 22 | 0 | 22 | 0% |
+| [T1](#t1--dokumen-perancangan) | Dokumen perancangan | M1 | 17 | 15 | 2 | 88% |
 | [T2](#t2--design-system--css-fondasi--komponen) | Design system → CSS | M2 | 15 | 0 | 15 | 0% |
 | [T3](#t3--layout-master-app-shell) | Layout master | M2 | 12 | 0 | 12 | 0% |
-| [T4](#t4--lapisan-data--modul-inti) | Data & modul inti | M3 | 15 | 0 | 15 | 0% |
+| [T4](#t4--lapisan-data--modul-inti) | Data & modul inti | M3 | 17 | 0 | 17 | 0% |
 | [T5](#t5--halaman-login) | Login | M3 | 10 | 0 | 10 | 0% |
 | [T6](#t6--dashboard) | Dashboard | M3 | 12 | 0 | 12 | 0% |
 | [T7](#t7--data-pendaftar) | Data Pendaftar | M3 | 16 | 0 | 16 | 0% |
@@ -48,10 +51,11 @@
 | [T10](#t10--hasil--peringkat) | Hasil & Peringkat | M3 | 11 | 0 | 11 | 0% |
 | [T11](#t11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 11 | 0 | 11 | 0% |
 | [T12](#t12--qa-menyeluruh) | QA menyeluruh | M3 | 15 | 0 | 15 | 0% |
-| [T13](#t13--readme-deploy--presentasi) | README, deploy & presentasi | M3 | 15 | 0 | 15 | 0% |
-| | **Total** | | **197** | **17** | **180** | **9%** |
+| [T13](#t13--readme-deploy--presentasi) | README, deploy & presentasi | M3 | 13 | 0 | 13 | 0% |
+| [T14](#t14--database--hosting-produksi-fase-2) | Database & hosting produksi | Fase 2 | 16 | 0 | 16 | 0% |
+| | **Total** | | **208** | **32** | **176** | **15%** |
 
-**Milestone:** M1 (pekan 3) 🔄 T0 selesai, T1 berikutnya · M2 (pekan 5) ⬜ · M3 (pekan 7) ⬜
+**Milestone:** M1 (pekan 3) 🔄 dokumen selesai, tinggal link Stitch & kirim LMS 👤 · M2 (pekan 5) ⬜ · M3 (pekan 7) ⬜ · Fase 2 (setelah tugas) ⬜
 
 ---
 
@@ -81,32 +85,32 @@ Ref: [perencanaan §3](perencanaan.md#3-keputusan--asumsi), [§10](perencanaan.m
 ---
 
 ## T1 — Dokumen Perancangan
-Ref: [perencanaan §4](perencanaan.md#4-prinsip-desain-anti-ai-slop)–[§9](perencanaan.md#9-design-system-material-design-3) · **Output:** `docs/perancangan.md` (deliverable M1), `docs/img/figma/*`
+Ref: [perencanaan §4](perencanaan.md#4-prinsip-desain-anti-ai-slop)–[§9](perencanaan.md#9-design-system-material-design-3) · **Output:** `docs/perancangan.md` (deliverable M1)
 
 | ID | Tugas | Ref | Status | Catatan |
 |---|---|---|---|---|
-| T1-01 | Kerangka `docs/perancangan.md` (identitas, daftar isi) | §2.1 | ⬜ | Nama file sesuai panduan tugas |
-| T1-02 | Deskripsi sistem, aktor, skenario penggunaan | §1, §5.1 | ⬜ | |
-| T1-03 | Tema terpilih (M3) + alasan + ringkasan prinsip anti-slop | D-01, §4.1 | ⬜ | |
-| T1-04 | Hierarki menu & top app bar | §6.1, §6.2 | ⬜ | |
-| T1-05 | Sitemap (Mermaid) | §6.3 | ⬜ | |
-| T1-06 | User flow verifikasi & input offline (Mermaid) | §6.4, §6.5 | ⬜ | |
-| T1-07 | ERD (Mermaid) + kamus data ringkas | §7.1 | ⬜ | |
-| T1-08 | Jalur, kuota, jadwal, status | §7.2–§7.4 | ⬜ | |
-| T1-09 | Wireframe low-fi tiap halaman (P-01…P-08) | §8 | ⬜ | Diagram teks/Mermaid di markdown |
-| T1-10 | Design system: warna, tipografi, bentuk, elevasi, komponen | §9 | ⬜ | |
-| T1-11 | Embed screenshot referensi Stitch + tabel keputusan (dipertahankan/diperbaiki/dibuang) | §4.2 | ⬜ | Bukti proses Stitch untuk penilaian M1 |
-| T1-12 | Figma: variables/styles warna & tipografi sesuai §9 | §9.1, §9.2 | ⬜ | 👤 Claude bisa membantu lewat Figma jika diminta |
-| T1-13 | Figma: komponen (button, field, chip, badge, card, baris tabel, dialog) | §9.7 | ⬜ | 👤 |
-| T1-14 | Figma: hi-fi Dashboard | P-02 | ⬜ | 👤 Wajib |
-| T1-15 | Figma: hi-fi Data Pendaftar | P-03 | ⬜ | 👤 Wajib |
-| T1-16 | Figma: Login, Form, dan versi mobile | P-01, P-04 | ⬜ | 👤 ➖ Nilai tambah |
-| T1-17 | Link publik Figma + screenshot di `docs/img/figma/` & di `perancangan.md` | §2.1 | ⬜ | 👤 + Claude |
-| T1-18 | Cek semua diagram Mermaid tampil benar | – | ⬜ | Pratinjau GitHub/VS Code |
+| T1-01 | Kerangka `docs/perancangan.md` (identitas, daftar isi) | §2.1 | ✅ | Nama file sesuai panduan tugas |
+| T1-02 | Deskripsi sistem, aktor, skenario penggunaan | §1, §5.1 | ✅ | |
+| T1-03 | Tema terpilih (M3) + alasan + ringkasan prinsip anti-slop | D-01, §4.1 | ✅ | |
+| T1-04 | Hierarki menu & top app bar | §6.1, §6.2 | ✅ | |
+| T1-05 | Sitemap (Mermaid) | §6.3 | ✅ | |
+| T1-06 | User flow verifikasi & input offline (Mermaid) | §6.4, §6.5 | ✅ | |
+| T1-07 | ERD (Mermaid) + kamus data ringkas | §7.1 | ✅ | |
+| T1-08 | Jalur, kuota, jadwal, status | §7.2–§7.4 | ✅ | |
+| T1-09 | Wireframe low-fi tiap halaman (P-01…P-08) | §8 | ✅ | Wireframe teks + kerangka desktop/tablet/mobile. Kelurusan kolom dicek skrip |
+| T1-10 | Design system: warna, tipografi, bentuk, elevasi, komponen | §9 | ✅ | |
+| T1-11 | Embed screenshot referensi Stitch + tabel keputusan (dipertahankan/diperbaiki/dibuang) | §4.2 | ✅ | 8 gambar, 13 keputusan |
+| T1-12 | Figma: variables/styles warna & tipografi sesuai §9 | D-20 | 🚫 | Dibatalkan: tanpa Figma |
+| T1-13 | Figma: komponen (button, field, chip, badge, card, baris tabel, dialog) | D-20 | 🚫 | Dibatalkan: diganti `styleguide.html` (T2-11) |
+| T1-14 | Figma: hi-fi Dashboard | D-20, P-02 | 🚫 | Dibatalkan: tanpa Figma |
+| T1-15 | Figma: hi-fi Data Pendaftar | D-20, P-03 | 🚫 | Dibatalkan: tanpa Figma |
+| T1-16 | Figma: Login, Form, dan versi mobile | D-20, P-01, P-04 | 🚫 | Dibatalkan: tanpa Figma |
+| T1-17 | Tempel link publik proyek Google Stitch di `perancangan.md` §8.2 | D-20, §2.1 | ⬜ | 👤 kirim link → Claude tempel |
+| T1-18 | Cek semua diagram Mermaid tampil benar | – | ✅ | 6 diagram lolos validator Mermaid Chart (flowchart ×4, stateDiagram, erDiagram) |
 | T1-19 | Kirim link repo M1 ke LMS Mentari | §2.1 | ⬜ | 👤 Tenggat pekan ke-3 |
-| T1-R1 | Uji tahap | §14 | ⬜ | |
-| T1-R2 | Catat log & ringkasan | §15 | ⬜ | |
-| T1-R3 | Review pengembang → commit | D-16 | ⬜ | |
+| T1-R1 | Uji tahap | §14 | ✅ | Mermaid valid, 8 gambar ada, 10 anchor valid, wireframe lurus, isi konsisten dengan perencanaan v0.2.2 |
+| T1-R2 | Catat log & ringkasan | §15 | ✅ | F-27, F-28 |
+| T1-R3 | Review pengembang → audit → commit & push | D-16, §15.1 | ✅ | Disetujui 23 Sep 2026 (perancangan, teknologi D-04…D-06, database D-21) |
 
 ---
 
@@ -170,6 +174,8 @@ Ref: [perencanaan §7](perencanaan.md#7-model-data--aturan-bisnis), [§10.2–10
 | T4-10 | `shell.js`: auth guard, login/logout, sesi (ingat saya), nama panitia | FR-01, FR-02 | ⬜ | |
 | T4-11 | `shell.js`: badge menu "Verifikasi" dari data | §6.1, AS-02 | ⬜ | |
 | T4-12 | Uji modul lewat console, termasuk skenario TC-17 di level data | TC-17 | ⬜ | |
+| T4-13 | `store.js` sebagai antarmuka + adapter `adapters/local.js` (halaman tidak mengakses `localStorage` langsung) | D-21 | ⬜ | Persiapan migrasi Fase 2 |
+| T4-14 | Ekspor & impor cadangan data (JSON), dengan validasi struktur saat impor | D-21 | ⬜ | Memindahkan data antar-browser/laptop demo |
 | T4-R1 | Uji tahap | §14 | ⬜ | |
 | T4-R2 | Catat log & ringkasan | §15 | ⬜ | |
 | T4-R3 | Review pengembang → commit | D-16 | ⬜ | |
@@ -383,12 +389,37 @@ Ref: [perencanaan §2](perencanaan.md#2-ketentuan-tugas--pemetaan-penilaian), G-
 | T13-07 | Naskah demo 5–7 menit | §2.2 | ⬜ | |
 | T13-08 | Siapkan jawaban tanya-jawab (tema, anti-slop, data, validasi) | §2.2 | ⬜ | |
 | T13-09 | Kirim link final ke LMS Mentari | §2.1 | ⬜ | 👤 Tenggat pekan ke-7 |
-| T13-10 | Domain kustom di Vercel (DNS + HTTPS otomatis) | D-19 | ⬜ | 👤 ➖ Butuh domain milik pengembang |
-| T13-11 | `vercel.json`: header keamanan (CSP, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`) | D-19, D-18 | ⬜ | ➖ Uji dengan securityheaders.com |
-| T13-12 | Audit produksi: tidak ada data asli, label "Data simulasi" tampil, HTTPS aktif | D-19, AS-06 | ⬜ | ➖ |
+| T13-10 | Domain kustom di Vercel (DNS + HTTPS otomatis) | D-19 | 🚫 | Dipindah ke T14-11 (setelah database) |
+| T13-11 | `vercel.json`: header keamanan | D-19, D-18 | 🚫 | Dipindah ke T14-12 |
+| T13-12 | Audit produksi | D-19, AS-06 | 🚫 | Dipindah ke T14-13 |
+| T13-13 | Tandai rilis `v1.0-tugas` (git tag): versi yang dikumpulkan, murni client-side | D-21 | ⬜ | Sebelum mulai T14 |
 | T13-R1 | Uji tahap | §14 | ⬜ | |
 | T13-R2 | Catat log & ringkasan | §15 | ⬜ | |
 | T13-R3 | Review pengembang → commit final | D-16 | ⬜ | |
+
+---
+
+## T14 — Database & Hosting Produksi (Fase 2)
+Ref: [perencanaan D-21](perencanaan.md#3-keputusan--asumsi), D-19, R-08 · **Dikerjakan setelah tugas dikumpulkan (T13-13).** **Output:** skema SQL, `assets/js/core/adapters/supabase.js`, domain produksi
+
+| ID | Tugas | Ref | Status | Catatan |
+|---|---|---|---|---|
+| T14-01 | Buat proyek Supabase (region Singapura) | D-21 | ⬜ | 👤 Akun milik pengembang |
+| T14-02 | Skema tabel dari ERD + file migrasi SQL di repo | D-21, §7.1 | ⬜ | Tanpa data rahasia di file |
+| T14-03 | Row Level Security: hanya panitia yang login bisa membaca & menulis | D-21, R-08 | ⬜ | |
+| T14-04 | Supabase Auth untuk akun panitia (menggantikan login simulasi) | D-21, FR-01 | ⬜ | |
+| T14-05 | Adapter `adapters/supabase.js` dengan antarmuka yang sama seperti `local.js` | D-21 | ⬜ | Halaman tidak perlu diubah |
+| T14-06 | Isi database dengan data simulasi (seed) | D-21, §7.6 | ⬜ | Tetap fiktif |
+| T14-07 | Storage berkas: bucket privat, maks. 2 MB, PDF/JPG/PNG | D-21, BR-05 | ⬜ | Upload berkas sungguhan |
+| T14-08 | UI untuk memuat, error, dan offline (skeleton, snackbar, coba lagi) | D-21, NFR-06 | ⬜ | |
+| T14-09 | Audit rahasia: hanya URL + kunci publik di klien. `service_role` tidak pernah di repo/klien | R-08, D-18 | ⬜ | |
+| T14-10 | Uji ulang TC-01…TC-23 memakai database | §12.2 | ⬜ | |
+| T14-11 | Domain kustom di Vercel (DNS + HTTPS otomatis) | D-19 | ⬜ | 👤 Domain milik pengembang. Pindahan dari T13-10 |
+| T14-12 | `vercel.json`: header keamanan (CSP mengizinkan domain Supabase, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`) | D-19, D-18 | ⬜ | Uji di securityheaders.com. Pindahan dari T13-11 |
+| T14-13 | Audit produksi: HTTPS aktif, label "Data simulasi" tampil, RLS teruji dari akun anonim | D-19, AS-06 | ⬜ | Pindahan dari T13-12 |
+| T14-R1 | Uji tahap | §14 | ⬜ | |
+| T14-R2 | Catat log & ringkasan | §15 | ⬜ | |
+| T14-R3 | Review pengembang → audit → commit & push | D-16, §15.1 | ⬜ | |
 
 ---
 
@@ -426,6 +457,14 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-24 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T0-14 | Identitas commit diganti ke `nurdinrhk-design`. Hash commit T0 diperbarui (`dd57340` → `1a0d182`, `0188e14` → `fb8bf8e`) |
 | F-25 | 23 Sep 2026 | UPDATE | `docs/perencanaan.md` | – | v0.2.2: nama pengembang → Nurdin (5 tempat). Tambah D-19 hosting lanjutan (domain & header keamanan) |
 | F-26 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T13-10…T13-12 | Tambah 3 tugas opsional hosting/domain. Total tugas 194 → 197 |
+| F-27 | 23 Sep 2026 | CREATE | `docs/perancangan.md` | T1-01…T1-11, T1-18 | Deliverable M1: ringkasan sistem, alasan tema M3, menu & sitemap, 4 user flow, ERD + kamus data, jalur/kuota/jadwal, 10 wireframe, design system, galeri & review Stitch, placeholder Figma |
+| F-28 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T1-R2 | Status T1 (14/22), posisi saat ini, log F-27/F-28 |
+| F-29 | 23 Sep 2026 | UPDATE | `docs/perencanaan.md` | T1-12…T1-17 | v0.2.3: D-20 tanpa Figma (link Stitch sebagai gantinya). Rujukan Figma di §2, §8, §9, §10.1, §11, R-01 disesuaikan |
+| F-30 | 23 Sep 2026 | UPDATE | `docs/perancangan.md` | T1-17 | §8 menjadi "Proses Desain", §8.2 "Dari desain ke kode" + tempat link Stitch. Rujukan Figma dihapus |
+| F-31 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T1-12…T1-17 | Status 🚫 ditambahkan. T1-12…T1-16 dibatalkan, T1-17 menjadi link Stitch. Total 197 → 192 (tanpa 🚫). B-01 selesai |
+| F-32 | 23 Sep 2026 | UPDATE | `docs/perencanaan.md` | T4-13, T4-14, T14 | v0.2.4: D-21 database dua fase, tahap T14, R-08, pola rahasia Supabase di S-02, `adapters/` di §10.1 |
+| F-33 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T4-13, T4-14, T13-13, T14 | Tambah T4-13/14 (adapter, cadangan JSON), T13-13 (tag `v1.0-tugas`), tahap T14 (16 tugas). T13-10…12 dipindah ke T14 (🚫). Total 192 → 208 |
+| F-34 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T1-R3 | T1 ditutup (15/17, sisa 2 tugas 👤), posisi saat ini → T2 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -436,8 +475,9 @@ PROGRAMWEB_2/
 │   ├── js/.gitkeep
 │   └── img/.gitkeep
 ├── docs/
-│   ├── perencanaan.md          (v0.2)
+│   ├── perencanaan.md          (v0.2.2)
 │   ├── checklist_work.md       (v0.2)
+│   ├── perancangan.md          (M1, menunggu Figma)
 │   └── img/referensi-stitch/   (8 screenshot)
 └── pages/.gitkeep
 ```
@@ -448,7 +488,7 @@ PROGRAMWEB_2/
 
 | ID | Deskripsi | Memblokir | Status | Penyelesaian |
 |---|---|---|---|---|
-| B-01 | Desain dari pengembang | T1–T3 | 🟡 Sebagian | Referensi Stitch diterima 23 Sep 2026. Figma belum ada: dijadwalkan di T1-12…T1-17 (👤) |
+| B-01 | Desain dari pengembang | T1–T3 | ✅ Selesai | Referensi Stitch diterima 23 Sep 2026. Figma dibatalkan (D-20). Tinggal link publik Stitch (T1-17) |
 | B-02 | Tema visual belum ditentukan | T2 | ✅ Selesai | D-01: Material Design 3 |
 | B-03 | **Push ditolak (403).** Kredensial Git di komputer ini adalah akun `fahrizal-tech`, yang tidak punya hak tulis ke `nurdinrhk-design/PROGRAMWEB_2` | T0-07, T0-R3, semua push berikutnya | ✅ Selesai | Kedua akun milik pengembang. `fahrizal-tech` ditambahkan sebagai collaborator. Push berhasil |
 | Q-01 | `localStorage` atau Google Spreadsheet? | T4 | ✅ Selesai | D-03: `localStorage` |
@@ -479,3 +519,7 @@ Satu baris per sesi kerja.
 | 23 Sep 2026 | T0-14, T0-07, T0-R3 | Pengembang mengonfirmasi `nurdinrhk-design` & `fahrizal-tech` sama-sama akunnya, dan `fahrizal-tech` sudah jadi collaborator. Identitas commit diganti ke noreply `fahrizal-tech` (commit lokal di-amend `--reset-author` sebelum push). Audit ulang S-01/S-04/S-07: bersih. **Push berhasil** `dd57340` → `origin/main` | ✅ T0 selesai (F-23) |
 | 23 Sep 2026 | T0-14 | Atas permintaan pengembang, identitas commit diganti ke akun kedua miliknya, `nurdinrhk-design` (noreply). 2 commit yang sudah di-push ditulis ulang (`rebase --root --reset-author`), lalu `push --force-with-lease`. Aman karena repo baru dan hanya dipakai pengembang | ✅ (F-24) |
 | 23 Sep 2026 | – | Nama pengembang di dokumen diganti menjadi **Nurdin**. Penyebutan akun login `fahrizal-tech` di log teknis sengaja dipertahankan karena push memang dilakukan lewat akun itu. Rencana domain kustom & header keamanan dicatat (D-19, T13-10…T13-12) | ✅ (F-25, F-26) |
+| 23 Sep 2026 | T1-01…T1-11, T1-18, T1-R1, T1-R2 | **Membuat `docs/perancangan.md`** dari perencanaan v0.2.2, untuk pembaca dosen. Uji: 6 diagram Mermaid valid (validator Mermaid Chart), 8 gambar ada, 10 anchor valid. Kelurusan wireframe dicek skrip, 5 baris diperbaiki (lebar/kolom) & kolom Status tabel dilebarkan. Bagian Figma masih placeholder | ✅ Menunggu review & Figma 👤 (F-27, F-28) |
+| 23 Sep 2026 | T1-12…T1-17 | Pengembang memutuskan **tidak memakai Figma**. Link publik Google Stitch akan ditempel di `perancangan.md`. Risiko nilai M1 dicatat (R-01), mitigasi lewat §7 + `styleguide.html` | ✅ Keputusan D-20 (F-29…F-31) |
+| 23 Sep 2026 | T4-13, T4-14, T13-13, T14 | Diskusi database. Keputusan D-21: **Fase 1** `localStorage` + adapter + cadangan JSON (versi tugas, ditandai `v1.0-tugas`). **Fase 2** Supabase sebelum hosting ke domain, tetap data simulasi. Tahap T14 dibuat, tugas domain dipindah dari T13 | ✅ (F-32, F-33) |
+| 23 Sep 2026 | T1-R3 | Pengembang menyetujui `perancangan.md`, teknologi (D-04…D-06), dan database dua fase (D-21). Audit keamanan S-01…S-07, lalu commit & push T1 | ✅ (F-34) |
