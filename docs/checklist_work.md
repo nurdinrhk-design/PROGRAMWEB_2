@@ -380,7 +380,7 @@ Ref: [perencanaan §2](perencanaan.md#2-ketentuan-tugas--pemetaan-penilaian), G-
 
 | ID | Tugas | Ref | Status | Catatan |
 |---|---|---|---|---|
-| T13-01 | `README.md`: deskripsi, fitur, teknologi, struktur, cara menjalankan, akun demo | G-06 | ⬜ | |
+| T13-01 | `README.md`: deskripsi, fitur, teknologi, struktur, cara menjalankan, akun demo | G-06 | 🟡 | Versi awal dibuat 23 Sep 2026 atas permintaan pengembang (identitas: Nurdin). Dilengkapi di T13 (screenshot, link Vercel, fitur final) |
 | T13-02 | Screenshot akhir desktop & mobile ke `docs/img/hasil/` | – | ⬜ | |
 | T13-03 | Tautkan GitHub & Vercel di README dan `perancangan.md` | – | ⬜ | |
 | T13-04 | Push ke GitHub | D-09 | ⬜ | 👤 Butuh T0-06 |
@@ -488,12 +488,15 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-55 | 23 Sep 2026 | UPDATE | `docs/perancangan.md` | T3-09 | §3.1: catatan label pendek mode rail |
 | F-56 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T3-R2 | T3 (11/12), TC-04, posisi, log |
 | F-57 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T3-R3 | T3 ditutup (12/12), posisi → menunggu aba-aba T4 |
+| F-58 | 23 Sep 2026 | CREATE | `README.md` | T13-01 | Catatan tugas versi awal: identitas Nurdin, status milestone, fitur, teknologi, cara menjalankan, struktur, dokumentasi |
+| F-59 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T13-01 | T13-01 → 🟡, log F-58/F-59 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
 PROGRAMWEB_2/
 ├── .gitignore
 ├── layout.html                  (template master, M2)
+├── README.md                    (catatan tugas, versi awal)
 ├── assets/
 │   ├── css/  main.css · tokens.css · base.css · layout.css · components.css
 │   ├── js/core/shell.js
@@ -552,3 +555,4 @@ Satu baris per sesi kerja.
 | 23 Sep 2026 | T2-R3 | Pengembang menyetujui tampilan styleguide. Audit keamanan, commit & push T2 | ✅ (F-48) |
 | 23 Sep 2026 | T3-01…T3-09, T3-R1, T3-R2 | **T3: layout master.** `layout.html`, `layout.css`, `shell.js`. Navigasi adaptif 3 mode (modal · rail · drawer) diuji di 5 lebar layar + 4 status interaksi. Temuan & perbaikan: label rail terpotong → label pendek (AS-08). Fokus drawer tidak pindah → `focus()` langsung + kembali ke tombol menu. W3C HTML & CSS 0 error, console bersih | ✅ Menunggu review (F-49…F-56) |
 | 23 Sep 2026 | T3-R3 | Pengembang menyetujui layout. Audit keamanan, commit & push T3. T4 ditahan sesuai permintaan | ✅ (F-57) |
+| 23 Sep 2026 | T13-01 | Atas permintaan pengembang: membuat `README.md` versi awal dengan identitas Nurdin. Semua tautan lokal dicek ada | ✅ Disetujui, diaudit, di-commit & di-push (F-58, F-59) |
