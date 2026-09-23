@@ -28,9 +28,9 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **T2 — Design system → CSS** (siap dimulai) |
-| **Tahap terakhir selesai** | T1 — disetujui & di-push 23 Sep 2026. Sisa 👤: link Stitch (T1-17), kirim ke LMS (T1-19) |
-| **Menunggu dari pengembang** | Link publik Google Stitch (T1-17, boleh menyusul) · aba-aba mulai T2 |
+| **Tahap aktif** | **T3 — Layout master (app shell)** (berjalan) |
+| **Tahap terakhir selesai** | T2 — disetujui & di-push 23 Sep 2026 |
+| **Menunggu dari pengembang** | – (sisa 👤 M1: kirim ke LMS, T1-19) |
 
 ## Ringkasan Progres
 
@@ -39,8 +39,8 @@
 | Tahap | Nama | Milestone | Total | ✅ | ⬜/🔄/⛔ | Progres |
 |---|---|---|---|---|---|---|
 | [T0](#t0--persiapan--revisi-rencana) | Persiapan & revisi rencana | M1 | 17 | 17 | 0 | 100% |
-| [T1](#t1--dokumen-perancangan) | Dokumen perancangan | M1 | 17 | 15 | 2 | 88% |
-| [T2](#t2--design-system--css-fondasi--komponen) | Design system → CSS | M2 | 15 | 0 | 15 | 0% |
+| [T1](#t1--dokumen-perancangan) | Dokumen perancangan | M1 | 17 | 16 | 1 | 94% |
+| [T2](#t2--design-system--css-fondasi--komponen) | Design system → CSS | M2 | 15 | 15 | 0 | 100% |
 | [T3](#t3--layout-master-app-shell) | Layout master | M2 | 12 | 0 | 12 | 0% |
 | [T4](#t4--lapisan-data--modul-inti) | Data & modul inti | M3 | 17 | 0 | 17 | 0% |
 | [T5](#t5--halaman-login) | Login | M3 | 10 | 0 | 10 | 0% |
@@ -53,9 +53,9 @@
 | [T12](#t12--qa-menyeluruh) | QA menyeluruh | M3 | 15 | 0 | 15 | 0% |
 | [T13](#t13--readme-deploy--presentasi) | README, deploy & presentasi | M3 | 13 | 0 | 13 | 0% |
 | [T14](#t14--database--hosting-produksi-fase-2) | Database & hosting produksi | Fase 2 | 16 | 0 | 16 | 0% |
-| | **Total** | | **208** | **32** | **176** | **15%** |
+| | **Total** | | **208** | **48** | **160** | **23%** |
 
-**Milestone:** M1 (pekan 3) 🔄 dokumen selesai, tinggal link Stitch & kirim LMS 👤 · M2 (pekan 5) ⬜ · M3 (pekan 7) ⬜ · Fase 2 (setelah tugas) ⬜
+**Milestone:** M1 (pekan 3) 🔄 dokumen lengkap, tinggal kirim LMS 👤 · M2 (pekan 5) 🔄 T2 selesai, T3 berikutnya · M3 (pekan 7) ⬜ · Fase 2 (setelah tugas) ⬜
 
 ---
 
@@ -105,7 +105,7 @@ Ref: [perencanaan §4](perencanaan.md#4-prinsip-desain-anti-ai-slop)–[§9](per
 | T1-14 | Figma: hi-fi Dashboard | D-20, P-02 | 🚫 | Dibatalkan: tanpa Figma |
 | T1-15 | Figma: hi-fi Data Pendaftar | D-20, P-03 | 🚫 | Dibatalkan: tanpa Figma |
 | T1-16 | Figma: Login, Form, dan versi mobile | D-20, P-01, P-04 | 🚫 | Dibatalkan: tanpa Figma |
-| T1-17 | Tempel link publik proyek Google Stitch di `perancangan.md` §8.2 | D-20, §2.1 | ⬜ | 👤 kirim link → Claude tempel |
+| T1-17 | Tempel link publik proyek Google Stitch di `perancangan.md` §8.2 | D-20, §2.1 | ✅ | Link dari pengembang ditempel di tabel identitas & §8.2 (F-35) |
 | T1-18 | Cek semua diagram Mermaid tampil benar | – | ✅ | 6 diagram lolos validator Mermaid Chart (flowchart ×4, stateDiagram, erDiagram) |
 | T1-19 | Kirim link repo M1 ke LMS Mentari | §2.1 | ⬜ | 👤 Tenggat pekan ke-3 |
 | T1-R1 | Uji tahap | §14 | ✅ | Mermaid valid, 8 gambar ada, 10 anchor valid, wireframe lurus, isi konsisten dengan perencanaan v0.2.2 |
@@ -119,21 +119,21 @@ Ref: [perencanaan §9](perencanaan.md#9-design-system-material-design-3), [§10.
 
 | ID | Tugas | Ref | Status | Catatan |
 |---|---|---|---|---|
-| T2-01 | `tokens.css`: warna peran M3 & status | §9.1, NFR-05 | ⬜ | |
-| T2-02 | `tokens.css`: tipografi, spasi, radius, elevasi, durasi | §9.2–§9.6 | ⬜ | |
-| T2-03 | Uji kontras semua pasangan teks/latar (≥ 4.5:1), catat penyesuaian | NFR-04 | ⬜ | Perubahan token dicatat di perencanaan §16 |
-| T2-04 | `main.css` (urutan `@import`) + `base.css` (reset, tipografi, fokus) | §10.1 | ⬜ | |
-| T2-05 | Komponen: button (filled/tonal/outlined/text/danger/icon) + state layer | §9.4, §9.7 | ⬜ | |
-| T2-06 | Komponen: text field, select, textarea, checkbox, radio, radio-card | §9.7 | ⬜ | |
-| T2-07 | Komponen: chip, badge status (6), card, KPI card | §9.7, §7.4 | ⬜ | |
-| T2-08 | Komponen: data table (sort, baris garis batas, mode kartu), pagination, tabs | §9.7 | ⬜ | |
-| T2-09 | Komponen: dialog, snackbar, menu, stepper, linear progress, empty state, skeleton | §9.7 | ⬜ | |
-| T2-10 | `logo.svg` sederhana & fiktif + favicon | D-17 | ⬜ | Tanpa lambang pemerintah |
-| T2-11 | `docs/styleguide.html`: etalase semua token & komponen | §11.1 | ⬜ | Bukti "Figma-to-code" untuk M2 |
-| T2-12 | Validasi W3C CSS | NFR-03 | ⬜ | |
-| T2-R1 | Uji tahap | §14 | ⬜ | |
-| T2-R2 | Catat log & ringkasan | §15 | ⬜ | |
-| T2-R3 | Review pengembang → commit | D-16 | ⬜ | |
+| T2-01 | `tokens.css`: warna peran M3 & status | §9.1, NFR-05 | ✅ | 20 peran warna M3 + 5 kelompok status + 5 warna grafik (F-36) |
+| T2-02 | `tokens.css`: tipografi, spasi, radius, elevasi, durasi | §9.2–§9.6 | ✅ | Tipografi 8 gaya, jarak 7 langkah, radius 4, elevasi 3, state layer, durasi, ukuran layout |
+| T2-03 | Uji kontras semua pasangan teks/latar (≥ 4.5:1), catat penyesuaian | NFR-04 | ✅ | 27 pasangan diuji (skrip). 3 gagal → diperbaiki: outline #8391A7, placeholder #64748B, secondary bukan latar teks. Di styleguide: 17/17 lolos |
+| T2-04 | `main.css` (urutan `@import`) + `base.css` (reset, tipografi, fokus) | §10.1 | ✅ | main.css memuat token, base, komponen (layout/halaman/print ditambah di tahapnya). base: reset, tipografi, fokus, ikon, utilitas |
+| T2-05 | Komponen: button (filled/tonal/outlined/text/danger/icon) + state layer | §9.4, §9.7 | ✅ | filled, tonal, outlined, text, danger, danger-outlined, sm, block, disabled + icon-btn, state layer ::before |
+| T2-06 | Komponen: text field, select, textarea, checkbox, radio, radio-card | §9.7 | ✅ | Outlined field + ikon + aksi + hint + error + disabled, select (panah CSS), textarea, checkbox/radio (accent-color), choice-card (:has) |
+| T2-07 | Komponen: chip, badge status (6), card, KPI card | §9.7, §7.4 | ✅ | Chip filter/input/jalur, 6 badge (teks + titik, tidak hanya warna), count, card, KPI |
+| T2-08 | Komponen: data table (sort, baris garis batas, mode kartu), pagination, tabs | §9.7 | ✅ | Tabel sortable (aria-sort), baris garis batas, mode kartu < 600px, pagination, tabs + count |
+| T2-09 | Komponen: dialog, snackbar, menu, stepper, linear progress, empty state, skeleton | §9.7 | ✅ | Dialog (<dialog>), snackbar + Urungkan, menu, stepper, <progress> 3 varian, empty, skeleton (hormati reduced-motion) |
+| T2-10 | `logo.svg` sederhana & fiktif + favicon | D-17 | ✅ | Logo topi wisuda sederhana, fiktif, tanpa lambang pemerintah. Dipakai juga sebagai favicon |
+| T2-11 | `docs/styleguide.html`: etalase semua token & komponen | §11.1 | ✅ | 12 bagian. Swatch & uji kontras dibaca dari token secara langsung. Dicek Chrome headless 1280px & 390px (iframe) |
+| T2-12 | Validasi W3C CSS | NFR-03 | ✅ | 4 file CSS valid, 0 error (awalnya 3 error var() di calc → diganti nilai tetap; clip → clip-path). HTML styleguide: 0 error, 0 peringatan (W3C Nu) |
+| T2-R1 | Uji tahap | §14 | ✅ | W3C CSS & HTML bersih, console 0 error, 22 swatch & 17 kontras tampil, NFR-05: 0 warna di luar tokens.css, tampilan 1280px & 390px rapi |
+| T2-R2 | Catat log & ringkasan | §15 | ✅ | F-35…F-47 |
+| T2-R3 | Review pengembang → audit → commit & push | D-16, §15.1 | ✅ | Disetujui 23 Sep 2026 |
 
 ---
 
@@ -142,7 +142,7 @@ Ref: [perencanaan P-00](perencanaan.md#p-00--layouthtml--template-master-m2-taha
 
 | ID | Tugas | Ref | Status | Catatan |
 |---|---|---|---|---|
-| T3-01 | `layout.html`: kerangka semantik (`aside`, `header`, `main`, `footer`) | P-00, NFR-02 | ⬜ | |
+| T3-01 | `layout.html`: kerangka semantik (`aside`, `header`, `main`, `footer`) | P-00, NFR-02 | ⬜ | Tambahkan `@import layout.css` di `main.css` |
 | T3-02 | Navigation drawer: brand, 3 grup menu, badge, "Data simulasi", Keluar | §6.1 | ⬜ | |
 | T3-03 | Top app bar 4 elemen + menu akun | §6.2 | ⬜ | |
 | T3-04 | Page header, area konten, grid helper | P-00 | ⬜ | |
@@ -465,19 +465,34 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-32 | 23 Sep 2026 | UPDATE | `docs/perencanaan.md` | T4-13, T4-14, T14 | v0.2.4: D-21 database dua fase, tahap T14, R-08, pola rahasia Supabase di S-02, `adapters/` di §10.1 |
 | F-33 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T4-13, T4-14, T13-13, T14 | Tambah T4-13/14 (adapter, cadangan JSON), T13-13 (tag `v1.0-tugas`), tahap T14 (16 tugas). T13-10…12 dipindah ke T14 (🚫). Total 192 → 208 |
 | F-34 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T1-R3 | T1 ditutup (15/17, sisa 2 tugas 👤), posisi saat ini → T2 |
+| F-35 | 23 Sep 2026 | UPDATE | `docs/perancangan.md` | T1-17 | Link publik proyek Google Stitch ditempel di tabel identitas & §8.2 |
+| F-36 | 23 Sep 2026 | CREATE | `assets/css/tokens.css` | T2-01…T2-03 | Semua design token M3 (warna, status, grafik, tipografi, jarak, bentuk, elevasi, gerak, layout). Satu-satunya file berisi nilai warna |
+| F-37 | 23 Sep 2026 | CREATE | `assets/css/main.css` | T2-04 | Titik masuk CSS: `@import` token → base → komponen |
+| F-38 | 23 Sep 2026 | CREATE | `assets/css/base.css` | T2-04 | Reset, tipografi dasar, fokus keyboard, ikon Material Symbols, utilitas, reduced-motion |
+| F-39 | 23 Sep 2026 | CREATE | `assets/css/components.css` | T2-05…T2-09 | 14 kelompok komponen M3 (BEM) |
+| F-40 | 23 Sep 2026 | CREATE | `assets/img/logo.svg` | T2-10 | Logo fiktif + favicon |
+| F-41 | 23 Sep 2026 | CREATE | `docs/styleguide.html` | T2-11 | Etalase design system (pengganti Figma, D-20) |
+| F-42 | 23 Sep 2026 | CREATE | `docs/styleguide.css` | T2-11 | Tata letak khusus halaman styleguide (hanya token) |
+| F-43 | 23 Sep 2026 | CREATE | `docs/styleguide.js` | T2-11 | Swatch & uji kontras langsung dari token, demo chip/tabs/sort/dialog/snackbar |
+| F-44 | 23 Sep 2026 | DELETE | `assets/css/.gitkeep`, `assets/img/.gitkeep` | T2-R1 | Folder sudah berisi file, penanda tidak diperlukan |
+| F-45 | 23 Sep 2026 | UPDATE | `docs/perencanaan.md` | T2-03 | v0.2.5: nilai token hasil uji kontras (§9.1) |
+| F-46 | 23 Sep 2026 | UPDATE | `docs/perancangan.md` | T2-03 | §7.1: outline #8391A7, on-surface-muted, catatan uji kontras |
+| F-47 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T2-R2 | T1-17 & T2 (14/15) ditandai, posisi saat ini, log |
+| F-48 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T2-R3 | T2 ditutup (15/15), posisi → T3 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
 PROGRAMWEB_2/
 ├── .gitignore
 ├── assets/
-│   ├── css/.gitkeep
+│   ├── css/  main.css · tokens.css · base.css · components.css
 │   ├── js/.gitkeep
-│   └── img/.gitkeep
+│   └── img/  logo.svg
 ├── docs/
-│   ├── perencanaan.md          (v0.2.2)
+│   ├── perencanaan.md          (v0.2.5)
 │   ├── checklist_work.md       (v0.2)
-│   ├── perancangan.md          (M1, menunggu Figma)
+│   ├── perancangan.md          (M1)
+│   ├── styleguide.html / .css / .js   (etalase design system, M2)
 │   └── img/referensi-stitch/   (8 screenshot)
 └── pages/.gitkeep
 ```
@@ -523,3 +538,5 @@ Satu baris per sesi kerja.
 | 23 Sep 2026 | T1-12…T1-17 | Pengembang memutuskan **tidak memakai Figma**. Link publik Google Stitch akan ditempel di `perancangan.md`. Risiko nilai M1 dicatat (R-01), mitigasi lewat §7 + `styleguide.html` | ✅ Keputusan D-20 (F-29…F-31) |
 | 23 Sep 2026 | T4-13, T4-14, T13-13, T14 | Diskusi database. Keputusan D-21: **Fase 1** `localStorage` + adapter + cadangan JSON (versi tugas, ditandai `v1.0-tugas`). **Fase 2** Supabase sebelum hosting ke domain, tetap data simulasi. Tahap T14 dibuat, tugas domain dipindah dari T13 | ✅ (F-32, F-33) |
 | 23 Sep 2026 | T1-R3 | Pengembang menyetujui `perancangan.md`, teknologi (D-04…D-06), dan database dua fase (D-21). Audit keamanan S-01…S-07, lalu commit & push T1 | ✅ (F-34) |
+| 23 Sep 2026 | T1-17, T2-01…T2-12, T2-R1, T2-R2 | Link Stitch ditempel. **T2: design system → CSS.** Uji kontras menemukan 3 nilai Stitch gagal WCAG → diperbaiki. `tokens.css`, `base.css`, `components.css` (14 kelompok), `main.css`, logo, `styleguide.html/.css/.js`. Validasi W3C: CSS 0 error (3 error `var()` dalam `calc()` diperbaiki), HTML 0 error (tabpanel & judul KPI ditambah). Dicek di Chrome headless 1280px & 390px, console 0 error | ✅ Menunggu review (F-35…F-47) |
+| 23 Sep 2026 | T2-R3 | Pengembang menyetujui tampilan styleguide. Audit keamanan, commit & push T2 | ✅ (F-48) |

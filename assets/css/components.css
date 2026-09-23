@@ -1,0 +1,1250 @@
+/* =====================================================================
+   components.css — Komponen reusable Material Design 3
+   Penamaan: BEM (.blok, .blok__elemen, .blok--varian) + state .is-*
+   Daftar isi:
+     1. Button & icon button      8. Tabs
+     2. Text field & select       9. Stepper
+     3. Checkbox, radio, choice  10. Progress
+     4. Chip                     11. Dialog
+     5. Badge status             12. Snackbar
+     6. Card & KPI               13. Menu
+     7. Data table & pagination  14. Empty state & skeleton
+   ===================================================================== */
+
+
+/* =====================================================================
+   1. BUTTON — filled · tonal · outlined · text · danger
+   State layer M3: lapisan ::before berwarna currentColor
+   ===================================================================== */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  padding: 0 var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--md-primary);
+  font-size: var(--type-label-lg-size);
+  line-height: var(--type-label-lg-line);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transition: box-shadow var(--duration-short) var(--easing-standard);
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: currentColor;
+  opacity: 0;
+  transition: opacity var(--duration-short) var(--easing-standard);
+}
+
+.btn:hover::before { opacity: var(--state-hover); }
+.btn:focus-visible::before { opacity: var(--state-focus); }
+.btn:active::before { opacity: var(--state-press); }
+
+.btn .icon {
+  font-size: var(--icon-size-sm);
+  margin-inline-start: calc(var(--space-2) * -1);
+}
+
+.btn--filled {
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+}
+
+.btn--filled:hover {
+  box-shadow: var(--elevation-1);
+  color: var(--md-on-primary);
+}
+
+.btn--tonal {
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+}
+
+.btn--outlined {
+  border-color: var(--md-outline);
+  color: var(--md-primary);
+}
+
+.btn--text {
+  padding-inline: var(--space-3);
+}
+
+.btn--danger {
+  background-color: var(--status-danger-solid);
+  color: var(--md-on-primary);
+}
+
+.btn--danger-outlined {
+  border-color: var(--status-danger-border);
+  color: var(--status-danger-text);
+}
+
+.btn--sm {
+  min-height: var(--control-height-sm);
+  padding-inline: var(--space-4);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  background-color: var(--md-disabled-container);
+  border-color: transparent;
+  color: var(--md-disabled-content);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.btn--text:disabled,
+.btn--outlined:disabled {
+  background-color: transparent;
+}
+
+.btn:disabled::before,
+.btn[aria-disabled="true"]::before {
+  display: none;
+}
+
+/* Icon button (40×40, bulat) */
+.icon-btn {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--md-on-surface-variant);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.icon-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: currentColor;
+  opacity: 0;
+  transition: opacity var(--duration-short) var(--easing-standard);
+}
+
+.icon-btn:hover::before { opacity: var(--state-hover); }
+.icon-btn:focus-visible::before { opacity: var(--state-focus); }
+.icon-btn:active::before { opacity: var(--state-press); }
+
+.icon-btn--sm {
+  width: 2rem;
+  height: 2rem;
+}
+
+.icon-btn--danger {
+  color: var(--status-danger-text);
+}
+
+.icon-btn:disabled {
+  color: var(--md-disabled-content);
+  cursor: not-allowed;
+}
+
+.icon-btn:disabled::before {
+  display: none;
+}
+
+
+/* =====================================================================
+   2. TEXT FIELD (outlined) & SELECT
+   Struktur:
+   <div class="field [field--error]">
+     <label class="field__label" for="x">Label</label>
+     <div class="field__box [field__box--select]">
+       <span class="icon field__icon">…</span>   (opsional)
+       <input class="field__control" id="x" aria-describedby="x-hint">
+     </div>
+     <p class="field__hint" id="x-hint">…</p>
+     <p class="field__error" id="x-error">…</p>
+   </div>
+   ===================================================================== */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.field__label {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-label-md-size);
+  line-height: var(--type-label-md-line);
+  font-weight: var(--weight-semibold);
+}
+
+.field__label .field__required {
+  color: var(--status-danger-text);
+}
+
+.field__box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.field__control {
+  width: 100%;
+  min-height: var(--control-height);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--md-outline);
+  border-radius: var(--radius-sm);
+  background-color: var(--md-surface-container-lowest);
+  color: var(--md-on-surface);
+  transition: border-color var(--duration-short) var(--easing-standard),
+              box-shadow var(--duration-short) var(--easing-standard);
+}
+
+.field__control:hover {
+  border-color: var(--md-on-surface-variant);
+}
+
+.field__control:focus-visible,
+.field__control:focus {
+  outline: none;
+  border-color: var(--md-primary);
+  box-shadow: inset 0 0 0 1px var(--md-primary);
+}
+
+textarea.field__control {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+.field__icon {
+  position: absolute;
+  inset-inline-start: var(--space-3);
+  color: var(--md-on-surface-variant);
+  font-size: var(--icon-size-sm);
+  pointer-events: none;
+}
+
+.field__icon ~ .field__control {
+  padding-inline-start: calc(var(--space-3) + var(--icon-size-sm) + var(--space-2));
+}
+
+.field__action {
+  position: absolute;
+  inset-inline-end: var(--space-1);
+}
+
+.field__action ~ .field__control,
+.field__box:has(.field__action) .field__control {
+  padding-inline-end: 3rem;
+}
+
+/* Select: panah dibuat dengan CSS, tanpa gambar berwarna */
+.field__box--select::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: var(--space-4);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-right: 2px solid var(--md-on-surface-variant);
+  border-bottom: 2px solid var(--md-on-surface-variant);
+  transform: translateY(-25%) rotate(45deg);
+  pointer-events: none;
+}
+
+.field__box--select .field__control {
+  appearance: none;
+  padding-inline-end: var(--space-7);
+  cursor: pointer;
+}
+
+.field__hint,
+.field__error {
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.field__hint {
+  color: var(--md-on-surface-variant);
+}
+
+.field__error {
+  display: none;
+  color: var(--status-danger-text);
+  font-weight: var(--weight-medium);
+}
+
+.field--error .field__control {
+  border-color: var(--status-danger-text);
+}
+
+.field--error .field__control:focus {
+  box-shadow: inset 0 0 0 1px var(--status-danger-text);
+}
+
+.field--error .field__label {
+  color: var(--status-danger-text);
+}
+
+.field--error .field__error {
+  display: block;
+}
+
+.field__control:disabled {
+  border-color: var(--md-disabled-container);
+  background-color: var(--md-surface-container);
+  color: var(--md-disabled-content);
+  cursor: not-allowed;
+}
+
+
+/* =====================================================================
+   3. CHECKBOX, RADIO, CHOICE CARD
+   Kontrol bawaan browser + accent-color (aksesibel & ringan)
+   ===================================================================== */
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height-sm);
+  cursor: pointer;
+}
+
+.check input {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0;
+  accent-color: var(--md-primary);
+  cursor: pointer;
+}
+
+.check input:disabled,
+.check input:disabled + span {
+  color: var(--md-disabled-content);
+  cursor: not-allowed;
+}
+
+/* Kartu pilihan (mis. pilihan jalur di form) */
+.choice-card {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--md-outline);
+  border-radius: var(--radius-md);
+  background-color: var(--md-surface-container-lowest);
+  cursor: pointer;
+  transition: border-color var(--duration-short) var(--easing-standard),
+              background-color var(--duration-short) var(--easing-standard);
+}
+
+.choice-card:hover {
+  border-color: var(--md-on-surface-variant);
+}
+
+.choice-card input {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0.125rem 0 0;
+  accent-color: var(--md-primary);
+  flex-shrink: 0;
+}
+
+.choice-card:has(input:checked) {
+  border-color: var(--md-primary);
+  background-color: var(--md-primary-container);
+  box-shadow: inset 0 0 0 1px var(--md-primary);
+}
+
+.choice-card:has(input:focus-visible) {
+  outline: var(--focus-ring-width) solid var(--md-focus-ring);
+  outline-offset: 2px;
+}
+
+.choice-card__title {
+  display: block;
+  font-weight: var(--weight-semibold);
+}
+
+.choice-card__meta {
+  display: block;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+
+/* =====================================================================
+   4. CHIP — filter · input (filter aktif) · jalur
+   ===================================================================== */
+.chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--md-outline);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-label-lg-size);
+  line-height: var(--type-label-lg-line);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.chip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: currentColor;
+  opacity: 0;
+  transition: opacity var(--duration-short) var(--easing-standard);
+}
+
+button.chip:hover::before { opacity: var(--state-hover); }
+button.chip:focus-visible::before { opacity: var(--state-focus); }
+
+.chip .icon {
+  font-size: var(--icon-size-sm);
+}
+
+/* Filter chip terpilih */
+.chip--filter[aria-pressed="true"] {
+  border-color: transparent;
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+}
+
+/* Input chip: filter aktif yang bisa dihapus */
+.chip--input {
+  padding-inline-end: var(--space-1);
+  border-color: transparent;
+  background-color: var(--md-surface-container);
+  color: var(--md-on-surface);
+}
+
+.chip__remove {
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--md-on-surface-variant);
+}
+
+.chip__remove:hover {
+  background-color: var(--md-surface-container-high);
+  color: var(--md-on-surface);
+}
+
+/* Tag jalur (bukan tombol) */
+.chip--jalur {
+  min-height: 1.5rem;
+  padding: 0 var(--space-2);
+  border-color: transparent;
+  background-color: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+  font-size: var(--type-label-md-size);
+  line-height: var(--type-label-md-line);
+  font-weight: var(--weight-semibold);
+}
+
+
+/* =====================================================================
+   5. BADGE STATUS — 4 status verifikasi + 2 status seleksi (§7.4)
+   Selalu teks + titik warna: status tidak hanya dibedakan warna
+   ===================================================================== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 1.5rem;
+  padding: 0 var(--space-2);
+  border: 1px solid;
+  border-radius: var(--radius-sm);
+  font-size: var(--type-label-md-size);
+  line-height: var(--type-label-md-line);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.badge::before {
+  content: "";
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+}
+
+.badge--menunggu {
+  border-color: var(--status-info-border);
+  background-color: var(--status-info-bg);
+  color: var(--status-info-text);
+}
+
+.badge--perbaikan {
+  border-color: var(--status-warning-border);
+  background-color: var(--status-warning-bg);
+  color: var(--status-warning-text);
+}
+
+.badge--terverifikasi,
+.badge--masuk {
+  border-color: var(--status-success-border);
+  background-color: var(--status-success-bg);
+  color: var(--status-success-text);
+}
+
+.badge--ditolak {
+  border-color: var(--status-danger-border);
+  background-color: var(--status-danger-bg);
+  color: var(--status-danger-text);
+}
+
+.badge--tergeser {
+  border-color: var(--status-neutral-border);
+  background-color: var(--status-neutral-bg);
+  color: var(--status-neutral-text);
+}
+
+/* Penghitung kecil (mis. jumlah antrean di menu) */
+.count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.5rem;
+  height: 1.25rem;
+  padding: 0 0.375rem;
+  border-radius: var(--radius-full);
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+  font-size: var(--type-label-md-size);
+  line-height: 1;
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+
+/* =====================================================================
+   6. CARD & KPI
+   ===================================================================== */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--radius-md);
+  background-color: var(--md-surface-container-lowest);
+  box-shadow: var(--elevation-1);
+  min-width: 0;
+}
+
+.card--flush {
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+}
+
+.card__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.card--flush .card__header {
+  padding: var(--space-5) var(--space-5) var(--space-4);
+}
+
+.card__title {
+  font-size: var(--type-headline-sm-size);
+  line-height: var(--type-headline-sm-line);
+  font-weight: var(--weight-semibold);
+}
+
+.card__subtitle {
+  margin-top: 0.125rem;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+/* KPI: satu angka + satu keterangan (AS-09) */
+.kpi {
+  gap: var(--space-2);
+}
+
+.kpi__label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-label-lg-size);
+  line-height: var(--type-label-lg-line);
+  font-weight: var(--weight-semibold);
+}
+
+.kpi__label .icon {
+  font-size: var(--icon-size-sm);
+}
+
+.kpi__value {
+  font-size: var(--type-display-sm-size);
+  line-height: var(--type-display-sm-line);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi__meta {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+
+/* =====================================================================
+   7. DATA TABLE & PAGINATION
+   ===================================================================== */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  font-size: var(--type-body-md-size);
+  line-height: var(--type-body-md-line);
+}
+
+.table th,
+.table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--md-outline-variant);
+  text-align: start;
+  vertical-align: middle;
+}
+
+.table thead th {
+  background-color: var(--md-surface-container);
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-label-md-size);
+  line-height: var(--type-label-md-line);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.table tbody tr {
+  transition: background-color var(--duration-short) var(--easing-standard);
+}
+
+.table tbody tr:hover {
+  background-color: var(--md-surface-container-low);
+}
+
+.table tbody tr.is-highlighted {
+  background-color: var(--md-primary-container);
+}
+
+.table__num {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table th.table__num {
+  text-align: end;
+}
+
+.table__primary {
+  display: block;
+  font-weight: var(--weight-semibold);
+}
+
+.table__secondary {
+  display: block;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+  font-variant-numeric: tabular-nums;
+}
+
+.table__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-1);
+}
+
+/* Header yang bisa diurutkan */
+.table__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.table__sort .icon {
+  font-size: 1rem;
+  opacity: 0.4;
+}
+
+th[aria-sort="ascending"] .table__sort,
+th[aria-sort="descending"] .table__sort {
+  color: var(--md-on-surface);
+}
+
+th[aria-sort="ascending"] .table__sort .icon,
+th[aria-sort="descending"] .table__sort .icon {
+  opacity: 1;
+}
+
+/* Baris garis batas kuota (hasil seleksi) */
+.table__cutoff td {
+  padding: var(--space-2) var(--space-4);
+  border-top: 2px solid var(--md-primary);
+  border-bottom: 2px solid var(--md-primary);
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+  font-size: var(--type-label-md-size);
+  line-height: var(--type-label-md-line);
+  font-weight: var(--weight-bold);
+  text-align: center;
+}
+
+/* Mode kartu untuk layar compact (< 600px) */
+@media (max-width: 599px) {
+  .table--stack thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .table--stack,
+  .table--stack tbody,
+  .table--stack tr,
+  .table--stack td {
+    display: block;
+    width: 100%;
+  }
+
+  .table--stack tr {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--md-outline-variant);
+  }
+
+  .table--stack td {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-1) 0;
+    border: 0;
+    text-align: end;
+  }
+
+  .table--stack td::before {
+    content: attr(data-label);
+    color: var(--md-on-surface-variant);
+    font-size: var(--type-label-md-size);
+    font-weight: var(--weight-semibold);
+    text-align: start;
+  }
+
+  .table--stack td.table__cell--full {
+    display: block;
+    text-align: start;
+  }
+
+  .table--stack td.table__cell--full::before {
+    content: none;
+  }
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+}
+
+.pagination__pages {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.pagination__page {
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 var(--space-2);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--md-on-surface);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.pagination__page:hover {
+  background-color: var(--md-surface-container);
+}
+
+.pagination__page[aria-current="page"] {
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+}
+
+.pagination__page:disabled {
+  color: var(--md-disabled-content);
+  cursor: not-allowed;
+  background: transparent;
+}
+
+
+/* =====================================================================
+   8. TABS
+   ===================================================================== */
+.tabs {
+  display: flex;
+  gap: var(--space-1);
+  border-bottom: 1px solid var(--md-outline-variant);
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 3rem;
+  padding: 0 var(--space-4);
+  border: 0;
+  background: transparent;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-label-lg-size);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.tab:hover {
+  color: var(--md-on-surface);
+  background-color: var(--md-surface-container-low);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--md-primary);
+}
+
+.tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  inset-inline: var(--space-2);
+  bottom: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background-color: var(--md-primary);
+}
+
+.tab__count {
+  padding: 0 0.375rem;
+  border-radius: var(--radius-full);
+  background-color: var(--md-surface-container);
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-label-md-size);
+  font-variant-numeric: tabular-nums;
+}
+
+.tab[aria-selected="true"] .tab__count {
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+}
+
+
+/* =====================================================================
+   9. STEPPER (form bertahap)
+   <ol class="stepper"><li class="stepper__item is-done|is-active">
+   ===================================================================== */
+.stepper {
+  display: flex;
+  gap: var(--space-2);
+  counter-reset: step;
+}
+
+.stepper__item {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-label-lg-size);
+  font-weight: var(--weight-semibold);
+  counter-increment: step;
+}
+
+.stepper__item:not(:last-child)::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  min-width: var(--space-4);
+  background-color: var(--md-outline-variant);
+}
+
+.stepper__button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.stepper__index {
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--md-outline);
+  border-radius: var(--radius-full);
+  font-size: var(--type-label-md-size);
+  font-variant-numeric: tabular-nums;
+}
+
+.stepper__index::before {
+  content: counter(step);
+}
+
+.stepper__item.is-active {
+  color: var(--md-primary);
+}
+
+.stepper__item.is-active .stepper__index {
+  border-color: var(--md-primary);
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+}
+
+.stepper__item.is-done {
+  color: var(--md-on-surface);
+}
+
+.stepper__item.is-done .stepper__index {
+  border-color: var(--md-primary-container);
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+}
+
+.stepper__item.is-done .stepper__index::before {
+  content: "✓";
+}
+
+.stepper__item.is-done:not(:last-child)::after {
+  background-color: var(--md-primary);
+}
+
+@media (max-width: 599px) {
+  .stepper__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .stepper__item.is-active {
+    flex: 3;
+  }
+
+  .stepper__item.is-active .stepper__label {
+    position: static;
+    width: auto;
+    height: auto;
+    clip-path: none;
+    white-space: nowrap;
+  }
+}
+
+
+/* =====================================================================
+   10. PROGRESS — elemen <progress> bawaan (semantik)
+   ===================================================================== */
+.progress {
+  width: 100%;
+  height: 0.5rem;
+  border: 0;
+  border-radius: var(--radius-full);
+  background-color: var(--md-surface-container-high);
+  color: var(--md-primary);
+  overflow: hidden;
+  appearance: none;
+}
+
+.progress::-webkit-progress-bar {
+  border-radius: var(--radius-full);
+  background-color: var(--md-surface-container-high);
+}
+
+.progress::-webkit-progress-value {
+  border-radius: var(--radius-full);
+  background-color: var(--md-primary);
+}
+
+.progress::-moz-progress-bar {
+  border-radius: var(--radius-full);
+  background-color: var(--md-primary);
+}
+
+.progress--warning::-webkit-progress-value { background-color: var(--status-warning-text); }
+.progress--warning::-moz-progress-bar { background-color: var(--status-warning-text); }
+.progress--danger::-webkit-progress-value { background-color: var(--status-danger-text); }
+.progress--danger::-moz-progress-bar { background-color: var(--status-danger-text); }
+
+
+/* =====================================================================
+   11. DIALOG — elemen <dialog> bawaan
+   ===================================================================== */
+.dialog {
+  width: min(35rem, calc(100vw - 2rem));      /* 2rem = 2 × --space-4 */
+  max-height: calc(100vh - 3rem);             /* 3rem = 2 × --space-5 */
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background-color: var(--md-surface-container-lowest);
+  color: var(--md-on-surface);
+  box-shadow: var(--elevation-3);
+}
+
+.dialog--lg {
+  width: min(48rem, calc(100vw - 2rem));
+}
+
+.dialog::backdrop {
+  background-color: var(--md-scrim);
+}
+
+.dialog[open] {
+  animation: dialog-in var(--duration-medium) var(--easing-standard);
+}
+
+@keyframes dialog-in {
+  from { opacity: 0; transform: translateY(0.5rem) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+.dialog__container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.dialog__icon {
+  color: var(--md-on-surface-variant);
+}
+
+.dialog__icon--danger {
+  color: var(--status-danger-text);
+}
+
+.dialog__title {
+  font-size: var(--type-headline-sm-size);
+  line-height: var(--type-headline-sm-line);
+  font-weight: var(--weight-semibold);
+}
+
+.dialog__body {
+  color: var(--md-on-surface-variant);
+}
+
+.dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+
+/* =====================================================================
+   12. SNACKBAR
+   ===================================================================== */
+.snackbar-host {
+  position: fixed;
+  inset-inline: var(--space-4);
+  bottom: var(--space-4);
+  z-index: var(--z-snackbar);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+
+.snackbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: min(35rem, 100%);
+  min-height: 3rem;
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  background-color: var(--md-inverse-surface);
+  color: var(--md-inverse-on-surface);
+  box-shadow: var(--elevation-2);
+  pointer-events: auto;
+  animation: snackbar-in var(--duration-medium) var(--easing-standard);
+}
+
+@keyframes snackbar-in {
+  from { opacity: 0; transform: translateY(1rem); }
+  to   { opacity: 1; transform: none; }
+}
+
+.snackbar__message {
+  flex: 1;
+}
+
+.snackbar__action {
+  flex-shrink: 0;
+  min-height: 2.25rem;
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--md-inverse-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.snackbar__action:hover {
+  background-color: var(--md-inverse-state-hover);
+}
+
+
+/* =====================================================================
+   13. MENU (dropdown)
+   ===================================================================== */
+.menu {
+  min-width: 12rem;
+  padding: var(--space-2) 0;
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--radius-lg);
+  background-color: var(--md-surface-container-lowest);
+  box-shadow: var(--elevation-2);
+}
+
+.menu__header {
+  padding: var(--space-2) var(--space-4) var(--space-3);
+  border-bottom: 1px solid var(--md-outline-variant);
+}
+
+.menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--control-height);
+  padding: 0 var(--space-4);
+  border: 0;
+  background: transparent;
+  color: var(--md-on-surface);
+  text-align: start;
+  text-decoration: none;
+}
+
+.menu__item:hover {
+  background-color: var(--md-surface-container);
+  color: var(--md-on-surface);
+}
+
+.menu__item .icon {
+  color: var(--md-on-surface-variant);
+  font-size: var(--icon-size-sm);
+}
+
+
+/* =====================================================================
+   14. EMPTY STATE & SKELETON
+   ===================================================================== */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-7) var(--space-4);
+  color: var(--md-on-surface-variant);
+  text-align: center;
+}
+
+.empty .icon {
+  font-size: 3rem;
+  color: var(--md-on-surface-muted);
+}
+
+.empty__title {
+  color: var(--md-on-surface);
+  font-size: var(--type-title-md-size);
+  line-height: var(--type-title-md-line);
+  font-weight: var(--weight-semibold);
+}
+
+.skeleton {
+  display: block;
+  min-height: 1rem;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    90deg,
+    var(--md-surface-container) 25%,
+    var(--md-surface-container-high) 50%,
+    var(--md-surface-container) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}

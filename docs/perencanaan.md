@@ -10,7 +10,7 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **0.2.4** |
+| Versi dokumen | **0.2.5** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1, dibuat di T1) · [referensi Stitch](img/referensi-stitch/) |
 | Status | ✅ Disetujui pengembang (23 Sep 2026). Tahap aktif: T1 |
@@ -514,14 +514,15 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 | `--md-on-primary` | Teks di atas primary | `#FFFFFF` |
 | `--md-primary-container` | Latar tonal (nav aktif, tombol tonal) | `#D6E3FF` |
 | `--md-on-primary-container` | Teks di atas container | `#001B3E` |
-| `--md-secondary` | Aksen jalur/kuota (hemat) | `#0D9488` |
+| `--md-secondary` | Aksen jalur/kuota & grafik. **Bukan latar teks** (putih di atasnya 3,74:1) | `#0D9488` |
 | `--md-secondary-container` | Latar chip jalur | `#CCFBF1` |
 | `--md-surface` | Kanvas halaman | `#F8FAFC` |
 | `--md-surface-container-lowest` | Kartu, tabel, dialog | `#FFFFFF` |
 | `--md-surface-container` | Header tabel, area input | `#F1F5F9` |
 | `--md-on-surface` | Teks utama | `#0F172A` |
 | `--md-on-surface-variant` | Teks sekunder | `#475569` |
-| `--md-outline` | Border input | `#CBD5E1` |
+| `--md-on-surface-muted` | Placeholder & keterangan kecil | `#64748B` (4,76:1) |
+| `--md-outline` | Batas input & kontrol | `#8391A7` (3,19:1). Awalnya `#CBD5E1` (1,48:1, gagal WCAG 1.4.11) |
 | `--md-outline-variant` | Garis pemisah, border kartu | `#E2E8F0` |
 | `--status-info-*` | Menunggu | teks `#0369A1` · latar `#F0F9FF` · border `#BAE6FD` |
 | `--status-warning-*` | Perlu perbaikan | teks `#B45309` · latar `#FFFBEB` · border `#FDE68A` |
@@ -529,7 +530,7 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 | `--status-danger-*` | Ditolak / aksi hapus | teks `#B91C1C` · latar `#FEF2F2` · border `#FECACA` · tombol `#DC2626` |
 | `--chart-1…4` | Seri grafik per jalur | `#0F3F7A` · `#0D9488` · `#0284C7` · `#B45309` (diuji di T2) |
 
-Aturan: teks `#94A3B8` hanya untuk placeholder/disabled, karena kontrasnya di bawah 4.5:1.
+Aturan kontras (diuji di T2-03, hasilnya tampil langsung di `docs/styleguide.html`): teks ≥ 4,5:1, batas kontrol & grafik ≥ 3:1. Nilai placeholder `#94A3B8` dari Stitch (2,56:1) diganti `#64748B`.
 
 ### 9.2 Tipografi (Plus Jakarta Sans)
 | Token | Ukuran / tinggi baris / bobot | Dipakai untuk |
@@ -828,3 +829,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | 0.2.2 | 23 Sep 2026 | Nama pengembang diganti menjadi **Nurdin** (akun `nurdinrhk-design`). Tambah D-19: rencana domain kustom & header keamanan setelah T13 (opsional) | Nurdin & Claude |
 | 0.2.3 | 23 Sep 2026 | Tambah D-20: tanpa Figma, diganti link Google Stitch. Rujukan Figma di §2, §8, §9, §10.1, §11, R-01 disesuaikan | Nurdin & Claude |
 | 0.2.4 | 23 Sep 2026 | Tambah D-21: database dua fase (localStorage + adapter → Supabase). Tahap baru T14 (database & hosting produksi). D-19 dipindah ke T14. Tambah R-08 (kebocoran kunci), pola `service_role`/`sb_secret_` di audit S-02. Struktur `adapters/` di §10.1 | Nurdin & Claude |
+| 0.2.5 | 23 Sep 2026 | Hasil uji kontras T2-03: `--md-outline` #CBD5E1 → #8391A7 (WCAG 1.4.11), placeholder #94A3B8 → `--md-on-surface-muted` #64748B, aturan `secondary` bukan latar teks | Nurdin & Claude |

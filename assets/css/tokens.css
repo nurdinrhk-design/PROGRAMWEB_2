@@ -1,0 +1,170 @@
+/* =====================================================================
+   tokens.css — Design token Admin Panel PPDB Online
+   Tema: Material Design 3 (disesuaikan untuk aplikasi data padat)
+   Sumber: docs/perencanaan.md §9 · docs/perancangan.md §7
+
+   ATURAN: ini SATU-SATUNYA file yang boleh berisi nilai warna HEX,
+   ukuran huruf, radius, bayangan, dan durasi (NFR-05).
+   File CSS lain hanya memakai var(--...).
+   ===================================================================== */
+
+:root {
+  /* ---------------------------------------------------------------
+     1. Warna — peran M3
+     --------------------------------------------------------------- */
+  --md-primary: #0f3f7a;
+  --md-on-primary: #ffffff;
+  --md-primary-container: #d6e3ff;
+  --md-on-primary-container: #001b3e;
+  --md-primary-hover: #0a2b54;
+
+  /* secondary hanya untuk aksen & grafik, BUKAN latar teks
+     (putih di atas #0d9488 = 3,74:1, gagal WCAG) */
+  --md-secondary: #0d9488;
+  --md-secondary-container: #ccfbf1;
+  --md-on-secondary-container: #134e4a;
+
+  --md-surface: #f8fafc;
+  --md-surface-container-lowest: #ffffff;
+  --md-surface-container-low: #f8fafc;
+  --md-surface-container: #f1f5f9;
+  --md-surface-container-high: #e2e8f0;
+
+  --md-on-surface: #0f172a;
+  --md-on-surface-variant: #475569;
+  --md-on-surface-muted: #64748b;      /* placeholder & keterangan kecil (4,76:1) */
+
+  --md-outline: #8391a7;               /* batas input & kontrol (3,19:1, WCAG 1.4.11) */
+  --md-outline-variant: #e2e8f0;       /* garis pemisah dekoratif */
+
+  --md-inverse-surface: #1e293b;       /* snackbar */
+  --md-inverse-on-surface: #f1f5f9;
+  --md-inverse-primary: #aac7ff;
+  --md-inverse-state-hover: rgb(255 255 255 / 0.08);
+
+  --md-focus-ring: #0284c7;            /* cincin fokus keyboard (4,1:1) */
+  --md-disabled-content: rgb(15 23 42 / 0.38);
+  --md-disabled-container: rgb(15 23 42 / 0.12);
+  --md-scrim: rgb(15 23 42 / 0.5);
+
+  /* ---------------------------------------------------------------
+     2. Warna status — hanya untuk status (AS-05)
+     --------------------------------------------------------------- */
+  --status-info-text: #0369a1;         /* menunggu verifikasi */
+  --status-info-bg: #f0f9ff;
+  --status-info-border: #bae6fd;
+
+  --status-warning-text: #b45309;      /* perlu perbaikan */
+  --status-warning-bg: #fffbeb;
+  --status-warning-border: #fde68a;
+
+  --status-success-text: #15803d;      /* terverifikasi / masuk kuota */
+  --status-success-bg: #f0fdf4;
+  --status-success-border: #bbf7d0;
+
+  --status-danger-text: #b91c1c;       /* ditolak */
+  --status-danger-bg: #fef2f2;
+  --status-danger-border: #fecaca;
+  --status-danger-solid: #dc2626;      /* tombol hapus/tolak */
+  --status-danger-solid-hover: #b91c1c;
+
+  --status-neutral-text: #475569;      /* tergeser */
+  --status-neutral-bg: #f1f5f9;
+  --status-neutral-border: #cbd5e1;
+
+  /* ---------------------------------------------------------------
+     3. Warna grafik per jalur
+     --------------------------------------------------------------- */
+  --chart-zonasi: #0f3f7a;
+  --chart-prestasi: #0d9488;
+  --chart-afirmasi: #0284c7;
+  --chart-perpindahan: #b45309;
+  --chart-grid: #e2e8f0;
+
+  /* ---------------------------------------------------------------
+     4. Tipografi — Plus Jakarta Sans (§9.2)
+     --------------------------------------------------------------- */
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-icon: "Material Symbols Outlined";
+
+  --type-display-sm-size: 1.75rem;     /* 28 / 36 / 700 — angka KPI */
+  --type-display-sm-line: 2.25rem;
+  --type-headline-lg-size: 1.5rem;     /* 24 / 32 / 700 — judul halaman */
+  --type-headline-lg-line: 2rem;
+  --type-headline-sm-size: 1.125rem;   /* 18 / 26 / 600 — judul kartu */
+  --type-headline-sm-line: 1.625rem;
+  --type-title-md-size: 1rem;          /* 16 / 24 / 600 — judul dialog */
+  --type-title-md-line: 1.5rem;
+  --type-body-md-size: 0.875rem;       /* 14 / 20 / 400 — teks dasar */
+  --type-body-md-line: 1.25rem;
+  --type-body-sm-size: 0.75rem;        /* 12 / 16 / 400 — keterangan */
+  --type-body-sm-line: 1rem;
+  --type-label-lg-size: 0.875rem;      /* 14 / 20 / 600 — tombol, tab */
+  --type-label-lg-line: 1.25rem;
+  --type-label-md-size: 0.75rem;       /* 12 / 16 / 600 — header tabel, chip */
+  --type-label-md-line: 1rem;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ---------------------------------------------------------------
+     5. Jarak (skala 4px)
+     --------------------------------------------------------------- */
+  --space-1: 0.25rem;   /* 4  */
+  --space-2: 0.5rem;    /* 8  */
+  --space-3: 0.75rem;   /* 12 */
+  --space-4: 1rem;      /* 16 */
+  --space-5: 1.5rem;    /* 24 */
+  --space-6: 2rem;      /* 32 */
+  --space-7: 3rem;      /* 48 */
+
+  /* ---------------------------------------------------------------
+     6. Bentuk (shape scale M3)
+     --------------------------------------------------------------- */
+  --radius-sm: 0.5rem;    /* 8  — chip, badge, input */
+  --radius-md: 0.75rem;   /* 12 — kartu, panel */
+  --radius-lg: 1rem;      /* 16 — dialog, menu */
+  --radius-full: 999px;   /* tombol pil, avatar */
+
+  /* ---------------------------------------------------------------
+     7. Elevasi & state layer
+     --------------------------------------------------------------- */
+  --elevation-1: 0 1px 2px rgb(15 23 42 / 0.05);
+  --elevation-2: 0 4px 8px rgb(15 23 42 / 0.08), 0 1px 3px rgb(15 23 42 / 0.06);
+  --elevation-3: 0 20px 25px -5px rgb(15 23 42 / 0.12), 0 8px 10px -6px rgb(15 23 42 / 0.06);
+
+  --state-hover: 0.08;
+  --state-focus: 0.1;
+  --state-press: 0.1;
+  --focus-ring-width: 2px;
+
+  /* ---------------------------------------------------------------
+     8. Gerak
+     --------------------------------------------------------------- */
+  --duration-short: 150ms;
+  --duration-medium: 250ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ---------------------------------------------------------------
+     9. Ukuran kontrol & layout (§9.5)
+     --------------------------------------------------------------- */
+  --control-height: 2.75rem;        /* 44 — input & tombol standar */
+  --control-height-sm: 2rem;        /* 32 — tombol kecil, chip */
+  --icon-size: 1.5rem;              /* 24 */
+  --icon-size-sm: 1.25rem;          /* 20 */
+
+  --layout-drawer-width: 17.5rem;   /* 280 */
+  --layout-rail-width: 5rem;        /* 80  */
+  --layout-appbar-height: 4rem;     /* 64  */
+  --layout-content-max: 90rem;      /* 1440 */
+  --layout-margin-compact: var(--space-4);
+  --layout-margin-medium: var(--space-5);
+  --layout-margin-expanded: var(--space-6);
+
+  --z-appbar: 20;
+  --z-drawer: 30;
+  --z-scrim: 25;
+  --z-snackbar: 50;
+}

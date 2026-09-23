@@ -1,0 +1,11 @@
+/* =====================================================================
+   main.css — Satu-satunya stylesheet yang ditautkan dari HTML.
+   Urutan impor TETAP (lihat docs/perencanaan.md §10.1):
+   token → base → layout → komponen → halaman → print
+   File layout, halaman, dan print ditambahkan di tahapnya masing-masing
+   (T3, T5–T11) agar tidak ada impor ke file yang belum ada.
+   ===================================================================== */
+
+@import url("tokens.css");
+@import url("base.css");
+@import url("components.css");
