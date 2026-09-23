@@ -27,15 +27,15 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **T0 — penutupan tertahan** (push ditolak, lihat B-03). T1 siap dimulai |
-| **Tahap terakhir selesai** | – (T0: disetujui, diaudit, di-commit lokal. Push gagal) |
-| **Menunggu dari pengembang** | Hak tulis ke repo `nurdinrhk-design/PROGRAMWEB_2` untuk akun `fahrizal-tech` (B-03) |
+| **Tahap aktif** | **T1 — Dokumen perancangan** (belum dimulai) |
+| **Tahap terakhir selesai** | T0 — disetujui, diaudit, di-push ke `origin/main` (commit `dd57340`) 23 Sep 2026 |
+| **Menunggu dari pengembang** | Aba-aba untuk mulai T1 |
 
 ## Ringkasan Progres
 
 | Tahap | Nama | Milestone | Total | ✅ | ⬜/🔄/⛔ | Progres |
 |---|---|---|---|---|---|---|
-| [T0](#t0--persiapan--revisi-rencana) | Persiapan & revisi rencana | M1 | 17 | 15 | 2 | 88% |
+| [T0](#t0--persiapan--revisi-rencana) | Persiapan & revisi rencana | M1 | 17 | 17 | 0 | 100% |
 | [T1](#t1--dokumen-perancangan) | Dokumen perancangan | M1 | 22 | 0 | 22 | 0% |
 | [T2](#t2--design-system--css-fondasi--komponen) | Design system → CSS | M2 | 15 | 0 | 15 | 0% |
 | [T3](#t3--layout-master-app-shell) | Layout master | M2 | 12 | 0 | 12 | 0% |
@@ -49,9 +49,9 @@
 | [T11](#t11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 11 | 0 | 11 | 0% |
 | [T12](#t12--qa-menyeluruh) | QA menyeluruh | M3 | 15 | 0 | 15 | 0% |
 | [T13](#t13--readme-deploy--presentasi) | README, deploy & presentasi | M3 | 12 | 0 | 12 | 0% |
-| | **Total** | | **194** | **15** | **179** | **8%** |
+| | **Total** | | **194** | **17** | **177** | **9%** |
 
-**Milestone:** M1 (pekan 3) 🔄 T0 tertahan di push · M2 (pekan 5) ⬜ · M3 (pekan 7) ⬜
+**Milestone:** M1 (pekan 3) 🔄 T0 selesai, T1 berikutnya · M2 (pekan 5) ⬜ · M3 (pekan 7) ⬜
 
 ---
 
@@ -65,18 +65,18 @@ Ref: [perencanaan §3](perencanaan.md#3-keputusan--asumsi), [§10](perencanaan.m
 | T0-03 | Buat `docs/perencanaan.md` | – | ✅ | v0.1 → v0.2 |
 | T0-04 | Buat `docs/checklist_work.md` | – | ✅ | v0.1 → v0.2 |
 | T0-05 | Buat `.gitignore` | §10.3 | ✅ | Bahan Stitch mentah tidak ikut di-commit |
-| T0-06 | Buat repository di GitHub & hubungkan `origin` | D-09 | ✅ | 👤 `origin` = `nurdinrhk-design/PROGRAMWEB_2` (publik, kosong). Hak tulis bermasalah: B-03 |
-| T0-07 | Commit pertama (lingkungan bersih + dokumen v0.2.1) & push | §10.3 | 🟡 | Commit lokal ✅ (di-amend dengan koreksi F-22). **Push ditolak 403** (B-03) |
+| T0-06 | Buat repository di GitHub & hubungkan `origin` | D-09 | ✅ | 👤 `origin` = `nurdinrhk-design/PROGRAMWEB_2` (publik, kosong). Akun `fahrizal-tech` ditambahkan sebagai collaborator (B-03 selesai) |
+| T0-07 | Commit pertama (lingkungan bersih + dokumen v0.2.1) & push | §10.3 | ✅ | `dd57340` di-push ke `origin/main` (setelah B-03 selesai) |
 | T0-08 | Tetapkan keputusan D-01…D-17 | §3 | ✅ | Mengikuti rekomendasi, disetujui pengembang 23 Sep 2026 |
 | T0-09 | Hapus 11 file kode draf bertema kaca | D-10 | ✅ | F-01…F-12 |
 | T0-10 | Salin 8 screenshot referensi Stitch ke `docs/img/referensi-stitch/` | §4.2 | ✅ | F-14 |
 | T0-11 | Revisi perencanaan ke v0.2 (M3, anti-slop, menu & halaman baru, T0–T13) | §16 | ✅ | F-17 |
 | T0-12 | Susun ulang checklist ke v0.2 | §15 | ✅ | F-18 |
 | T0-13 | Audit keamanan sebelum push (S-01…S-07) + perkuat `.gitignore` | D-18, §15.1 | ✅ | Temuan: email pribadi di identitas commit. Diganti noreply. F-19 |
-| T0-14 | Atur email commit ke noreply GitHub (lokal repo, bukan global) | D-18 | ✅ | `237171232+nurdinrhk-design@users.noreply.github.com` |
+| T0-14 | Atur email commit ke noreply GitHub (lokal repo, bukan global) | D-18 | ✅ | Final: `214245399+fahrizal-tech@users.noreply.github.com` (akun yang terhubung di VS Code) |
 | T0-R1 | Uji tahap: konsistensi ID antara kedua dokumen | §14 | ✅ | Dicek dengan skrip: semua tahap & ID rujukan ditemukan |
 | T0-R2 | Catat log & ringkasan progres | §15 | ✅ | |
-| T0-R3 | Review pengembang → audit → commit & push | D-16, §15.1 | 🟡 | Disetujui & diaudit ✅. Push tertahan (B-03) |
+| T0-R3 | Review pengembang → audit → commit & push | D-16, §15.1 | ✅ | Disetujui, diaudit, di-push 23 Sep 2026 |
 
 ---
 
@@ -419,6 +419,7 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-20 | 23 Sep 2026 | UPDATE | `docs/perencanaan.md` | T0-13 | v0.2.1: D-18 keamanan repo publik, §15.1 audit S-01…S-07, R3 mencakup audit & push, status "disetujui" |
 | F-21 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T0-R3 | T0 ditutup (17/17), T0-13 & T0-14 ditambah, posisi saat ini → T1 |
 | F-22 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T0-07, T0-R3 | Koreksi setelah push gagal: T0 15/17, B-03 ditambah, posisi saat ini dikembalikan ke T0 |
+| F-23 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T0-R3 | T0 ditutup (17/17) setelah push berhasil, B-03 selesai, email commit final dicatat, posisi saat ini → T1 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -443,7 +444,7 @@ PROGRAMWEB_2/
 |---|---|---|---|---|
 | B-01 | Desain dari pengembang | T1–T3 | 🟡 Sebagian | Referensi Stitch diterima 23 Sep 2026. Figma belum ada: dijadwalkan di T1-12…T1-17 (👤) |
 | B-02 | Tema visual belum ditentukan | T2 | ✅ Selesai | D-01: Material Design 3 |
-| B-03 | **Push ditolak (403).** Kredensial Git di komputer ini adalah akun `fahrizal-tech`, yang tidak punya hak tulis ke `nurdinrhk-design/PROGRAMWEB_2` | T0-07, T0-R3, semua push berikutnya | ⛔ Terbuka | Diputuskan: tetap `nurdinrhk-design`. Menunggu pengembang memberi hak tulis ke `fahrizal-tech` (collaborator) atau login Git dengan akun `nurdinrhk-design` |
+| B-03 | **Push ditolak (403).** Kredensial Git di komputer ini adalah akun `fahrizal-tech`, yang tidak punya hak tulis ke `nurdinrhk-design/PROGRAMWEB_2` | T0-07, T0-R3, semua push berikutnya | ✅ Selesai | Kedua akun milik pengembang. `fahrizal-tech` ditambahkan sebagai collaborator. Push berhasil |
 | Q-01 | `localStorage` atau Google Spreadsheet? | T4 | ✅ Selesai | D-03: `localStorage` |
 | Q-02 | CSS murni atau Tailwind? | T2 | ✅ Selesai | D-04: CSS murni modular |
 | Q-03 | Nama sekolah? | T1 | ✅ Selesai | D-02: SMA Negeri 1 Harapan Bangsa (fiktif) |
@@ -469,3 +470,4 @@ Satu baris per sesi kerja.
 | 23 Sep 2026 | T0-08, T0-11, T0-12, T0-R1, T0-R2 | **Revisi rencana v0.2** sesuai rekomendasi yang disetujui: tema M3, prinsip anti-slop, identitas & kuota, tanggal simulasi, 9 halaman (P-00…P-08), 14 tahap (T0–T13). Checklist disusun ulang | ✅ Menunggu review (T0-R3) (F-17, F-18) |
 | 23 Sep 2026 | T0-13, T0-14, T0-R3 | Pengembang menyetujui v0.2. **Audit keamanan** 15 file: tanpa kunci/token/kata sandi nyata, tanpa email/no. HP/path lokal di file, PNG tanpa metadata, kredensial demo sengaja publik. **Temuan:** email pribadi akan tercatat di commit publik → diganti email noreply (config lokal repo; bukan file, jadi tidak ada nomor F). Commit pertama lokal | ✅ (F-19…F-21) |
 | 23 Sep 2026 | T0-07, T0-R3 | `git push -u origin main` **ditolak 403**: "Permission denied to fahrizal-tech". Tidak ada data yang terkirim ke GitHub. Checklist dikoreksi (T0-07 & T0-R3 → 🟡), blocker B-03 dibuat | ⛔ Diputuskan tetap repo `nurdinrhk-design`. Menunggu hak akses (F-22) |
+| 23 Sep 2026 | T0-14, T0-07, T0-R3 | Pengembang mengonfirmasi `nurdinrhk-design` & `fahrizal-tech` sama-sama akunnya, dan `fahrizal-tech` sudah jadi collaborator. Identitas commit diganti ke noreply `fahrizal-tech` (commit lokal di-amend `--reset-author` sebelum push). Audit ulang S-01/S-04/S-07: bersih. **Push berhasil** `dd57340` → `origin/main` | ✅ T0 selesai (F-23) |
