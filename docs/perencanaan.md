@@ -9,8 +9,8 @@
 |---|---|
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
-| Pengembang | Fahrizal |
-| Versi dokumen | **0.2.1** |
+| Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
+| Versi dokumen | **0.2.2** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1, dibuat di T1) · [referensi Stitch](img/referensi-stitch/) |
 | Status | ✅ Disetujui pengembang (23 Sep 2026). Tahap aktif: T1 |
@@ -122,6 +122,7 @@ Status: ✅ Disepakati · 🔄 Bisa ditinjau ulang
 | D-16 | Alur kerja | Satu tahap per sesi. Berhenti untuk **review pengembang** di akhir tiap tahap | ✅ | Permintaan pengembang |
 | D-17 | Kejujuran konten | Tanpa logo pemerintah, tanpa tanda tangan/stempel/QR palsu. Label "Data simulasi" | ✅ | Etika & AS-06 |
 | D-18 | Keamanan repo publik | Commit memakai **email noreply GitHub** (diatur lokal per repo). `.gitignore` memblokir file rahasia & ekspor data. **Audit keamanan wajib sebelum setiap push** (§15.1) | ✅ | Repo `nurdinrhk-design/PROGRAMWEB_2` bersifat publik |
+| D-19 | Hosting lanjutan | Setelah T13 stabil: **domain kustom** di Vercel (HTTPS otomatis) + **header keamanan** lewat `vercel.json` (CSP, `X-Frame-Options`, `Referrer-Policy`). Label "Data simulasi" tetap tampil selama tidak memakai data asli | 🔄 | Keinginan pengembang. Opsional, dikerjakan di T13-10…T13-12 |
 
 **Asumsi:**
 - A-01: Satu peran pengguna: **Panitia PPDB** (akun demo `panitia` / `ppdb2026`).
@@ -812,7 +813,8 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 
 | Versi | Tanggal | Perubahan | Oleh |
 |---|---|---|---|
-| 0.1 | 23 Sep 2026 | Dokumen perencanaan awal. Tema & design system menunggu desain | Fahrizal & Claude |
-| 0.1.1 | 23 Sep 2026 | D-10: kode draf dihapus. `.gitignore` dibuat. Referensi Stitch disalin ke `docs/img/referensi-stitch/` | Fahrizal & Claude |
-| **0.2** | 23 Sep 2026 | **Revisi besar setelah review desain Stitch:** tema **Material Design 3** (D-01). Identitas fiktif tetap (D-02). CSS modular (D-04). Istilah PPDB + 4 jalur (D-11). Tanggal simulasi 18 Juni 2026 (D-12). Status verifikasi manual vs seleksi otomatis (D-14). Kuota 432 (D-15). Review per tahap (D-16). Tambah §4 Prinsip Anti-"AI Slop". Menu 7 item. Halaman bertambah menjadi P-00…P-08 (Verifikasi, Hasil Seleksi, Bukti). Aturan zonasi diganti dari "jarak ≤ 5 km" menjadi "KK ≥ 1 tahun" (BR-03) agar sesuai aturan PPDB. Tahap dipecah menjadi T0–T13 (satu tahap per sesi). Design system M3 (§9). ID tugas checklist disusun ulang | Fahrizal & Claude |
-| 0.2.1 | 23 Sep 2026 | Tambah D-18 (keamanan repo publik: email noreply, `.gitignore` rahasia, audit sebelum push). Tambah §15.1 Audit keamanan S-01…S-07. R3 kini mencakup audit + push | Fahrizal & Claude |
+| 0.1 | 23 Sep 2026 | Dokumen perencanaan awal. Tema & design system menunggu desain | Nurdin & Claude |
+| 0.1.1 | 23 Sep 2026 | D-10: kode draf dihapus. `.gitignore` dibuat. Referensi Stitch disalin ke `docs/img/referensi-stitch/` | Nurdin & Claude |
+| **0.2** | 23 Sep 2026 | **Revisi besar setelah review desain Stitch:** tema **Material Design 3** (D-01). Identitas fiktif tetap (D-02). CSS modular (D-04). Istilah PPDB + 4 jalur (D-11). Tanggal simulasi 18 Juni 2026 (D-12). Status verifikasi manual vs seleksi otomatis (D-14). Kuota 432 (D-15). Review per tahap (D-16). Tambah §4 Prinsip Anti-"AI Slop". Menu 7 item. Halaman bertambah menjadi P-00…P-08 (Verifikasi, Hasil Seleksi, Bukti). Aturan zonasi diganti dari "jarak ≤ 5 km" menjadi "KK ≥ 1 tahun" (BR-03) agar sesuai aturan PPDB. Tahap dipecah menjadi T0–T13 (satu tahap per sesi). Design system M3 (§9). ID tugas checklist disusun ulang | Nurdin & Claude |
+| 0.2.1 | 23 Sep 2026 | Tambah D-18 (keamanan repo publik: email noreply, `.gitignore` rahasia, audit sebelum push). Tambah §15.1 Audit keamanan S-01…S-07. R3 kini mencakup audit + push | Nurdin & Claude |
+| 0.2.2 | 23 Sep 2026 | Nama pengembang diganti menjadi **Nurdin** (akun `nurdinrhk-design`). Tambah D-19: rencana domain kustom & header keamanan setelah T13 (opsional) | Nurdin & Claude |

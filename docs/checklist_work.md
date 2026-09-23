@@ -48,8 +48,8 @@
 | [T10](#t10--hasil--peringkat) | Hasil & Peringkat | M3 | 11 | 0 | 11 | 0% |
 | [T11](#t11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 11 | 0 | 11 | 0% |
 | [T12](#t12--qa-menyeluruh) | QA menyeluruh | M3 | 15 | 0 | 15 | 0% |
-| [T13](#t13--readme-deploy--presentasi) | README, deploy & presentasi | M3 | 12 | 0 | 12 | 0% |
-| | **Total** | | **194** | **17** | **177** | **9%** |
+| [T13](#t13--readme-deploy--presentasi) | README, deploy & presentasi | M3 | 15 | 0 | 15 | 0% |
+| | **Total** | | **197** | **17** | **180** | **9%** |
 
 **Milestone:** M1 (pekan 3) 🔄 T0 selesai, T1 berikutnya · M2 (pekan 5) ⬜ · M3 (pekan 7) ⬜
 
@@ -383,6 +383,9 @@ Ref: [perencanaan §2](perencanaan.md#2-ketentuan-tugas--pemetaan-penilaian), G-
 | T13-07 | Naskah demo 5–7 menit | §2.2 | ⬜ | |
 | T13-08 | Siapkan jawaban tanya-jawab (tema, anti-slop, data, validasi) | §2.2 | ⬜ | |
 | T13-09 | Kirim link final ke LMS Mentari | §2.1 | ⬜ | 👤 Tenggat pekan ke-7 |
+| T13-10 | Domain kustom di Vercel (DNS + HTTPS otomatis) | D-19 | ⬜ | 👤 ➖ Butuh domain milik pengembang |
+| T13-11 | `vercel.json`: header keamanan (CSP, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`) | D-19, D-18 | ⬜ | ➖ Uji dengan securityheaders.com |
+| T13-12 | Audit produksi: tidak ada data asli, label "Data simulasi" tampil, HTTPS aktif | D-19, AS-06 | ⬜ | ➖ |
 | T13-R1 | Uji tahap | §14 | ⬜ | |
 | T13-R2 | Catat log & ringkasan | §15 | ⬜ | |
 | T13-R3 | Review pengembang → commit final | D-16 | ⬜ | |
@@ -421,6 +424,8 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-22 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T0-07, T0-R3 | Koreksi setelah push gagal: T0 15/17, B-03 ditambah, posisi saat ini dikembalikan ke T0 |
 | F-23 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T0-R3 | T0 ditutup (17/17) setelah push berhasil, B-03 selesai, email commit final dicatat, posisi saat ini → T1 |
 | F-24 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T0-14 | Identitas commit diganti ke `nurdinrhk-design`. Hash commit T0 diperbarui (`dd57340` → `1a0d182`, `0188e14` → `fb8bf8e`) |
+| F-25 | 23 Sep 2026 | UPDATE | `docs/perencanaan.md` | – | v0.2.2: nama pengembang → Nurdin (5 tempat). Tambah D-19 hosting lanjutan (domain & header keamanan) |
+| F-26 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T13-10…T13-12 | Tambah 3 tugas opsional hosting/domain. Total tugas 194 → 197 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -473,3 +478,4 @@ Satu baris per sesi kerja.
 | 23 Sep 2026 | T0-07, T0-R3 | `git push -u origin main` **ditolak 403**: "Permission denied to fahrizal-tech". Tidak ada data yang terkirim ke GitHub. Checklist dikoreksi (T0-07 & T0-R3 → 🟡), blocker B-03 dibuat | ⛔ Diputuskan tetap repo `nurdinrhk-design`. Menunggu hak akses (F-22) |
 | 23 Sep 2026 | T0-14, T0-07, T0-R3 | Pengembang mengonfirmasi `nurdinrhk-design` & `fahrizal-tech` sama-sama akunnya, dan `fahrizal-tech` sudah jadi collaborator. Identitas commit diganti ke noreply `fahrizal-tech` (commit lokal di-amend `--reset-author` sebelum push). Audit ulang S-01/S-04/S-07: bersih. **Push berhasil** `dd57340` → `origin/main` | ✅ T0 selesai (F-23) |
 | 23 Sep 2026 | T0-14 | Atas permintaan pengembang, identitas commit diganti ke akun kedua miliknya, `nurdinrhk-design` (noreply). 2 commit yang sudah di-push ditulis ulang (`rebase --root --reset-author`), lalu `push --force-with-lease`. Aman karena repo baru dan hanya dipakai pengembang | ✅ (F-24) |
+| 23 Sep 2026 | – | Nama pengembang di dokumen diganti menjadi **Nurdin**. Penyebutan akun login `fahrizal-tech` di log teknis sengaja dipertahankan karena push memang dilakukan lewat akun itu. Rencana domain kustom & header keamanan dicatat (D-19, T13-10…T13-12) | ✅ (F-25, F-26) |
