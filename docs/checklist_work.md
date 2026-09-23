@@ -28,9 +28,9 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **T3 — Layout master (app shell)** (berjalan) |
-| **Tahap terakhir selesai** | T2 — disetujui & di-push 23 Sep 2026 |
-| **Menunggu dari pengembang** | – (sisa 👤 M1: kirim ke LMS, T1-19) |
+| **Tahap aktif** | – (T4 belum dimulai, menunggu aba-aba pengembang) |
+| **Tahap terakhir selesai** | T3 — disetujui & di-push 23 Sep 2026 |
+| **Menunggu dari pengembang** | Aba-aba mulai T4 · kirim M1 & M2 ke LMS 👤 |
 
 ## Ringkasan Progres
 
@@ -41,7 +41,7 @@
 | [T0](#t0--persiapan--revisi-rencana) | Persiapan & revisi rencana | M1 | 17 | 17 | 0 | 100% |
 | [T1](#t1--dokumen-perancangan) | Dokumen perancangan | M1 | 17 | 16 | 1 | 94% |
 | [T2](#t2--design-system--css-fondasi--komponen) | Design system → CSS | M2 | 15 | 15 | 0 | 100% |
-| [T3](#t3--layout-master-app-shell) | Layout master | M2 | 12 | 0 | 12 | 0% |
+| [T3](#t3--layout-master-app-shell) | Layout master | M2 | 12 | 12 | 0 | 100% |
 | [T4](#t4--lapisan-data--modul-inti) | Data & modul inti | M3 | 17 | 0 | 17 | 0% |
 | [T5](#t5--halaman-login) | Login | M3 | 10 | 0 | 10 | 0% |
 | [T6](#t6--dashboard) | Dashboard | M3 | 12 | 0 | 12 | 0% |
@@ -53,9 +53,9 @@
 | [T12](#t12--qa-menyeluruh) | QA menyeluruh | M3 | 15 | 0 | 15 | 0% |
 | [T13](#t13--readme-deploy--presentasi) | README, deploy & presentasi | M3 | 13 | 0 | 13 | 0% |
 | [T14](#t14--database--hosting-produksi-fase-2) | Database & hosting produksi | Fase 2 | 16 | 0 | 16 | 0% |
-| | **Total** | | **208** | **48** | **160** | **23%** |
+| | **Total** | | **208** | **60** | **148** | **29%** |
 
-**Milestone:** M1 (pekan 3) 🔄 dokumen lengkap, tinggal kirim LMS 👤 · M2 (pekan 5) 🔄 T2 selesai, T3 berikutnya · M3 (pekan 7) ⬜ · Fase 2 (setelah tugas) ⬜
+**Milestone:** M1 (pekan 3) 🔄 dokumen lengkap, tinggal kirim LMS 👤 · M2 (pekan 5) ✅ kode selesai, tinggal kirim LMS 👤 · M3 (pekan 7) ⬜ · Fase 2 (setelah tugas) ⬜
 
 ---
 
@@ -142,18 +142,18 @@ Ref: [perencanaan P-00](perencanaan.md#p-00--layouthtml--template-master-m2-taha
 
 | ID | Tugas | Ref | Status | Catatan |
 |---|---|---|---|---|
-| T3-01 | `layout.html`: kerangka semantik (`aside`, `header`, `main`, `footer`) | P-00, NFR-02 | ⬜ | Tambahkan `@import layout.css` di `main.css` |
-| T3-02 | Navigation drawer: brand, 3 grup menu, badge, "Data simulasi", Keluar | §6.1 | ⬜ | |
-| T3-03 | Top app bar 4 elemen + menu akun | §6.2 | ⬜ | |
-| T3-04 | Page header, area konten, grid helper | P-00 | ⬜ | |
-| T3-05 | Footer ringkas | P-00 | ⬜ | |
-| T3-06 | Responsif: drawer permanen / rail / drawer modal + scrim | §9.5, NFR-01 | ⬜ | |
-| T3-07 | `shell.js`: toggle, `Esc`, simpan preferensi, fokus kembali, `aria-expanded` | P-00 | ⬜ | |
-| T3-08 | `shell.js`: menu aktif (`aria-current`) | NFR-04 | ⬜ | |
-| T3-09 | Uji 5 breakpoint & navigasi keyboard | NFR-01, TC-04 | ⬜ | |
-| T3-R1 | Uji tahap | §14 | ⬜ | |
-| T3-R2 | Catat log & ringkasan | §15 | ⬜ | |
-| T3-R3 | Review pengembang → commit (+ kirim M2 👤) | D-16 | ⬜ | Tenggat M2 pekan ke-5 |
+| T3-01 | `layout.html`: kerangka semantik (`aside`, `header`, `main`, `footer`) | P-00, NFR-02 | ✅ | `layout.html` di root: skip link, aside, header, main, footer + `@import layout.css` di main.css. Komentar cara memakai template |
+| T3-02 | Navigation drawer: brand, 3 grup menu, badge, "Data simulasi", Keluar | §6.1 | ✅ | Brand, 4 kelompok menu (7 item), badge `data-badge` (diisi T4), catatan Data simulasi, Keluar (logika di T4). Label pendek untuk rail |
+| T3-03 | Top app bar 4 elemen + menu akun | §6.2 | ✅ | Tombol menu, breadcrumb + judul, chip tahap (teks dihitung di T4), menu akun pola disclosure |
+| T3-04 | Page header, area konten, grid helper | P-00 | ✅ | `.page-header`, `.content` (maks. 1440px), grid `--kpi` (1→2→4), `--main-side` (1→2/3+1/3), `--halves` |
+| T3-05 | Footer ringkas | P-00 | ✅ | Footer ringkas + label data simulasi |
+| T3-06 | Responsif: drawer permanen / rail / drawer modal + scrim | §9.5, NFR-01 | ✅ | Compact: drawer modal + scrim · medium: rail (tombol membuka overlay) · large: drawer permanen, bisa diciutkan. Tampilan dasar murni CSS media query |
+| T3-07 | `shell.js`: toggle, `Esc`, simpan preferensi, fokus kembali, `aria-expanded` | P-00 | ✅ | Toggle, Esc, klik scrim, preferensi disimpan (try/catch), fokus masuk ke drawer & kembali ke tombol, `inert` pada konten, `aria-expanded` sinkron |
+| T3-08 | `shell.js`: menu aktif (`aria-current`) | NFR-04 | ✅ | Dari `<body data-page>` → `aria-current=page` + ikon terisi (terverifikasi di DOM) |
+| T3-09 | Uji 5 breakpoint & navigasi keyboard | NFR-01, TC-04 | ✅ | Screenshot 360/600/840/1200/1440 + 4 status interaksi (Chrome headless). Fokus & Esc diuji lewat skrip. Temuan: label rail terpotong → label pendek; fokus drawer → diperbaiki |
+| T3-R1 | Uji tahap | §14 | ✅ | W3C HTML 0 error/0 peringatan, CSS 0 error, console 0 error, 0 warna mentah, 5 breakpoint rapi |
+| T3-R2 | Catat log & ringkasan | §15 | ✅ | F-49…F-56 |
+| T3-R3 | Review pengembang → audit → commit & push (+ kirim M2 👤) | D-16, §15.1 | ✅ | Disetujui 23 Sep 2026. Kirim M2 ke LMS 👤 (tenggat pekan ke-5) |
 
 ---
 
@@ -352,7 +352,7 @@ Ref: [perencanaan §12](perencanaan.md#12-strategi-pengujian), [§5.3 NFR](peren
 | TC-01 | Login benar | T5 | – | ⬜ |
 | TC-02 | Login kosong/salah | T5 | – | ⬜ |
 | TC-03 | Halaman admin tanpa sesi | T4 | – | ⬜ |
-| TC-04 | Drawer/rail/modal per lebar layar | T3 | – | ⬜ |
+| TC-04 | Drawer/rail/modal per lebar layar | T3 | ✅ T3 (23 Sep) | ⬜ |
 | TC-05 | KPI = jumlah di Data Pendaftar | T6 | – | ⬜ |
 | TC-06 | Cari NISN | T7 | – | ⬜ |
 | TC-07 | Filter berlapis + chip | T7 | – | ⬜ |
@@ -479,17 +479,27 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-46 | 23 Sep 2026 | UPDATE | `docs/perancangan.md` | T2-03 | §7.1: outline #8391A7, on-surface-muted, catatan uji kontras |
 | F-47 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T2-R2 | T1-17 & T2 (14/15) ditandai, posisi saat ini, log |
 | F-48 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T2-R3 | T2 ditutup (15/15), posisi → T3 |
+| F-49 | 23 Sep 2026 | CREATE | `assets/css/layout.css` | T3-02…T3-06 | App shell: drawer/rail/modal, top app bar, konten, page header, grid, footer |
+| F-50 | 23 Sep 2026 | UPDATE | `assets/css/main.css` | T3-01 | Tambah `@import layout.css` (urutan token → base → layout → komponen) |
+| F-51 | 23 Sep 2026 | CREATE | `assets/js/core/shell.js` | T3-07, T3-08 | Navigasi adaptif, menu akun, menu aktif (`PPDB.shell`) |
+| F-52 | 23 Sep 2026 | CREATE | `layout.html` | T3-01…T3-05 | Template master Milestone 2 |
+| F-53 | 23 Sep 2026 | DELETE | `assets/js/.gitkeep` | T3-R1 | Folder `js/` sudah berisi file |
+| F-54 | 23 Sep 2026 | UPDATE | `docs/perencanaan.md` | T3-09 | v0.2.6: label pendek mode rail (§6.1) |
+| F-55 | 23 Sep 2026 | UPDATE | `docs/perancangan.md` | T3-09 | §3.1: catatan label pendek mode rail |
+| F-56 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T3-R2 | T3 (11/12), TC-04, posisi, log |
+| F-57 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T3-R3 | T3 ditutup (12/12), posisi → menunggu aba-aba T4 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
 PROGRAMWEB_2/
 ├── .gitignore
+├── layout.html                  (template master, M2)
 ├── assets/
-│   ├── css/  main.css · tokens.css · base.css · components.css
-│   ├── js/.gitkeep
+│   ├── css/  main.css · tokens.css · base.css · layout.css · components.css
+│   ├── js/core/shell.js
 │   └── img/  logo.svg
 ├── docs/
-│   ├── perencanaan.md          (v0.2.5)
+│   ├── perencanaan.md          (v0.2.6)
 │   ├── checklist_work.md       (v0.2)
 │   ├── perancangan.md          (M1)
 │   ├── styleguide.html / .css / .js   (etalase design system, M2)
@@ -540,3 +550,5 @@ Satu baris per sesi kerja.
 | 23 Sep 2026 | T1-R3 | Pengembang menyetujui `perancangan.md`, teknologi (D-04…D-06), dan database dua fase (D-21). Audit keamanan S-01…S-07, lalu commit & push T1 | ✅ (F-34) |
 | 23 Sep 2026 | T1-17, T2-01…T2-12, T2-R1, T2-R2 | Link Stitch ditempel. **T2: design system → CSS.** Uji kontras menemukan 3 nilai Stitch gagal WCAG → diperbaiki. `tokens.css`, `base.css`, `components.css` (14 kelompok), `main.css`, logo, `styleguide.html/.css/.js`. Validasi W3C: CSS 0 error (3 error `var()` dalam `calc()` diperbaiki), HTML 0 error (tabpanel & judul KPI ditambah). Dicek di Chrome headless 1280px & 390px, console 0 error | ✅ Menunggu review (F-35…F-47) |
 | 23 Sep 2026 | T2-R3 | Pengembang menyetujui tampilan styleguide. Audit keamanan, commit & push T2 | ✅ (F-48) |
+| 23 Sep 2026 | T3-01…T3-09, T3-R1, T3-R2 | **T3: layout master.** `layout.html`, `layout.css`, `shell.js`. Navigasi adaptif 3 mode (modal · rail · drawer) diuji di 5 lebar layar + 4 status interaksi. Temuan & perbaikan: label rail terpotong → label pendek (AS-08). Fokus drawer tidak pindah → `focus()` langsung + kembali ke tombol menu. W3C HTML & CSS 0 error, console bersih | ✅ Menunggu review (F-49…F-56) |
+| 23 Sep 2026 | T3-R3 | Pengembang menyetujui layout. Audit keamanan, commit & push T3. T4 ditahan sesuai permintaan | ✅ (F-57) |

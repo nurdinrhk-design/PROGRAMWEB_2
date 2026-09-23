@@ -117,6 +117,7 @@ PPDB Online · SMAN 1 Harapan Bangsa
 
 **Keputusan menu:**
 - **Badge hanya di "Verifikasi Berkas"**, karena hanya menu itu yang menuntut tindakan.
+- **Mode rail** (tablet, atau layar besar saat menu diciutkan) memakai label pendek agar tidak terpotong: Dasbor · Data · Tambah · Berkas · Hasil · Rekap.
 - **Menu dikelompokkan mengikuti alur kerja PPDB:** Pendaftaran → Seleksi → Laporan.
 - **Setiap menu punya halaman yang berfungsi.** Tidak ada menu "Pengaturan" atau "Integrasi" yang kosong.
 

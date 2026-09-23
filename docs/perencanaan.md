@@ -10,7 +10,7 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **0.2.5** |
+| Versi dokumen | **0.2.6** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1, dibuat di T1) · [referensi Stitch](img/referensi-stitch/) |
 | Status | ✅ Disetujui pengembang (23 Sep 2026). Tahap aktif: T1 |
@@ -248,6 +248,7 @@ Satu halaman lolos jika **semua** jawaban "ya":
 └ (bawah) Data simulasi · Keluar
 ```
 - **Badge** hanya ada di "Verifikasi Berkas" (jumlah menunggu), karena hanya itu yang menuntut tindakan.
+- **Label rail** (tablet 600–1199px, atau layar besar saat menu diciutkan) memakai kata pendek: Dasbor · Data · Tambah · Berkas · Hasil · Rekap · Keluar. Label penuh tetap dibacakan pembaca layar (AS-08: tidak ada teks terpotong).
 - **Bukti Pendaftaran** (`pages/bukti.html?id=…`) tidak ada di menu. Halaman ini dibuka dari detail pendaftar.
 
 ### 6.2 Top app bar (4 elemen)
@@ -830,3 +831,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | 0.2.3 | 23 Sep 2026 | Tambah D-20: tanpa Figma, diganti link Google Stitch. Rujukan Figma di §2, §8, §9, §10.1, §11, R-01 disesuaikan | Nurdin & Claude |
 | 0.2.4 | 23 Sep 2026 | Tambah D-21: database dua fase (localStorage + adapter → Supabase). Tahap baru T14 (database & hosting produksi). D-19 dipindah ke T14. Tambah R-08 (kebocoran kunci), pola `service_role`/`sb_secret_` di audit S-02. Struktur `adapters/` di §10.1 | Nurdin & Claude |
 | 0.2.5 | 23 Sep 2026 | Hasil uji kontras T2-03: `--md-outline` #CBD5E1 → #8391A7 (WCAG 1.4.11), placeholder #94A3B8 → `--md-on-surface-muted` #64748B, aturan `secondary` bukan latar teks | Nurdin & Claude |
+| 0.2.6 | 23 Sep 2026 | §6.1: label pendek untuk mode rail (temuan uji T3: label penuh terpotong) | Nurdin & Claude |
