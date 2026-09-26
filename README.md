@@ -107,4 +107,4 @@ PROGRAMWEB_2/
 
 ---
 
-© 2026 Nurdin · Dibuat untuk tugas mata kuliah Pemrograman Web 2.
+© 2026 Nurdin · Dibangun oleh Nurdin bersama Claude (AI dari Anthropic) untuk tugas mata kuliah Pemrograman Web 2.

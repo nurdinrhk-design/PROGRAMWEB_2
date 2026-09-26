@@ -27,9 +27,9 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | – (Tahap 4 belum dimulai, menunggu aba-aba pengembang) |
+| **Tahap aktif** | **13.1** (dikerjakan lebih awal): pindah ke akun Nurdin & bersihkan jejak |
 | **Tahap terakhir selesai** | Tahap 3 — Design system & layout (23 Sep 2026) |
-| **Menunggu dari pengembang** | Aba-aba mulai Tahap 4 · kirim M1 & M2 ke LMS (2.8, 3.8) · akun Nurdin untuk push (13.1, B-04) |
+| **Menunggu dari pengembang** | Izin langkah kredensial push (13.1) · izin tambahan token `delete_repo, workflow` · konfirmasi hapus & buat ulang repo |
 
 ## Ringkasan Progres
 
@@ -262,7 +262,7 @@ Ref: [perencanaan D-09, D-18, D-19, D-24](perencanaan.md#3-keputusan--asumsi) ·
 
 | No | Langkah | Ref | Status | Catatan |
 |---|---|---|---|---|
-| 13.1 | Operasi repo dari akun Nurdin + pembersihan jejak akun lain (lihat B-04) | D-24, D-18 | ⬜ | 👤 login `gh`. Bisa dikerjakan kapan saja begitu akun siap |
+| 13.1 | Operasi repo dari akun Nurdin + pembersihan jejak akun lain (lihat B-04) | D-24, D-18 | 🔄 | Dikerjakan lebih awal atas persetujuan pengembang (26 Sep). ✅ login `gh` Nurdin (ADMIN) · ✅ riwayat lokal disamarkan · ✅ kredit README · ⬜ kredensial push repo · ⬜ buat ulang repo & push · ⬜ hapus collaborator |
 | 13.2 | CI GitHub Actions (W3C Nu Validator + pemindaian rahasia) + perlindungan branch `main` | D-18, R-08 | ⬜ | |
 | 13.3 | GitHub Pages + CSP `<meta>` + `noindex` + halaman 404 | D-09, D-19 | ⬜ | |
 | 13.4 | README final (fitur, screenshot, link situs) + rilis `v1.0` | G-06 | ⬜ | Melanjutkan 1.7 |
@@ -367,6 +367,9 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-59 | 23 Sep 2026 | UPDATE | `docs/checklist_work.md` | T13-01 | T13-01 → 🟡, log F-58/F-59 |
 | F-60 | 25 Sep 2026 | UPDATE | `docs/perencanaan.md` | 1.2 | v0.3: penomoran tahap 1–13 & langkah x.y (D-22), urutan halaman (D-23), database lokal saja (D-21), GitHub Pages (D-09, D-19), push ditunda (D-24), §11 ditulis ulang |
 | F-61 | 25 Sep 2026 | UPDATE | `docs/checklist_work.md` | 1.2 | v0.3: ditulis ulang ke tahap 1–13 (86 langkah), tahap 1–3 diringkas dengan padanan ID lama, tabel Padanan ID Lama → Baru. Log & blocker lama dipertahankan |
+| F-62 | 26 Sep 2026 | UPDATE | riwayat Git lokal (9 commit) | 13.1 | Penyebutan akun kedua pengembang & ID-nya disamarkan di semua versi file & pesan commit (`git filter-branch`). Diverifikasi: hanya 4 baris berubah di versi terakhir, file biner tidak berubah, 0 jejak tersisa |
+| F-63 | 26 Sep 2026 | UPDATE | `README.md` | 13.1 | Kredit: "Dibangun oleh Nurdin bersama Claude (AI dari Anthropic)" |
+| F-64 | 26 Sep 2026 | UPDATE | `docs/checklist_work.md` | 13.1 | 13.1 → 🔄, B-04 diperbarui, posisi saat ini |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -396,7 +399,7 @@ PROGRAMWEB_2/
 | B-01 | Desain dari pengembang | T1–T3 | ✅ Selesai | Referensi Stitch diterima 23 Sep 2026. Figma dibatalkan (D-20). Tinggal link publik Stitch (T1-17) |
 | B-02 | Tema visual belum ditentukan | T2 | ✅ Selesai | D-01: Material Design 3 |
 | B-03 | **Push ditolak (403).** Kredensial Git di komputer ini adalah akun login kedua pengembang (disamarkan), yang tidak punya hak tulis ke `nurdinrhk-design/PROGRAMWEB_2` | T0-07, T0-R3, semua push berikutnya | ✅ Selesai | Kedua akun milik pengembang. akun kedua pengembang (disamarkan) ditambahkan sebagai collaborator. Push berhasil |
-| B-04 | Operasi GitHub (push, PR, CI, Pages) belum bisa dijalankan dari akun Nurdin | Push & deploy (D-24), 13.1–13.3 | ⛔ Ditunda pengembang | Pengembang menyiapkan login `gh` akun Nurdin. Sampai itu, commit disimpan lokal |
+| B-04 | Operasi GitHub (push, PR, CI, Pages) belum bisa dijalankan dari akun Nurdin | Push & deploy (D-24), 13.1–13.3 | 🔄 Sebagian | 26 Sep: `gh` sudah login akun Nurdin (ADMIN). Sisa: kredensial push repo, izin token `delete_repo`/`workflow`, buat ulang repo |
 | Q-01 | `localStorage` atau Google Spreadsheet? | T4 | ✅ Selesai | D-03: `localStorage` |
 | Q-02 | CSS murni atau Tailwind? | T2 | ✅ Selesai | D-04: CSS murni modular |
 | Q-03 | Nama sekolah? | T1 | ✅ Selesai | D-02: SMA Negeri 1 Harapan Bangsa (fiktif) |
@@ -435,3 +438,4 @@ Satu baris per sesi kerja.
 | 23 Sep 2026 | T3-R3 | Pengembang menyetujui layout. Audit keamanan, commit & push T3. T4 ditahan sesuai permintaan | ✅ (F-57) |
 | 23 Sep 2026 | T13-01 | Atas permintaan pengembang: membuat `README.md` versi awal dengan identitas Nurdin. Semua tautan lokal dicek ada | ✅ Disetujui, diaudit, di-commit & di-push (F-58, F-59) |
 | 25 Sep 2026 | 1.2, 1.3 | **Revisi rencana v0.3** atas arahan pengembang: penomoran tahap 1–13 \& langkah x.y, urutan halaman baru (Dashboard setelah Hasil), database lokal saja, GitHub Pages, push ditunda sampai akun Nurdin siap (B-04). Hanya dokumen yang diubah, belum ada langkah Tahap 4 yang dieksekusi | ✅ (F-60, F-61) |
+| 26 Sep 2026 | 13.1 | Pengembang menyetujui 13.1 dikerjakan lebih awal. Rencana v0.3 di-commit lokal. `gh` akun Nurdin terverifikasi (ADMIN, 0 fork, 0 star), akun aktif `gh` dikembalikan ke akun utama pengembang. Riwayat lokal disamarkan \& diverifikasi. Langkah kredensial push **ditolak pengaman otomatis Claude Code** → menunggu keputusan pengembang | 🔄 (F-62…F-64) |
