@@ -27,8 +27,8 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **Tahap 5 — Login** (berikutnya) · 13.1 menunggu izin token pengembang |
-| **Tahap terakhir selesai** | Tahap 4 — Fondasi data & modul inti (26 Sep 2026) |
+| **Tahap aktif** | **Tahap 6 — Data Pendaftar** (berikutnya) · 13.1 menunggu izin token pengembang |
+| **Tahap terakhir selesai** | Tahap 5 — Login (26 Sep 2026) |
 | **Menunggu dari pengembang** | Izin langkah kredensial push (13.1) · izin tambahan token `delete_repo, workflow` · konfirmasi hapus & buat ulang repo |
 
 ## Ringkasan Progres
@@ -39,7 +39,7 @@
 | [2](#tahap-2--perancangan) | Perancangan | M1 | 9 | 8 | 1 | 89% |
 | [3](#tahap-3--design-system--layout) | Design system & layout | M2 | 9 | 8 | 1 | 89% |
 | [4](#tahap-4--fondasi-data--modul-inti) | Fondasi data & modul inti | M3 | 9 | 9 | 0 | 100% |
-| [5](#tahap-5--login) | Login | M3 | 5 | 0 | 5 | 0% |
+| [5](#tahap-5--login) | Login | M3 | 5 | 5 | 0 | 100% |
 | [6](#tahap-6--data-pendaftar) | Data Pendaftar | M3 | 7 | 0 | 7 | 0% |
 | [7](#tahap-7--form-pendaftar-stepper) | Form Pendaftar | M3 | 6 | 0 | 6 | 0% |
 | [8](#tahap-8--verifikasi-berkas) | Verifikasi Berkas | M3 | 5 | 0 | 5 | 0% |
@@ -48,9 +48,9 @@
 | [11](#tahap-11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 5 | 0 | 5 | 0% |
 | [12](#tahap-12--qa-menyeluruh) | QA menyeluruh | M3 | 7 | 0 | 7 | 0% |
 | [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 0 | 7 | 0% |
-| | **Total** | | **86** | **33** | **53** | **38%** |
+| | **Total** | | **86** | **38** | **48** | **44%** |
 
-**Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 🔄 Tahap 4 selesai
+**Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 🔄 Tahap 4–5 selesai
 
 ---
 
@@ -126,11 +126,11 @@ Ref: [perencanaan P-01](perencanaan.md#p-01--indexhtml--login-tahap-5) · **Outp
 
 | No | Langkah | Ref | Status | Catatan |
 |---|---|---|---|---|
-| 5.1 | `index.html` + panel identitas & jadwal (dari data) | P-01, AS-02 | ⬜ | |
-| 5.2 | Form: username, sandi, tampilkan sandi, "Ingat saya", kotak akun demo | P-01, AS-06 | ⬜ | |
-| 5.3 | Validasi & pesan error per kolom | FR-01, TC-02 | ⬜ | |
-| 5.4 | Sesi, redirect, lewati login jika sesi ada, logout di semua halaman | FR-01, FR-02, TC-01, TC-03, TC-23 | ⬜ | |
-| 5.5 | Penutupan | §11.3 | ⬜ | |
+| 5.1 | `index.html` + panel identitas & jadwal (dari data) | P-01, AS-02 | ✅ | Panel identitas, tahun ajaran, tahap berjalan & 4 jadwal (tahap aktif ditandai) — semua dari `rules.js` |
+| 5.2 | Form: username, sandi, tampilkan sandi, "Ingat saya", kotak akun demo | P-01, AS-06 | ✅ | Ikon field, tombol tampilkan sandi (aria-pressed), Ingat saya, kotak akun demo + Isi otomatis |
+| 5.3 | Validasi & pesan error per kolom | FR-01, TC-02 | ✅ | Error per kolom + alert role=alert, fokus ke kolom pertama yang salah, error hilang saat mengetik ulang |
+| 5.4 | Sesi, redirect, lewati login jika sesi ada, logout di semua halaman | FR-01, FR-02, TC-01, TC-03, TC-23 | ✅ | Sesi tersimpan & tercatat di log, pesan "sudah keluar"/"silakan masuk" dari URL. Penjaga halaman & logout diuji di Tahap 6 (butuh halaman admin) |
+| 5.5 | Penutupan | §11.3 | ✅ | Uji skenario otomatis 6/6, tampilan 1280 & 360 px, W3C HTML & CSS 0 error, 32/32 uji modul tetap lulus |
 
 ---
 
@@ -231,8 +231,8 @@ Ref: [perencanaan §12](perencanaan.md#12-strategi-pengujian), [§5.3 NFR](peren
 
 | TC | Skenario ringkas | Tahap terkait | Pertama diuji | Hasil QA |
 |---|---|---|---|---|
-| TC-01 | Login benar | 5 | – | ⬜ |
-| TC-02 | Login kosong/salah | 5 | – | ⬜ |
+| TC-01 | Login benar | 5 | ✅ Tahap 5 (26 Sep) | ⬜ |
+| TC-02 | Login kosong/salah | 5 | ✅ Tahap 5 (26 Sep) | ⬜ |
 | TC-03 | Halaman admin tanpa sesi | 4, 5 | – (diuji di Tahap 5, butuh halaman admin) | ⬜ |
 | TC-04 | Drawer/rail/modal per lebar layar | 3 | ✅ Tahap 3 (23 Sep) | ⬜ |
 | TC-05 | KPI = jumlah di Data Pendaftar | 10 | – | ⬜ |
@@ -381,6 +381,13 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-73 | 26 Sep 2026 | UPDATE | `docs/perencanaan.md` | 4.9 | v0.3.1: chip "hari ke-11", BR-13, folder `tests/`, konvensi `ui.el`, kunci penyimpanan |
 | F-74 | 26 Sep 2026 | UPDATE | `docs/perancangan.md` | 4.9 | Teks chip tahap "hari ke-11 dari 12" (§3.2 & wireframe) |
 | F-75 | 26 Sep 2026 | UPDATE | `docs/checklist_work.md` | 4.9 | Tahap 4 selesai (9/9), TC-17, log |
+| F-76 | 26 Sep 2026 | CREATE | `index.html` | 5.1–5.4 | Halaman masuk panitia (P-01) |
+| F-77 | 26 Sep 2026 | CREATE | `assets/js/pages/login.js` | 5.1–5.4 | Panel jadwal dari data, validasi, toggle sandi, isi akun demo |
+| F-78 | 26 Sep 2026 | CREATE | `assets/css/pages.css` | 5.1 | Gaya khusus halaman login |
+| F-79 | 26 Sep 2026 | UPDATE | `assets/css/main.css` | 5.1 | `@import pages.css` |
+| F-80 | 26 Sep 2026 | UPDATE | `assets/css/components.css` | 5.3 | Komponen 'alert' (info, error, warning, sukses) |
+| F-81 | 26 Sep 2026 | UPDATE | `assets/js/core/shell.js` | 5.4 | Logout ke `index.html?keluar=1` |
+| F-82 | 26 Sep 2026 | UPDATE | `docs/checklist_work.md` | 5.5 | Tahap 5 selesai, TC-01 & TC-02 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -388,10 +395,12 @@ PROGRAMWEB_2/
 ├── .gitignore
 ├── layout.html                  (template master, M2)
 ├── README.md                    (catatan tugas, versi awal)
+├── index.html                   (halaman masuk)
 ├── tests/                       (uji otomatis modul inti)
 ├── assets/
-│   ├── css/  main.css · tokens.css · base.css · layout.css · components.css
+│   ├── css/  main.css · tokens.css · base.css · layout.css · components.css · pages.css
 │   ├── js/core/  rules.js · seed.js · store.js · ui.js · shell.js
+│   ├── js/pages/ login.js
 │   └── img/  logo.svg
 ├── docs/
 │   ├── perencanaan.md          (v0.3.1)
@@ -452,3 +461,4 @@ Satu baris per sesi kerja.
 | 25 Sep 2026 | 1.2, 1.3 | **Revisi rencana v0.3** atas arahan pengembang: penomoran tahap 1–13 & langkah x.y, urutan halaman baru (Dashboard setelah Hasil), database lokal saja, GitHub Pages, push ditunda sampai akun Nurdin siap (B-04). Hanya dokumen yang diubah, belum ada langkah Tahap 4 yang dieksekusi | ✅ (F-60, F-61) |
 | 26 Sep 2026 | 13.1 | Pengembang menyetujui 13.1 dikerjakan lebih awal. Rencana v0.3 di-commit lokal. `gh` akun Nurdin terverifikasi (ADMIN, 0 fork, 0 star), akun aktif `gh` dikembalikan ke akun utama pengembang. Riwayat lokal disamarkan & diverifikasi. Langkah kredensial push **ditolak pengaman otomatis Claude Code** → menunggu keputusan pengembang | 🔄 (F-62…F-64) |
 | 26 Sep 2026 | 4.1–4.9 | **Tahap 4: fondasi data & modul inti.** `rules.js`, `seed.js`, `store.js`, `ui.js`, login di `shell.js`, 32 uji otomatis (lulus semua, percobaan pertama). Temuan: teks chip di dokumen ("hari ke-9") ternyata salah hitung, diganti hasil perhitungan (hari ke-11). Pengamanan: tanpa innerHTML, CSV anti formula, impor ketat, anti open-redirect, batas percobaan login | ✅ (F-65…F-75) |
+| 26 Sep 2026 | 5.1–5.5 | **Tahap 5: Login.** `index.html` + `login.js` + `pages.css` + komponen alert. Uji skenario otomatis: kosong, salah, toggle sandi, isi demo, login benar → sesi & log. Perbaikan tampilan: kotak akun demo di 360 px | ✅ (F-76…F-82) |

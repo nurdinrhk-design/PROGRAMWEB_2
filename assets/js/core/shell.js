@@ -99,7 +99,7 @@
     [simpanan(false), simpanan(true)].forEach(function (s) {
       try { if (s) s.removeItem(SESSION_KEY); } catch (e) { /* abaikan */ }
     });
-    window.location.replace(root + 'index.html');
+    window.location.replace(root + 'index.html?keluar=1');
   }
 
   function tujuanSetelahLogin() {

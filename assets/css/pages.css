@@ -1,0 +1,173 @@
+/* =====================================================================
+   pages.css — Penyesuaian khusus halaman (sesedikit mungkin)
+   Setiap halaman diawali blok komentar dengan nama berkasnya.
+   ===================================================================== */
+
+
+/* =====================================================================
+   LOGIN — index.html (P-01)
+   compact: panel info diringkas di atas form · ≥ 840px: dua kolom
+   ===================================================================== */
+.login {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* Panel informasi (warna primary) */
+.login__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-5) var(--layout-margin-compact);
+  background-color: var(--md-primary);
+  color: var(--md-on-primary);
+}
+
+.login__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.login__logo {
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+}
+
+.login__brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.login__brand-text strong {
+  font-size: var(--type-headline-sm-size);
+  line-height: var(--type-headline-sm-line);
+}
+
+.login__brand-text span,
+.login__meta {
+  color: var(--md-primary-container);
+  font-size: var(--type-body-md-size);
+}
+
+.login__intro {
+  display: none;
+}
+
+.login__schedule {
+  display: none;
+}
+
+.login__schedule-title {
+  margin-bottom: var(--space-3);
+  color: var(--md-primary-container);
+  font-size: var(--type-label-md-size);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.schedule {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.schedule__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid transparent;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--md-primary-container);
+}
+
+.schedule__item.is-active {
+  border-left-color: var(--md-inverse-primary);
+  background-color: var(--md-inverse-state-hover);
+  color: var(--md-on-primary);
+  font-weight: var(--weight-semibold);
+}
+
+.schedule__date {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.login__note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: auto;
+  color: var(--md-primary-container);
+  font-size: var(--type-body-sm-size);
+}
+
+/* Area form */
+.login__main {
+  display: grid;
+  place-items: center;
+  padding: var(--space-6) var(--layout-margin-compact);
+}
+
+.login__card {
+  width: min(26rem, 100%);
+  gap: var(--space-5);
+}
+
+.login__heading p {
+  margin-top: var(--space-1);
+  color: var(--md-on-surface-variant);
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.login__demo {
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* Di layar sempit tombol turun ke baris baru agar teks tidak terjepit */
+.login__demo .alert__body {
+  min-width: 12rem;
+}
+
+.login__demo .btn {
+  margin-inline-start: auto;
+}
+
+@media (min-width: 840px) {
+  .login {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .login__panel {
+    justify-content: flex-start;
+    gap: var(--space-6);
+    padding: var(--space-7) var(--layout-margin-expanded);
+  }
+
+  .login__intro,
+  .login__schedule {
+    display: block;
+  }
+
+  .login__intro h1 {
+    font-size: var(--type-display-sm-size);
+    line-height: var(--type-display-sm-line);
+  }
+
+  .login__intro p {
+    margin-top: var(--space-2);
+    color: var(--md-primary-container);
+    font-size: var(--type-title-md-size);
+    line-height: var(--type-title-md-line);
+  }
+}

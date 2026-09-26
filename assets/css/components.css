@@ -9,6 +9,7 @@
      5. Badge status             12. Snackbar
      6. Card & KPI               13. Menu
      7. Data table & pagination  14. Empty state & skeleton
+                                 15. Alert
    ===================================================================== */
 
 
@@ -1247,4 +1248,57 @@ th[aria-sort="descending"] .table__sort .icon {
 @keyframes skeleton-shimmer {
   from { background-position: 200% 0; }
   to   { background-position: -200% 0; }
+}
+
+
+/* =====================================================================
+   15. ALERT — pesan di dalam halaman (info, error, peringatan, sukses)
+   Pesan error form memakai role="alert" pada elemen ini.
+   ===================================================================== */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid;
+  border-radius: var(--radius-sm);
+  font-size: var(--type-body-md-size);
+  line-height: var(--type-body-md-line);
+}
+
+.alert .icon {
+  font-size: var(--icon-size-sm);
+}
+
+.alert__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.alert__title {
+  font-weight: var(--weight-semibold);
+}
+
+.alert--info {
+  border-color: var(--status-info-border);
+  background-color: var(--status-info-bg);
+  color: var(--status-info-text);
+}
+
+.alert--error {
+  border-color: var(--status-danger-border);
+  background-color: var(--status-danger-bg);
+  color: var(--status-danger-text);
+}
+
+.alert--warning {
+  border-color: var(--status-warning-border);
+  background-color: var(--status-warning-bg);
+  color: var(--status-warning-text);
+}
+
+.alert--success {
+  border-color: var(--status-success-border);
+  background-color: var(--status-success-bg);
+  color: var(--status-success-text);
 }

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Masuk ke Admin Panel PPDB Online SMA Negeri 1 Harapan Bangsa (fiktif). Data simulasi.">
+  <title>Masuk · PPDB Online</title>
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,400,0..1,0&amp;display=block">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body data-auth="guest">
+  <noscript><p class="noscript-note">Admin Panel PPDB memerlukan JavaScript. Aktifkan JavaScript di browser Anda.</p></noscript>
+
+  <div class="login">
+
+    <!-- ===================== PANEL INFORMASI ===================== -->
+    <section class="login__panel" aria-labelledby="panel-judul">
+      <div class="login__brand">
+        <img class="login__logo" src="assets/img/logo.svg" alt="">
+        <div class="login__brand-text">
+          <strong>PPDB Online</strong>
+          <span data-sekolah>SMA Negeri 1 Harapan Bangsa</span>
+        </div>
+      </div>
+      <p class="login__meta" data-tahap>Tahun Ajaran 2026/2027</p>
+
+      <div class="login__intro">
+        <h2 id="panel-judul">Admin panel panitia PPDB</h2>
+        <p>Verifikasi berkas, pantau keketatan setiap jalur, dan cetak rekap seleksi.</p>
+      </div>
+
+      <div class="login__schedule">
+        <p class="login__schedule-title">Jadwal PPDB 2026</p>
+        <ol class="schedule" data-jadwal></ol>
+      </div>
+
+      <p class="login__note"><span class="icon icon--sm" aria-hidden="true">science</span><span>Data simulasi · sekolah dan siswa fiktif</span></p>
+    </section>
+
+    <!-- ===================== FORM MASUK ===================== -->
+    <main class="login__main">
+      <div class="card login__card">
+        <div class="login__heading">
+          <h1>Masuk panitia</h1>
+          <p>Gunakan akun panitia yang diberikan sekolah.</p>
+        </div>
+
+        <div class="alert alert--info" role="status" data-info hidden>
+          <span class="icon" aria-hidden="true">info</span>
+          <p class="alert__body" data-info-text></p>
+        </div>
+
+        <div class="alert alert--error" role="alert" data-error hidden>
+          <span class="icon" aria-hidden="true">error</span>
+          <p class="alert__body" data-error-text></p>
+        </div>
+
+        <form class="login__form" data-login-form novalidate>
+          <div class="field" data-field="username">
+            <label class="field__label" for="username">Username</label>
+            <div class="field__box">
+              <span class="icon field__icon" aria-hidden="true">person</span>
+              <input class="field__control" id="username" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="40" required aria-describedby="username-error">
+            </div>
+            <p class="field__error" id="username-error"></p>
+          </div>
+
+          <div class="field" data-field="sandi">
+            <label class="field__label" for="sandi">Kata sandi</label>
+            <div class="field__box">
+              <span class="icon field__icon" aria-hidden="true">lock</span>
+              <input class="field__control" id="sandi" name="sandi" type="password" autocomplete="current-password" maxlength="64" required aria-describedby="sandi-error">
+              <button type="button" class="icon-btn field__action" data-toggle-sandi aria-controls="sandi" aria-pressed="false" aria-label="Tampilkan kata sandi">
+                <span class="icon" aria-hidden="true">visibility</span>
+              </button>
+            </div>
+            <p class="field__error" id="sandi-error"></p>
+          </div>
+
+          <label class="check">
+            <input type="checkbox" name="ingat">
+            <span>Ingat saya di perangkat ini</span>
+          </label>
+
+          <button type="submit" class="btn btn--filled btn--block">Masuk</button>
+        </form>
+
+        <div class="alert alert--info login__demo">
+          <span class="icon" aria-hidden="true">key</span>
+          <div class="alert__body">
+            <p class="alert__title">Akun demo</p>
+            <p>Username <strong>panitia</strong> · kata sandi <strong>ppdb2026</strong></p>
+          </div>
+          <button type="button" class="btn btn--text btn--sm" data-isi-demo>Isi otomatis</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Urutan wajib (perencanaan §10.2): rules → seed → store → ui → shell → skrip halaman -->
+  <script src="assets/js/core/rules.js"></script>
+  <script src="assets/js/core/seed.js"></script>
+  <script src="assets/js/core/store.js"></script>
+  <script src="assets/js/core/ui.js"></script>
+  <script src="assets/js/core/shell.js"></script>
+  <script src="assets/js/pages/login.js"></script>
+</body>
+</html>
