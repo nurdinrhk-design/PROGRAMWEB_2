@@ -2,18 +2,18 @@
 
 > **Dokumen induk (master plan).** Dokumen ini menjelaskan **apa** yang dibangun, **mengapa**, dan **aturannya**.
 > Progres pekerjaan dilacak di **[checklist_work.md](checklist_work.md)**. Keduanya terhubung lewat ID:
-> - Tahap `T0`–`T14` (§11) = heading tahap di checklist.
-> - Tugas di checklist (mis. `T7-04`) menunjuk balik ke ID di dokumen ini: kebutuhan `FR-xx`/`NFR-xx`, aturan `BR-xx`, prinsip `AS-xx`, halaman `P-xx`, keputusan `D-xx`, kasus uji `TC-xx`.
+> - Tahap **1–13** (§11) = heading tahap di checklist. Langkah di dalamnya bernomor **x.y** (mis. `6.3`).
+> - Langkah di checklist (mis. `6.3`) menunjuk balik ke ID di dokumen ini: kebutuhan `FR-xx`/`NFR-xx`, aturan `BR-xx`, prinsip `AS-xx`, halaman `P-xx`, keputusan `D-xx`, kasus uji `TC-xx`.
 
 | Atribut | Keterangan |
 |---|---|
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **0.2.6** |
+| Versi dokumen | **0.3** |
 | Tanggal | 23 September 2026 |
-| Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1, dibuat di T1) · [referensi Stitch](img/referensi-stitch/) |
-| Status | ✅ Disetujui pengembang (23 Sep 2026). Tahap aktif: T1 |
+| Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1) · [referensi Stitch](img/referensi-stitch/) |
+| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–3 selesai. Berikutnya: Tahap 4 |
 
 ---
 
@@ -57,7 +57,7 @@ Proyek ini membangun **Admin Panel (Back-Office)** untuk pekerjaan tersebut. Fok
 | G-03 | Minimal 4 halaman wajib (Dashboard, Data Master, Form, Laporan/Detail), ditambah halaman khas PPDB (Verifikasi, Hasil Seleksi). |
 | G-04 | Interaktivitas JavaScript yang **bermakna**: sidebar, dialog, validasi, grafik, dan manipulasi data yang memengaruhi seluruh halaman. |
 | G-05 | Tampilan yang **realistis dan profesional**, bebas elemen "AI slop" (§4). |
-| G-06 | Dokumentasi M1 lengkap, kode di GitHub, dan demo di Vercel. |
+| G-06 | Dokumentasi M1 lengkap, kode di GitHub, dan versi online di GitHub Pages (domain dipasang pengembang). |
 
 ### 1.3 Ruang lingkup
 **Termasuk:** login simulasi, dashboard, data pendaftar (CRUD), form input pendaftar offline (stepper), verifikasi berkas, hasil & peringkat per jalur, laporan rekap, bukti pendaftaran cetak, template layout, dokumentasi.
@@ -65,7 +65,7 @@ Proyek ini membangun **Admin Panel (Back-Office)** untuk pekerjaan tersebut. Fok
 **Tidak termasuk (dengan alasan):**
 | Fitur | Alasan dikeluarkan |
 |---|---|
-| Server, database, API | Tugas client-side. **Ditambahkan di Fase 2** setelah tugas dikumpulkan (D-21, T14) |
+| Server, database, API | Tugas client-side. Data disimpan di browser (D-21) |
 | Integrasi Dapodik/Dukcapil, OCR, sinkronisasi | Tidak bisa dibuat nyata tanpa back-end. Menampilkannya berarti memalsukan (AS-01) |
 | Peta GPS & hitung jarak otomatis | Butuh layanan peta. Jarak diinput petugas dalam meter |
 | Blast WhatsApp/SMS | Butuh gateway eksternal |
@@ -80,18 +80,18 @@ Proyek ini membangun **Admin Panel (Back-Office)** untuk pekerjaan tersebut. Fok
 ### 2.1 Milestone resmi → tahap internal
 | Milestone | Tenggat | Output wajib | Tahap |
 |---|---|---|---|
-| **M1**: Perencanaan & wireframe | Pekan ke-3 | `docs/perancangan.md` (menu, ERD Mermaid, link Stitch (pengganti Figma, D-20), screenshot Stitch) | T0, T1 |
-| **M2**: Slicing & layouting | Pekan ke-5 | CSS hasil slicing + `layout.html` | T2, T3 |
-| **M3**: Komponen & interaktivitas | Pekan ke-7 | Source code lengkap + deploy | T4 – T13 |
+| **M1**: Perencanaan & wireframe | Pekan ke-3 | `docs/perancangan.md` (menu, ERD Mermaid, link Stitch (pengganti Figma, D-20), screenshot Stitch) | 1, 2 |
+| **M2**: Slicing & layouting | Pekan ke-5 | CSS hasil slicing + `layout.html` | 3 |
+| **M3**: Komponen & interaktivitas | Pekan ke-7 | Source code lengkap + deploy | 4 – 13 |
 
 ### 2.2 Kriteria penilaian → pekerjaan
 | Komponen | Bobot | Dipenuhi oleh | Bukti saat presentasi |
 |---|---|---|---|
-| Milestone 1 (dokumentasi, Stitch, Figma) | 20% | T1 | `perancangan.md`, link Stitch, screenshot. Tanpa Figma (D-20): design system dibuktikan lewat §9 + `styleguide.html` |
-| Kualitas HTML & CSS | 30% | T2, T3, T5–T11, T12 | Tag semantik, CSS modular bertoken, validator W3C, uji responsif |
-| Interaktivitas JavaScript | 20% | T3–T11 | Drawer/rail, dialog, validasi stepper, Chart.js, verifikasi yang mengubah peringkat |
-| Kesesuaian UI/UX topik | 20% | T6, T9, T10, T11 | Keketatan per jalur, antrean verifikasi FIFO, garis batas kuota |
-| Presentasi | 10% | T13 | Naskah demo |
+| Milestone 1 (dokumentasi, Stitch, Figma) | 20% | 2 | `perancangan.md`, link Stitch, screenshot. Tanpa Figma (D-20): design system dibuktikan lewat §9 + `styleguide.html` |
+| Kualitas HTML & CSS | 30% | 3, 5–12 | Tag semantik, CSS modular bertoken, validator W3C, uji responsif |
+| Interaktivitas JavaScript | 20% | 3–11 | Drawer/rail, dialog, validasi stepper, Chart.js, verifikasi yang mengubah peringkat |
+| Kesesuaian UI/UX topik | 20% | 8–11 | Keketatan per jalur, antrean verifikasi FIFO, garis batas kuota |
+| Presentasi | 10% | 13 | Naskah demo |
 
 ### 2.3 Struktur folder wajib (panduan tugas)
 `docs/perancangan.md`, `assets/{css,js,img}/`, `pages/*.html`, dan `index.html` sebagai halaman login. Struktur lengkap proyek ada di §10.1.
@@ -106,14 +106,14 @@ Status: ✅ Disepakati · 🔄 Bisa ditinjau ulang
 |---|---|---|---|---|
 | D-01 | Tema visual | **Material Design 3** (M3) | ✅ | Sesuai arah desain Stitch. Cocok untuk aplikasi kerja yang padat data |
 | D-02 | Identitas | **SMA Negeri 1 Harapan Bangsa**, Kota Nusantara (fiktif). TA **2026/2027** | ✅ | Satu identitas konsisten. Tidak meniru sekolah/instansi nyata |
-| D-03 | Penyimpanan data | **Fase 1 (tugas):** `localStorage` + data simulasi deterministik (seed tetap). **Fase 2:** Supabase (D-21) | ✅ | Sederhana, bekerja offline, hasil demo selalu sama |
+| D-03 | Penyimpanan data | `localStorage` + data simulasi deterministik (seed tetap) + ekspor/impor cadangan JSON | ✅ | Sederhana, bekerja offline, hasil demo selalu sama. Lihat D-21 |
 | D-04 | CSS | **CSS3 murni, modular** (`main.css` meng-`@import` token, base, layout, komponen, halaman, print) | ✅ | Mudah dijelaskan. Kelas semantik, bukan utility soup |
 | D-05 | JavaScript | Vanilla JS, pola IIFE + namespace global, tanpa build tool | ✅ | Bisa dibuka lewat `file://` dan di-deploy statis |
 | D-06 | Grafik | Chart.js 4 (jsDelivr, versi dipatok) | ✅ | Sesuai panduan |
 | D-07 | Font & ikon | Plus Jakarta Sans + Material Symbols Outlined | ✅ | Dari `DESIGN.md` Stitch. Ikon resmi keluarga Material |
 | D-08 | Bahasa | UI dan komentar kode dalam Bahasa Indonesia | ✅ | |
-| D-09 | Hosting | GitHub + Vercel (statis, tanpa build) | ✅ | |
-| D-10 | Kode draf lama | Dihapus. Dibangun ulang per tahap | ✅ | Dihapus 23 Sep 2026 (T0-09) |
+| D-09 | Hosting | **GitHub Pages** (statis, tanpa build). Domain kustom dipasang sendiri oleh pengembang di akhir | ✅ | Revisi 25 Sep 2026 (sebelumnya Vercel) |
+| D-10 | Kode draf lama | Dihapus. Dibangun ulang per tahap | ✅ | Dihapus 23 Sep 2026 (Tahap 1) |
 | D-11 | Istilah & regulasi | Istilah **PPDB** dengan 4 jalur: **Zonasi, Afirmasi, Perpindahan Tugas Orang Tua, Prestasi** | ✅ | Sesuai judul tugas. Sejak 2025 istilah resmi berganti menjadi SPMB, tetapi di luar lingkup tugas |
 | D-12 | Waktu | **Tanggal simulasi tetap:** "hari ini" = **Kamis, 18 Juni 2026**. Jam memakai jam asli perangkat | ✅ | Demo konsisten dan realistis di tengah masa pendaftaran |
 | D-13 | Sumber desain | Referensi Stitch dipakai sebagai **acuan, bukan disalin**. Boleh improvisasi | ✅ | Menghilangkan AI slop (§4) |
@@ -122,9 +122,12 @@ Status: ✅ Disepakati · 🔄 Bisa ditinjau ulang
 | D-16 | Alur kerja | Satu tahap per sesi. Berhenti untuk **review pengembang** di akhir tiap tahap | ✅ | Permintaan pengembang |
 | D-17 | Kejujuran konten | Tanpa logo pemerintah, tanpa tanda tangan/stempel/QR palsu. Label "Data simulasi" | ✅ | Etika & AS-06 |
 | D-18 | Keamanan repo publik | Commit memakai **email noreply GitHub** (diatur lokal per repo). `.gitignore` memblokir file rahasia & ekspor data. **Audit keamanan wajib sebelum setiap push** (§15.1) | ✅ | Repo `nurdinrhk-design/PROGRAMWEB_2` bersifat publik |
-| D-19 | Hosting lanjutan | Setelah T14 (database sungguhan) selesai: **domain kustom** di Vercel (HTTPS otomatis) + **header keamanan** lewat `vercel.json` (CSP, `X-Frame-Options`, `Referrer-Policy`). Label "Data simulasi" tetap tampil selama tidak memakai data asli | 🔄 | Keinginan pengembang. Opsional, dikerjakan di T14-11…T14-13 |
+| D-19 | Keamanan produksi | GitHub Pages tidak mendukung header kustom, jadi: **CSP lewat `<meta>`**, SRI untuk Chart.js, `referrer` policy, `noindex` selama data simulasi, halaman 404. Domain & HTTPS dipasang pengembang (panduan di langkah 13.6) | ✅ | Revisi 25 Sep 2026 |
 | D-20 | Figma | **Tidak memakai Figma.** `perancangan.md` memuat link publik Google Stitch sebagai gantinya. Design system dibuktikan lewat `perancangan.md` §7 dan `docs/styleguide.html` | ✅ | Keputusan pengembang 23 Sep 2026. Fokus ke kualitas web akhir. Risiko: R-01 |
-| D-21 | Database | **Dua fase.** Fase 1 (versi tugas): `localStorage` lewat **lapisan adapter** + ekspor/impor cadangan JSON. Versi ini ditandai rilis `v1.0-tugas`. Fase 2 (sebelum hosting ke domain): **Supabase** (PostgreSQL, Auth, RLS, Storage, region Singapura) dengan data simulasi | ✅ | Keputusan pengembang 23 Sep 2026. Adapter membuat migrasi cukup mengganti satu file. Data tetap simulasi (bukan data siswa asli) |
+| D-21 | Database | **Hanya lokal (`localStorage`)** dengan data bohongan. Tanpa lapisan adapter, tanpa database server | ✅ | Revisi 25 Sep 2026: rencana Supabase dibatalkan atas arahan pengembang |
+| D-22 | Penomoran tahap | Tahap **1–13**, langkah **x.y**, langkah terakhir setiap tahap = **Penutupan**. Menggantikan ID lama `T0`–`T14` (padanan di checklist) | ✅ | Permintaan pengembang 25 Sep 2026: rapi, terstruktur, tanpa langkah sia-sia |
+| D-23 | Urutan halaman | Data Pendaftar → Form → Verifikasi → Hasil → **Dashboard** → Laporan | ✅ | Dashboard memakai hampir semua perhitungan & komponen tahap 6–9 |
+| D-24 | Push & deploy | Commit disimpan lokal per tahap. **Push, CI, dan GitHub Pages dijalankan setelah akun Nurdin siap** (langkah 13.1) | ✅ | Menghindari jejak akun lain di repo publik |
 
 **Asumsi:**
 - A-01: Satu peran pengguna: **Panitia PPDB** (akun demo `panitia` / `ppdb2026`).
@@ -157,7 +160,7 @@ Status: ✅ Disepakati · 🔄 Bisa ditinjau ulang
 |---|---|---|
 | Sidebar + topbar + breadcrumb | ✅ Dipertahankan | Topbar dirampingkan menjadi 4 elemen. Nama pengguna tidak terpotong |
 | Kartu KPI | 🔧 Diperbaiki | Maksimal 4, masing-masing 1 angka + 1 keterangan. Sub-metrik dibuang |
-| Tabel peringkat dengan garis batas kuota | ✅ Dipertahankan | Ide terbaik di desain. Dihitung otomatis (T10) |
+| Tabel peringkat dengan garis batas kuota | ✅ Dipertahankan | Ide terbaik di desain. Dihitung otomatis (Tahap 9) |
 | Form bertahap (stepper) | ✅ Dipertahankan | Dari 5 menjadi 4 langkah, validasi per langkah |
 | Verifikasi dua panel | 🔧 Diperbaiki | Panel pratinjau jujur ("pratinjau tidak tersedia di versi simulasi") + checklist per berkas |
 | Bukti pendaftaran cetak | 🔧 Diperbaiki | Tanpa lambang, stempel, tanda tangan palsu, QR, barcode, hash |
@@ -193,36 +196,36 @@ Satu halaman lolos jika **semua** jawaban "ya":
 ### 5.2 Kebutuhan fungsional (FR)
 | ID | Kebutuhan | Halaman | Tahap |
 |---|---|---|---|
-| FR-01 | Login & logout (simulasi) dengan pesan error yang jelas | P-01, semua | T4, T5 |
-| FR-02 | Halaman admin tidak bisa dibuka tanpa login | Semua `pages/*` | T4 |
-| FR-03 | Ringkasan kerja hari ini: total pendaftar, menunggu verifikasi, perlu perbaikan, terverifikasi | P-02 | T6 |
-| FR-04 | Grafik pendaftar per hari selama masa pendaftaran | P-02 | T6 |
-| FR-05 | Keterisian & keketatan per jalur, termasuk batas nilai/jarak sementara | P-02, P-06 | T6, T10 |
-| FR-06 | Antrean verifikasi terlama & jadwal PPDB | P-02 | T6 |
-| FR-07 | Tabel pendaftar: cari, filter (status, jalur, asal sekolah), urutkan, paginasi | P-03 | T7 |
-| FR-08 | Detail pendaftar dalam dialog | P-03 | T7 |
-| FR-09 | Hapus pendaftar dengan dialog konfirmasi | P-03 | T7 |
-| FR-10 | Tambah pendaftar (input offline) lewat form bertahap tervalidasi | P-04 | T8 |
-| FR-11 | Edit pendaftar | P-04 | T8 |
-| FR-12 | Verifikasi berkas: checklist per dokumen, catatan, keputusan (terverifikasi / perlu perbaikan / ditolak) | P-05 | T9 |
-| FR-13 | Peringkat otomatis per jalur dengan garis batas kuota | P-06 | T10 |
-| FR-14 | Laporan rekap per jalur, per asal sekolah, per hari, dan log aktivitas, dengan filter | P-07 | T11 |
-| FR-15 | Cetak laporan & bukti pendaftaran (tata letak khusus cetak) | P-07, P-08 | T11 |
-| FR-16 | Ekspor CSV (data pendaftar, peringkat, rekap) | P-03, P-06, P-07 | T7, T10, T11 |
-| FR-17 | Kembalikan data ke kondisi awal simulasi | P-03 | T7 |
-| FR-18 | Log aktivitas untuk setiap perubahan data | Semua | T4 |
+| FR-01 | Login & logout (simulasi) dengan pesan error yang jelas | P-01, semua | 4, 5 |
+| FR-02 | Halaman admin tidak bisa dibuka tanpa login | Semua `pages/*` | 4 |
+| FR-03 | Ringkasan kerja hari ini: total pendaftar, menunggu verifikasi, perlu perbaikan, terverifikasi | P-02 | 10 |
+| FR-04 | Grafik pendaftar per hari selama masa pendaftaran | P-02 | 10 |
+| FR-05 | Keterisian & keketatan per jalur, termasuk batas nilai/jarak sementara | P-02, P-06 | 9, 10 |
+| FR-06 | Antrean verifikasi terlama & jadwal PPDB | P-02 | 10 |
+| FR-07 | Tabel pendaftar: cari, filter (status, jalur, asal sekolah), urutkan, paginasi | P-03 | 6 |
+| FR-08 | Detail pendaftar dalam dialog | P-03 | 6 |
+| FR-09 | Hapus pendaftar dengan dialog konfirmasi | P-03 | 6 |
+| FR-10 | Tambah pendaftar (input offline) lewat form bertahap tervalidasi | P-04 | 7 |
+| FR-11 | Edit pendaftar | P-04 | 7 |
+| FR-12 | Verifikasi berkas: checklist per dokumen, catatan, keputusan (terverifikasi / perlu perbaikan / ditolak) | P-05 | 8 |
+| FR-13 | Peringkat otomatis per jalur dengan garis batas kuota | P-06 | 9 |
+| FR-14 | Laporan rekap per jalur, per asal sekolah, per hari, dan log aktivitas, dengan filter | P-07 | 11 |
+| FR-15 | Cetak laporan & bukti pendaftaran (tata letak khusus cetak) | P-07, P-08 | 11 |
+| FR-16 | Ekspor CSV (data pendaftar, peringkat, rekap) | P-03, P-06, P-07 | 6, 9, 11 |
+| FR-17 | Kembalikan data ke kondisi awal simulasi | P-03 | 6 |
+| FR-18 | Log aktivitas untuk setiap perubahan data | Semua | 4 |
 
 ### 5.3 Kebutuhan non-fungsional (NFR)
 | ID | Kebutuhan | Ukuran keberhasilan | Tahap |
 |---|---|---|---|
-| NFR-01 | Responsif | Rapi di 360, 600, 840, 1200, dan 1440 px, tanpa scroll horizontal halaman | Semua, T12 |
-| NFR-02 | HTML semantik | `header`, `nav`, `aside`, `main`, `section`, `article`, `footer`, `dialog`, `fieldset`, `table` dipakai sesuai fungsinya | Semua, T12 |
-| NFR-03 | Valid | 0 error di W3C HTML & CSS Validator | T12 |
-| NFR-04 | Aksesibilitas | Label form, fokus terlihat, bisa dipakai dengan keyboard, kontras teks ≥ 4.5:1, Lighthouse Accessibility ≥ 90 | Semua, T12 |
-| NFR-05 | Konsistensi desain | Semua warna, ukuran, dan jarak memakai token (§9). Tidak ada nilai HEX di luar `tokens.css` | T2+, T12 |
-| NFR-06 | Performa & kebersihan | Console bersih. Tabel ±900 baris tetap responsif (paginasi) | T12 |
-| NFR-07 | Kode rapi | Penamaan kelas konsisten, komentar per bagian, tanpa kode mati | Semua, T12 |
-| NFR-08 | Anti-slop | Setiap halaman lolos Uji Anti-Slop (§4.3) | T5–T11 |
+| NFR-01 | Responsif | Rapi di 360, 600, 840, 1200, dan 1440 px, tanpa scroll horizontal halaman | Semua, 12 |
+| NFR-02 | HTML semantik | `header`, `nav`, `aside`, `main`, `section`, `article`, `footer`, `dialog`, `fieldset`, `table` dipakai sesuai fungsinya | Semua, 12 |
+| NFR-03 | Valid | 0 error di W3C HTML & CSS Validator | 12 |
+| NFR-04 | Aksesibilitas | Label form, fokus terlihat, bisa dipakai dengan keyboard, kontras teks ≥ 4.5:1, Lighthouse Accessibility ≥ 90 | Semua, 12 |
+| NFR-05 | Konsistensi desain | Semua warna, ukuran, dan jarak memakai token (§9). Tidak ada nilai HEX di luar `tokens.css` | 3+, 12 |
+| NFR-06 | Performa & kebersihan | Console bersih. Tabel ±900 baris tetap responsif (paginasi) | 12 |
+| NFR-07 | Kode rapi | Penamaan kelas konsisten, komentar per bagian, tanpa kode mati | Semua, 12 |
+| NFR-08 | Anti-slop | Setiap halaman lolos Uji Anti-Slop (§4.3) | 5–11 |
 
 ---
 
@@ -435,26 +438,26 @@ Berkas wajib **semua jalur**: Kartu Keluarga, Akta Kelahiran, Rapor semester 1�
 - Proporsi dibuat supaya setiap jalur **melebihi kuota setelah verifikasi**, sehingga garis batas dan status "tergeser" benar-benar muncul.
 - Nama, alamat, kelurahan, dan sekolah asal: fiktif tetapi masuk akal (bahasa Indonesia).
 - Distribusi status disesuaikan dengan "hari ini": pendaftar lama sebagian besar sudah diverifikasi, pendaftar 2 hari terakhir sebagian besar masih menunggu.
-- Rincian generator ditetapkan di T4.
+- Rincian generator ditetapkan di Tahap 4.
 
 ---
 
 ## 8. Spesifikasi Halaman
 
-Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konten · Interaksi · Catatan anti-slop.** Tata letak detail ada di wireframe `perancangan.md` §6 (T1) dan diimplementasikan di tahapnya.
+Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konten · Interaksi · Catatan anti-slop.** Tata letak detail ada di wireframe `perancangan.md` §6 (Tahap 2) dan diimplementasikan di tahapnya.
 
-### P-00 · `layout.html` — Template master (M2, tahap T3)
+### P-00 · `layout.html` — Template master (M2, Tahap 3)
 - **Tujuan:** kerangka yang dipakai semua halaman admin.
 - **Konten:** navigation drawer (§6.1), top app bar (§6.2), area konten dengan page header, footer ringkas ("Data simulasi · v1.0").
 - **Interaksi:** drawer permanen (≥ 1200px) ↔ rail ikon (600–1199px) ↔ drawer modal dengan scrim (< 600px). Tombol `Esc` menutup drawer modal. Preferensi rail/drawer disimpan.
 
-### P-01 · `index.html` — Login (T5)
+### P-01 · `index.html` — Login (Tahap 5)
 - **Pertanyaan:** "Bagaimana saya masuk, dan apa jadwal PPDB saat ini?"
 - **Konten:** panel kiri warna primary berisi nama sekolah, nama sistem, dan jadwal PPDB (tahap aktif ditandai). Panel kanan berisi form username & password, tombol tampilkan password, "Ingat saya", dan kotak info akun demo.
 - **Interaksi:** validasi kolom kosong, pesan error kredensial, simpan sesi (session vs local sesuai "Ingat saya"), redirect ke dashboard, dan langsung ke dashboard jika sesi masih ada.
 - **Anti-slop:** tanpa pilihan peran, loket, CAPTCHA, status server, atau foto sekolah nyata.
 
-### P-02 · `pages/dashboard.html` — Dashboard (T6)
+### P-02 · `pages/dashboard.html` — Dashboard (Tahap 10)
 - **Pertanyaan:** "Berapa pekerjaan hari ini, jalur mana yang paling ketat, apa yang harus saya kerjakan dulu?"
 - **Konten:**
   1. Page header: "Ringkasan" + chip tanggal simulasi. Aksi utama: **Mulai verifikasi (n)**.
@@ -465,13 +468,13 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
   6. Jadwal PPDB (tahap aktif ditandai).
 - **Anti-slop:** tanpa banner hero, "real-time", agenda palsu, atau metrik teknis.
 
-### P-03 · `pages/data-master.html` — Data Pendaftar (T7)
+### P-03 · `pages/data-master.html` — Data Pendaftar (Tahap 6)
 - **Pertanyaan:** "Di mana data pendaftar X, dan bagaimana kondisinya?"
 - **Konten:** tab status (Semua · Menunggu · Perbaikan · Terverifikasi · Ditolak) dengan jumlah. Toolbar: cari (nama/NISN/no. daftar), filter jalur, filter asal sekolah, chip filter aktif + "Hapus filter". Tabel kolom: No. daftar & tanggal · Nama & NISN · Asal sekolah · Jalur · Jarak/Skor · Status · Aksi. Paginasi. Aksi header: Ekspor CSV (outlined), **Tambah pendaftar** (filled), Reset data simulasi (menu).
 - **Interaksi:** cari dengan debounce, filter berlapis, sort kolom (`aria-sort`), paginasi, dialog detail (dengan tautan ke Verifikasi & Bukti), edit, hapus dengan dialog konfirmasi, snackbar dengan **Urungkan** untuk hapus. Parameter URL (`?status=menunggu`) agar bisa dibuka dari dashboard. Di < 600px tabel menjadi daftar kartu.
 - **Anti-slop:** tanpa aksi massal "validasi sekaligus", tanpa panel status integrasi.
 
-### P-04 · `pages/form.html` — Tambah/Edit Pendaftar (T8)
+### P-04 · `pages/form.html` — Tambah/Edit Pendaftar (Tahap 7)
 - **Pertanyaan:** "Bagaimana menginput pendaftar yang datang langsung dengan benar?"
 - **Konten:** stepper 4 langkah:
   1. **Identitas:** nama, NISN, JK, tempat/tanggal lahir, nama orang tua, no. HP.
@@ -481,22 +484,22 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 - **Interaksi:** validasi saat blur dan saat pindah langkah (BR-01…BR-06), validasi lintas kolom (BR-03 zonasi–KK, BR-04 prestasi), fokus ke error pertama, langkah bisa diklik kembali, berkas wajib berubah mengikuti jalur, mode edit via `?id=`, peringatan saat meninggalkan halaman yang belum disimpan.
 - **Anti-slop:** tanpa peta GPS, "server sinkron", atau "draf tersimpan di cloud".
 
-### P-05 · `pages/verifikasi.html` — Verifikasi Berkas (T9)
+### P-05 · `pages/verifikasi.html` — Verifikasi Berkas (Tahap 8)
 - **Pertanyaan:** "Berkas siapa berikutnya, dan apakah sah?"
 - **Konten:** kiri: antrean (menunggu, terlama dulu; bisa dicari). Tengah: tab per berkas dengan panel pratinjau jujur (nama file, ukuran, keterangan "pratinjau tidak tersedia di versi simulasi"). Kanan: data isian pendaftar untuk dibandingkan, checklist per berkas (sesuai/tidak sesuai), catatan, tiga keputusan: **Terverifikasi** (filled), Perlu perbaikan (tonal), Tolak (outlined danger).
 - **Interaksi:** keputusan terverifikasi hanya aktif jika semua berkas wajib dicentang "sesuai". Catatan wajib untuk perbaikan/tolak (BR-08). Dialog konfirmasi untuk tolak. Setelah keputusan: snackbar, log, lanjut ke antrean berikutnya, badge menu berkurang. Parameter `?id=` untuk membuka pendaftar tertentu.
 
-### P-06 · `pages/hasil-seleksi.html` — Hasil & Peringkat (T10)
+### P-06 · `pages/hasil-seleksi.html` — Hasil & Peringkat (Tahap 9)
 - **Pertanyaan:** "Siapa yang masuk kuota saat ini, berapa batasnya, dan siapa yang tergeser?"
 - **Konten:** tab jalur (dengan kuota). Ringkasan: kuota · terverifikasi · keketatan · batas sementara. Tabel peringkat (peringkat, nama, asal sekolah, jarak/skor, status seleksi) dengan **baris pemisah garis batas kuota**. Keterangan dasar peringkat (BR-10). Label "Peringkat sementara, berubah sampai verifikasi ditutup 22 Juni".
 - **Interaksi:** ganti tab, cari nama (lompat ke baris & sorot), tampilkan "hanya sekitar garis batas", ekspor CSV, tautan ke bukti pendaftaran.
 
-### P-07 · `pages/laporan.html` — Rekap & Cetak (T11)
+### P-07 · `pages/laporan.html` — Rekap & Cetak (Tahap 11)
 - **Pertanyaan:** "Apa yang saya bawa ke rapat panitia?"
 - **Konten:** filter (rentang tanggal daftar, jalur). Rekap per jalur (kuota, pendaftar, per status, keketatan). 10 asal sekolah terbanyak. Rekap per hari. Log aktivitas. Kop cetak **fiktif tanpa lambang**, kolom tanda tangan kosong.
 - **Interaksi:** filter memperbarui semua bagian, validasi rentang tanggal, cetak (`@media print`, A4), ekspor CSV.
 
-### P-08 · `pages/bukti.html?id=` — Bukti Pendaftaran (T11)
+### P-08 · `pages/bukti.html?id=` — Bukti Pendaftaran (Tahap 11)
 - **Pertanyaan:** "Dokumen apa yang diberikan ke pendaftar sebagai tanda terima?"
 - **Konten:** kop fiktif, identitas pendaftar, jalur & jarak/skor, status verifikasi, daftar berkas & hasil cek, jadwal pengumuman & daftar ulang, kolom tanda tangan kosong, catatan kaki "Dokumen simulasi — bukan dokumen resmi".
 - **Interaksi:** tombol cetak, kembali. Pesan jelas jika `id` tidak ditemukan.
@@ -506,7 +509,7 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 ## 9. Design System (Material Design 3)
 
 > **Sumber:** `stitch_enterprise_admin_panel_ui/sistem_informasi_ppdb_terpadu/DESIGN.md`, disesuaikan ke kaidah M3.
-> **Tabel ini adalah acuan token untuk `tokens.css` (T2).** Nilai boleh disesuaikan di T2 jika uji kontras gagal. Setiap perubahan dicatat di Riwayat Perubahan.
+> **Tabel ini adalah acuan token untuk `tokens.css` (Tahap 3).** Nilai boleh disesuaikan di Tahap 3 jika uji kontras gagal. Setiap perubahan dicatat di Riwayat Perubahan.
 
 ### 9.1 Warna (peran M3)
 | Token CSS | Peran | Nilai |
@@ -529,9 +532,9 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 | `--status-warning-*` | Perlu perbaikan | teks `#B45309` · latar `#FFFBEB` · border `#FDE68A` |
 | `--status-success-*` | Terverifikasi / masuk kuota | teks `#15803D` · latar `#F0FDF4` · border `#BBF7D0` |
 | `--status-danger-*` | Ditolak / aksi hapus | teks `#B91C1C` · latar `#FEF2F2` · border `#FECACA` · tombol `#DC2626` |
-| `--chart-1…4` | Seri grafik per jalur | `#0F3F7A` · `#0D9488` · `#0284C7` · `#B45309` (diuji di T2) |
+| `--chart-1…4` | Seri grafik per jalur | `#0F3F7A` · `#0D9488` · `#0284C7` · `#B45309` (diuji di Tahap 3) |
 
-Aturan kontras (diuji di T2-03, hasilnya tampil langsung di `docs/styleguide.html`): teks ≥ 4,5:1, batas kontrol & grafik ≥ 3:1. Nilai placeholder `#94A3B8` dari Stitch (2,56:1) diganti `#64748B`.
+Aturan kontras (diuji di Tahap 3, hasilnya tampil langsung di `docs/styleguide.html`): teks ≥ 4,5:1, batas kontrol & grafik ≥ 3:1. Nilai placeholder `#94A3B8` dari Stitch (2,56:1) diganti `#64748B`.
 
 ### 9.2 Tipografi (Plus Jakarta Sans)
 | Token | Ukuran / tinggi baris / bobot | Dipakai untuk |
@@ -572,7 +575,7 @@ Angka (NISN, jarak, skor, tanggal) memakai `font-variant-numeric: tabular-nums`.
 - Material Symbols Outlined (wght 400, FILL 0; FILL 1 untuk menu aktif), ukuran 20/24px.
 - Durasi animasi 150–250ms dengan easing *standard* M3. `prefers-reduced-motion` dihormati.
 
-### 9.7 Komponen (nama kelas ditetapkan di T2)
+### 9.7 Komponen (nama kelas ditetapkan di Tahap 3)
 | Komponen | Varian |
 |---|---|
 | Button | filled · tonal · outlined · text · danger · icon button |
@@ -603,7 +606,7 @@ PROGRAMWEB_2/
 │   ├── perencanaan.md            # dokumen ini
 │   ├── checklist_work.md         # pelacakan
 │   ├── perancangan.md            # deliverable M1
-│   ├── styleguide.html           # etalase komponen (M2, T2)
+│   ├── styleguide.html           # etalase komponen (M2)
 │   └── img/
 │       ├── referensi-stitch/     # screenshot referensi (bukan desain final)
 │       └── ...                   # screenshot hasil akhir
@@ -618,10 +621,7 @@ PROGRAMWEB_2/
 │   │   └── print.css             # @media print (laporan, bukti)
 │   ├── js/
 │   │   ├── core/
-│   │   │   ├── store.js          # PPDB.store: antarmuka data (CRUD, log, cadangan JSON)
-│   │   │   ├── adapters/
-│   │   │   │   ├── local.js      # Fase 1: localStorage
-│   │   │   │   └── supabase.js   # Fase 2 (T14): database sungguhan
+│   │   │   ├── store.js          # PPDB.store: localStorage, CRUD, log, cadangan JSON
 │   │   │   ├── seed.js           # PPDB.seed: generator data simulasi
 │   │   │   ├── rules.js          # PPDB.rules: konstanta, validasi BR, peringkat
 │   │   │   ├── ui.js             # PPDB.ui: snackbar, dialog, format, escape
@@ -643,7 +643,7 @@ PROGRAMWEB_2/
 - **HTML:** semantik, `lang="id"`, setiap kontrol punya `<label>`, ikon dekoratif `aria-hidden="true"`, tanpa atribut `style` dan tanpa inline handler.
 - **CSS:** penamaan BEM (`.nav-drawer__item`, `.btn--tonal`, `.is-active`). Nilai hanya dari token. Satu komponen, satu blok komentar.
 - **JS:** `'use strict'`, satu namespace `PPDB`, event delegation, semua data ke HTML lewat `PPDB.ui.escape()`, akses storage dalam `try/catch`, tidak ada angka yang ditulis manual di HTML (AS-02).
-- **Git:** satu commit per tahap (atau per kelompok tugas), dengan pesan seperti `feat(T7): tabel data pendaftar` atau `docs(T1): ERD & user flow`.
+- **Git:** commit per langkah atau kelompok langkah, pesan diawali nomor tahap, mis. `feat(6): tabel data pendaftar` atau `docs(2): ERD & user flow`. Setelah akun Nurdin siap (13.1): satu branch per tahap + Pull Request + CI (13.2).
 
 ### 10.4 Kunci penyimpanan browser
 | Kunci | Isi |
@@ -658,56 +658,56 @@ PROGRAMWEB_2/
 
 ## 11. Tahapan Pengembangan
 
-Satu tahap dikerjakan per sesi. Setelah tahap selesai, jalankan **rutinitas penutupan** (§11.3), lalu **berhenti menunggu review** (D-16).
+**Penomoran (D-22):** tahap besar diberi nomor **1–13**, langkah di dalamnya **x.1, x.2, …**. Langkah terakhir setiap tahap adalah **Penutupan** (§11.3). Rincian langkah dan statusnya ada di [checklist_work.md](checklist_work.md). Satu tahap dikerjakan per sesi, lalu **berhenti menunggu review** (D-16).
 
-| Tahap | Nama | Milestone | Output utama | Prasyarat |
-|---|---|---|---|---|
-| **T0** | Persiapan & revisi rencana | M1 | Dokumen perencanaan v0.2, checklist, repo bersih | – |
-| **T1** | Dokumen perancangan | M1 | `docs/perancangan.md` + link Stitch 👤 | T0 |
-| **T2** | Design system → CSS fondasi & komponen | M2 | `assets/css/*`, `docs/styleguide.html`, logo | T1 |
-| **T3** | Layout master (app shell) | M2 | `layout.html` + `core/shell.js` (drawer/rail) | T2 |
-| **T4** | Lapisan data & modul inti | M3 | `core/rules.js`, `seed.js`, `store.js`, `ui.js`, auth di `shell.js` | T3 |
-| **T5** | Halaman Login | M3 | `index.html`, `pages/login.js` | T4 |
-| **T6** | Dashboard | M3 | `pages/dashboard.html` + JS | T4 |
-| **T7** | Data Pendaftar | M3 | `pages/data-master.html` + JS | T4 |
-| **T8** | Form Tambah/Edit (stepper) | M3 | `pages/form.html` + JS | T7 |
-| **T9** | Verifikasi Berkas | M3 | `pages/verifikasi.html` + JS | T7 |
-| **T10** | Hasil & Peringkat | M3 | `pages/hasil-seleksi.html` + JS | T9 |
-| **T11** | Laporan & Bukti Pendaftaran | M3 | `pages/laporan.html`, `pages/bukti.html` + JS, `print.css` | T10 |
-| **T12** | QA menyeluruh | M3 | Semua uji lulus (§12) | T5–T11 |
-| **T13** | README, deploy & presentasi | M3 | Link GitHub & Vercel, naskah demo | T12 |
-| **T14** | Database & hosting produksi (Fase 2) | Setelah M3 | Supabase (skema, RLS, auth, storage), adapter data, domain & header keamanan | T13 |
+| Tahap | Nama | Milestone | Output utama | Prasyarat | Status |
+|---|---|---|---|---|---|
+| **1** | Persiapan & perencanaan | M1 | Repo bersih, `perencanaan.md`, `checklist_work.md`, `.gitignore` | – | ✅ |
+| **2** | Perancangan | M1 | `docs/perancangan.md` + link Stitch | 1 | ✅ |
+| **3** | Design system & layout | M2 | `assets/css/*`, `docs/styleguide.html`, logo, `layout.html`, `core/shell.js` | 2 | ✅ |
+| **4** | Fondasi data & modul inti | M3 | `core/rules.js`, `seed.js`, `store.js`, `ui.js`, login di `shell.js` | 3 | ⬜ |
+| **5** | Login | M3 | `index.html`, `pages/login.js` | 4 | ⬜ |
+| **6** | Data Pendaftar | M3 | `pages/data-master.html` + JS | 4 | ⬜ |
+| **7** | Form Pendaftar (stepper) | M3 | `pages/form.html` + JS | 6 | ⬜ |
+| **8** | Verifikasi Berkas | M3 | `pages/verifikasi.html` + JS | 6 | ⬜ |
+| **9** | Hasil & Peringkat | M3 | `pages/hasil-seleksi.html` + JS | 8 | ⬜ |
+| **10** | Dashboard | M3 | `pages/dashboard.html` + JS | 9 | ⬜ |
+| **11** | Laporan & Bukti Pendaftaran | M3 | `pages/laporan.html`, `pages/bukti.html` + JS, `print.css` | 9 | ⬜ |
+| **12** | QA menyeluruh | M3 | Semua uji lulus (§12) | 5–11 | ⬜ |
+| **13** | Rilis & online | M3 | Akun Nurdin, CI, GitHub Pages, README final, rilis `v1.0`, panduan domain | 12 | ⬜ |
 
 ```mermaid
 flowchart LR
-    T0 --> T1 --> T2 --> T3 --> T4
-    T4 --> T5 & T6 & T7
-    T7 --> T8 & T9
-    T9 --> T10 --> T11
-    T5 & T6 & T8 & T11 --> T12 --> T13 --> T14
+    S1[1] --> S2[2] --> S3[3] --> S4[4]
+    S4 --> S5[5] & S6[6]
+    S6 --> S7[7] & S8[8]
+    S8 --> S9[9] --> S10[10] & S11[11]
+    S5 & S7 & S10 & S11 --> S12[12] --> S13[13]
 ```
 
+**Alasan urutan (D-23):** Data Pendaftar (6) dikerjakan lebih dulu karena pola tabelnya dipakai ulang di halaman lain. Dashboard (10) dikerjakan setelah Hasil & Peringkat (9) karena memakai hampir semua perhitungan dan komponen yang sudah teruji di tahap 6–9, sehingga tidak ada pekerjaan bolak-balik.
+
 ### 11.1 Gerbang kualitas antartahap
-- **T1 → T2:** `perancangan.md` lengkap. Link Stitch boleh menyusul (👤), tetapi token §9 harus sudah final.
-- **T2 → T3:** `styleguide.html` menampilkan semua komponen §9.7, dan kontras warna lolos.
-- **T3 → T4:** `layout.html` rapi di 5 breakpoint (NFR-01).
-- **T4 → T5+:** data simulasi terbentuk, peringkat terhitung, tidak ada error di console.
-- **T12 → T13:** semua TC lulus dan semua halaman lolos Uji Anti-Slop.
+- **3 → 4:** styleguide & `layout.html` lolos W3C dan rapi di 5 breakpoint. ✅
+- **4 → 5+:** data simulasi terbentuk, setiap jalur melebihi kuota, peringkat terhitung, console bersih.
+- **Setiap tahap halaman (5–11):** lolos Definition of Done (§14) dan Uji Anti-Slop (§4.3).
+- **12 → 13:** semua TC lulus, semua halaman lolos audit keamanan & aksesibilitas.
 
 ### 11.2 Perkiraan jadwal
 | Pekan | Tahap |
 |---|---|
-| Pekan 3 (tenggat M1) | T0, T1 |
-| Pekan 4–5 (tenggat M2) | T2, T3 |
-| Pekan 6 | T4, T5, T6, T7 |
-| Pekan 7 (tenggat M3) | T8 – T13 |
-| Setelah pekan 7 (Fase 2) | T14: database sungguhan, lalu domain & hosting produksi |
+| Pekan 3 (tenggat M1) | 1, 2 ✅ |
+| Pekan 4–5 (tenggat M2) | 3 ✅ |
+| Pekan 6 | 4, 5, 6, 7 |
+| Pekan 7 (tenggat M3) | 8 – 12 |
+| Setelah kode final | 13: rilis & online, lalu pengembang memasang domain |
 
-### 11.3 Rutinitas penutupan setiap tahap
-Setiap tahap di checklist diakhiri tiga tugas berkode `R`:
-- **`Tx-R1`** Uji tahap: Definition of Done (§14) + Uji Anti-Slop (§4.3) untuk tahap halaman.
-- **`Tx-R2`** Catat: Log Perubahan File, Log Kerja, ringkasan progres, dan Riwayat Perubahan di dokumen ini jika rencana berubah.
-- **`Tx-R3`** Review pengembang → audit keamanan (§15.1) → commit & push setelah disetujui.
+### 11.3 Langkah Penutupan setiap tahap
+Langkah terakhir setiap tahap (mis. 6.7) berisi empat hal berurutan:
+1. **Uji:** Definition of Done (§14) + Uji Anti-Slop (§4.3) untuk tahap halaman.
+2. **Catat:** Log Perubahan File, Log Kerja, ringkasan progres, dan Riwayat Perubahan dokumen ini jika rencana berubah.
+3. **Review:** pengembang memeriksa hasil.
+4. **Simpan:** audit keamanan (§15.1) → commit. Push dilakukan setelah akun Nurdin siap (D-24).
 
 ---
 
@@ -757,14 +757,14 @@ Setiap tahap di checklist diakhiri tiga tugas berkode `R`:
 
 | ID | Risiko | Mitigasi |
 |---|---|---|
-| R-01 | Nilai M1 berkurang karena tidak ada Figma (D-20) | Design system lengkap di `perancangan.md` §7, diwujudkan di `docs/styleguide.html` (T2) sebagai bukti "desain ke kode". Siapkan penjelasan saat presentasi |
+| R-01 | Nilai M1 berkurang karena tidak ada Figma (D-20) | Design system lengkap di `perancangan.md` §7, diwujudkan di `docs/styleguide.html` (Tahap 3) sebagai bukti "desain ke kode". Siapkan penjelasan saat presentasi |
 | R-02 | Hasil terlihat generik lagi | Uji Anti-Slop di setiap tahap halaman |
 | R-03 | CDN gagal dimuat | Fallback font sistem. Pesan jelas di area grafik |
 | R-04 | `localStorage` diblokir | Fallback ke memori + snackbar peringatan |
 | R-05 | Tabel lebar di mobile | Pola kartu di compact + kolom prioritas |
 | R-06 | ±900 data terasa lambat | Paginasi, debounce pencarian, render hanya halaman aktif |
 | R-07 | Lingkup melebar | Fitur di luar §1.3 harus melalui keputusan baru (D-xx) terlebih dulu |
-| R-08 | Kunci rahasia database bocor ke repo publik (Fase 2) | Hanya URL + kunci publik (anon) di klien, akses dijaga RLS. Kunci `service_role` tidak pernah masuk repo atau kode klien. Audit S-02 memeriksanya |
+| R-08 | Token GitHub atau kunci rahasia terbawa ke repo publik | Audit S-01…S-07 sebelum setiap push + pemindaian rahasia di CI (13.2). Token tidak pernah ditulis ke file proyek |
 
 ---
 
@@ -832,3 +832,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | 0.2.4 | 23 Sep 2026 | Tambah D-21: database dua fase (localStorage + adapter → Supabase). Tahap baru T14 (database & hosting produksi). D-19 dipindah ke T14. Tambah R-08 (kebocoran kunci), pola `service_role`/`sb_secret_` di audit S-02. Struktur `adapters/` di §10.1 | Nurdin & Claude |
 | 0.2.5 | 23 Sep 2026 | Hasil uji kontras T2-03: `--md-outline` #CBD5E1 → #8391A7 (WCAG 1.4.11), placeholder #94A3B8 → `--md-on-surface-muted` #64748B, aturan `secondary` bukan latar teks | Nurdin & Claude |
 | 0.2.6 | 23 Sep 2026 | §6.1: label pendek untuk mode rail (temuan uji T3: label penuh terpotong) | Nurdin & Claude |
+| **0.3** | 25 Sep 2026 | **Revisi rencana pengembangan website:** penomoran tahap 1–13 dengan langkah x.y (D-22). Urutan halaman baru, Dashboard setelah Hasil (D-23). Database hanya lokal, Supabase & adapter dibatalkan (D-21). Hosting GitHub Pages + domain dari pengembang (D-09, D-19). Push & deploy menunggu akun Nurdin (D-24). §11 ditulis ulang, rujukan tahap lama di §2, §3, §5, §8, §9, §10, §13 diperbarui, R-08 diganti | Nurdin & Claude |
