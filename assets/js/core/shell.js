@@ -1,8 +1,172 @@
 /* =====================================================================
-   shell.js — Perilaku app shell (navigasi adaptif, menu akun, menu aktif)
-   Namespace: PPDB.shell
-   Bagian autentikasi & badge data ditambahkan di tahap T4.
+   shell.js — App shell: autentikasi simulasi + navigasi adaptif
+   Namespace: PPDB.auth, PPDB.shell
+   Bagian 1 — Autentikasi & widget data (Tahap 4, FR-01, FR-02)
+   Bagian 2 — Navigasi adaptif, menu akun, menu aktif (Tahap 3)
+   ===================================================================== */
 
+/* ---------------------------------------------------------------------
+   BAGIAN 1 — Autentikasi simulasi & widget data
+   <body data-auth="required"> : halaman admin (wajib login)
+   <body data-auth="guest">    : halaman login (sudah login → dasbor)
+   <body data-root="../">      : jalur ke akar situs dari halaman ini
+   --------------------------------------------------------------------- */
+(function (window, document) {
+  'use strict';
+
+  var PPDB = window.PPDB = window.PPDB || {};
+  var R = PPDB.rules;
+
+  var SESSION_KEY = 'ppdb.v2.session';
+  var GAGAL_KEY = 'ppdb.v2.login-gagal';
+  var SESI_BIASA_MS = 8 * 3600 * 1000;       // 8 jam
+  var SESI_INGAT_MS = 30 * 24 * 3600 * 1000; // 30 hari ("Ingat saya")
+  var MAKS_GAGAL = 5;
+  var KUNCI_MS = 30 * 1000;
+  // Hanya halaman internal yang boleh menjadi tujuan setelah login (anti open-redirect)
+  var POLA_KEMBALI = /^pages\/[a-z-]+\.html(\?[A-Za-z0-9=&%_-]{0,120})?$/;
+
+  var body = document.body;
+  var root = body.getAttribute('data-root') || '';
+
+  function simpanan(ingat) {
+    try { return ingat ? window.localStorage : window.sessionStorage; } catch (e) { return null; }
+  }
+
+  function bacaSesi() {
+    var sumber = [simpanan(false), simpanan(true)];
+    for (var i = 0; i < sumber.length; i++) {
+      if (!sumber[i]) continue;
+      try {
+        var s = JSON.parse(sumber[i].getItem(SESSION_KEY));
+        if (s && s.kedaluwarsa > Date.now()) return s;
+        if (s) sumber[i].removeItem(SESSION_KEY); // sesi kedaluwarsa dibersihkan
+      } catch (e) { /* abaikan data rusak */ }
+    }
+    return null;
+  }
+
+  function panitiaAktif() {
+    var s = bacaSesi();
+    if (!s || !R) return null;
+    return R.PANITIA.filter(function (p) { return p.id === s.panitiaId; })[0] || null;
+  }
+
+  function statusKunci() {
+    try {
+      var g = JSON.parse(window.sessionStorage.getItem(GAGAL_KEY)) || { jumlah: 0, sampai: 0 };
+      return g;
+    } catch (e) { return { jumlah: 0, sampai: 0 }; }
+  }
+
+  function catatGagal() {
+    var g = statusKunci();
+    g.jumlah += 1;
+    if (g.jumlah >= MAKS_GAGAL) { g.sampai = Date.now() + KUNCI_MS; g.jumlah = 0; }
+    try { window.sessionStorage.setItem(GAGAL_KEY, JSON.stringify(g)); } catch (e) { /* abaikan */ }
+  }
+
+  /**
+   * @returns {{ok: boolean, error?: string, kolom?: 'username'|'sandi'}}
+   */
+  function login(username, sandi, ingat) {
+    var kunci = statusKunci();
+    if (kunci.sampai > Date.now()) {
+      var detik = Math.ceil((kunci.sampai - Date.now()) / 1000);
+      return { ok: false, error: 'Terlalu banyak percobaan. Coba lagi dalam ' + detik + ' detik.' };
+    }
+    var u = String(username || '').trim().toLowerCase();
+    var akun = R.PANITIA.filter(function (p) { return p.username === u; })[0];
+    if (!akun || akun.sandi !== String(sandi || '')) {
+      catatGagal();
+      return { ok: false, error: 'Username atau kata sandi salah.', kolom: 'sandi' };
+    }
+    try { window.sessionStorage.removeItem(GAGAL_KEY); } catch (e) { /* abaikan */ }
+    var tempat = simpanan(ingat);
+    if (!tempat) return { ok: false, error: 'Browser memblokir penyimpanan sesi. Izinkan penyimpanan situs lalu coba lagi.' };
+    tempat.setItem(SESSION_KEY, JSON.stringify({
+      panitiaId: akun.id,
+      masuk: new Date().toISOString(),
+      kedaluwarsa: Date.now() + (ingat ? SESI_INGAT_MS : SESI_BIASA_MS)
+    }));
+    if (PPDB.store) PPDB.store.catatLog('login', akun.nama + ' masuk ke sistem');
+    return { ok: true };
+  }
+
+  function logout() {
+    var akun = panitiaAktif();
+    if (akun && PPDB.store) PPDB.store.catatLog('logout', akun.nama + ' keluar dari sistem');
+    [simpanan(false), simpanan(true)].forEach(function (s) {
+      try { if (s) s.removeItem(SESSION_KEY); } catch (e) { /* abaikan */ }
+    });
+    window.location.replace(root + 'index.html');
+  }
+
+  function tujuanSetelahLogin() {
+    var kembali = new URLSearchParams(window.location.search).get('kembali');
+    return kembali && POLA_KEMBALI.test(kembali) ? kembali : 'pages/dashboard.html';
+  }
+
+  /* ---------- Penjaga halaman ---------- */
+  var mode = body.getAttribute('data-auth');
+  if (mode === 'required' && !panitiaAktif()) {
+    var jalurIni = window.location.pathname.split('/').slice(-2).join('/') + window.location.search;
+    var q = POLA_KEMBALI.test(jalurIni) ? '?kembali=' + encodeURIComponent(jalurIni) : '';
+    window.location.replace(root + 'index.html' + q);
+    return;
+  }
+  if (mode === 'guest' && panitiaAktif()) {
+    window.location.replace(root + tujuanSetelahLogin());
+    return;
+  }
+  body.classList.add('is-authed');
+
+  /* ---------- Widget data di app shell ---------- */
+  function isiIdentitas() {
+    var akun = panitiaAktif();
+    if (!akun) return;
+    document.querySelectorAll('[data-user-name]').forEach(function (n) { n.textContent = akun.nama; });
+    document.querySelectorAll('[data-user-role]').forEach(function (n) { n.textContent = akun.peran; });
+    document.querySelectorAll('[data-user-initials]').forEach(function (n) { n.textContent = akun.inisial; });
+  }
+
+  function isiTahap() {
+    if (!R) return;
+    var t = R.tahapAktif();
+    document.querySelectorAll('[data-phase-text]').forEach(function (n) {
+      n.textContent = t ? t.nama.split(' & ')[0] + ' · hari ke-' + t.hariKe + ' dari ' + t.totalHari : 'Di luar jadwal PPDB';
+    });
+  }
+
+  function isiBadge() {
+    if (!PPDB.store) return;
+    var jumlah = PPDB.store.hitungStatus().menunggu;
+    document.querySelectorAll('[data-badge="verifikasi"]').forEach(function (n) {
+      n.textContent = jumlah > 99 ? '99+' : String(jumlah);
+      n.hidden = jumlah === 0;
+      n.setAttribute('aria-label', jumlah + ' berkas menunggu verifikasi');
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('[data-action="logout"]')) logout();
+  });
+  window.addEventListener('ppdb:change', isiBadge);
+
+  isiIdentitas();
+  isiTahap();
+  isiBadge();
+
+  PPDB.auth = {
+    login: login,
+    logout: logout,
+    panitiaAktif: panitiaAktif,
+    tujuanSetelahLogin: tujuanSetelahLogin
+  };
+})(window, document);
+
+/* ---------------------------------------------------------------------
+   BAGIAN 2 — Navigasi adaptif
    Mode navigasi (CSS di layout.css menentukan tampilan dasarnya):
      compact  < 600px    : tombol menu membuka drawer modal (.is-nav-open)
      medium   600–1199px : tombol menu membuka drawer overlay (.is-nav-open)

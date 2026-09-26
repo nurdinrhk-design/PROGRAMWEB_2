@@ -10,7 +10,7 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **0.3** |
+| Versi dokumen | **0.3.1** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1) · [referensi Stitch](img/referensi-stitch/) |
 | Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–3 selesai. Berikutnya: Tahap 4 |
@@ -257,7 +257,7 @@ Satu halaman lolos jika **semua** jawaban "ya":
 ### 6.2 Top app bar (4 elemen)
 1. Tombol menu (drawer/rail)
 2. Judul halaman + breadcrumb
-3. Chip tahap PPDB: "Pendaftaran · hari ke-9 dari 12"
+3. Chip tahap PPDB: "Pendaftaran · hari ke-11 dari 12" (dihitung dari jadwal & tanggal simulasi)
 4. Avatar + nama panitia → menu kecil: nama, peran, **Keluar**
 
 ### 6.3 Sitemap
@@ -401,7 +401,7 @@ Berkas wajib **semua jalur**: Kartu Keluarga, Akta Kelahiran, Rapor semester 1�
 | Verifikasi berkas | 8 – 22 Juni 2026 |
 | Pengumuman hasil | 26 Juni 2026 |
 | Daftar ulang | 29 Juni – 1 Juli 2026 |
-| **"Hari ini" dalam simulasi** | **Kamis, 18 Juni 2026** (pendaftaran hari ke-9 dari 12) |
+| **"Hari ini" dalam simulasi** | **Kamis, 18 Juni 2026** (pendaftaran hari ke-11 dari 12) |
 
 ### 7.4 Status
 | Status verifikasi | Kode | Arti | Warna (§9.1) |
@@ -432,6 +432,7 @@ Berkas wajib **semua jalur**: Kartu Keluarga, Akta Kelahiran, Rapor semester 1�
 | BR-10 | Peringkat jalur jarak: jarak terdekat → usia lebih tua → waktu daftar lebih awal. Jalur prestasi: skor tertinggi → usia lebih tua → waktu daftar lebih awal |
 | BR-11 | Keketatan = pendaftar terverifikasi ÷ kuota. Batas sementara = jarak/skor pendaftar di peringkat terakhir yang masuk kuota |
 | BR-12 | Semua perubahan data dicatat di log aktivitas (maksimal 100 entri terbaru) |
+| BR-13 | Jika data pendaftar yang **sudah diperiksa** diubah pada kolom yang memengaruhi seleksi (jalur, jarak, nilai rapor, prestasi, tanggal terbit KK, tanggal lahir), statusnya kembali **menunggu** dan hasil cek berkas di-reset untuk diverifikasi ulang |
 
 ### 7.6 Spesifikasi data simulasi
 - **±900 pendaftar** dibuat dengan generator ber-*seed* tetap (hasil selalu sama), tersebar 8–18 Juni 2026 dengan puncak di hari-hari awal.
@@ -631,9 +632,11 @@ PROGRAMWEB_2/
 │   │       └── verifikasi.js  hasil-seleksi.js  laporan.js  bukti.js
 │   └── img/
 │       └── logo.svg
-└── pages/
-    ├── dashboard.html  data-master.html  form.html  verifikasi.html
-    └── hasil-seleksi.html  laporan.html  bukti.html
+├── pages/
+│   ├── dashboard.html  data-master.html  form.html  verifikasi.html
+│   └── hasil-seleksi.html  laporan.html  bukti.html
+└── tests/                        # uji otomatis modul inti (buka index.html di browser)
+    └── index.html  setup.js  core.test.js
 ```
 
 ### 10.2 Urutan pemuatan script
@@ -642,16 +645,18 @@ PROGRAMWEB_2/
 ### 10.3 Konvensi
 - **HTML:** semantik, `lang="id"`, setiap kontrol punya `<label>`, ikon dekoratif `aria-hidden="true"`, tanpa atribut `style` dan tanpa inline handler.
 - **CSS:** penamaan BEM (`.nav-drawer__item`, `.btn--tonal`, `.is-active`). Nilai hanya dari token. Satu komponen, satu blok komentar.
-- **JS:** `'use strict'`, satu namespace `PPDB`, event delegation, semua data ke HTML lewat `PPDB.ui.escape()`, akses storage dalam `try/catch`, tidak ada angka yang ditulis manual di HTML (AS-02).
+- **JS:** `'use strict'`, satu namespace `PPDB`, event delegation, elemen dibuat lewat `PPDB.ui.el()` dengan `textContent` (tanpa `innerHTML`, anti-XSS), akses storage dalam `try/catch`, tidak ada angka yang ditulis manual di HTML (AS-02).
 - **Git:** commit per langkah atau kelompok langkah, pesan diawali nomor tahap, mis. `feat(6): tabel data pendaftar` atau `docs(2): ERD & user flow`. Setelah akun Nurdin siap (13.1): satu branch per tahap + Pull Request + CI (13.2).
 
 ### 10.4 Kunci penyimpanan browser
 | Kunci | Isi |
 |---|---|
+| `ppdb.v2.meta` | Versi skema & asal data (seed/impor) |
 | `ppdb.v2.pendaftar` | Array pendaftar (termasuk berkas) |
 | `ppdb.v2.verifikasi` | Riwayat keputusan verifikasi |
 | `ppdb.v2.log` | Log aktivitas (≤ 100) |
-| `ppdb.v2.session` | Sesi login (`localStorage` jika "Ingat saya", selain itu `sessionStorage`) |
+| `ppdb.v2.session` | Sesi login simulasi: 8 jam di `sessionStorage`, atau 30 hari di `localStorage` jika "Ingat saya" |
+| `ppdb.v2.login-gagal` | Penghitung percobaan login gagal (`sessionStorage`, kunci 30 detik setelah 5 kali salah) |
 | `ppdb.v2.pref` | Preferensi UI (rail/drawer) |
 
 ---
@@ -718,7 +723,7 @@ Langkah terakhir setiap tahap (mis. 6.7) berisi empat hal berurutan:
 |---|---|
 | Responsif | DevTools: 360, 600, 840, 1200, 1440 px |
 | Validasi | validator.w3.org (HTML), jigsaw.w3.org (CSS) |
-| Fungsional | Kasus uji TC di bawah |
+| Fungsional | Kasus uji TC di bawah + **uji otomatis modul inti** (`tests/index.html`, dibuka di browser) |
 | Aksesibilitas | Keyboard saja, Lighthouse, cek kontras |
 | Lintas browser | Chrome, Edge, Firefox |
 | Cetak | Print preview A4 |
@@ -833,3 +838,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | 0.2.5 | 23 Sep 2026 | Hasil uji kontras T2-03: `--md-outline` #CBD5E1 → #8391A7 (WCAG 1.4.11), placeholder #94A3B8 → `--md-on-surface-muted` #64748B, aturan `secondary` bukan latar teks | Nurdin & Claude |
 | 0.2.6 | 23 Sep 2026 | §6.1: label pendek untuk mode rail (temuan uji T3: label penuh terpotong) | Nurdin & Claude |
 | **0.3** | 25 Sep 2026 | **Revisi rencana pengembangan website:** penomoran tahap 1–13 dengan langkah x.y (D-22). Urutan halaman baru, Dashboard setelah Hasil (D-23). Database hanya lokal, Supabase & adapter dibatalkan (D-21). Hosting GitHub Pages + domain dari pengembang (D-09, D-19). Push & deploy menunggu akun Nurdin (D-24). §11 ditulis ulang, rujukan tahap lama di §2, §3, §5, §8, §9, §10, §13 diperbarui, R-08 diganti | Nurdin & Claude |
+| 0.3.1 | 26 Sep 2026 | Hasil Tahap 4: chip tahap dihitung = "hari ke-11 dari 12" (teks lama "ke-9" salah hitung). Tambah BR-13 (ubah data terperiksa → verifikasi ulang). §10.1 folder `tests/`, §10.3 pembuat elemen aman `PPDB.ui.el`, §10.4 kunci `meta` & `login-gagal`, §12.1 uji otomatis | Nurdin & Claude |

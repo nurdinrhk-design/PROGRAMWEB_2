@@ -125,7 +125,7 @@ PPDB Online · SMAN 1 Harapan Bangsa
 Isinya hanya empat elemen:
 1. Tombol menu
 2. Judul halaman + breadcrumb
-3. Chip tahap PPDB ("Pendaftaran · hari ke-9 dari 12")
+3. Chip tahap PPDB ("Pendaftaran · hari ke-11 dari 12", dihitung otomatis)
 4. Avatar panitia (menu: nama, peran, Keluar)
 
 ### 3.3 Sitemap
@@ -334,7 +334,7 @@ Wireframe low-fidelity ini menunjukkan **susunan dan prioritas**, bukan ukuran a
 **Desktop (≥ 1200px): navigation drawer permanen**
 ```
 ┌────────────────┬─────────────────────────────────────────────────────┐
-│ [logo] PPDB    │ =  Dashboard          [Pendaftaran · hari 9/12] (RK)│
+│ [logo] PPDB    │ =  Dashboard         [Pendaftaran · hari 11/12] (RK)│
 │ SMAN 1 HB      │    PPDB Online / Dashboard                          │
 │                ├─────────────────────────────────────────────────────┤
 │ > Dashboard    │ Judul halaman                     ( aksi ) ((UTAMA))│

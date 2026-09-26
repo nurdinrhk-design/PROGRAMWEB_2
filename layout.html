@@ -66,7 +66,7 @@
               <span class="icon nav-item__icon" aria-hidden="true">fact_check</span>
               <span class="nav-item__label">Verifikasi Berkas</span>
               <span class="nav-item__short" aria-hidden="true">Berkas</span>
-              <!-- Jumlah antrean diisi dari data di tahap T4 (AS-02) -->
+              <!-- Jumlah antrean diisi shell.js dari data (AS-02) -->
               <span class="count nav-item__badge" data-badge="verifikasi" hidden></span>
             </a>
           </li>
@@ -124,20 +124,20 @@
         </div>
 
         <div class="top-app-bar__actions">
-          <!-- Teks tahap dihitung dari jadwal & tanggal simulasi di tahap T4 (AS-02) -->
-          <span class="phase-chip" data-phase-chip><span class="icon" aria-hidden="true">event</span><span data-phase-text>Pendaftaran · hari ke-9 dari 12</span></span>
+          <!-- Teks tahap dihitung shell.js dari jadwal & tanggal simulasi (AS-02) -->
+          <span class="phase-chip" data-phase-chip><span class="icon" aria-hidden="true">event</span><span data-phase-text>Pendaftaran · hari ke-11 dari 12</span></span>
 
           <div class="account">
             <button type="button" class="account__button" data-account-toggle aria-expanded="false" aria-controls="account-menu">
-              <span class="avatar" aria-hidden="true">RK</span>
-              <span class="account__name">Rina Kartika</span>
+              <span class="avatar" aria-hidden="true" data-user-initials>RK</span>
+              <span class="account__name" data-user-name>Rina Kartika</span>
               <span class="icon icon--sm" aria-hidden="true">expand_more</span>
               <span class="sr-only">Menu akun</span>
             </button>
             <div class="menu account__menu" id="account-menu" hidden>
               <div class="menu__header">
-                <p class="text-label-lg">Rina Kartika</p>
-                <p class="text-body-sm text-variant">Panitia PPDB · Verifikator</p>
+                <p class="text-label-lg" data-user-name>Rina Kartika</p>
+                <p class="text-body-sm text-variant" data-user-role>Panitia PPDB · Verifikator</p>
               </div>
               <button type="button" class="menu__item" data-action="logout">
                 <span class="icon" aria-hidden="true">logout</span>Keluar
@@ -211,6 +211,11 @@
     </div>
   </div>
 
+  <!-- Urutan wajib (perencanaan §10.2): rules → seed → store → ui → shell → skrip halaman -->
+  <script src="assets/js/core/rules.js"></script>
+  <script src="assets/js/core/seed.js"></script>
+  <script src="assets/js/core/store.js"></script>
+  <script src="assets/js/core/ui.js"></script>
   <script src="assets/js/core/shell.js"></script>
 </body>
 </html>

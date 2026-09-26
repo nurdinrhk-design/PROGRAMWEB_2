@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Uji Modul Inti · PPDB Online</title>
+  <link rel="icon" href="../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+  <main class="content">
+    <div class="page-header">
+      <div>
+        <h1>Uji Modul Inti</h1>
+        <p class="page-header__desc">Uji otomatis aturan PPDB, data simulasi, penyimpanan, keamanan, dan login. Data kerja di browser ini dicadangkan sebelum uji dan dipulihkan sesudahnya.</p>
+      </div>
+      <span class="badge" data-ringkasan>Menjalankan…</span>
+    </div>
+    <section class="card" aria-label="Hasil uji">
+      <ol class="stack" data-hasil></ol>
+    </section>
+  </main>
+
+  <script src="../assets/js/core/rules.js"></script>
+  <script src="../assets/js/core/seed.js"></script>
+  <script src="../assets/js/core/store.js"></script>
+  <script src="../assets/js/core/ui.js"></script>
+  <script src="setup.js"></script>
+  <script src="../assets/js/core/shell.js"></script>
+  <script src="core.test.js"></script>
+</body>
+</html>

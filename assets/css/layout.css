@@ -30,6 +30,22 @@
   color: var(--md-on-primary);
 }
 
+/* ---------- Penjaga halaman: sembunyikan isi sampai sesi terverifikasi ---------- */
+body[data-auth="required"]:not(.is-authed) .app {
+  visibility: hidden;
+}
+
+.noscript-note {
+  margin: var(--space-6) auto;
+  max-width: 32rem;
+  padding: var(--space-4);
+  border: 1px solid var(--status-warning-border);
+  border-radius: var(--radius-md);
+  background-color: var(--status-warning-bg);
+  color: var(--status-warning-text);
+  text-align: center;
+}
+
 /* ---------- Kerangka ---------- */
 .app {
   display: grid;

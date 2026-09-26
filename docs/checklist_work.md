@@ -27,8 +27,8 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **13.1** (dikerjakan lebih awal): pindah ke akun Nurdin & bersihkan jejak |
-| **Tahap terakhir selesai** | Tahap 3 — Design system & layout (23 Sep 2026) |
+| **Tahap aktif** | **Tahap 5 — Login** (berikutnya) · 13.1 menunggu izin token pengembang |
+| **Tahap terakhir selesai** | Tahap 4 — Fondasi data & modul inti (26 Sep 2026) |
 | **Menunggu dari pengembang** | Izin langkah kredensial push (13.1) · izin tambahan token `delete_repo, workflow` · konfirmasi hapus & buat ulang repo |
 
 ## Ringkasan Progres
@@ -38,7 +38,7 @@
 | [1](#tahap-1--persiapan--perencanaan) | Persiapan & perencanaan | M1 | 8 | 8 | 0 | 100% |
 | [2](#tahap-2--perancangan) | Perancangan | M1 | 9 | 8 | 1 | 89% |
 | [3](#tahap-3--design-system--layout) | Design system & layout | M2 | 9 | 8 | 1 | 89% |
-| [4](#tahap-4--fondasi-data--modul-inti) | Fondasi data & modul inti | M3 | 9 | 0 | 9 | 0% |
+| [4](#tahap-4--fondasi-data--modul-inti) | Fondasi data & modul inti | M3 | 9 | 9 | 0 | 100% |
 | [5](#tahap-5--login) | Login | M3 | 5 | 0 | 5 | 0% |
 | [6](#tahap-6--data-pendaftar) | Data Pendaftar | M3 | 7 | 0 | 7 | 0% |
 | [7](#tahap-7--form-pendaftar-stepper) | Form Pendaftar | M3 | 6 | 0 | 6 | 0% |
@@ -48,9 +48,9 @@
 | [11](#tahap-11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 5 | 0 | 5 | 0% |
 | [12](#tahap-12--qa-menyeluruh) | QA menyeluruh | M3 | 7 | 0 | 7 | 0% |
 | [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 0 | 7 | 0% |
-| | **Total** | | **86** | **24** | **62** | **28%** |
+| | **Total** | | **86** | **33** | **53** | **38%** |
 
-**Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 ⬜ Tahap 4–13
+**Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 🔄 Tahap 4 selesai
 
 ---
 
@@ -109,15 +109,15 @@ Ref: [perencanaan §7](perencanaan.md#7-model-data--aturan-bisnis), [§10.2–10
 
 | No | Langkah | Ref | Status | Catatan |
 |---|---|---|---|---|
-| 4.1 | Aturan PPDB: identitas sekolah, jalur & kuota, jadwal, status, berkas wajib, tanggal simulasi | §7.2–§7.4, D-12 | ⬜ | `rules.js` |
-| 4.2 | Validator: NISN, usia, KK zonasi, skor prestasi, berkas, no. HP | BR-01…BR-06 | ⬜ | Fungsi murni, dipakai Form & Verifikasi |
-| 4.3 | Mesin peringkat: urutan per jalur, keketatan, batas sementara | BR-09…BR-11 | ⬜ | |
-| 4.4 | Generator ±900 pendaftar bohongan + cek setiap jalur melebihi kuota | §7.6 | ⬜ | `seed.js`, deterministik |
-| 4.5 | Penyimpanan: CRUD, nomor otomatis, riwayat verifikasi, log, reset, ekspor/impor JSON | BR-07, BR-12, FR-17, FR-18, D-21 | ⬜ | `store.js`, fallback memori (R-04) |
-| 4.6 | Utilitas UI: anti-XSS, format tanggal/angka/jarak, snackbar + Urungkan, dialog | §9.7, §10.3 | ⬜ | `ui.js` |
-| 4.7 | Login/logout simulasi, penjaga halaman, badge antrean, chip tahap dari data | FR-01, FR-02, AS-02 | ⬜ | Melengkapi `shell.js` |
-| 4.8 | Uji modul: verifikasi 1 pendaftar → peringkat jalur berubah | TC-17 | ⬜ | Lewat console/halaman uji di scratchpad |
-| 4.9 | Penutupan | §11.3 | ⬜ | |
+| 4.1 | Aturan PPDB: identitas sekolah, jalur & kuota, jadwal, status, berkas wajib, tanggal simulasi | §7.2–§7.4, D-12 | ✅ | `rules.js`: sekolah, 18 sekolah asal fiktif, 4 jalur (432 kursi), jadwal, status, berkas wajib, tanggal simulasi |
+| 4.2 | Validator: NISN, usia, KK zonasi, skor prestasi, berkas, no. HP | BR-01…BR-06 | ✅ | 11 validator murni (BR-01…BR-06, BR-08), semuanya diuji |
+| 4.3 | Mesin peringkat: urutan per jalur, keketatan, batas sementara | BR-09…BR-11 | ✅ | `peringkat()` & `statusSeleksi()`: urut jarak/skor → usia → waktu daftar, batas sementara saat kuota penuh |
+| 4.4 | Generator ±900 pendaftar bohongan + cek setiap jalur melebihi kuota | §7.6 | ✅ | 900 pendaftar deterministik. Keketatan 1,22–1,48× per jalur, 195 menunggu, 864 KB |
+| 4.5 | Penyimpanan: CRUD, nomor otomatis, riwayat verifikasi, log, reset, ekspor/impor JSON | BR-07, BR-12, FR-17, FR-18, D-21 | ✅ | `store.js`: penyaring data, fallback memori, BR-13 verifikasi ulang, hapus+urungkan, impor ketat |
+| 4.6 | Utilitas UI: anti-XSS, format tanggal/angka/jarak, snackbar + Urungkan, dialog | §9.7, §10.3 | ✅ | `ui.js`: pembuat elemen tanpa innerHTML, format id-ID, snackbar, dialog, CSV anti formula-injection |
+| 4.7 | Login/logout simulasi, penjaga halaman, badge antrean, chip tahap dari data | FR-01, FR-02, AS-02 | ✅ | Login + kunci 30 dtk setelah 5× gagal, sesi 8 jam/30 hari, anti open-redirect, badge 99+, chip hari ke-11 dari 12 |
+| 4.8 | Uji modul: verifikasi 1 pendaftar → peringkat jalur berubah | TC-17 | ✅ | `tests/index.html`: **32/32 lulus** (Chrome headless). Data kerja dicadangkan & dipulihkan otomatis |
+| 4.9 | Penutupan | §11.3 | ✅ | W3C HTML & CSS 0 error, console bersih, dokumen diperbarui (v0.3.1), commit lokal |
 
 ---
 
@@ -233,7 +233,7 @@ Ref: [perencanaan §12](perencanaan.md#12-strategi-pengujian), [§5.3 NFR](peren
 |---|---|---|---|---|
 | TC-01 | Login benar | 5 | – | ⬜ |
 | TC-02 | Login kosong/salah | 5 | – | ⬜ |
-| TC-03 | Halaman admin tanpa sesi | 4, 5 | – | ⬜ |
+| TC-03 | Halaman admin tanpa sesi | 4, 5 | – (diuji di Tahap 5, butuh halaman admin) | ⬜ |
 | TC-04 | Drawer/rail/modal per lebar layar | 3 | ✅ Tahap 3 (23 Sep) | ⬜ |
 | TC-05 | KPI = jumlah di Data Pendaftar | 10 | – | ⬜ |
 | TC-06 | Cari NISN | 6 | – | ⬜ |
@@ -247,7 +247,7 @@ Ref: [perencanaan §12](perencanaan.md#12-strategi-pengujian), [§5.3 NFR](peren
 | TC-14 | Simpan pendaftar baru | 7 | – | ⬜ |
 | TC-15 | Tombol terverifikasi nonaktif jika berkas belum dicentang | 8 | – | ⬜ |
 | TC-16 | Perbaikan/tolak tanpa catatan | 8 | – | ⬜ |
-| TC-17 | Verifikasi mengubah peringkat | 4, 9 | – | ⬜ |
+| TC-17 | Verifikasi mengubah peringkat | 4, 9 | ✅ Tahap 4 (26 Sep, uji otomatis) | ⬜ |
 | TC-18 | Cari nama di peringkat | 9 | – | ⬜ |
 | TC-19 | Rentang tanggal laporan terbalik | 11 | – | ⬜ |
 | TC-20 | Cetak laporan & bukti | 11 | – | ⬜ |
@@ -370,6 +370,17 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-62 | 26 Sep 2026 | UPDATE | riwayat Git lokal (9 commit) | 13.1 | Penyebutan akun kedua pengembang & ID-nya disamarkan di semua versi file & pesan commit (`git filter-branch`). Diverifikasi: hanya 4 baris berubah di versi terakhir, file biner tidak berubah, 0 jejak tersisa |
 | F-63 | 26 Sep 2026 | UPDATE | `README.md` | 13.1 | Kredit: "Dibangun oleh Nurdin bersama Claude (AI dari Anthropic)" |
 | F-64 | 26 Sep 2026 | UPDATE | `docs/checklist_work.md` | 13.1 | 13.1 → 🔄, B-04 diperbarui, posisi saat ini |
+| F-65 | 26 Sep 2026 | CREATE | `assets/js/core/rules.js` | 4.1–4.3 | Aturan PPDB, master data fiktif, 11 validator, mesin peringkat |
+| F-66 | 26 Sep 2026 | CREATE | `assets/js/core/seed.js` | 4.4 | Generator 900 pendaftar deterministik (NISN awalan 9, HP awalan 08000) |
+| F-67 | 26 Sep 2026 | CREATE | `assets/js/core/store.js` | 4.5 | Penyimpanan localStorage + fallback memori, penyaring data, verifikasi, hapus/urungkan, cadangan JSON |
+| F-68 | 26 Sep 2026 | CREATE | `assets/js/core/ui.js` | 4.6 | Pembuat elemen aman, format id-ID, snackbar, dialog, CSV |
+| F-69 | 26 Sep 2026 | UPDATE | `assets/js/core/shell.js` | 4.7 | Bagian 1: login simulasi, sesi, penjaga halaman, badge, chip tahap (navigasi Tahap 3 tidak diubah) |
+| F-70 | 26 Sep 2026 | UPDATE | `assets/css/layout.css` | 4.7 | Sembunyikan halaman admin sampai sesi terverifikasi + gaya pesan `noscript` |
+| F-71 | 26 Sep 2026 | UPDATE | `layout.html` | 4.7 | Penanda `data-user-*`, memuat modul inti sesuai urutan §10.2 |
+| F-72 | 26 Sep 2026 | CREATE | `tests/index.html`, `tests/setup.js`, `tests/core.test.js` | 4.8 | 32 uji otomatis modul inti, data kerja dicadangkan & dipulihkan |
+| F-73 | 26 Sep 2026 | UPDATE | `docs/perencanaan.md` | 4.9 | v0.3.1: chip "hari ke-11", BR-13, folder `tests/`, konvensi `ui.el`, kunci penyimpanan |
+| F-74 | 26 Sep 2026 | UPDATE | `docs/perancangan.md` | 4.9 | Teks chip tahap "hari ke-11 dari 12" (§3.2 & wireframe) |
+| F-75 | 26 Sep 2026 | UPDATE | `docs/checklist_work.md` | 4.9 | Tahap 4 selesai (9/9), TC-17, log |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -377,12 +388,13 @@ PROGRAMWEB_2/
 ├── .gitignore
 ├── layout.html                  (template master, M2)
 ├── README.md                    (catatan tugas, versi awal)
+├── tests/                       (uji otomatis modul inti)
 ├── assets/
 │   ├── css/  main.css · tokens.css · base.css · layout.css · components.css
-│   ├── js/core/shell.js
+│   ├── js/core/  rules.js · seed.js · store.js · ui.js · shell.js
 │   └── img/  logo.svg
 ├── docs/
-│   ├── perencanaan.md          (v0.3)
+│   ├── perencanaan.md          (v0.3.1)
 │   ├── checklist_work.md       (v0.3)
 │   ├── perancangan.md          (M1)
 │   ├── styleguide.html / .css / .js   (etalase design system, M2)
@@ -437,5 +449,6 @@ Satu baris per sesi kerja.
 | 23 Sep 2026 | T3-01…T3-09, T3-R1, T3-R2 | **T3: layout master.** `layout.html`, `layout.css`, `shell.js`. Navigasi adaptif 3 mode (modal · rail · drawer) diuji di 5 lebar layar + 4 status interaksi. Temuan & perbaikan: label rail terpotong → label pendek (AS-08). Fokus drawer tidak pindah → `focus()` langsung + kembali ke tombol menu. W3C HTML & CSS 0 error, console bersih | ✅ Menunggu review (F-49…F-56) |
 | 23 Sep 2026 | T3-R3 | Pengembang menyetujui layout. Audit keamanan, commit & push T3. T4 ditahan sesuai permintaan | ✅ (F-57) |
 | 23 Sep 2026 | T13-01 | Atas permintaan pengembang: membuat `README.md` versi awal dengan identitas Nurdin. Semua tautan lokal dicek ada | ✅ Disetujui, diaudit, di-commit & di-push (F-58, F-59) |
-| 25 Sep 2026 | 1.2, 1.3 | **Revisi rencana v0.3** atas arahan pengembang: penomoran tahap 1–13 \& langkah x.y, urutan halaman baru (Dashboard setelah Hasil), database lokal saja, GitHub Pages, push ditunda sampai akun Nurdin siap (B-04). Hanya dokumen yang diubah, belum ada langkah Tahap 4 yang dieksekusi | ✅ (F-60, F-61) |
-| 26 Sep 2026 | 13.1 | Pengembang menyetujui 13.1 dikerjakan lebih awal. Rencana v0.3 di-commit lokal. `gh` akun Nurdin terverifikasi (ADMIN, 0 fork, 0 star), akun aktif `gh` dikembalikan ke akun utama pengembang. Riwayat lokal disamarkan \& diverifikasi. Langkah kredensial push **ditolak pengaman otomatis Claude Code** → menunggu keputusan pengembang | 🔄 (F-62…F-64) |
+| 25 Sep 2026 | 1.2, 1.3 | **Revisi rencana v0.3** atas arahan pengembang: penomoran tahap 1–13 & langkah x.y, urutan halaman baru (Dashboard setelah Hasil), database lokal saja, GitHub Pages, push ditunda sampai akun Nurdin siap (B-04). Hanya dokumen yang diubah, belum ada langkah Tahap 4 yang dieksekusi | ✅ (F-60, F-61) |
+| 26 Sep 2026 | 13.1 | Pengembang menyetujui 13.1 dikerjakan lebih awal. Rencana v0.3 di-commit lokal. `gh` akun Nurdin terverifikasi (ADMIN, 0 fork, 0 star), akun aktif `gh` dikembalikan ke akun utama pengembang. Riwayat lokal disamarkan & diverifikasi. Langkah kredensial push **ditolak pengaman otomatis Claude Code** → menunggu keputusan pengembang | 🔄 (F-62…F-64) |
+| 26 Sep 2026 | 4.1–4.9 | **Tahap 4: fondasi data & modul inti.** `rules.js`, `seed.js`, `store.js`, `ui.js`, login di `shell.js`, 32 uji otomatis (lulus semua, percobaan pertama). Temuan: teks chip di dokumen ("hari ke-9") ternyata salah hitung, diganti hasil perhitungan (hari ke-11). Pengamanan: tanpa innerHTML, CSV anti formula, impor ketat, anti open-redirect, batas percobaan login | ✅ (F-65…F-75) |
