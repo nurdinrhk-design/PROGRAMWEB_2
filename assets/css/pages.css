@@ -559,3 +559,311 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
+
+
+/* =====================================================================
+   VERIFIKASI BERKAS — pages/verifikasi.html (P-05)
+   < 840px: satu kolom · 840–1399px: antrean | (berkas di atas keputusan)
+   ≥ 1400px: antrean | berkas | keputusan
+   ===================================================================== */
+.verif {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-4);
+}
+
+/* Antrean */
+.queue__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--md-outline-variant);
+}
+
+.queue {
+  max-height: 22rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.queue__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-bottom: 1px solid var(--md-outline-variant);
+  border-inline-start: 3px solid transparent;
+  background: transparent;
+  color: var(--md-on-surface);
+  font: inherit;
+  text-align: start;
+}
+
+.queue__item:hover {
+  background-color: var(--md-surface-container-low);
+}
+
+.queue__item[aria-current="true"] {
+  border-inline-start-color: var(--md-primary);
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+}
+
+.queue__name {
+  font-weight: var(--weight-semibold);
+}
+
+.queue__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.queue__item[aria-current="true"] .queue__meta {
+  color: var(--md-on-primary-container);
+}
+
+.queue__age {
+  margin-inline-start: auto;
+  white-space: nowrap;
+}
+
+.queue__empty {
+  padding: var(--space-5) var(--space-4);
+  color: var(--md-on-surface-variant);
+  text-align: center;
+}
+
+/* Kepala panel berkas */
+.verif__person {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.verif__person .card__title:focus {
+  outline: none;
+}
+
+/* Pemeriksaan otomatis dari isian */
+.auto-check {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+
+.auto-check__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.auto-check__item .icon {
+  color: var(--status-success-text);
+}
+
+.auto-check__item--warn {
+  color: var(--status-warning-text);
+  font-weight: var(--weight-semibold);
+}
+
+.auto-check__item--warn .icon {
+  color: var(--status-warning-text);
+}
+
+/* Tab berkas: ikon menunjukkan hasil cek (dengan teks tersembunyi untuk pembaca layar) */
+.tab--doc .icon {
+  color: var(--md-on-surface-muted);
+}
+
+.tab--sesuai .icon {
+  color: var(--status-success-text);
+}
+
+.tab--tidak_sesuai .icon {
+  color: var(--status-danger-text);
+}
+
+/* Isi berkas */
+.doc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.doc:focus-visible {
+  outline: var(--focus-ring-width) solid var(--md-focus-ring);
+  outline-offset: 2px;
+}
+
+.doc__preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 14rem;
+  padding: var(--space-5);
+  border: 1px dashed var(--md-outline);
+  border-radius: var(--radius-md);
+  background-color: var(--md-surface-container-low);
+  text-align: center;
+}
+
+.doc__icon {
+  margin-bottom: var(--space-2);
+  color: var(--md-on-surface-muted);
+  font-size: 3rem;
+}
+
+.doc__file {
+  max-width: 100%;
+  font-weight: var(--weight-semibold);
+  overflow-wrap: anywhere;
+}
+
+.doc__size,
+.doc__note {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.doc__note {
+  max-width: 22rem;
+  margin-top: var(--space-2);
+}
+
+.doc__compare {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Keputusan */
+.decision {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.decision__checks > legend {
+  margin-bottom: var(--space-2);
+}
+
+.check-rows {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Panel sempit (HP & tata letak 3 kolom): label di atas pilihan */
+.check-row {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--md-outline-variant);
+}
+
+.check-row__label {
+  font-weight: var(--weight-medium);
+  grid-column: 1 / -1;
+  overflow-wrap: anywhere;
+}
+
+.decision__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.decision__actions .btn {
+  width: 100%;
+}
+
+.decision__actions p {
+  margin-top: -0.25rem;                 /* rapat ke tombol di atasnya */
+}
+
+.decision__history {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--md-outline-variant);
+}
+
+@media (min-width: 600px) {
+  .doc {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .check-row {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
+  .check-row__label {
+    grid-column: auto;
+  }
+}
+
+@media (min-width: 840px) {
+  .verif {
+    grid-template-columns: 17rem minmax(0, 1fr);
+    grid-template-areas:
+      "antrean berkas"
+      "antrean keputusan";
+  }
+
+  .verif__queue {
+    grid-area: antrean;
+    position: sticky;
+    top: 5rem;                          /* 5rem = --layout-appbar-height (4rem) + 1rem */
+  }
+
+  .verif__main,
+  .verif__empty {
+    grid-area: berkas;
+  }
+
+  .verif__side {
+    grid-area: keputusan;
+  }
+
+  .queue {
+    max-height: calc(100vh - 20rem);
+  }
+}
+
+@media (min-width: 1400px) {
+  .verif {
+    grid-template-columns: 17rem minmax(0, 1fr) 21rem;
+    grid-template-areas: "antrean berkas keputusan";
+  }
+
+  .check-row {
+    grid-template-columns: auto auto minmax(0, 1fr);
+  }
+
+  .check-row__label {
+    grid-column: 1 / -1;
+  }
+
+  .doc {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -10,10 +10,10 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **0.3.3** |
+| Versi dokumen | **0.3.4** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1) · [referensi Stitch](img/referensi-stitch/) |
-| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–7 selesai. Berikutnya: Tahap 8 |
+| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–8 selesai. Berikutnya: Tahap 9 |
 
 ---
 
@@ -490,6 +490,7 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 - **Pertanyaan:** "Berkas siapa berikutnya, dan apakah sah?"
 - **Konten:** kiri: antrean (menunggu, terlama dulu; bisa dicari). Tengah: tab per berkas dengan panel pratinjau jujur (nama file, ukuran, keterangan "pratinjau tidak tersedia di versi simulasi"). Kanan: data isian pendaftar untuk dibandingkan, checklist per berkas (sesuai/tidak sesuai), catatan, tiga keputusan: **Terverifikasi** (filled), Perlu perbaikan (tonal), Tolak (outlined danger).
 - **Interaksi:** keputusan terverifikasi hanya aktif jika semua berkas wajib dicentang "sesuai". Catatan wajib untuk perbaikan/tolak (BR-08). Dialog konfirmasi untuk tolak. Setelah keputusan: snackbar, log, lanjut ke antrean berikutnya, badge menu berkurang. Parameter `?id=` untuk membuka pendaftar tertentu.
+- **Hasil Tahap 8:** antrean bisa dialihkan ke "Perlu perbaikan" (pemeriksaan ulang setelah berkas diperbaiki). Panel berkas memuat panduan "yang dicocokkan" per jenis berkas, isian pembanding yang relevan, dan pemeriksaan otomatis dari isian (usia, KK zonasi, kelengkapan berkas). Tata letak: 1 kolom < 840px, 2 kolom 840–1399px, 3 kolom ≥ 1400px.
 
 ### P-06 · `pages/hasil-seleksi.html` — Hasil & Peringkat (Tahap 9)
 - **Pertanyaan:** "Siapa yang masuk kuota saat ini, berapa batasnya, dan siapa yang tergeser?"
@@ -843,3 +844,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | 0.3.1 | 26 Sep 2026 | Hasil Tahap 4: chip tahap dihitung = "hari ke-11 dari 12" (teks lama "ke-9" salah hitung). Tambah BR-13 (ubah data terperiksa → verifikasi ulang). §10.1 folder `tests/`, §10.3 pembuat elemen aman `PPDB.ui.el`, §10.4 kunci `meta` & `login-gagal`, §12.1 uji otomatis | Nurdin & Claude |
 | 0.3.2 | 2 Okt 2026 | Hasil Tahap 6: tabel menjadi kartu di < 840px karena 6 kolom tidak muat bersama navigation rail (R-05, P-03, §9). P-03: semua status tampilan disimpan di URL, menu cadangan & reset. §9: komponen daftar info/berkas/riwayat dan menu tarik-turun. §10.1: fungsi `ui.js` | Nurdin & Claude |
 | 0.3.3 | 2 Okt 2026 | Hasil Tahap 7: ERD tambah `nilai_semester`; P-04 asal sekolah memakai `<select>` (bukan datalist), tahun lulus 2024–2026, penanganan data lama tanpa nilai semester | Nurdin & Claude |
+| 0.3.4 | 2 Okt 2026 | Hasil Tahap 8: P-05 antrean perlu perbaikan, panduan & pemeriksaan otomatis, titik henti tata letak | Nurdin & Claude |
