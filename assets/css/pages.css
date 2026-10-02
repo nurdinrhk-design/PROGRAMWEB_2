@@ -1118,3 +1118,155 @@
     min-width: 10rem;
   }
 }
+
+
+/* =====================================================================
+   REKAP & CETAK — pages/laporan.html (P-07)
+   ===================================================================== */
+.report-filter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-3);
+}
+
+.report-filter__reset {
+  justify-self: start;
+}
+
+.report-table__total th,
+.report-table__total td {
+  border-top: 2px solid var(--md-outline);
+  background-color: var(--md-surface-container-low);
+  font-weight: var(--weight-semibold);
+}
+
+.report-table__empty {
+  color: var(--md-on-surface-variant);
+  text-align: center;
+}
+
+@media (min-width: 600px) {
+  .report-filter {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  }
+
+  .report-filter__reset {
+    margin-top: 1.375rem;              /* sejajar kolom isian (tinggi label) */
+  }
+}
+
+
+/* =====================================================================
+   BUKTI PENDAFTARAN — pages/bukti.html (P-08)
+   Lembar meniru kertas A4 di layar; tata letak cetak di print.css
+   ===================================================================== */
+.sheet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  width: 100%;
+  max-width: 52rem;
+  margin-inline: auto;
+  padding: var(--space-6) var(--space-5);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--radius-md);
+  background-color: var(--md-surface-container-lowest);
+  box-shadow: var(--elevation-1);
+}
+
+.sheet__head,
+.print-head {
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--md-on-surface);
+  text-align: center;
+}
+
+.sheet__school,
+.print-head__school {
+  font-size: var(--type-title-md-size);
+  line-height: var(--type-title-md-line);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+}
+
+.sheet__sub,
+.print-head__sub {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+}
+
+.sheet__title {
+  font-size: var(--type-headline-sm-size);
+  line-height: var(--type-headline-sm-line);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.sheet__number {
+  margin-top: -1rem;                    /* rapat ke judul */
+  font-weight: var(--weight-semibold);
+  text-align: center;
+}
+
+.sheet__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3) var(--space-6);
+}
+
+.sheet__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.sheet__table th,
+.sheet__table td {
+  padding: var(--space-2) var(--space-3);
+}
+
+.sheet__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-inline-start: var(--space-5);
+  list-style: disc;
+}
+
+/* Tanda tangan kosong (tanpa tanda tangan/stempel palsu, D-17) */
+.print-sign {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-4);
+  text-align: center;
+}
+
+.print-sign__col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Garis tanda tangan selalu di dasar kolom agar kedua kolom sejajar */
+.print-sign__line {
+  margin-top: auto;
+  padding-top: var(--space-7);
+}
+
+.print-note {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  font-style: italic;
+  text-align: center;
+}
+
+@media (min-width: 600px) {
+  .sheet {
+    padding: var(--space-7);
+  }
+
+  .sheet__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

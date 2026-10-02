@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Ringkasan kerja panitia PPDB Online SMA Negeri 1 Harapan Bangsa (fiktif). Data simulasi.">
-  <title>Dashboard · PPDB Online</title>
+  <meta name="description" content="Bukti pendaftaran PPDB Online SMA Negeri 1 Harapan Bangsa (fiktif). Dokumen simulasi.">
+  <title>Bukti Pendaftaran · PPDB Online</title>
   <link rel="icon" href="../assets/img/logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,400,0..1,0&amp;display=block">
   <link rel="stylesheet" href="../assets/css/main.css">
 </head>
-<body data-page="dashboard" data-auth="required" data-root="../">
+<body data-page="data-master" data-auth="required" data-root="../">
   <noscript><p class="noscript-note">Admin Panel PPDB memerlukan JavaScript. Aktifkan JavaScript di browser Anda.</p></noscript>
   <a class="skip-link" href="#konten">Lewati ke konten utama</a>
 
@@ -109,10 +109,12 @@
         <div class="top-app-bar__heading">
           <nav aria-label="Breadcrumb">
             <ol class="breadcrumb">
-              <li><span aria-current="page">PPDB Online</span></li>
+              <li><a href="dashboard.html">PPDB Online</a></li>
+              <li><a href="data-master.html">Data Pendaftar</a></li>
+              <li><span aria-current="page">Bukti</span></li>
             </ol>
           </nav>
-          <p class="top-app-bar__title">Dashboard</p>
+          <p class="top-app-bar__title">Bukti Pendaftaran</p>
         </div>
 
         <div class="top-app-bar__actions">
@@ -140,88 +142,58 @@
 
       <!-- ===================== KONTEN ===================== -->
       <main class="content" id="konten" tabindex="-1">
-        <div class="page-header">
+        <div class="page-header no-print">
           <div>
-            <h1>Ringkasan</h1>
-            <p class="page-header__desc"><span data-hari-ini>Kamis, 18 Juni 2026</span> · pekerjaan hari ini dan kondisi setiap jalur.</p>
+            <h1>Bukti Pendaftaran</h1>
+            <p class="page-header__desc">Tanda terima untuk pendaftar. Cetak di kertas A4.</p>
           </div>
           <div class="page-header__actions">
-            <a class="btn btn--filled" href="verifikasi.html" data-mulai-verifikasi><span class="icon" aria-hidden="true">fact_check</span>Mulai verifikasi</a>
+            <a class="btn btn--text" href="data-master.html"><span class="icon" aria-hidden="true">arrow_back</span>Kembali ke data</a>
+            <button type="button" class="btn btn--filled" data-aksi="cetak"><span class="icon" aria-hidden="true">print</span>Cetak bukti</button>
           </div>
         </div>
 
-        <!-- 4 KPI: semua angka dari data (AS-02) -->
-        <section class="grid grid--kpi" aria-label="Angka utama" data-kpi></section>
+        <section class="card no-print" data-tidak-ditemukan hidden aria-labelledby="judul-tidak-ada">
+          <div class="empty">
+            <span class="icon" aria-hidden="true">person_off</span>
+            <h2 class="empty__title" id="judul-tidak-ada">Data pendaftar tidak ditemukan</h2>
+            <p>Buka bukti pendaftaran dari halaman Data Pendaftar atau Hasil &amp; Peringkat.</p>
+            <a class="btn btn--tonal" href="data-master.html">Buka Data Pendaftar</a>
+          </div>
+        </section>
 
-        <div class="grid grid--main-side">
-          <section class="card" aria-labelledby="judul-grafik">
-            <div class="card__header">
-              <div>
-                <h2 class="card__title" id="judul-grafik">Pendaftar per hari</h2>
-                <p class="card__subtitle" data-subjudul-grafik></p>
-              </div>
-            </div>
-            <figure class="chart">
-              <div class="chart__canvas" data-wadah-grafik>
-                <canvas id="grafik-harian" role="img" aria-label="Grafik batang pendaftar per hari menurut jalur. Datanya ada di tabel di bawah grafik."></canvas>
-              </div>
-              <p class="chart__fallback text-body-sm text-variant" data-grafik-gagal hidden>Grafik tidak dapat dimuat (koneksi ke CDN gagal). Data ditampilkan sebagai tabel.</p>
-              <details class="chart__data" data-detail-tabel>
-                <summary>Lihat data dalam tabel</summary>
-                <div class="table-wrap">
-                  <table class="table chart__table">
-                    <caption class="sr-only">Pendaftar per hari menurut jalur</caption>
-                    <thead data-thead-grafik></thead>
-                    <tbody data-tbody-grafik></tbody>
-                  </table>
-                </div>
-              </details>
-            </figure>
+        <article class="sheet" data-lembar hidden aria-labelledby="judul-bukti">
+          <header class="sheet__head">
+            <p class="sheet__school" data-kop-sekolah>SMA Negeri 1 Harapan Bangsa (fiktif)</p>
+            <p class="sheet__sub" data-kop-sub>Panitia PPDB · Tahun Ajaran 2026/2027</p>
+          </header>
+          <h2 class="sheet__title" id="judul-bukti">Bukti Pendaftaran PPDB</h2>
+          <p class="sheet__number num" data-no-daftar>PPDB-2026-0000</p>
+
+          <div class="sheet__grid">
+            <dl class="info-list" data-identitas></dl>
+            <dl class="info-list" data-seleksi></dl>
+          </div>
+
+          <section class="sheet__section" aria-labelledby="judul-berkas-bukti">
+            <h3 class="detail__heading" id="judul-berkas-bukti">Berkas</h3>
+            <table class="table sheet__table">
+              <thead><tr><th scope="col">Berkas</th><th scope="col">Nama berkas</th><th scope="col">Hasil cek</th></tr></thead>
+              <tbody data-berkas></tbody>
+            </table>
           </section>
 
-          <section class="card" aria-labelledby="judul-antrean">
-            <div class="card__header">
-              <div>
-                <h2 class="card__title" id="judul-antrean">Antrean verifikasi</h2>
-                <p class="card__subtitle">Paling lama menunggu</p>
-              </div>
-            </div>
-            <ol class="mini-queue" data-antrean></ol>
-            <a class="btn btn--text" href="verifikasi.html" data-lihat-antrean>Lihat semua antrean</a>
-          </section>
-        </div>
-
-        <div class="grid grid--main-side">
-          <section class="card card--flush" aria-labelledby="judul-jalur">
-            <div class="card__header">
-              <div>
-                <h2 class="card__title" id="judul-jalur">Keterisian &amp; keketatan per jalur</h2>
-                <p class="card__subtitle">Keketatan = terverifikasi ÷ kuota. Batas sementara dari peringkat terakhir yang masuk kuota.</p>
-              </div>
-            </div>
-            <div class="table-wrap">
-              <table class="table table--stack lane-table">
-                <caption class="sr-only">Keterisian dan keketatan setiap jalur</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Jalur</th>
-                    <th scope="col" class="table__num">Kuota</th>
-                    <th scope="col" class="table__num">Terverifikasi</th>
-                    <th scope="col" class="table__num">Keketatan</th>
-                    <th scope="col" class="table__num">Batas sementara</th>
-                    <th scope="col">Keterisian</th>
-                  </tr>
-                </thead>
-                <tbody data-jalur></tbody>
-              </table>
-            </div>
+          <section class="sheet__section" aria-labelledby="judul-jadwal-bukti">
+            <h3 class="detail__heading" id="judul-jadwal-bukti">Jadwal berikutnya</h3>
+            <ul class="sheet__list" data-jadwal></ul>
           </section>
 
-          <section class="card" aria-labelledby="judul-jadwal">
-            <h2 class="card__title" id="judul-jadwal">Jadwal PPDB 2026</h2>
-            <ol class="agenda" data-jadwal></ol>
-          </section>
-        </div>
+          <div class="print-sign">
+            <div class="print-sign__col"><p>Pendaftar / Orang tua</p><p class="print-sign__line">(..............................)</p></div>
+            <div class="print-sign__col"><p data-tgl-cetak>Kota Nusantara,</p><p>Petugas panitia</p><p class="print-sign__line">(..............................)</p></div>
+          </div>
+          <p class="print-note">Dokumen simulasi untuk tugas Pemrograman Web 2, bukan dokumen resmi.</p>
+        </article>
       </main>
 
       <footer class="app-footer">
@@ -235,7 +207,6 @@
   <script src="../assets/js/core/store.js"></script>
   <script src="../assets/js/core/ui.js"></script>
   <script src="../assets/js/core/shell.js"></script>
-  <!-- Chart.js 4.5.1 dimuat oleh dashboard.js (asinkron + SRI) agar angka tampil tanpa menunggu CDN -->
-  <script src="../assets/js/pages/dashboard.js"></script>
+  <script src="../assets/js/pages/bukti.js"></script>
 </body>
 </html>

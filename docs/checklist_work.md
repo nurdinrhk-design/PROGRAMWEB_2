@@ -27,8 +27,8 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **Tahap 11 — Laporan & Bukti Pendaftaran** (berikutnya) |
-| **Tahap terakhir selesai** | Tahap 10 — Dashboard (2 Okt 2026) |
+| **Tahap aktif** | **Tahap 12 — QA Menyeluruh** (berikutnya) |
+| **Tahap terakhir selesai** | Tahap 11 — Laporan & Bukti Pendaftaran (2 Okt 2026) |
 | **Menunggu dari pengembang** | Kirim tautan M1 & M2 ke LMS (2.8, 3.8) |
 
 ## Ringkasan Progres
@@ -45,10 +45,10 @@
 | [8](#tahap-8--verifikasi-berkas) | Verifikasi Berkas | M3 | 5 | 5 | 0 | 100% |
 | [9](#tahap-9--hasil--peringkat) | Hasil & Peringkat | M3 | 5 | 5 | 0 | 100% |
 | [10](#tahap-10--dashboard) | Dashboard | M3 | 4 | 4 | 0 | 100% |
-| [11](#tahap-11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 5 | 0 | 5 | 0% |
+| [11](#tahap-11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 5 | 5 | 0 | 100% |
 | [12](#tahap-12--qa-menyeluruh) | QA menyeluruh | M3 | 7 | 0 | 7 | 0% |
 | [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 1 | 6 | 14% |
-| | **Total** | | **86** | **66** | **20** | **77%** |
+| | **Total** | | **86** | **71** | **15** | **83%** |
 
 **Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 🔄 Tahap 4–5 selesai
 
@@ -206,11 +206,11 @@ Ref: [perencanaan P-07](perencanaan.md#p-07--pageslaporanhtml--rekap--cetak-taha
 
 | No | Langkah | Ref | Status | Catatan |
 |---|---|---|---|---|
-| 11.1 | Laporan: filter periode & jalur + validasi rentang tanggal | P-07, FR-14, TC-19 | ⬜ | |
-| 11.2 | Rekap per jalur, 10 sekolah asal terbanyak, rekap harian, log aktivitas | FR-14, BR-12 | ⬜ | |
-| 11.3 | Tata letak cetak A4 (kop fiktif, tanda tangan kosong) + ekspor CSV | FR-15, FR-16, D-17, TC-20 | ⬜ | |
-| 11.4 | Bukti pendaftaran + cetak + pesan jika `id` tidak ditemukan | P-08, FR-15, AS-06 | ⬜ | |
-| 11.5 | Penutupan | §11.3 | ⬜ | |
+| 11.1 | Laporan: filter periode & jalur + validasi rentang tanggal | P-07, FR-14, TC-19 | ✅ | Filter tanggal daftar (dibatasi 8–18 Jun) + jalur, berlaku langsung saat diubah. Rentang terbalik/di luar masa pendaftaran → pesan di kolom, rekap tetap memakai rentang valid terakhir (TC-19 ✅). Filter tersimpan di URL, tombol "Seluruh periode" |
+| 11.2 | Rekap per jalur, 10 sekolah asal terbanyak, rekap harian, log aktivitas | FR-14, BR-12 | ✅ | Rekap per jalur (kuota, pendaftar, 4 status, keketatan) + baris total, 10 sekolah asal terbanyak, pendaftar per hari + kumulatif, log aktivitas pada periode (BR-12). Semua dari data |
+| 11.3 | Tata letak cetak A4 (kop fiktif, tanda tangan kosong) + ekspor CSV | FR-15, FR-16, D-17, TC-20 | ✅ | `print.css` (A4, margin 15/14 mm): navigasi, filter, tombol disembunyikan; kop fiktif tanpa lambang dari data sekolah; tanda tangan kosong (nama petugas login terisi) + catatan "dokumen simulasi"; tabel kartu kembali jadi tabel; baris tidak terpotong. Warna cetak tetap dari token. Ekspor CSV rekap sesuai filter (TC-21 ✅). PDF uji: rekap 2 halaman (TC-20 ✅) |
+| 11.4 | Bukti pendaftaran + cetak + pesan jika `id` tidak ditemukan | P-08, FR-15, AS-06 | ✅ | Bukti: kop fiktif, nomor, identitas, jalur & jarak/skor, status verifikasi + peringkat sementara, tabel berkas & hasil cek, jadwal (+ catatan perbaikan bila ada), tanda tangan kosong. Tanpa gambar/QR/barcode/stempel. PDF uji muat 1 halaman A4. `id` tidak ada → pesan + tombol cetak disembunyikan. Ditaut dari detail Data Pendaftar & Hasil & Peringkat |
+| 11.5 | Penutupan | §11.3 | ✅ | Uji laporan & bukti 12/12 + regresi (inti 34, Data Pendaftar 36, form 26, verifikasi 22, hasil 12, dashboard 10), konsol bersih. 5 lebar layar tanpa scroll horizontal. W3C HTML 0 pesan, CSS 0 error (termasuk `print.css`). Uji Anti-Slop 7/7. Audit S-01…S-07 lulus |
 
 ---
 
@@ -249,9 +249,9 @@ Ref: [perencanaan §12](perencanaan.md#12-strategi-pengujian), [§5.3 NFR](peren
 | TC-16 | Perbaikan/tolak tanpa catatan | 8 | ✅ Tahap 8 (2 Okt) | ⬜ |
 | TC-17 | Verifikasi mengubah peringkat | 4, 9 | ✅ Tahap 4 (26 Sep, uji otomatis) · Tahap 8 (2 Okt, lewat halaman) | ⬜ |
 | TC-18 | Cari nama di peringkat | 9 | ✅ Tahap 9 (2 Okt) | ⬜ |
-| TC-19 | Rentang tanggal laporan terbalik | 11 | – | ⬜ |
-| TC-20 | Cetak laporan & bukti | 11 | – | ⬜ |
-| TC-21 | Ekspor CSV | 6, 9, 11 | ✅ Tahap 6 (data pendaftar) · Tahap 9 (peringkat) | ⬜ |
+| TC-19 | Rentang tanggal laporan terbalik | 11 | ✅ Tahap 11 (2 Okt) | ⬜ |
+| TC-20 | Cetak laporan & bukti | 11 | ✅ Tahap 11 (2 Okt, emulasi cetak + PDF A4) | ⬜ |
+| TC-21 | Ekspor CSV | 6, 9, 11 | ✅ Tahap 6 (data pendaftar) · 9 (peringkat) · 11 (rekap) | ⬜ |
 | TC-22 | Reset data simulasi | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
 | TC-23 | Logout | 5 | ✅ Tahap 6 (2 Okt) | ⬜ |
 
@@ -427,6 +427,13 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-119 | 2 Okt 2026 | UPDATE | `assets/css/pages.css` | 10.1–10.3 | Blok Dashboard: tautan KPI, grafik, antrean ringkas, keterisian, jadwal |
 | F-120 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md`, `README.md` | 10.4 | v0.3.6: catatan hasil Tahap 10 di P-02. README: fitur dashboard, versi Chart.js |
 | F-121 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 10.4 | Tahap 10 selesai (4/4), TC-01/05, progres 66/86 |
+| F-122 | 2 Okt 2026 | CREATE | `pages/laporan.html`, `assets/js/pages/laporan.js` | 11.1–11.3 | Rekap & Cetak: filter + validasi rentang, 4 bagian rekap, log, CSV, cetak dengan kop & tanda tangan kosong |
+| F-123 | 2 Okt 2026 | CREATE | `pages/bukti.html`, `assets/js/pages/bukti.js` | 11.4 | Bukti pendaftaran siap cetak + pesan bila `id` tidak ada |
+| F-124 | 2 Okt 2026 | CREATE | `assets/css/print.css` | 11.3 | Tata letak cetak A4 (warna dari token) |
+| F-125 | 2 Okt 2026 | UPDATE | `assets/css/main.css`, `pages.css` | 11.3 | Impor `print.css`; blok Rekap & Bukti (lembar A4 di layar, tanda tangan sejajar) |
+| F-126 | 2 Okt 2026 | UPDATE | `pages/dashboard.html`, `assets/js/pages/dashboard.js` | 11.5 | Chart.js kini dimuat asinkron oleh skrip (SRI tetap) setelah angka tampil; gagal/lebih dari 8 detik → tabel pengganti. Temuan regresi: CDN lambat sempat menahan seluruh dashboard |
+| F-127 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md`, `README.md` | 11.5 | v0.3.7: catatan hasil Tahap 11, pemuatan Chart.js asinkron. README: fitur rekap & bukti |
+| F-128 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 11.5 | Tahap 11 selesai (5/5), TC-19/20/21, progres 71/86 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -437,17 +444,17 @@ PROGRAMWEB_2/
 ├── index.html                   (halaman masuk)
 ├── tests/                       (uji otomatis modul inti)
 ├── assets/
-│   ├── css/  main.css · tokens.css · base.css · layout.css · components.css · pages.css
+│   ├── css/  main.css · tokens.css · base.css · layout.css · components.css · pages.css · print.css
 │   ├── js/core/  rules.js · seed.js · store.js · ui.js · shell.js
-│   ├── js/pages/ login.js · dashboard.js · data-master.js · form.js · verifikasi.js · hasil-seleksi.js
+│   ├── js/pages/ login.js · dashboard.js · data-master.js · form.js · verifikasi.js · hasil-seleksi.js · laporan.js · bukti.js
 │   └── img/  logo.svg
 ├── docs/
-│   ├── perencanaan.md          (v0.3.6)
+│   ├── perencanaan.md          (v0.3.7)
 │   ├── checklist_work.md       (v0.3)
 │   ├── perancangan.md          (M1)
 │   ├── styleguide.html / .css / .js   (etalase design system, M2)
 │   └── img/referensi-stitch/   (8 screenshot)
-└── pages/  dashboard.html · data-master.html · form.html · verifikasi.html · hasil-seleksi.html
+└── pages/  dashboard.html · data-master.html · form.html · verifikasi.html · hasil-seleksi.html · laporan.html · bukti.html
 ```
 
 ---
@@ -508,3 +515,4 @@ Satu baris per sesi kerja.
 | 2 Okt 2026 | 8.1–8.5 | **Tahap 8: Verifikasi Berkas.** Halaman 3 panel lengkap dengan aturan keputusan. Temuan uji tampilan: label cek berkas terjepit di panel sempit (360 px & 3 kolom) → label dipindah ke atas pilihan; judul kosong sebelum JS (info validator) → diberi teks awal. Semua diuji ulang. Audit keamanan lulus | ✅ (F-107…F-111) |
 | 2 Okt 2026 | 9.1–9.5 | **Tahap 9: Hasil & Peringkat.** Temuan uji: tombol pindah jalur belum menyorot baris & spasi berlebih di teks ringkasan (diperbaiki); angka di kolom numerik tabel tidak rata kanan di semua halaman (bug komponen, diperbaiki). Alur verifikasi → peringkat berubah diuji lintas halaman. Audit keamanan lulus | ✅ (F-112…F-116) |
 | 2 Okt 2026 | 10.1–10.4 | **Tahap 10: Dashboard.** Hash SRI dihitung dari berkas Chart.js asli (bukan disalin dari internet). Uji lintas halaman: login → dashboard, KPI = tab Data Pendaftar, CDN diblokir → tabel pengganti. Penyesuaian: penanda `aria-current` dihapus dari jadwal karena dua tahap bisa berlangsung bersamaan (teks "Berlangsung" sudah cukup). Audit keamanan lulus | ✅ (F-117…F-121) |
+| 2 Okt 2026 | 11.1–11.5 | **Tahap 11: Laporan & Bukti.** Cetak diuji dengan emulasi media print + PDF A4 (rekap 2 hlm, bukti 1 hlm) dan diperiksa visual. Perbaikan: sel nama jalur memakai kelas blok (merusak baris tabel), garis tanda tangan tidak sejajar. **Temuan regresi penting:** dashboard menunggu Chart.js dari CDN sebelum menampilkan angka → Chart.js dimuat asinkron dengan SRI + batas 8 detik. Harness uji diberi batas 30 detik per perintah CDP. Audit keamanan lulus | ✅ (F-122…F-128) |

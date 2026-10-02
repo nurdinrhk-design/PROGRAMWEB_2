@@ -1,0 +1,157 @@
+/* =====================================================================
+   print.css — Tata letak cetak A4 (FR-15, Tahap 11)
+   Dipakai Rekap & Cetak dan Bukti Pendaftaran. Navigasi & tombol
+   disembunyikan; kop fiktif dan kolom tanda tangan kosong ditampilkan.
+   ===================================================================== */
+
+/* Elemen khusus cetak tidak tampil di layar */
+.print-only {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 15mm 14mm;
+  }
+
+  html,
+  body {
+    background: var(--md-surface-container-lowest);
+    color: var(--md-on-surface);
+    font-size: 11pt;
+  }
+
+  .skip-link,
+  .nav-drawer,
+  .top-app-bar,
+  .app-footer,
+  .snackbar-host,
+  .no-print,
+  .scrim {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block;
+  }
+
+  .print-only.print-sign {
+    display: grid;
+  }
+
+  .app,
+  .app__main {
+    display: block;
+  }
+
+  .content {
+    max-width: none;
+    padding: 0;
+    gap: 6mm;
+  }
+
+  .page-header {
+    display: block;
+  }
+
+  /* Kartu jadi blok polos agar hemat tinta */
+  .card,
+  .sheet {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: none;
+  }
+
+  .card--flush .card__header {
+    padding: 0 0 2mm;
+  }
+
+  .card__title {
+    font-size: 13pt;
+  }
+
+  .grid {
+    display: block;
+  }
+
+  .grid > * + * {
+    margin-top: 6mm;
+  }
+
+  /* Tabel tetap tabel (bukan kartu) dan tidak terpotong di tengah baris */
+  .table-wrap {
+    overflow: visible;
+  }
+
+  .table--stack thead {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+  }
+
+  .table--stack {
+    display: table;
+  }
+
+  .table--stack tbody {
+    display: table-row-group;
+  }
+
+  .table--stack tr {
+    display: table-row;
+    padding: 0;
+  }
+
+  .table--stack td {
+    display: table-cell;
+    width: auto;
+    padding: 1.5mm 2mm;
+    border-bottom: 0.2mm solid var(--md-outline);
+  }
+
+  .table--stack td::before {
+    content: none;
+  }
+
+  .table th,
+  .table td {
+    padding: 1.5mm 2mm;
+    border-bottom: 0.2mm solid var(--md-outline);
+  }
+
+  .table thead th {
+    background: var(--md-surface-container);
+    color: var(--md-on-surface);
+  }
+
+  tr,
+  .report-section,
+  .print-sign {
+    break-inside: avoid;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  a {
+    color: var(--md-on-surface);
+    text-decoration: none;
+  }
+
+  .badge,
+  .chip {
+    border-color: var(--md-outline);
+    background: none;
+    color: var(--md-on-surface);
+  }
+
+  .print-note {
+    margin-top: 6mm;
+  }
+}

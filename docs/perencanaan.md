@@ -10,10 +10,10 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **0.3.6** |
+| Versi dokumen | **0.3.7** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1) · [referensi Stitch](img/referensi-stitch/) |
-| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–10 selesai. Berikutnya: Tahap 11 |
+| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–11 selesai. Berikutnya: Tahap 12 |
 
 ---
 
@@ -469,7 +469,7 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
   5. Antrean verifikasi: 5 pendaftar yang paling lama menunggu.
   6. Jadwal PPDB (tahap aktif ditandai).
 - **Anti-slop:** tanpa banner hero, "real-time", agenda palsu, atau metrik teknis.
-- **Hasil Tahap 10:** setiap KPI menaut ke Data Pendaftar dengan filter status yang sama (TC-05). Grafik batang bertumpuk per jalur memakai Chart.js 4.5.1 + SRI; datanya selalu tersedia sebagai tabel dan menjadi pengganti bila CDN gagal (R-03).
+- **Hasil Tahap 10:** setiap KPI menaut ke Data Pendaftar dengan filter status yang sama (TC-05). Grafik batang bertumpuk per jalur memakai Chart.js 4.5.1 + SRI yang dimuat asinkron setelah angka tampil; datanya selalu tersedia sebagai tabel dan menjadi pengganti bila CDN gagal atau lebih dari 8 detik (R-03).
 
 ### P-03 · `pages/data-master.html` — Data Pendaftar (Tahap 6)
 - **Pertanyaan:** "Di mana data pendaftar X, dan bagaimana kondisinya?"
@@ -508,6 +508,7 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 - **Pertanyaan:** "Dokumen apa yang diberikan ke pendaftar sebagai tanda terima?"
 - **Konten:** kop fiktif, identitas pendaftar, jalur & jarak/skor, status verifikasi, daftar berkas & hasil cek, jadwal pengumuman & daftar ulang, kolom tanda tangan kosong, catatan kaki "Dokumen simulasi — bukan dokumen resmi".
 - **Interaksi:** tombol cetak, kembali. Pesan jelas jika `id` tidak ditemukan.
+- **Hasil Tahap 11:** bukti memuat peringkat sementara (bila terverifikasi) dan catatan perbaikan terakhir (bila perlu perbaikan). Muat 1 halaman A4. Rekap & Cetak: filter dibatasi masa pendaftaran, rentang tidak valid tidak mengubah rekap yang tampil, nama petugas yang login tercetak di kolom tanda tangan (tanpa tanda tangan).
 
 ---
 
@@ -849,3 +850,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | 0.3.4 | 2 Okt 2026 | Hasil Tahap 8: P-05 antrean perlu perbaikan, panduan & pemeriksaan otomatis, titik henti tata letak | Nurdin & Claude |
 | 0.3.5 | 2 Okt 2026 | Hasil Tahap 9: P-06 penjelasan hasil cari di luar peringkat, perilaku saat kuota belum penuh | Nurdin & Claude |
 | 0.3.6 | 2 Okt 2026 | Hasil Tahap 10: P-02 tautan KPI, grafik per jalur + tabel pengganti | Nurdin & Claude |
+| 0.3.7 | 2 Okt 2026 | Hasil Tahap 11: catatan P-07 & P-08; P-02 Chart.js dimuat asinkron (temuan regresi) | Nurdin & Claude |

@@ -2,8 +2,7 @@
    main.css — Satu-satunya stylesheet yang ditautkan dari HTML.
    Urutan impor TETAP (lihat docs/perencanaan.md §10.1):
    token → base → layout → komponen → halaman → print
-   File print ditambahkan di Tahap 11 agar tidak ada impor ke file
-   yang belum ada.
+   print.css ditambahkan di Tahap 11 (cetak A4).
    ===================================================================== */
 
 @import url("tokens.css");
@@ -11,3 +10,4 @@
 @import url("layout.css");
 @import url("components.css");
 @import url("pages.css");
+@import url("print.css");

@@ -2,8 +2,8 @@
    dashboard.js — Dashboard (P-02, Tahap 10)
    FR-03 KPI · FR-04 grafik pendaftar per hari · FR-05 keketatan jalur
    FR-06 antrean terlama & jadwal. Semua angka dari data (AS-02).
-   Chart.js dimuat dari CDN dengan SRI; jika gagal, data tetap tersedia
-   sebagai tabel (R-03).
+   Chart.js dimuat asinkron dari CDN (versi dikunci + SRI) SETELAH angka
+   tampil. Jika CDN gagal/lambat, data tetap tersedia sebagai tabel (R-03).
    ===================================================================== */
 (function (window, document) {
   'use strict';
@@ -18,6 +18,14 @@
   var $ = function (sel) { return document.querySelector(sel); };
 
   var grafik = null;
+  var statusChart = 'memuat';   // memuat | siap | gagal
+
+  // Chart.js 4.5.1 — hash SRI dihitung dari berkas asli (D-06, D-19)
+  var CHART_JS = {
+    src: 'https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js',
+    integrity: 'sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ'
+  };
+  var BATAS_TUNGGU_MS = 8000;
 
   function hari(iso) { return iso.slice(0, 10); }
 
@@ -111,8 +119,9 @@
       ' · hari ke-' + total + ' pendaftaran, menurut jalur';
     renderTabelGrafik(data);
 
-    if (typeof window.Chart !== 'function') {
-      // CDN gagal / diblokir: tampilkan tabel sebagai pengganti grafik
+    if (statusChart === 'memuat') return;           // digambar saat Chart.js siap
+    if (statusChart === 'gagal' || typeof window.Chart !== 'function') {
+      // CDN gagal / diblokir / terlalu lama: tabel menjadi pengganti grafik
       $('[data-wadah-grafik]').hidden = true;
       $('[data-grafik-gagal]').hidden = false;
       $('[data-detail-tabel]').open = true;
@@ -233,7 +242,25 @@
     renderJadwal();
   }
 
+  function muatChartJs() {
+    if (typeof window.Chart === 'function') { statusChart = 'siap'; renderGrafik(); return; }
+    var selesai = function (status) {
+      if (statusChart !== 'memuat') return;
+      statusChart = status;
+      renderGrafik();
+    };
+    var s = document.createElement('script');
+    s.src = CHART_JS.src;
+    s.integrity = CHART_JS.integrity;
+    s.crossOrigin = 'anonymous';
+    s.onload = function () { selesai(typeof window.Chart === 'function' ? 'siap' : 'gagal'); };
+    s.onerror = function () { selesai('gagal'); };
+    document.head.appendChild(s);
+    window.setTimeout(function () { selesai('gagal'); }, BATAS_TUNGGU_MS);
+  }
+
   $('[data-hari-ini]').textContent = U.tanggalPanjang(R.TANGGAL_SIMULASI);
   window.addEventListener('ppdb:change', render);
-  render();
+  render();        // angka, tabel, antrean, jadwal langsung tampil
+  muatChartJs();   // grafik menyusul
 })(window, document);

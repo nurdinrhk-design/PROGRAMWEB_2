@@ -42,9 +42,11 @@ Rincian progres setiap tugas ada di [docs/checklist_work.md](docs/checklist_work
 - Form tambah/ubah pendaftar 4 langkah: validasi aturan PPDB (NISN unik, usia, KK zonasi, nilai, berkas), berkas wajib mengikuti jalur, rata-rata rapor otomatis, ringkasan sebelum simpan, dan peringatan jika keluar sebelum menyimpan.
 - Verifikasi berkas: antrean terlama dulu, cek per berkas dengan data pembanding, keputusan Terverifikasi/Perlu perbaikan/Tolak dengan catatan wajib, lalu otomatis lanjut ke pendaftar berikutnya.
 - Hasil & peringkat per jalur: kuota, keketatan, batas sementara, garis batas kuota di tabel, cari nama yang langsung disorot, dan ekspor CSV.
+- Rekap & Cetak: filter periode dan jalur, rekap per jalur, 10 asal sekolah terbanyak, rekap harian, log aktivitas, ekspor CSV, dan cetak A4 dengan kop fiktif.
+- Bukti pendaftaran siap cetak A4 (tanpa lambang, stempel, atau tanda tangan palsu).
 
 **Direncanakan (Milestone 3)**
-- Rekap siap cetak dan bukti pendaftaran.
+- Rilis online di GitHub Pages dengan pengamanan tambahan (Tahap 13).
 
 ## Teknologi
 
@@ -74,6 +76,8 @@ Proyek ini tidak memerlukan instalasi atau proses build.
    - `pages/form.html`: tambah pendaftar, atau `pages/form.html?id=pd-0001` untuk mengubah data.
    - `pages/verifikasi.html`: verifikasi berkas dari antrean.
    - `pages/hasil-seleksi.html`: peringkat sementara per jalur.
+   - `pages/laporan.html`: rekap & cetak.
+   - `pages/bukti.html?id=pd-0001`: bukti pendaftaran.
    - `layout.html`: template dasar Admin Panel. Coba ubah lebar jendela browser.
    - `docs/styleguide.html`: etalase design system dan hasil uji kontras.
 
