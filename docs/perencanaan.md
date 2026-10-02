@@ -10,10 +10,10 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **0.3.7** |
+| Versi dokumen | **0.3.8** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1) · [referensi Stitch](img/referensi-stitch/) |
-| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–11 selesai. Berikutnya: Tahap 12 |
+| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–12 selesai. Berikutnya: Tahap 13 |
 
 ---
 
@@ -851,3 +851,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | 0.3.5 | 2 Okt 2026 | Hasil Tahap 9: P-06 penjelasan hasil cari di luar peringkat, perilaku saat kuota belum penuh | Nurdin & Claude |
 | 0.3.6 | 2 Okt 2026 | Hasil Tahap 10: P-02 tautan KPI, grafik per jalur + tabel pengganti | Nurdin & Claude |
 | 0.3.7 | 2 Okt 2026 | Hasil Tahap 11: catatan P-07 & P-08; P-02 Chart.js dimuat asinkron (temuan regresi) | Nurdin & Claude |
+| 0.3.8 | 2 Okt 2026 | Hasil Tahap 12: CSP `<meta>` terpasang di semua halaman (bagian D-19 yang dikerjakan lebih awal; `noindex`, `referrer`, 404 tetap di Tahap 13). QA: Chrome & Edge, Lighthouse 100/100, 23 TC lulus | Nurdin & Claude |

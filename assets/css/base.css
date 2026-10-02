@@ -191,10 +191,6 @@ a:hover {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 20;
 }
 
-.icon--filled {
-  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
-}
-
 /* ---------- Utilitas ---------- */
 .sr-only {
   position: absolute;

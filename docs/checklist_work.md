@@ -27,9 +27,9 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **Tahap 12 — QA Menyeluruh** (berikutnya) |
-| **Tahap terakhir selesai** | Tahap 11 — Laporan & Bukti Pendaftaran (2 Okt 2026) |
-| **Menunggu dari pengembang** | Kirim tautan M1 & M2 ke LMS (2.8, 3.8) |
+| **Tahap aktif** | **Tahap 13 — Rilis & Online** (berikutnya) |
+| **Tahap terakhir selesai** | Tahap 12 — QA Menyeluruh (2 Okt 2026) |
+| **Menunggu dari pengembang** | Kirim tautan M1 & M2 ke LMS (2.8, 3.8) · cek sekilas di Firefox (tidak terpasang di laptop ini) |
 
 ## Ringkasan Progres
 
@@ -46,9 +46,9 @@
 | [9](#tahap-9--hasil--peringkat) | Hasil & Peringkat | M3 | 5 | 5 | 0 | 100% |
 | [10](#tahap-10--dashboard) | Dashboard | M3 | 4 | 4 | 0 | 100% |
 | [11](#tahap-11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 5 | 5 | 0 | 100% |
-| [12](#tahap-12--qa-menyeluruh) | QA menyeluruh | M3 | 7 | 0 | 7 | 0% |
+| [12](#tahap-12--qa-menyeluruh) | QA menyeluruh | M3 | 7 | 7 | 0 | 100% |
 | [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 1 | 6 | 14% |
-| | **Total** | | **86** | **71** | **15** | **83%** |
+| | **Total** | | **86** | **78** | **8** | **91%** |
 
 **Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 🔄 Tahap 4–5 selesai
 
@@ -219,41 +219,41 @@ Ref: [perencanaan §12](perencanaan.md#12-strategi-pengujian), [§5.3 NFR](peren
 
 | No | Langkah | Ref | Status | Catatan |
 |---|---|---|---|---|
-| 12.1 | Responsif 5 lebar layar + Chrome, Edge, Firefox | NFR-01, A-03 | ⬜ | |
-| 12.2 | W3C HTML & CSS semua halaman + console bersih + audit semantik | NFR-02, NFR-03, NFR-06 | ⬜ | |
-| 12.3 | Aksesibilitas: keyboard, fokus, kontras, Lighthouse ≥ 90 | NFR-04 | ⬜ | |
-| 12.4 | Keamanan front-end: uji input berbahaya (XSS), CSP | D-18, D-19 | ⬜ | |
-| 12.5 | 23 kasus uji fungsional (tabel di bawah) | §12.2 | ⬜ | |
-| 12.6 | Uji Anti-Slop ulang, 0 warna di luar token, rapikan & hapus kode mati | NFR-05, NFR-07, NFR-08 | ⬜ | |
-| 12.7 | Penutupan | §11.3 | ⬜ | |
+| 12.1 | Responsif 5 lebar layar + Chrome, Edge, Firefox | NFR-01, A-03 | ✅ | Chrome & Edge: 7 suite uji (152 uji) lulus di keduanya, konsol bersih. 8 halaman × 5 lebar (360–1440) tanpa scroll horizontal & teks terpotong (Edge). **Firefox tidak terpasang di laptop ini → perlu dicek manual oleh pengembang (👤)** |
+| 12.2 | W3C HTML & CSS semua halaman + console bersih + audit semantik | NFR-02, NFR-03, NFR-06 | ✅ | W3C: 11 HTML 0 error/0 warning (pesan "info" CSP hanya karena validator tanpa alamat asal), 8 CSS 0 error. Konsol bersih di semua halaman (Chrome & Edge). Semantik & urutan heading lolos audit Lighthouse |
+| 12.3 | Aksesibilitas: keyboard, fokus, kontras, Lighthouse ≥ 90 | NFR-04 | ✅ | Lighthouse 12 (lewat server lokal 127.0.0.1, cache npm sementara lalu dihapus): **8 halaman aksesibilitas 100, praktik terbaik 100**. Keyboard: tautan lewati-ke-konten, cincin fokus, drawer modal (fokus masuk, `inert`, Esc, fokus kembali). Kontras: 17 pasangan token lolos (Tahap 2) |
+| 12.4 | Keamanan front-end: uji input berbahaya (XSS), CSP | D-18, D-19 | ✅ | **CSP `<meta>` di 11 halaman** (skrip lokal + jsDelivr, font Google, tanpa inline, `object-src none`, `base-uri none`): 0 pelanggaran. XSS: isian berbahaya di nama/alamat/prestasi/URL tidak tereksekusi di 8 tampilan. Open-redirect (4 pola), sesi palsu/kedaluwarsa, penguncian 5× gagal: lulus |
+| 12.5 | 23 kasus uji fungsional (tabel di bawah) | §12.2 | ✅ | 23/23 TC lulus di Chrome & Edge (kolom "Hasil QA"). Uji QA tambahan 27/27 (TC-02, TC-04, keamanan, CSP) |
+| 12.6 | Uji Anti-Slop ulang, 0 warna di luar token, rapikan & hapus kode mati | NFR-05, NFR-07, NFR-08 | ✅ | Pemindai: 0 warna HEX di luar `tokens.css`, 0 fungsi JS tak terpakai, 0 ekspor modul tak terpakai, 0 `console.log`/TODO. 3 kelas CSS mati dihapus (`icon--filled`, `card__footer`, `alert--success`). Uji Anti-Slop 7/7 di 9 halaman |
+| 12.7 | Penutupan | §11.3 | ✅ | Uji ulang setelah perubahan, audit S-01…S-07 lulus, dicatat |
 
 **Hasil kasus uji** (kolom "Pertama diuji" diisi di tahap terkait, "Hasil QA" di langkah 12.5):
 
 | TC | Skenario ringkas | Tahap terkait | Pertama diuji | Hasil QA |
 |---|---|---|---|---|
-| TC-01 | Login benar | 5 | ✅ Tahap 5 (26 Sep) · Tahap 10 (sampai dashboard) | ⬜ |
-| TC-02 | Login kosong/salah | 5 | ✅ Tahap 5 (26 Sep) | ⬜ |
-| TC-03 | Halaman admin tanpa sesi | 4, 5 | ✅ Tahap 6 (2 Okt) | ⬜ |
-| TC-04 | Drawer/rail/modal per lebar layar | 3 | ✅ Tahap 3 (23 Sep) | ⬜ |
-| TC-05 | KPI = jumlah di Data Pendaftar | 10 | ✅ Tahap 10 (2 Okt) | ⬜ |
-| TC-06 | Cari NISN | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
-| TC-07 | Filter berlapis + chip | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
-| TC-08 | Hapus lalu Urungkan | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
-| TC-09 | Lanjut langkah dengan kolom kosong | 7 | ✅ Tahap 7 (2 Okt) | ⬜ |
-| TC-10 | NISN duplikat | 7 | ✅ Tahap 7 (2 Okt) | ⬜ |
-| TC-11 | Zonasi dengan KK < 1 tahun | 7 | ✅ Tahap 7 (2 Okt) | ⬜ |
-| TC-12 | Ganti jalur ke afirmasi → KIP wajib | 7 | ✅ Tahap 7 (2 Okt) | ⬜ |
-| TC-13 | Berkas salah jenis/terlalu besar | 7 | ✅ Tahap 7 (2 Okt) | ⬜ |
-| TC-14 | Simpan pendaftar baru | 7 | ✅ Tahap 7 (2 Okt) | ⬜ |
-| TC-15 | Tombol terverifikasi nonaktif jika berkas belum dicentang | 8 | ✅ Tahap 8 (2 Okt) | ⬜ |
-| TC-16 | Perbaikan/tolak tanpa catatan | 8 | ✅ Tahap 8 (2 Okt) | ⬜ |
-| TC-17 | Verifikasi mengubah peringkat | 4, 9 | ✅ Tahap 4 (26 Sep, uji otomatis) · Tahap 8 (2 Okt, lewat halaman) | ⬜ |
-| TC-18 | Cari nama di peringkat | 9 | ✅ Tahap 9 (2 Okt) | ⬜ |
-| TC-19 | Rentang tanggal laporan terbalik | 11 | ✅ Tahap 11 (2 Okt) | ⬜ |
-| TC-20 | Cetak laporan & bukti | 11 | ✅ Tahap 11 (2 Okt, emulasi cetak + PDF A4) | ⬜ |
-| TC-21 | Ekspor CSV | 6, 9, 11 | ✅ Tahap 6 (data pendaftar) · 9 (peringkat) · 11 (rekap) | ⬜ |
-| TC-22 | Reset data simulasi | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
-| TC-23 | Logout | 5 | ✅ Tahap 6 (2 Okt) | ⬜ |
+| TC-01 | Login benar | 5 | ✅ Tahap 5 (26 Sep) · Tahap 10 (sampai dashboard) | ✅ Chrome & Edge (2 Okt) |
+| TC-02 | Login kosong/salah | 5 | ✅ Tahap 5 (26 Sep) | ✅ Chrome & Edge (2 Okt) |
+| TC-03 | Halaman admin tanpa sesi | 4, 5 | ✅ Tahap 6 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-04 | Drawer/rail/modal per lebar layar | 3 | ✅ Tahap 3 (23 Sep) | ✅ Chrome & Edge (2 Okt) |
+| TC-05 | KPI = jumlah di Data Pendaftar | 10 | ✅ Tahap 10 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-06 | Cari NISN | 6 | ✅ Tahap 6 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-07 | Filter berlapis + chip | 6 | ✅ Tahap 6 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-08 | Hapus lalu Urungkan | 6 | ✅ Tahap 6 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-09 | Lanjut langkah dengan kolom kosong | 7 | ✅ Tahap 7 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-10 | NISN duplikat | 7 | ✅ Tahap 7 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-11 | Zonasi dengan KK < 1 tahun | 7 | ✅ Tahap 7 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-12 | Ganti jalur ke afirmasi → KIP wajib | 7 | ✅ Tahap 7 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-13 | Berkas salah jenis/terlalu besar | 7 | ✅ Tahap 7 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-14 | Simpan pendaftar baru | 7 | ✅ Tahap 7 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-15 | Tombol terverifikasi nonaktif jika berkas belum dicentang | 8 | ✅ Tahap 8 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-16 | Perbaikan/tolak tanpa catatan | 8 | ✅ Tahap 8 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-17 | Verifikasi mengubah peringkat | 4, 9 | ✅ Tahap 4 (26 Sep, uji otomatis) · Tahap 8 (2 Okt, lewat halaman) | ✅ Chrome & Edge (2 Okt) |
+| TC-18 | Cari nama di peringkat | 9 | ✅ Tahap 9 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-19 | Rentang tanggal laporan terbalik | 11 | ✅ Tahap 11 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-20 | Cetak laporan & bukti | 11 | ✅ Tahap 11 (2 Okt, emulasi cetak + PDF A4) | ✅ Chrome & Edge (2 Okt) |
+| TC-21 | Ekspor CSV | 6, 9, 11 | ✅ Tahap 6 (data pendaftar) · 9 (peringkat) · 11 (rekap) | ✅ Chrome & Edge (2 Okt) |
+| TC-22 | Reset data simulasi | 6 | ✅ Tahap 6 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-23 | Logout | 5 | ✅ Tahap 6 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
 
 ---
 
@@ -434,6 +434,10 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-126 | 2 Okt 2026 | UPDATE | `pages/dashboard.html`, `assets/js/pages/dashboard.js` | 11.5 | Chart.js kini dimuat asinkron oleh skrip (SRI tetap) setelah angka tampil; gagal/lebih dari 8 detik → tabel pengganti. Temuan regresi: CDN lambat sempat menahan seluruh dashboard |
 | F-127 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md`, `README.md` | 11.5 | v0.3.7: catatan hasil Tahap 11, pemuatan Chart.js asinkron. README: fitur rekap & bukti |
 | F-128 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 11.5 | Tahap 11 selesai (5/5), TC-19/20/21, progres 71/86 |
+| F-129 | 2 Okt 2026 | UPDATE | 11 berkas `*.html` | 12.4 | Meta Content-Security-Policy yang sama di semua halaman |
+| F-130 | 2 Okt 2026 | UPDATE | `assets/css/base.css`, `components.css` | 12.6 | Hapus kelas tak terpakai `icon--filled`, `card__footer`, `alert--success` |
+| F-131 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md` | 12.7 | v0.3.8: CSP sudah dipasang (D-19), hasil QA |
+| F-132 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 12.7 | Tahap 12 selesai (7/7), kolom Hasil QA 23 TC, progres 78/86 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -449,7 +453,7 @@ PROGRAMWEB_2/
 │   ├── js/pages/ login.js · dashboard.js · data-master.js · form.js · verifikasi.js · hasil-seleksi.js · laporan.js · bukti.js
 │   └── img/  logo.svg
 ├── docs/
-│   ├── perencanaan.md          (v0.3.7)
+│   ├── perencanaan.md          (v0.3.8)
 │   ├── checklist_work.md       (v0.3)
 │   ├── perancangan.md          (M1)
 │   ├── styleguide.html / .css / .js   (etalase design system, M2)
@@ -517,3 +521,4 @@ Satu baris per sesi kerja.
 | 2 Okt 2026 | 10.1–10.4 | **Tahap 10: Dashboard.** Hash SRI dihitung dari berkas Chart.js asli (bukan disalin dari internet). Uji lintas halaman: login → dashboard, KPI = tab Data Pendaftar, CDN diblokir → tabel pengganti. Penyesuaian: penanda `aria-current` dihapus dari jadwal karena dua tahap bisa berlangsung bersamaan (teks "Berlangsung" sudah cukup). Audit keamanan lulus | ✅ (F-117…F-121) |
 | 2 Okt 2026 | 11.1–11.5 | **Tahap 11: Laporan & Bukti.** Cetak diuji dengan emulasi media print + PDF A4 (rekap 2 hlm, bukti 1 hlm) dan diperiksa visual. Perbaikan: sel nama jalur memakai kelas blok (merusak baris tabel), garis tanda tangan tidak sejajar. **Temuan regresi penting:** dashboard menunggu Chart.js dari CDN sebelum menampilkan angka → Chart.js dimuat asinkron dengan SRI + batas 8 detik. Harness uji diberi batas 30 detik per perintah CDP. Audit keamanan lulus | ✅ (F-122…F-128) |
 | 2 Okt 2026 | – | **Pembersihan lingkungan kerja** atas permintaan pengembang. Diperiksa: folder proyek, file yang diabaikan git, Downloads, folder Temp, proses Chrome uji. Dihapus: 32 folder sesi Claude kosong yang lama (Temp, hanya folder tanpa file), 4 skrip uji usang & 4 log tugas latar di scratchpad. Git dirapikan (`git gc`, 4,8 → 4,3 MB, `fsck` bersih). **Tidak disentuh:** bahan desain Stitch milik pengembang (folder + zip, diabaikan git, masih dirujuk dokumen), file Temp milik aplikasi lain (VS Code, puppeteer), folder sesi hari ini. Tidak ada file hasil uji di Downloads, tidak ada proses Chrome uji tersisa | ✅ |
+| 2 Okt 2026 | 12.1–12.7 | **Tahap 12: QA menyeluruh.** CSP dipasang & diuji. Uji lintas browser (Chrome, Edge), Lighthouse 100/100 di 8 halaman, keamanan (XSS, open-redirect, sesi, penguncian), pemindaian kode mati. Alat bantu sementara (server statis lokal, Lighthouse via `npx` dengan cache terpisah) dihapus setelah dipakai — cache npm pengguna tidak tersentuh. Firefox tidak terpasang → dicatat untuk dicek pengembang. Audit keamanan lulus | ✅ (F-129…F-132) |

@@ -600,14 +600,6 @@ button.chip:focus-visible::before { opacity: var(--state-focus); }
   line-height: var(--type-body-sm-line);
 }
 
-.card__footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--space-2);
-}
-
 /* KPI: satu angka + satu keterangan (AS-09) */
 .kpi {
   gap: var(--space-2);
@@ -1337,7 +1329,7 @@ th[aria-sort="descending"] .table__sort .icon {
 
 
 /* =====================================================================
-   15. ALERT — pesan di dalam halaman (info, error, peringatan, sukses)
+   15. ALERT — pesan di dalam halaman (info, error, peringatan)
    Pesan error form memakai role="alert" pada elemen ini.
    ===================================================================== */
 .alert {
@@ -1380,12 +1372,6 @@ th[aria-sort="descending"] .table__sort .icon {
   border-color: var(--status-warning-border);
   background-color: var(--status-warning-bg);
   color: var(--status-warning-text);
-}
-
-.alert--success {
-  border-color: var(--status-success-border);
-  background-color: var(--status-success-bg);
-  color: var(--status-success-text);
 }
 
 
