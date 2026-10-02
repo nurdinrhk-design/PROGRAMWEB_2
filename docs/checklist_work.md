@@ -6,7 +6,7 @@
 > - Aturan pencatatan: [perencanaan §15](perencanaan.md#15-alur-kerja--aturan-pencatatan). Definition of Done: [§14](perencanaan.md#14-definition-of-done).
 > - ID lama (`T0-01`…`T14-R3`) dipakai sampai v0.2. Padanannya ada di [Padanan ID Lama](#padanan-id-lama--baru).
 
-**Versi checklist:** 0.3 · **Terakhir diperbarui:** 2 Oktober 2026
+**Versi checklist:** 1.0 · **Terakhir diperbarui:** 2 Oktober 2026
 
 ---
 
@@ -27,9 +27,9 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **Tahap 13 — Rilis & Online** (berikutnya) |
-| **Tahap terakhir selesai** | Tahap 12 — QA Menyeluruh (2 Okt 2026) |
-| **Menunggu dari pengembang** | Kirim tautan M1 & M2 ke LMS (2.8, 3.8) · cek sekilas di Firefox (tidak terpasang di laptop ini) |
+| **Tahap aktif** | ✅ Semua tahap selesai (v1.0 online di https://nurdinrhk-design.github.io/PROGRAMWEB_2/) |
+| **Tahap terakhir selesai** | Tahap 13 — Rilis & Online (2 Okt 2026) |
+| **Menunggu dari pengembang** | Kirim tautan M1, M2 & M3 ke LMS (2.8, 3.8, 13.5) · cek sekilas di Firefox · pasang domain sendiri bila diinginkan ([panduan](panduan-domain.md)) |
 
 ## Ringkasan Progres
 
@@ -47,8 +47,8 @@
 | [10](#tahap-10--dashboard) | Dashboard | M3 | 4 | 4 | 0 | 100% |
 | [11](#tahap-11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 5 | 5 | 0 | 100% |
 | [12](#tahap-12--qa-menyeluruh) | QA menyeluruh | M3 | 7 | 7 | 0 | 100% |
-| [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 1 | 6 | 14% |
-| | **Total** | | **86** | **78** | **8** | **91%** |
+| [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 7 | 0 | 100% |
+| | **Total** | | **86** | **84** | **2** | **98%** |
 
 **Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 🔄 Tahap 4–5 selesai
 
@@ -263,12 +263,12 @@ Ref: [perencanaan D-09, D-18, D-19, D-24](perencanaan.md#3-keputusan--asumsi) ·
 | No | Langkah | Ref | Status | Catatan |
 |---|---|---|---|---|
 | 13.1 | Operasi repo dari akun Nurdin + pembersihan jejak akun lain (lihat B-04) | D-24, D-18 | ✅ | 26 Sep: login `gh` Nurdin, riwayat lokal disamarkan, kredit README. 2 Okt: izin token `delete_repo`+`workflow`, audit S-01…S-07 lulus, repo dihapus & dibuat ulang (publik, wiki nonaktif), 12 commit bersih di-push, collaborator & kontributor hanya Nurdin, `refs/original` dihapus + `git gc` |
-| 13.2 | CI GitHub Actions (W3C Nu Validator + pemindaian rahasia) + perlindungan branch `main` | D-18, R-08 | ⬜ | |
-| 13.3 | GitHub Pages + CSP `<meta>` + `noindex` + halaman 404 | D-09, D-19 | ⬜ | |
-| 13.4 | README final (fitur, screenshot, link situs) + rilis `v1.0` | G-06 | ⬜ | Melanjutkan 1.7 |
-| 13.5 | Naskah demo 5–7 menit + jawaban tanya-jawab + kirim link M3 ke LMS | §2.2 | ⬜ | 👤 kirim LMS |
-| 13.6 | Panduan pemasangan domain (DNS + `CNAME` + HTTPS) → serah terima | D-09, D-19 | ⬜ | 👤 domain milik pengembang |
-| 13.7 | Penutupan | §11.3 | ⬜ | |
+| 13.2 | CI GitHub Actions (W3C Nu Validator + pemindaian rahasia) + perlindungan branch `main` | D-18, R-08 | ✅ | `.github/workflows/ci.yml`: W3C Nu Validator (vnu-jar 26.10.2, hanya HTML & CSS terlacak git, error menjadi anotasi) + Gitleaks (riwayat penuh). Action dikunci SHA, izin token hanya baca. CI hijau. Perlindungan `main`: tanpa force push, tanpa hapus, riwayat linear, wajib lulus 2 cek |
+| 13.3 | GitHub Pages + CSP `<meta>` + `noindex` + halaman 404 | D-09, D-19 | ✅ | Pages aktif dari `main` (HTTPS dipaksa): https://nurdinrhk-design.github.io/PROGRAMWEB_2/. CSP (Tahap 12) + `noindex, nofollow`, `robots.txt`, referrer `no-referrer`, `.nojekyll`, `404.html` berdiri sendiri (CSP hash, tautan pulang menyesuaikan domain). Diuji online: 7 suite + QA lulus, konsol bersih. Build Pages pertama tertahan di antrean GitHub → dibatalkan & diminta ulang |
+| 13.4 | README final (fitur, screenshot, link situs) + rilis `v1.0` | G-06 | ✅ | README final: tautan situs, lencana CI, 5 tangkapan layar (PNG tanpa metadata), tabel fitur, aturan PPDB, kualitas & keamanan, cara menjalankan, struktur. Rilis `v1.0` di GitHub |
+| 13.5 | Naskah demo 5–7 menit + jawaban tanya-jawab + kirim link M3 ke LMS | §2.2 | ✅ | `docs/presentasi.md`: naskah demo 7 menit per bagian + 10 tanya-jawab + tautan untuk LMS. 👤 Pengiriman ke LMS oleh pengembang |
+| 13.6 | Panduan pemasangan domain (DNS + `CNAME` + HTTPS) → serah terima | D-09, D-19 | ✅ | `docs/panduan-domain.md`: verifikasi domain, record DNS (IP diverifikasi dari dokumentasi resmi GitHub), custom domain, HTTPS, daftar uji, batasan GitHub Pages. 👤 Pemasangan oleh pengembang |
+| 13.7 | Penutupan | §11.3 | ✅ | Uji online lulus, audit S-01…S-07 lulus, dicatat, rilis v1.0 |
 
 ---
 
@@ -438,6 +438,14 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-130 | 2 Okt 2026 | UPDATE | `assets/css/base.css`, `components.css` | 12.6 | Hapus kelas tak terpakai `icon--filled`, `card__footer`, `alert--success` |
 | F-131 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md` | 12.7 | v0.3.8: CSP sudah dipasang (D-19), hasil QA |
 | F-132 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 12.7 | Tahap 12 selesai (7/7), kolom Hasil QA 23 TC, progres 78/86 |
+| F-133 | 2 Okt 2026 | CREATE | `.github/workflows/ci.yml` | 13.2 | CI: W3C Nu Validator + Gitleaks (3 iterasi: berkas .md ikut divalidasi → daftar dari `git ls-files`; error dijadikan anotasi) |
+| F-134 | 2 Okt 2026 | CREATE | `404.html`, `robots.txt`, `.nojekyll` | 13.3 | Halaman 404 mandiri, larangan indeks, nonaktifkan Jekyll |
+| F-135 | 2 Okt 2026 | UPDATE | 10 berkas `*.html` | 13.3 | Meta `robots noindex, nofollow` + `referrer no-referrer` |
+| F-136 | 2 Okt 2026 | CONFIG | GitHub `nurdinrhk-design/PROGRAMWEB_2` | 13.2, 13.3 | Pages dari `main` (HTTPS), perlindungan branch `main` |
+| F-137 | 2 Okt 2026 | CREATE | `docs/img/tangkapan/*.png` (5) | 13.4 | Tangkapan layar untuk README |
+| F-138 | 2 Okt 2026 | UPDATE | `README.md` | 13.4 | README final |
+| F-139 | 2 Okt 2026 | CREATE | `docs/presentasi.md`, `docs/panduan-domain.md` | 13.5, 13.6 | Naskah demo & tanya-jawab, panduan domain |
+| F-140 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md`, `docs/checklist_work.md` | 13.7 | Versi 1.0, Tahap 13 selesai, progres 84/86 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -453,9 +461,11 @@ PROGRAMWEB_2/
 │   ├── js/pages/ login.js · dashboard.js · data-master.js · form.js · verifikasi.js · hasil-seleksi.js · laporan.js · bukti.js
 │   └── img/  logo.svg
 ├── docs/
-│   ├── perencanaan.md          (v0.3.8)
-│   ├── checklist_work.md       (v0.3)
+│   ├── perencanaan.md          (v1.0)
+│   ├── checklist_work.md       (v1.0)
 │   ├── perancangan.md          (M1)
+│   ├── presentasi.md           (naskah demo & tanya-jawab)
+│   ├── panduan-domain.md       (DNS & HTTPS)
 │   ├── styleguide.html / .css / .js   (etalase design system, M2)
 │   └── img/referensi-stitch/   (8 screenshot)
 └── pages/  dashboard.html · data-master.html · form.html · verifikasi.html · hasil-seleksi.html · laporan.html · bukti.html
@@ -522,3 +532,4 @@ Satu baris per sesi kerja.
 | 2 Okt 2026 | 11.1–11.5 | **Tahap 11: Laporan & Bukti.** Cetak diuji dengan emulasi media print + PDF A4 (rekap 2 hlm, bukti 1 hlm) dan diperiksa visual. Perbaikan: sel nama jalur memakai kelas blok (merusak baris tabel), garis tanda tangan tidak sejajar. **Temuan regresi penting:** dashboard menunggu Chart.js dari CDN sebelum menampilkan angka → Chart.js dimuat asinkron dengan SRI + batas 8 detik. Harness uji diberi batas 30 detik per perintah CDP. Audit keamanan lulus | ✅ (F-122…F-128) |
 | 2 Okt 2026 | – | **Pembersihan lingkungan kerja** atas permintaan pengembang. Diperiksa: folder proyek, file yang diabaikan git, Downloads, folder Temp, proses Chrome uji. Dihapus: 32 folder sesi Claude kosong yang lama (Temp, hanya folder tanpa file), 4 skrip uji usang & 4 log tugas latar di scratchpad. Git dirapikan (`git gc`, 4,8 → 4,3 MB, `fsck` bersih). **Tidak disentuh:** bahan desain Stitch milik pengembang (folder + zip, diabaikan git, masih dirujuk dokumen), file Temp milik aplikasi lain (VS Code, puppeteer), folder sesi hari ini. Tidak ada file hasil uji di Downloads, tidak ada proses Chrome uji tersisa | ✅ |
 | 2 Okt 2026 | 12.1–12.7 | **Tahap 12: QA menyeluruh.** CSP dipasang & diuji. Uji lintas browser (Chrome, Edge), Lighthouse 100/100 di 8 halaman, keamanan (XSS, open-redirect, sesi, penguncian), pemindaian kode mati. Alat bantu sementara (server statis lokal, Lighthouse via `npx` dengan cache terpisah) dihapus setelah dipakai — cache npm pengguna tidak tersentuh. Firefox tidak terpasang → dicatat untuk dicek pengembang. Audit keamanan lulus | ✅ (F-129…F-132) |
+| 2 Okt 2026 | 13.2–13.7 | **Tahap 13: Rilis & online.** CI hijau setelah 2 perbaikan (log CI tidak bisa diunduh dari jaringan ini → error dijadikan anotasi yang terbaca lewat API). Pages aktif: https://nurdinrhk-design.github.io/PROGRAMWEB_2/ (build pertama tertahan di antrean GitHub, diminta ulang). Seluruh suite uji dijalankan ulang terhadap situs online: lulus, konsol bersih. Rilis v1.0. Sisa: 2.8, 3.8 & pengiriman M3 ke LMS (👤) | ✅ (F-133…F-140) |
