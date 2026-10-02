@@ -198,6 +198,10 @@
   font-weight: var(--weight-semibold);
 }
 
+fieldset.field > legend {
+  margin-bottom: var(--space-1);
+}
+
 .field__label .field__required {
   color: var(--status-danger-text);
 }
@@ -1002,6 +1006,15 @@ th[aria-sort="descending"] .table__sort .icon {
   font: inherit;
 }
 
+.stepper__button:disabled {
+  cursor: default;
+}
+
+.stepper__button:not(:disabled):hover .stepper__label {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 .stepper__index {
   display: inline-grid;
   place-items: center;
@@ -1063,7 +1076,7 @@ th[aria-sort="descending"] .table__sort .icon {
     width: auto;
     height: auto;
     clip-path: none;
-    white-space: nowrap;
+    min-width: 0;
   }
 }
 

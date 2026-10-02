@@ -104,10 +104,18 @@
     });
   }
 
+  // Nilai rapor semester 1–5: tepat 5 angka 0–100, selain itu dianggap tidak tercatat
+  function saringSemester(daftar) {
+    if (!Array.isArray(daftar) || daftar.length !== R.JUMLAH_SEMESTER) return [];
+    var hasil = daftar.map(function (v) { return angka(v, 0, 100, 2); });
+    return hasil.every(function (n) { return n !== null; }) ? hasil : [];
+  }
+
   // Menyaring isian formulir menjadi objek pendaftar yang bersih
   function saringIsian(d, sebelumnya) {
     var jalurKode = R.jalur(d.jalur) ? d.jalur : (sebelumnya ? sebelumnya.jalur : 'zonasi');
     var tingkat = R.PRESTASI_BONUS.hasOwnProperty(d.prestasiTingkat) ? d.prestasiTingkat : '';
+    var semester = saringSemester(d.nilaiSemester);
     return {
       nama: teks(d.nama, 80),
       nisn: teks(d.nisn, 10),
@@ -122,7 +130,9 @@
       jalur: jalurKode,
       sekolahAsal: R.sekolahAsal(d.sekolahAsal) ? d.sekolahAsal : '',
       tahunLulus: /^\d{4}$/.test(String(d.tahunLulus)) ? String(d.tahunLulus) : '',
-      nilaiRapor: angka(d.nilaiRapor, 0, 100, 2) || 0,
+      // Rata-rata dihitung dari nilai semester bila tercatat (BR-04)
+      nilaiSemester: semester,
+      nilaiRapor: semester.length ? R.rataRapor(semester) : (angka(d.nilaiRapor, 0, 100, 2) || 0),
       prestasiTingkat: tingkat,
       prestasiNama: tingkat ? teks(d.prestasiNama, 100) : '',
       namaOrtu: teks(d.namaOrtu, 80),

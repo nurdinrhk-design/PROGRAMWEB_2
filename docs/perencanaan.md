@@ -10,10 +10,10 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **0.3.2** |
+| Versi dokumen | **0.3.3** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1) · [referensi Stitch](img/referensi-stitch/) |
-| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–6 selesai. Berikutnya: Tahap 7 |
+| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–7 selesai. Berikutnya: Tahap 8 |
 
 ---
 
@@ -352,6 +352,7 @@ erDiagram
         string npsn_asal FK
         string tahun_lulus
         float nilai_rapor "rata-rata smt 1-5"
+        string nilai_semester "5 nilai smt 1-5"
         string prestasi_tingkat "kota|provinsi|nasional|-"
         string prestasi_nama
         string nama_ortu
@@ -480,7 +481,7 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 - **Konten:** stepper 4 langkah:
   1. **Identitas:** nama, NISN, JK, tempat/tanggal lahir, nama orang tua, no. HP.
   2. **Domisili & Jalur:** alamat, kelurahan, kecamatan, tanggal terbit KK, jarak (meter), pilihan jalur (kartu radio berisi kuota & syarat).
-  3. **Akademik:** asal sekolah (datalist), tahun lulus, nilai rapor smt 1–5 (rata-rata dihitung otomatis), prestasi (tingkat & nama).
+  3. **Akademik:** asal sekolah (`<select>` berkelompok negeri/swasta, karena kode sekolah harus dari daftar), tahun lulus (2024–2026), nilai rapor smt 1–5 (rata-rata dihitung otomatis dan disimpan bersama nilai per semester), prestasi (tingkat & nama). Data lama tanpa nilai per semester boleh dibiarkan kosong agar rata-rata tersimpan dipertahankan.
   4. **Berkas & Ringkasan:** unggah berkas sesuai jalur, ringkasan seluruh isian untuk dicek, tombol **Simpan**.
 - **Interaksi:** validasi saat blur dan saat pindah langkah (BR-01…BR-06), validasi lintas kolom (BR-03 zonasi–KK, BR-04 prestasi), fokus ke error pertama, langkah bisa diklik kembali, berkas wajib berubah mengikuti jalur, mode edit via `?id=`, peringatan saat meninggalkan halaman yang belum disimpan.
 - **Anti-slop:** tanpa peta GPS, "server sinkron", atau "draf tersimpan di cloud".
@@ -841,3 +842,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | **0.3** | 25 Sep 2026 | **Revisi rencana pengembangan website:** penomoran tahap 1–13 dengan langkah x.y (D-22). Urutan halaman baru, Dashboard setelah Hasil (D-23). Database hanya lokal, Supabase & adapter dibatalkan (D-21). Hosting GitHub Pages + domain dari pengembang (D-09, D-19). Push & deploy menunggu akun Nurdin (D-24). §11 ditulis ulang, rujukan tahap lama di §2, §3, §5, §8, §9, §10, §13 diperbarui, R-08 diganti | Nurdin & Claude |
 | 0.3.1 | 26 Sep 2026 | Hasil Tahap 4: chip tahap dihitung = "hari ke-11 dari 12" (teks lama "ke-9" salah hitung). Tambah BR-13 (ubah data terperiksa → verifikasi ulang). §10.1 folder `tests/`, §10.3 pembuat elemen aman `PPDB.ui.el`, §10.4 kunci `meta` & `login-gagal`, §12.1 uji otomatis | Nurdin & Claude |
 | 0.3.2 | 2 Okt 2026 | Hasil Tahap 6: tabel menjadi kartu di < 840px karena 6 kolom tidak muat bersama navigation rail (R-05, P-03, §9). P-03: semua status tampilan disimpan di URL, menu cadangan & reset. §9: komponen daftar info/berkas/riwayat dan menu tarik-turun. §10.1: fungsi `ui.js` | Nurdin & Claude |
+| 0.3.3 | 2 Okt 2026 | Hasil Tahap 7: ERD tambah `nilai_semester`; P-04 asal sekolah memakai `<select>` (bukan datalist), tahun lulus 2024–2026, penanganan data lama tanpa nilai semester | Nurdin & Claude |

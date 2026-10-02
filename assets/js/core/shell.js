@@ -156,6 +156,7 @@
   isiIdentitas();
   isiTahap();
   isiBadge();
+  if (PPDB.ui) PPDB.ui.tampilkanTitipan();
 
   PPDB.auth = {
     login: login,

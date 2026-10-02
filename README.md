@@ -38,10 +38,10 @@ Rincian progres setiap tugas ada di [docs/checklist_work.md](docs/checklist_work
 - Bisa dipakai dengan keyboard: tautan lewati-ke-konten, fokus yang jelas, dan tombol `Esc` untuk menutup menu.
 - Login panitia (simulasi) dengan batas percobaan, pilihan "Ingat saya", dan halaman admin yang terkunci tanpa sesi.
 - Data pendaftar: tab status, cari, filter berlapis, urutkan, paginasi, tampilan kartu di HP, detail, hapus dengan pilihan "Urungkan", ekspor CSV, serta cadangan dan pemulihan data (JSON).
+- Form tambah/ubah pendaftar 4 langkah: validasi aturan PPDB (NISN unik, usia, KK zonasi, nilai, berkas), berkas wajib mengikuti jalur, rata-rata rapor otomatis, ringkasan sebelum simpan, dan peringatan jika keluar sebelum menyimpan.
 
 **Direncanakan (Milestone 3)**
 - Dashboard: ringkasan kerja harian, grafik pendaftar per hari, dan keketatan tiap jalur.
-- Form tambah/edit pendaftar 4 langkah dengan validasi aturan PPDB.
 - Verifikasi berkas dengan checklist per dokumen.
 - Hasil & peringkat otomatis per jalur, lengkap dengan garis batas kuota.
 - Rekap siap cetak dan bukti pendaftaran.
@@ -70,6 +70,7 @@ Proyek ini tidak memerlukan instalasi atau proses build.
 3. Halaman yang bisa dicoba saat ini:
    - `index.html`: halaman masuk. Gunakan akun demo di bawah.
    - `pages/data-master.html`: data pendaftar (wajib masuk lebih dulu).
+   - `pages/form.html`: tambah pendaftar, atau `pages/form.html?id=pd-0001` untuk mengubah data.
    - `layout.html`: template dasar Admin Panel. Coba ubah lebar jendela browser.
    - `docs/styleguide.html`: etalase design system dan hasil uji kontras.
 

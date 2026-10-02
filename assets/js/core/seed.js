@@ -72,6 +72,12 @@
     };
   }
 
+  // Nilai semester 1–5 yang rata-ratanya tepat sama dengan nilai rapor.
+  // Tanpa memakai angka acak agar urutan data simulasi tidak berubah.
+  function nilaiSemester(rata) {
+    return [-0.6, -0.3, 0, 0.3, 0.6].map(function (d) { return Math.round((rata + d) * 100) / 100; });
+  }
+
   function pad(n, len) {
     return String(n).padStart(len, '0');
   }
@@ -167,6 +173,7 @@
         sekolahAsal: weighted(sekolahBobot),
         tahunLulus: chance(0.95) ? '2026' : '2025',
         nilaiRapor: Math.round(nilai * 100) / 100,
+        nilaiSemester: nilaiSemester(Math.round(nilai * 100) / 100),
         prestasiTingkat: tingkat,
         prestasiNama: tingkat ? pick(PRESTASI_NAMA) : '',
         namaOrtu: pick(NAMA_ORTU) + ' ' + pick(NAMA_BELAKANG),

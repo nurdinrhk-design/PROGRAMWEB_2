@@ -157,6 +157,23 @@
     return tutup;
   }
 
+  // Pesan yang dititipkan untuk halaman berikutnya (mis. "Data disimpan"
+  // lalu pindah ke Data Pendaftar). Ditampilkan sekali oleh shell.js.
+  var KUNCI_TITIPAN = 'ppdb.v2.pesan';
+
+  function titipPesan(pesan) {
+    try { window.sessionStorage.setItem(KUNCI_TITIPAN, String(pesan).slice(0, 300)); } catch (e) { /* abaikan */ }
+  }
+
+  function tampilkanTitipan() {
+    var pesan = null;
+    try {
+      pesan = window.sessionStorage.getItem(KUNCI_TITIPAN);
+      window.sessionStorage.removeItem(KUNCI_TITIPAN);
+    } catch (e) { /* abaikan */ }
+    if (pesan) snackbar(pesan, { durasi: 8000 });
+  }
+
   /* ---------------------------------------------------------------
      5. Dialog konfirmasi (elemen <dialog> bawaan) → Promise<boolean>
      --------------------------------------------------------------- */
@@ -296,6 +313,8 @@
     badgeSeleksi: badgeSeleksi,
     chipJalur: chipJalur,
     snackbar: snackbar,
+    titipPesan: titipPesan,
+    tampilkanTitipan: tampilkanTitipan,
     konfirmasi: konfirmasi,
     unduh: unduh,
     csv: csv,

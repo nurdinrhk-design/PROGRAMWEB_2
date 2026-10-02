@@ -27,8 +27,8 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **Tahap 7 — Form Pendaftar** (berikutnya) |
-| **Tahap terakhir selesai** | Tahap 6 — Data Pendaftar (2 Okt 2026) |
+| **Tahap aktif** | **Tahap 8 — Verifikasi Berkas** (berikutnya) |
+| **Tahap terakhir selesai** | Tahap 7 — Form Pendaftar (2 Okt 2026) |
 | **Menunggu dari pengembang** | Kirim tautan M1 & M2 ke LMS (2.8, 3.8) |
 
 ## Ringkasan Progres
@@ -41,14 +41,14 @@
 | [4](#tahap-4--fondasi-data--modul-inti) | Fondasi data & modul inti | M3 | 9 | 9 | 0 | 100% |
 | [5](#tahap-5--login) | Login | M3 | 5 | 5 | 0 | 100% |
 | [6](#tahap-6--data-pendaftar) | Data Pendaftar | M3 | 7 | 7 | 0 | 100% |
-| [7](#tahap-7--form-pendaftar-stepper) | Form Pendaftar | M3 | 6 | 0 | 6 | 0% |
+| [7](#tahap-7--form-pendaftar-stepper) | Form Pendaftar | M3 | 6 | 6 | 0 | 100% |
 | [8](#tahap-8--verifikasi-berkas) | Verifikasi Berkas | M3 | 5 | 0 | 5 | 0% |
 | [9](#tahap-9--hasil--peringkat) | Hasil & Peringkat | M3 | 5 | 0 | 5 | 0% |
 | [10](#tahap-10--dashboard) | Dashboard | M3 | 4 | 0 | 4 | 0% |
 | [11](#tahap-11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 5 | 0 | 5 | 0% |
 | [12](#tahap-12--qa-menyeluruh) | QA menyeluruh | M3 | 7 | 0 | 7 | 0% |
 | [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 1 | 6 | 14% |
-| | **Total** | | **86** | **46** | **40** | **53%** |
+| | **Total** | | **86** | **52** | **34** | **60%** |
 
 **Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 🔄 Tahap 4–5 selesai
 
@@ -154,12 +154,12 @@ Ref: [perencanaan P-04](perencanaan.md#p-04--pagesformhtml--tambahedit-pendaftar
 
 | No | Langkah | Ref | Status | Catatan |
 |---|---|---|---|---|
-| 7.1 | Struktur stepper 4 langkah | P-04 | ⬜ | |
-| 7.2 | Langkah 1–3: identitas, domisili & jalur, akademik (rata-rata rapor otomatis) | P-04, BR-02, BR-03, BR-04 | ⬜ | Usia, KK zonasi, skor prestasi |
-| 7.3 | Langkah 4: berkas mengikuti jalur + ringkasan isian | BR-05, TC-12 | ⬜ | |
-| 7.4 | Validasi per kolom, per langkah, lintas kolom + aksesibilitas error | BR-01…BR-06, TC-09…TC-13, NFR-04 | ⬜ | |
-| 7.5 | Simpan, mode edit (`?id=`), peringatan data belum disimpan | FR-10, FR-11, TC-14 | ⬜ | |
-| 7.6 | Penutupan | §11.3 | ⬜ | |
+| 7.1 | Struktur stepper 4 langkah | P-04 | ✅ | Stepper 4 langkah (`aria-current="step"`, tanda selesai). Maju lewat stepper hanya bila langkah sebelumnya valid; mundur bebas. Satu tombol *filled* (Lanjut → Simpan). Panel "Aturan di langkah ini" dari konstanta aturan |
+| 7.2 | Langkah 1–3: identitas, domisili & jalur, akademik (rata-rata rapor otomatis) | P-04, BR-02, BR-03, BR-04 | ✅ | Petunjuk usia per 1 Juli & jarak km otomatis. Jalur berupa kartu radio (kuota, dasar peringkat, syarat). Asal sekolah `<select>` dengan grup negeri/swasta (pengganti datalist: kode sekolah harus dari daftar). Nilai semester 1–5 → rata-rata & skor prestasi langsung dihitung |
+| 7.3 | Langkah 4: berkas mengikuti jalur + ringkasan isian | BR-05, TC-12 | ✅ | Daftar berkas berubah mengikuti jalur & prestasi (TC-12 ✅). Berkas disimulasikan: hanya nama & ukuran dicatat, hasil cek di-reset ke "belum". Ringkasan 3 bagian dengan tombol Ubah per bagian |
+| 7.4 | Validasi per kolom, per langkah, lintas kolom + aksesibilitas error | BR-01…BR-06, TC-09…TC-13, NFR-04 | ✅ | Validasi saat blur, saat mengetik ulang (error hilang), saat Lanjut/Simpan. Lintas kolom: jalur ↔ KK zonasi, prestasi ↔ nama prestasi & sertifikat. `aria-invalid`, pesan terhubung `aria-describedby`, ringkasan error `role="alert"`, fokus ke kolom pertama yang salah (TC-09…TC-13 ✅) |
+| 7.5 | Simpan, mode edit (`?id=`), peringatan data belum disimpan | FR-10, FR-11, TC-14 | ✅ | Simpan → Data Pendaftar terfilter nomor baru + snackbar (pesan titipan). Mode ubah `?id=` (peringatan BR-13, menu Data Pendaftar aktif, data lama tanpa nilai semester tetap bisa disimpan), id tidak ada → pesan jelas. Peringatan `beforeunload` bila belum disimpan (TC-14 ✅) |
+| 7.6 | Penutupan | §11.3 | ✅ | Uji form 26/26, Data Pendaftar 36/36 (regresi), inti 34/34, konsol bersih. 5 lebar layar tanpa scroll horizontal. W3C HTML 0 pesan, CSS 0 error. Uji Anti-Slop 7/7. Audit S-01…S-07 lulus |
 
 ---
 
@@ -239,12 +239,12 @@ Ref: [perencanaan §12](perencanaan.md#12-strategi-pengujian), [§5.3 NFR](peren
 | TC-06 | Cari NISN | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
 | TC-07 | Filter berlapis + chip | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
 | TC-08 | Hapus lalu Urungkan | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
-| TC-09 | Lanjut langkah dengan kolom kosong | 7 | – | ⬜ |
-| TC-10 | NISN duplikat | 7 | – | ⬜ |
-| TC-11 | Zonasi dengan KK < 1 tahun | 7 | – | ⬜ |
-| TC-12 | Ganti jalur ke afirmasi → KIP wajib | 7 | – | ⬜ |
-| TC-13 | Berkas salah jenis/terlalu besar | 7 | – | ⬜ |
-| TC-14 | Simpan pendaftar baru | 7 | – | ⬜ |
+| TC-09 | Lanjut langkah dengan kolom kosong | 7 | ✅ Tahap 7 (2 Okt) | ⬜ |
+| TC-10 | NISN duplikat | 7 | ✅ Tahap 7 (2 Okt) | ⬜ |
+| TC-11 | Zonasi dengan KK < 1 tahun | 7 | ✅ Tahap 7 (2 Okt) | ⬜ |
+| TC-12 | Ganti jalur ke afirmasi → KIP wajib | 7 | ✅ Tahap 7 (2 Okt) | ⬜ |
+| TC-13 | Berkas salah jenis/terlalu besar | 7 | ✅ Tahap 7 (2 Okt) | ⬜ |
+| TC-14 | Simpan pendaftar baru | 7 | ✅ Tahap 7 (2 Okt) | ⬜ |
 | TC-15 | Tombol terverifikasi nonaktif jika berkas belum dicentang | 8 | – | ⬜ |
 | TC-16 | Perbaikan/tolak tanpa catatan | 8 | – | ⬜ |
 | TC-17 | Verifikasi mengubah peringkat | 4, 9 | ✅ Tahap 4 (26 Sep, uji otomatis) | ⬜ |
@@ -401,6 +401,17 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-93 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md` | 6.7 | v0.3.2: kartu < 840 px (R-05), komponen 16, `ui.pasangMenu` |
 | F-94 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 6.7 | Tahap 6 selesai (7/7), TC-03/06/07/08/21/22/23, progres 46/86 |
 | F-95 | 2 Okt 2026 | UPDATE | `README.md` | 6.7 | Fitur login & data pendaftar pindah ke "Sudah tersedia", hosting GitHub Pages, halaman yang bisa dicoba, akun demo |
+| F-96 | 2 Okt 2026 | CREATE | `pages/form.html` | 7.1–7.4 | Form 4 langkah: stepper, kolom berlabel + hint + error, kartu jalur, nilai semester, daftar berkas, ringkasan, panel aturan |
+| F-97 | 2 Okt 2026 | CREATE | `assets/js/pages/form.js` | 7.1–7.5 | Logika form: validasi blur/langkah/lintas kolom, stepper, unggah berkas simulasi, ringkasan, simpan, mode ubah, `beforeunload` |
+| F-98 | 2 Okt 2026 | UPDATE | `assets/js/core/rules.js` | 7.2 | `rataRapor()`, `validasi.prestasiNama`, `validasi.tahunLulus`, label opsional di `validasi.nama`; ekspor `TAHUN_LULUS`, `JUMLAH_SEMESTER`, `BERKAS_FORMAT`, `USIA_MAKS` |
+| F-99 | 2 Okt 2026 | UPDATE | `assets/js/core/store.js` | 7.2 | Kolom `nilaiSemester` (5 angka 0–100); rata-rata rapor dihitung ulang dari semester bila tercatat |
+| F-100 | 2 Okt 2026 | UPDATE | `assets/js/core/seed.js` | 7.2 | Nilai semester 1–5 untuk data simulasi, rata-ratanya tepat sama dengan nilai rapor (tanpa angka acak, sebaran data tidak berubah). Ukuran data 864 → 906 KB |
+| F-101 | 2 Okt 2026 | UPDATE | `assets/js/core/ui.js`, `shell.js` | 7.5 | `titipPesan()` / `tampilkanTitipan()`: snackbar setelah pindah halaman |
+| F-102 | 2 Okt 2026 | UPDATE | `assets/css/components.css` | 7.6 | Stepper: tombol nonaktif, label aktif boleh terlipat di HP; jarak legend pada fieldset |
+| F-103 | 2 Okt 2026 | UPDATE | `assets/css/pages.css` | 7.1–7.6 | Blok Form Pendaftar: grid kolom, kartu jalur, semester, unggah berkas, ringkasan, tombol bawah, panel aturan |
+| F-104 | 2 Okt 2026 | UPDATE | `tests/core.test.js` | 7.6 | +2 uji: rata-rata rapor & validator baru, nilai semester di store (34 uji) |
+| F-105 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md`, `docs/perancangan.md`, `README.md` | 7.6 | README: fitur form & halaman yang bisa dicoba. v0.3.3: ERD `nilai_semester`, P-04 (select sekolah, data lama), aturan tahun lulus |
+| F-106 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 7.6 | Tahap 7 selesai (6/6), TC-09…TC-14, progres 52/86 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -413,15 +424,15 @@ PROGRAMWEB_2/
 ├── assets/
 │   ├── css/  main.css · tokens.css · base.css · layout.css · components.css · pages.css
 │   ├── js/core/  rules.js · seed.js · store.js · ui.js · shell.js
-│   ├── js/pages/ login.js · data-master.js
+│   ├── js/pages/ login.js · data-master.js · form.js
 │   └── img/  logo.svg
 ├── docs/
-│   ├── perencanaan.md          (v0.3.2)
+│   ├── perencanaan.md          (v0.3.3)
 │   ├── checklist_work.md       (v0.3)
 │   ├── perancangan.md          (M1)
 │   ├── styleguide.html / .css / .js   (etalase design system, M2)
 │   └── img/referensi-stitch/   (8 screenshot)
-└── pages/  data-master.html
+└── pages/  data-master.html · form.html
 ```
 
 ---
@@ -478,3 +489,4 @@ Satu baris per sesi kerja.
 | 29 Sep 2026 | 13.1 | Atas permintaan pengembang, akun aktif `gh` dikembalikan ke akun utama pengembang. Penambahan izin token akun Nurdin (`delete_repo`, `workflow`) **belum selesai** dan izinnya tetap seperti semula. Sisa pekerjaan 13.1 ditunda sampai pengembang siap mengurus akun Nurdin. Berkas log sementara di scratchpad sudah dihapus | ⏸️ Ditunda |
 | 2 Okt 2026 | 13.1 | Pengembang menyetujui izin token akun Nurdin (`delete_repo`, `workflow`) lewat device login; `gh` otomatis kembali ke akun utama. Isi repo lama dicocokkan dengan riwayat lokal (selisih hanya 6 baris yang disamarkan). Audit keamanan lulus: 0 jejak akun lain, 0 pola rahasia, 0 file terlarang, 12/12 commit beridentitas Nurdin. **Atas konfirmasi pengembang**, repo dihapus & dibuat ulang, lalu di-push. Verifikasi remote: 12 commit, kontributor & collaborator hanya Nurdin. Cadangan `refs/original` dihapus + `git gc`; log sementara di scratchpad dihapus | ✅ (F-83, F-84) |
 | 2 Okt 2026 | 6.1–6.7 | **Tahap 6: Data Pendaftar.** Halaman + skrip halaman + `ui.pasangMenu` + komponen 16. Uji otomatis lewat Chrome headless (DevTools Protocol, profil sementara di scratchpad lalu dihapus): 36/36 lulus setelah 3 perbaikan pada skrip uji (bukan halaman). Uji tampilan 7 lebar: temuan & perbaikan — tombol Tambah terpotong di 360 px, nomor & tanggal di kartu berantakan, tabel 600–840 px berdesakan + scroll halaman di 600 px, garis bawah ikon edit, padding riwayat tertimpa reset daftar. Semua diperbaiki dan diuji ulang. W3C HTML 0 pesan, CSS 0 error. Audit keamanan lulus | ✅ (F-85…F-95) |
+| 2 Okt 2026 | 7.1–7.6 | **Tahap 7: Form Pendaftar.** Form 4 langkah + nilai semester di model data + pesan titipan antarhalaman. Temuan saat uji: (1) event `blur` tidak terpicu di Chrome headless → harness memakai emulasi fokus, validasi blur kini benar-benar teruji; (2) label langkah aktif & tombol Simpan terpotong di 360 px; (3) legend terlalu rapat. Semua diperbaiki & diuji ulang. Uji XSS: nama berisi tag tampil sebagai teks. Audit keamanan lulus | ✅ (F-96…F-106) |

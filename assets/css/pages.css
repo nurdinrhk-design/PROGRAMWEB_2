@@ -315,3 +315,247 @@
     column-gap: var(--space-6);
   }
 }
+
+
+/* =====================================================================
+   FORM PENDAFTAR — pages/form.html (P-04)
+   ===================================================================== */
+.form-card {
+  gap: var(--space-5);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.form-step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.form-step__title {
+  font-size: var(--type-title-md-size);
+  line-height: var(--type-title-md-line);
+  font-weight: var(--weight-semibold);
+}
+
+.form-step__title:focus {
+  outline: none;
+}
+
+.form-step__subtitle {
+  margin-top: var(--space-2);
+  font-size: var(--type-label-lg-size);
+  line-height: var(--type-label-lg-line);
+  font-weight: var(--weight-semibold);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.form-radio {
+  min-height: var(--control-height);
+  gap: var(--space-5);
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+/* Nilai rapor semester 1–5 */
+.semester-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.semester {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.semester__label {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.semester .field__control[aria-invalid="true"] {
+  border-color: var(--status-danger-text);
+}
+
+.form-output {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.form-output strong {
+  color: var(--md-on-surface);
+}
+
+/* Unggah berkas (simulasi) */
+.upload-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.upload__row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--radius-md);
+}
+
+.upload.field--error .upload__row {
+  border-color: var(--status-danger-text);
+}
+
+.upload__icon {
+  flex-shrink: 0;
+  color: var(--md-on-surface-variant);
+}
+
+.upload__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.upload__title {
+  font-weight: var(--weight-semibold);
+}
+
+.upload__meta {
+  overflow: hidden;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upload__button {
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+/* Input berkas tersembunyi: fokus keyboard ditampilkan pada tombolnya */
+.upload__input:focus-visible + .upload__button {
+  outline: var(--focus-ring-width) solid var(--md-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Ringkasan isian */
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.summary__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--md-surface-container-low);
+}
+
+.summary__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.summary__title {
+  font-size: var(--type-label-lg-size);
+  line-height: var(--type-label-lg-line);
+  font-weight: var(--weight-semibold);
+}
+
+/* Tombol bawah form */
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--md-outline-variant);
+}
+
+.form-actions__step {
+  flex: 1;
+  text-align: center;
+}
+
+.form-actions .btn--filled {
+  margin-inline-start: auto;
+}
+
+/* Panel aturan */
+.rule-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.rule-list__item {
+  display: flex;
+  gap: var(--space-2);
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.rule-list__icon {
+  flex-shrink: 0;
+  color: var(--md-primary);
+  font-size: var(--icon-size-sm);
+}
+
+@media (max-width: 599.98px) {
+  .form-actions__step {
+    order: -1;
+    flex-basis: 100%;
+  }
+
+  .form-actions .btn {
+    flex: 1 1 100%;
+  }
+
+  /* Aksi utama di atas, lebar penuh */
+  .form-actions .btn--filled {
+    order: -1;
+  }
+}
+
+@media (min-width: 600px) {
+  .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .form-grid__full {
+    grid-column: 1 / -1;
+  }
+
+  .choice-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .semester-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}

@@ -97,6 +97,8 @@
   var BATAS_KK_ZONASI = '2025-06-08';       // 1 tahun sebelum pendaftaran dibuka (BR-03)
   var ACUAN_USIA = '2026-07-01';            // usia dihitung per 1 Juli (BR-02)
   var USIA_MAKS = 21;
+  var TAHUN_LULUS = ['2026', '2025', '2024'];    // lulusan maksimal 2 tahun sebelumnya
+  var JUMLAH_SEMESTER = 5;                       // rapor semester 1–5
 
   /* ---------------------------------------------------------------
      2. Tanggal
@@ -186,6 +188,18 @@
     return daftar;
   }
 
+  // Rata-rata nilai rapor semester 1–5, dibulatkan 2 desimal (BR-04)
+  function rataRapor(nilaiSemester) {
+    if (!Array.isArray(nilaiSemester) || nilaiSemester.length !== JUMLAH_SEMESTER) return null;
+    var total = 0;
+    for (var i = 0; i < nilaiSemester.length; i++) {
+      var n = Number(nilaiSemester[i]);
+      if (!isFinite(n)) return null;
+      total += n;
+    }
+    return Math.round(total / JUMLAH_SEMESTER * 100) / 100;
+  }
+
   function skorPrestasi(p) {
     var nilai = Number(p.nilaiRapor) || 0;
     var bonus = PRESTASI_BONUS[p.prestasiTingkat] || 0;
@@ -201,10 +215,12 @@
       return (v === undefined || v === null || String(v).trim() === '') ? label + ' wajib diisi.' : '';
     },
 
-    nama: function (v) {
+    // label opsional, mis. 'Nama orang tua/wali' (bawaan: 'Nama lengkap')
+    nama: function (v, label) {
       var s = String(v || '').trim();
-      if (!s) return 'Nama lengkap wajib diisi.';
-      if (s.length < 3 || s.length > 80) return 'Nama harus 3–80 karakter.';
+      var l = label || 'Nama lengkap';
+      if (!s) return l + ' wajib diisi.';
+      if (s.length < 3 || s.length > 80) return l + ' harus 3–80 karakter.';
       if (!/^[A-Za-zÀ-ɏ' .-]+$/.test(s)) return 'Nama hanya boleh berisi huruf, spasi, titik, tanda hubung, atau apostrof.';
       return '';
     },
@@ -263,6 +279,20 @@
     prestasiTingkat: function (v) {
       if (!v) return '';
       return PRESTASI_BONUS.hasOwnProperty(v) ? '' : 'Tingkat prestasi tidak dikenal.';
+    },
+
+    // Nama prestasi wajib bila tingkat prestasi dipilih (BR-04)
+    prestasiNama: function (v, tingkat) {
+      var s = String(v || '').trim();
+      if (!tingkat) return '';
+      if (s.length < 5) return 'Nama prestasi wajib diisi (minimal 5 karakter), mis. "Juara 1 Olimpiade Matematika".';
+      if (s.length > 100) return 'Nama prestasi maksimal 100 karakter.';
+      return '';
+    },
+
+    tahunLulus: function (v) {
+      if (!v) return 'Tahun lulus wajib dipilih.';
+      return TAHUN_LULUS.indexOf(String(v)) > -1 ? '' : 'Tahun lulus harus ' + TAHUN_LULUS.join(', ') + '.';
     },
 
     // BR-06: nomor HP 08…, total 10–13 digit
@@ -367,6 +397,9 @@
     BERKAS: BERKAS,
     BERKAS_UMUM: BERKAS_UMUM,
     BERKAS_MAKS_KB: BERKAS_MAKS_KB,
+    BERKAS_FORMAT: BERKAS_FORMAT,
+    TAHUN_LULUS: TAHUN_LULUS,
+    JUMLAH_SEMESTER: JUMLAH_SEMESTER,
     STATUS_VERIFIKASI: STATUS_VERIFIKASI,
     STATUS_SELEKSI: STATUS_SELEKSI,
     PRESTASI_BONUS: PRESTASI_BONUS,
@@ -374,6 +407,7 @@
     JADWAL: JADWAL,
     TANGGAL_SIMULASI: TANGGAL_SIMULASI,
     BATAS_KK_ZONASI: BATAS_KK_ZONASI,
+    USIA_MAKS: USIA_MAKS,
     parseTanggal: parseTanggal,
     isoTanggal: isoTanggal,
     now: now,
@@ -385,6 +419,7 @@
     sekolahAsal: sekolahAsal,
     totalKuota: totalKuota,
     berkasWajib: berkasWajib,
+    rataRapor: rataRapor,
     skorPrestasi: skorPrestasi,
     validasi: validasi,
     bolehTerverifikasi: bolehTerverifikasi,

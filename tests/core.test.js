@@ -77,6 +77,15 @@
       sama(R.skorPrestasi({ nilaiRapor: 88, prestasiTingkat: '' }), 88);
     });
 
+    uji('BR-04 rata-rata rapor semester 1–5, nama prestasi, tahun lulus', function () {
+      sama(R.rataRapor([88, 89.5, 90.25, 92, 91]), 90.15);
+      sama(R.rataRapor([90, 91]), null);
+      pastikan(R.validasi.prestasiNama('', 'kota') !== '', 'nama prestasi wajib bila tingkat dipilih');
+      sama(R.validasi.prestasiNama('', ''), '');
+      pastikan(R.validasi.tahunLulus('2023') !== '', 'lulusan > 2 tahun ditolak');
+      sama(R.validasi.tahunLulus('2026'), '');
+    });
+
     uji('BR-05 berkas wajib mengikuti jalur & format/ukuran', function () {
       sama(R.berkasWajib('afirmasi', '').join(','), 'kk,akta,rapor,kip');
       sama(R.berkasWajib('prestasi', 'kota').join(','), 'kk,akta,rapor,sertifikat');
@@ -161,6 +170,17 @@
       sama(p.id, 'pd-0901'); sama(p.noDaftar, 'PPDB-2026-0901'); sama(p.status, 'menunggu');
       sama(p.berkas.map(function (b) { return b.jenis; }).join(','), 'kk,akta,rapor,kip');
       pastikan(S.nisnDipakai('9000000001'), 'NISN baru terdeteksi dipakai');
+    });
+
+    uji('FR-10 nilai semester disimpan & rata-rata dihitung ulang oleh store', function () {
+      var p = S.tambah({ nama: 'Uji Coba Dua', nisn: '9000000002', jk: 'L', tglLahir: '2010-03-04', jalur: 'prestasi',
+        nilaiSemester: ['80', '82,5', 85, 90, 'x'], nilaiRapor: 70 });
+      sama(p.nilaiSemester.length, 0, 'semester tidak valid diabaikan');
+      sama(p.nilaiRapor, 70);
+      var r = S.ubah(p.id, Object.assign({}, p, { nilaiSemester: ['80', '82,5', 85, 90, 92.5] }));
+      sama(r.data.nilaiSemester.join(','), '80,82.5,85,90,92.5');
+      sama(r.data.nilaiRapor, 86);
+      S.hapus(p.id);
     });
 
     uji('FR-12 verifikasi ditolak bila berkas belum sesuai / catatan kosong', function () {

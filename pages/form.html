@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Formulir tambah dan ubah data pendaftar PPDB Online SMA Negeri 1 Harapan Bangsa (fiktif). Data simulasi.">
+  <title>Tambah Pendaftar · PPDB Online</title>
+  <link rel="icon" href="../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,400,0..1,0&amp;display=block">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-page="form" data-auth="required" data-root="../">
+  <noscript><p class="noscript-note">Admin Panel PPDB memerlukan JavaScript. Aktifkan JavaScript di browser Anda.</p></noscript>
+  <a class="skip-link" href="#konten">Lewati ke konten utama</a>
+
+  <div class="app">
+
+    <!-- ===================== NAVIGATION DRAWER ===================== -->
+    <aside class="nav-drawer" id="nav-drawer" aria-label="Navigasi utama">
+      <a class="nav-drawer__brand" href="dashboard.html">
+        <img class="nav-drawer__logo" src="../assets/img/logo.svg" alt="">
+        <span class="nav-drawer__brand-text">
+          <strong>PPDB Online</strong>
+          <small>SMA Negeri 1 Harapan Bangsa</small>
+        </span>
+      </a>
+
+      <nav class="nav-drawer__nav" aria-label="Menu utama">
+        <ul class="nav-list">
+          <li>
+            <a class="nav-item" href="dashboard.html" data-page="dashboard">
+              <span class="icon nav-item__icon" aria-hidden="true">space_dashboard</span>
+              <span class="nav-item__label">Dashboard</span>
+              <span class="nav-item__short" aria-hidden="true">Dasbor</span>
+            </a>
+          </li>
+        </ul>
+
+        <p class="nav-section" id="nav-pendaftaran">Pendaftaran</p>
+        <ul class="nav-list" aria-labelledby="nav-pendaftaran">
+          <li>
+            <a class="nav-item" href="data-master.html" data-page="data-master">
+              <span class="icon nav-item__icon" aria-hidden="true">groups</span>
+              <span class="nav-item__label">Data Pendaftar</span>
+              <span class="nav-item__short" aria-hidden="true">Data</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-item" href="form.html" data-page="form">
+              <span class="icon nav-item__icon" aria-hidden="true">person_add</span>
+              <span class="nav-item__label">Tambah Pendaftar</span>
+              <span class="nav-item__short" aria-hidden="true">Tambah</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-item" href="verifikasi.html" data-page="verifikasi">
+              <span class="icon nav-item__icon" aria-hidden="true">fact_check</span>
+              <span class="nav-item__label">Verifikasi Berkas</span>
+              <span class="nav-item__short" aria-hidden="true">Berkas</span>
+              <span class="count nav-item__badge" data-badge="verifikasi" hidden></span>
+            </a>
+          </li>
+        </ul>
+
+        <p class="nav-section" id="nav-seleksi">Seleksi</p>
+        <ul class="nav-list" aria-labelledby="nav-seleksi">
+          <li>
+            <a class="nav-item" href="hasil-seleksi.html" data-page="hasil-seleksi">
+              <span class="icon nav-item__icon" aria-hidden="true">leaderboard</span>
+              <span class="nav-item__label">Hasil &amp; Peringkat</span>
+              <span class="nav-item__short" aria-hidden="true">Hasil</span>
+            </a>
+          </li>
+        </ul>
+
+        <p class="nav-section" id="nav-laporan">Laporan</p>
+        <ul class="nav-list" aria-labelledby="nav-laporan">
+          <li>
+            <a class="nav-item" href="laporan.html" data-page="laporan">
+              <span class="icon nav-item__icon" aria-hidden="true">summarize</span>
+              <span class="nav-item__label">Rekap &amp; Cetak</span>
+              <span class="nav-item__short" aria-hidden="true">Rekap</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="nav-drawer__footer">
+        <p class="nav-drawer__note"><span class="icon" aria-hidden="true">science</span><span>Data simulasi</span></p>
+        <button type="button" class="nav-item" data-action="logout">
+          <span class="icon nav-item__icon" aria-hidden="true">logout</span>
+          <span class="nav-item__label">Keluar</span>
+          <span class="nav-item__short" aria-hidden="true">Keluar</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="app__main">
+
+      <!-- ===================== TOP APP BAR ===================== -->
+      <header class="top-app-bar">
+        <button type="button" class="icon-btn" data-nav-toggle aria-controls="nav-drawer" aria-expanded="true" aria-label="Tampilkan atau sembunyikan menu">
+          <span class="icon" aria-hidden="true">menu</span>
+        </button>
+
+        <div class="top-app-bar__heading">
+          <nav aria-label="Breadcrumb">
+            <ol class="breadcrumb">
+              <li><a href="dashboard.html">PPDB Online</a></li>
+              <li><a href="data-master.html">Data Pendaftar</a></li>
+              <li><span aria-current="page" data-crumb>Tambah</span></li>
+            </ol>
+          </nav>
+          <p class="top-app-bar__title" data-judul-bar>Tambah Pendaftar</p>
+        </div>
+
+        <div class="top-app-bar__actions">
+          <span class="phase-chip" data-phase-chip><span class="icon" aria-hidden="true">event</span><span data-phase-text>Pendaftaran</span></span>
+
+          <div class="account">
+            <button type="button" class="account__button" data-account-toggle aria-expanded="false" aria-controls="account-menu">
+              <span class="avatar" aria-hidden="true" data-user-initials></span>
+              <span class="account__name" data-user-name></span>
+              <span class="icon icon--sm" aria-hidden="true">expand_more</span>
+              <span class="sr-only">Menu akun</span>
+            </button>
+            <div class="menu account__menu" id="account-menu" hidden>
+              <div class="menu__header">
+                <p class="text-label-lg" data-user-name></p>
+                <p class="text-body-sm text-variant" data-user-role></p>
+              </div>
+              <button type="button" class="menu__item" data-action="logout">
+                <span class="icon" aria-hidden="true">logout</span>Keluar
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===================== KONTEN ===================== -->
+      <main class="content" id="konten" tabindex="-1">
+        <div class="page-header">
+          <div>
+            <h1 data-judul>Tambah Pendaftar</h1>
+            <p class="page-header__desc" data-deskripsi>Input pendaftar yang datang langsung ke sekolah. Setiap isian dicek sesuai aturan PPDB sebelum disimpan.</p>
+          </div>
+          <div class="page-header__actions">
+            <a class="btn btn--text" href="data-master.html"><span class="icon" aria-hidden="true">arrow_back</span>Kembali ke data</a>
+          </div>
+        </div>
+
+        <!-- Mode edit: data tidak ditemukan -->
+        <section class="card" data-tidak-ditemukan hidden aria-labelledby="judul-tidak-ditemukan">
+          <div class="empty">
+            <span class="icon" aria-hidden="true">person_off</span>
+            <h2 class="empty__title" id="judul-tidak-ditemukan">Data pendaftar tidak ditemukan</h2>
+            <p>Data mungkin sudah dihapus atau tautannya salah.</p>
+            <a class="btn btn--tonal" href="data-master.html">Buka Data Pendaftar</a>
+          </div>
+        </section>
+
+        <!-- Mode edit: data sudah diperiksa (BR-13) -->
+        <div class="alert alert--warning" data-peringatan-ulang hidden>
+          <span class="icon" aria-hidden="true">warning</span>
+          <div class="alert__body">
+            <p class="alert__title" data-peringatan-judul>Pendaftar ini sudah diperiksa panitia</p>
+            <p>Mengubah jalur, tanggal lahir, tanggal terbit KK, jarak, nilai rapor, atau prestasi akan mengembalikan status ke <strong>Menunggu</strong> dan hasil cek berkas diulang.</p>
+          </div>
+        </div>
+
+        <div class="grid grid--main-side" data-area-form>
+          <section class="card form-card" aria-label="Formulir pendaftar">
+            <ol class="stepper" aria-label="Langkah pengisian" data-stepper>
+              <li class="stepper__item"><button type="button" class="stepper__button" data-ke="0"><span class="stepper__index" aria-hidden="true"></span><span class="stepper__label">Identitas</span></button></li>
+              <li class="stepper__item"><button type="button" class="stepper__button" data-ke="1"><span class="stepper__index" aria-hidden="true"></span><span class="stepper__label">Domisili &amp; jalur</span></button></li>
+              <li class="stepper__item"><button type="button" class="stepper__button" data-ke="2"><span class="stepper__index" aria-hidden="true"></span><span class="stepper__label">Akademik</span></button></li>
+              <li class="stepper__item"><button type="button" class="stepper__button" data-ke="3"><span class="stepper__index" aria-hidden="true"></span><span class="stepper__label">Berkas &amp; ringkasan</span></button></li>
+            </ol>
+
+            <form class="form" id="form-pendaftar" novalidate>
+              <div class="alert alert--error" role="alert" data-ringkasan-error hidden>
+                <span class="icon" aria-hidden="true">error</span>
+                <p class="alert__body" data-ringkasan-error-teks></p>
+              </div>
+
+              <!-- ===== Langkah 1: Identitas ===== -->
+              <section class="form-step" data-langkah="0" aria-labelledby="judul-l1">
+                <h2 class="form-step__title" id="judul-l1" tabindex="-1">Identitas calon siswa</h2>
+                <div class="form-grid">
+                  <div class="field form-grid__full" data-field="nama">
+                    <label class="field__label" for="f-nama">Nama lengkap <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box"><input class="field__control" id="f-nama" name="nama" maxlength="80" autocomplete="off" required aria-describedby="f-nama-hint f-nama-error"></div>
+                    <p class="field__hint" id="f-nama-hint">Sesuai akta kelahiran.</p>
+                    <p class="field__error" id="f-nama-error"></p>
+                  </div>
+                  <div class="field" data-field="nisn">
+                    <label class="field__label" for="f-nisn">NISN <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box"><input class="field__control num" id="f-nisn" name="nisn" inputmode="numeric" maxlength="10" autocomplete="off" required aria-describedby="f-nisn-hint f-nisn-error"></div>
+                    <p class="field__hint" id="f-nisn-hint">10 digit angka.</p>
+                    <p class="field__error" id="f-nisn-error"></p>
+                  </div>
+                  <fieldset class="field" data-field="jk" aria-describedby="f-jk-error">
+                    <legend class="field__label">Jenis kelamin <span class="field__required" aria-hidden="true">*</span></legend>
+                    <div class="cluster form-radio">
+                      <label class="check"><input type="radio" name="jk" value="L" required> <span>Laki-laki</span></label>
+                      <label class="check"><input type="radio" name="jk" value="P"> <span>Perempuan</span></label>
+                    </div>
+                    <p class="field__error" id="f-jk-error"></p>
+                  </fieldset>
+                  <div class="field" data-field="tempatLahir">
+                    <label class="field__label" for="f-tempatLahir">Tempat lahir <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box"><input class="field__control" id="f-tempatLahir" name="tempatLahir" maxlength="60" autocomplete="off" required aria-describedby="f-tempatLahir-error"></div>
+                    <p class="field__error" id="f-tempatLahir-error"></p>
+                  </div>
+                  <div class="field" data-field="tglLahir">
+                    <label class="field__label" for="f-tglLahir">Tanggal lahir <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box"><input class="field__control" type="date" id="f-tglLahir" name="tglLahir" required aria-describedby="f-tglLahir-hint f-tglLahir-error"></div>
+                    <p class="field__hint" id="f-tglLahir-hint" data-hint-usia>Usia dihitung per 1 Juli 2026.</p>
+                    <p class="field__error" id="f-tglLahir-error"></p>
+                  </div>
+                  <div class="field" data-field="namaOrtu">
+                    <label class="field__label" for="f-namaOrtu">Nama orang tua/wali <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box"><input class="field__control" id="f-namaOrtu" name="namaOrtu" maxlength="80" autocomplete="off" required aria-describedby="f-namaOrtu-error"></div>
+                    <p class="field__error" id="f-namaOrtu-error"></p>
+                  </div>
+                  <div class="field" data-field="noHp">
+                    <label class="field__label" for="f-noHp">No. HP orang tua/wali <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box"><input class="field__control num" type="tel" id="f-noHp" name="noHp" maxlength="16" autocomplete="off" required aria-describedby="f-noHp-hint f-noHp-error"></div>
+                    <p class="field__hint" id="f-noHp-hint">Diawali 08, 10–13 digit.</p>
+                    <p class="field__error" id="f-noHp-error"></p>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ===== Langkah 2: Domisili & jalur ===== -->
+              <section class="form-step" data-langkah="1" aria-labelledby="judul-l2" hidden>
+                <h2 class="form-step__title" id="judul-l2" tabindex="-1">Domisili &amp; jalur pendaftaran</h2>
+                <div class="form-grid">
+                  <div class="field form-grid__full" data-field="alamat">
+                    <label class="field__label" for="f-alamat">Alamat sesuai KK <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box"><input class="field__control" id="f-alamat" name="alamat" maxlength="160" autocomplete="off" required aria-describedby="f-alamat-hint f-alamat-error"></div>
+                    <p class="field__hint" id="f-alamat-hint">Nama jalan, nomor rumah, RT/RW.</p>
+                    <p class="field__error" id="f-alamat-error"></p>
+                  </div>
+                  <div class="field" data-field="kelurahan">
+                    <label class="field__label" for="f-kelurahan">Kelurahan <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box"><input class="field__control" id="f-kelurahan" name="kelurahan" maxlength="60" autocomplete="off" required aria-describedby="f-kelurahan-error"></div>
+                    <p class="field__error" id="f-kelurahan-error"></p>
+                  </div>
+                  <div class="field" data-field="kecamatan">
+                    <label class="field__label" for="f-kecamatan">Kecamatan <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box"><input class="field__control" id="f-kecamatan" name="kecamatan" maxlength="60" autocomplete="off" required aria-describedby="f-kecamatan-error"></div>
+                    <p class="field__error" id="f-kecamatan-error"></p>
+                  </div>
+                  <div class="field" data-field="tglTerbitKk">
+                    <label class="field__label" for="f-tglTerbitKk">Tanggal terbit KK <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box"><input class="field__control" type="date" id="f-tglTerbitKk" name="tglTerbitKk" required aria-describedby="f-tglTerbitKk-hint f-tglTerbitKk-error"></div>
+                    <p class="field__hint" id="f-tglTerbitKk-hint">Tertera di bagian bawah Kartu Keluarga.</p>
+                    <p class="field__error" id="f-tglTerbitKk-error"></p>
+                  </div>
+                  <div class="field" data-field="jarakMeter">
+                    <label class="field__label" for="f-jarakMeter">Jarak rumah ke sekolah (meter) <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box"><input class="field__control num" id="f-jarakMeter" name="jarakMeter" inputmode="numeric" maxlength="5" autocomplete="off" required aria-describedby="f-jarakMeter-hint f-jarakMeter-error"></div>
+                    <p class="field__hint" id="f-jarakMeter-hint" data-hint-jarak>Bilangan bulat, 1–50.000 meter.</p>
+                    <p class="field__error" id="f-jarakMeter-error"></p>
+                  </div>
+                  <fieldset class="field form-grid__full" data-field="jalur" aria-describedby="f-jalur-error">
+                    <legend class="field__label">Jalur pendaftaran <span class="field__required" aria-hidden="true">*</span></legend>
+                    <div class="choice-grid" data-pilihan-jalur></div>
+                    <p class="field__error" id="f-jalur-error"></p>
+                  </fieldset>
+                </div>
+              </section>
+
+              <!-- ===== Langkah 3: Akademik ===== -->
+              <section class="form-step" data-langkah="2" aria-labelledby="judul-l3" hidden>
+                <h2 class="form-step__title" id="judul-l3" tabindex="-1">Data akademik</h2>
+                <div class="form-grid">
+                  <div class="field" data-field="sekolahAsal">
+                    <label class="field__label" for="f-sekolahAsal">Asal sekolah <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box field__box--select">
+                      <select class="field__control" id="f-sekolahAsal" name="sekolahAsal" required aria-describedby="f-sekolahAsal-error"><option value="">Pilih sekolah</option></select>
+                    </div>
+                    <p class="field__error" id="f-sekolahAsal-error"></p>
+                  </div>
+                  <div class="field" data-field="tahunLulus">
+                    <label class="field__label" for="f-tahunLulus">Tahun lulus <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box field__box--select">
+                      <select class="field__control" id="f-tahunLulus" name="tahunLulus" required aria-describedby="f-tahunLulus-error"><option value="">Pilih tahun</option></select>
+                    </div>
+                    <p class="field__error" id="f-tahunLulus-error"></p>
+                  </div>
+                  <fieldset class="field form-grid__full" data-field="smt" aria-describedby="f-smt-hint f-smt-error">
+                    <legend class="field__label">Nilai rapor rata-rata per semester <span class="field__required" aria-hidden="true">*</span></legend>
+                    <div class="semester-grid" data-semester></div>
+                    <p class="field__hint" id="f-smt-hint" data-hint-semester>Angka 0–100, maksimal 2 desimal (koma atau titik).</p>
+                    <p class="field__error" id="f-smt-error"></p>
+                    <p class="form-output" aria-live="polite" data-output-nilai></p>
+                  </fieldset>
+                  <div class="field" data-field="prestasiTingkat">
+                    <label class="field__label" for="f-prestasiTingkat">Prestasi tertinggi</label>
+                    <div class="field__box field__box--select">
+                      <select class="field__control" id="f-prestasiTingkat" name="prestasiTingkat" aria-describedby="f-prestasiTingkat-hint f-prestasiTingkat-error"><option value="">Tidak ada</option></select>
+                    </div>
+                    <p class="field__hint" id="f-prestasiTingkat-hint">Opsional. Jika diisi, sertifikat wajib diunggah.</p>
+                    <p class="field__error" id="f-prestasiTingkat-error"></p>
+                  </div>
+                  <div class="field" data-field="prestasiNama" hidden>
+                    <label class="field__label" for="f-prestasiNama">Nama prestasi <span class="field__required" aria-hidden="true">*</span></label>
+                    <div class="field__box"><input class="field__control" id="f-prestasiNama" name="prestasiNama" maxlength="100" autocomplete="off" aria-describedby="f-prestasiNama-error"></div>
+                    <p class="field__error" id="f-prestasiNama-error"></p>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ===== Langkah 4: Berkas & ringkasan ===== -->
+              <section class="form-step" data-langkah="3" aria-labelledby="judul-l4" hidden>
+                <h2 class="form-step__title" id="judul-l4" tabindex="-1">Berkas &amp; ringkasan</h2>
+                <p class="text-body-sm text-variant">Simulasi: berkas tidak dikirim ke mana pun. Yang dicatat hanya nama dan ukuran berkas.</p>
+                <div class="upload-list" data-daftar-berkas></div>
+                <h3 class="form-step__subtitle">Periksa kembali isian</h3>
+                <div class="summary" data-ringkasan-isian></div>
+              </section>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn--outlined" data-aksi="sebelumnya"><span class="icon" aria-hidden="true">arrow_back</span>Sebelumnya</button>
+                <p class="form-actions__step text-body-sm text-variant" data-posisi aria-live="polite"></p>
+                <button type="submit" class="btn btn--filled" data-aksi="lanjut"><span data-label-lanjut>Lanjut</span><span class="icon" aria-hidden="true" data-ikon-lanjut>arrow_forward</span></button>
+              </div>
+            </form>
+          </section>
+
+          <aside class="card" aria-labelledby="judul-aturan">
+            <h2 class="card__title" id="judul-aturan">Aturan di langkah ini</h2>
+            <ul class="rule-list" data-aturan></ul>
+          </aside>
+        </div>
+      </main>
+
+      <footer class="app-footer">
+        <p>PPDB Online · SMA Negeri 1 Harapan Bangsa (fiktif) · Data simulasi · v1.0</p>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../assets/js/core/rules.js"></script>
+  <script src="../assets/js/core/seed.js"></script>
+  <script src="../assets/js/core/store.js"></script>
+  <script src="../assets/js/core/ui.js"></script>
+  <script src="../assets/js/core/shell.js"></script>
+  <script src="../assets/js/pages/form.js"></script>
+</body>
+</html>

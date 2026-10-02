@@ -253,6 +253,7 @@ erDiagram
         string jalur_kode FK
         string npsn_asal FK
         float nilai_rapor
+        string nilai_semester
         string prestasi_tingkat
         string status_verifikasi
         datetime tgl_daftar
