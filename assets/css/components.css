@@ -689,7 +689,8 @@ button.chip:focus-visible::before { opacity: var(--state-focus); }
   font-variant-numeric: tabular-nums;
 }
 
-.table th.table__num {
+.table th.table__num,
+.table td.table__num {
   text-align: end;
 }
 

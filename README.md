@@ -40,10 +40,10 @@ Rincian progres setiap tugas ada di [docs/checklist_work.md](docs/checklist_work
 - Data pendaftar: tab status, cari, filter berlapis, urutkan, paginasi, tampilan kartu di HP, detail, hapus dengan pilihan "Urungkan", ekspor CSV, serta cadangan dan pemulihan data (JSON).
 - Form tambah/ubah pendaftar 4 langkah: validasi aturan PPDB (NISN unik, usia, KK zonasi, nilai, berkas), berkas wajib mengikuti jalur, rata-rata rapor otomatis, ringkasan sebelum simpan, dan peringatan jika keluar sebelum menyimpan.
 - Verifikasi berkas: antrean terlama dulu, cek per berkas dengan data pembanding, keputusan Terverifikasi/Perlu perbaikan/Tolak dengan catatan wajib, lalu otomatis lanjut ke pendaftar berikutnya.
+- Hasil & peringkat per jalur: kuota, keketatan, batas sementara, garis batas kuota di tabel, cari nama yang langsung disorot, dan ekspor CSV.
 
 **Direncanakan (Milestone 3)**
 - Dashboard: ringkasan kerja harian, grafik pendaftar per hari, dan keketatan tiap jalur.
-- Hasil & peringkat otomatis per jalur, lengkap dengan garis batas kuota.
 - Rekap siap cetak dan bukti pendaftaran.
 
 ## Teknologi
@@ -72,6 +72,7 @@ Proyek ini tidak memerlukan instalasi atau proses build.
    - `pages/data-master.html`: data pendaftar (wajib masuk lebih dulu).
    - `pages/form.html`: tambah pendaftar, atau `pages/form.html?id=pd-0001` untuk mengubah data.
    - `pages/verifikasi.html`: verifikasi berkas dari antrean.
+   - `pages/hasil-seleksi.html`: peringkat sementara per jalur.
    - `layout.html`: template dasar Admin Panel. Coba ubah lebar jendela browser.
    - `docs/styleguide.html`: etalase design system dan hasil uji kontras.
 

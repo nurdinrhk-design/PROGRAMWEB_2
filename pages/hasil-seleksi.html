@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Peringkat sementara per jalur PPDB Online SMA Negeri 1 Harapan Bangsa (fiktif). Data simulasi.">
+  <title>Hasil &amp; Peringkat · PPDB Online</title>
+  <link rel="icon" href="../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,400,0..1,0&amp;display=block">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-page="hasil-seleksi" data-auth="required" data-root="../">
+  <noscript><p class="noscript-note">Admin Panel PPDB memerlukan JavaScript. Aktifkan JavaScript di browser Anda.</p></noscript>
+  <a class="skip-link" href="#konten">Lewati ke konten utama</a>
+
+  <div class="app">
+
+    <!-- ===================== NAVIGATION DRAWER ===================== -->
+    <aside class="nav-drawer" id="nav-drawer" aria-label="Navigasi utama">
+      <a class="nav-drawer__brand" href="dashboard.html">
+        <img class="nav-drawer__logo" src="../assets/img/logo.svg" alt="">
+        <span class="nav-drawer__brand-text">
+          <strong>PPDB Online</strong>
+          <small>SMA Negeri 1 Harapan Bangsa</small>
+        </span>
+      </a>
+
+      <nav class="nav-drawer__nav" aria-label="Menu utama">
+        <ul class="nav-list">
+          <li>
+            <a class="nav-item" href="dashboard.html" data-page="dashboard">
+              <span class="icon nav-item__icon" aria-hidden="true">space_dashboard</span>
+              <span class="nav-item__label">Dashboard</span>
+              <span class="nav-item__short" aria-hidden="true">Dasbor</span>
+            </a>
+          </li>
+        </ul>
+
+        <p class="nav-section" id="nav-pendaftaran">Pendaftaran</p>
+        <ul class="nav-list" aria-labelledby="nav-pendaftaran">
+          <li>
+            <a class="nav-item" href="data-master.html" data-page="data-master">
+              <span class="icon nav-item__icon" aria-hidden="true">groups</span>
+              <span class="nav-item__label">Data Pendaftar</span>
+              <span class="nav-item__short" aria-hidden="true">Data</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-item" href="form.html" data-page="form">
+              <span class="icon nav-item__icon" aria-hidden="true">person_add</span>
+              <span class="nav-item__label">Tambah Pendaftar</span>
+              <span class="nav-item__short" aria-hidden="true">Tambah</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-item" href="verifikasi.html" data-page="verifikasi">
+              <span class="icon nav-item__icon" aria-hidden="true">fact_check</span>
+              <span class="nav-item__label">Verifikasi Berkas</span>
+              <span class="nav-item__short" aria-hidden="true">Berkas</span>
+              <span class="count nav-item__badge" data-badge="verifikasi" hidden></span>
+            </a>
+          </li>
+        </ul>
+
+        <p class="nav-section" id="nav-seleksi">Seleksi</p>
+        <ul class="nav-list" aria-labelledby="nav-seleksi">
+          <li>
+            <a class="nav-item" href="hasil-seleksi.html" data-page="hasil-seleksi">
+              <span class="icon nav-item__icon" aria-hidden="true">leaderboard</span>
+              <span class="nav-item__label">Hasil &amp; Peringkat</span>
+              <span class="nav-item__short" aria-hidden="true">Hasil</span>
+            </a>
+          </li>
+        </ul>
+
+        <p class="nav-section" id="nav-laporan">Laporan</p>
+        <ul class="nav-list" aria-labelledby="nav-laporan">
+          <li>
+            <a class="nav-item" href="laporan.html" data-page="laporan">
+              <span class="icon nav-item__icon" aria-hidden="true">summarize</span>
+              <span class="nav-item__label">Rekap &amp; Cetak</span>
+              <span class="nav-item__short" aria-hidden="true">Rekap</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="nav-drawer__footer">
+        <p class="nav-drawer__note"><span class="icon" aria-hidden="true">science</span><span>Data simulasi</span></p>
+        <button type="button" class="nav-item" data-action="logout">
+          <span class="icon nav-item__icon" aria-hidden="true">logout</span>
+          <span class="nav-item__label">Keluar</span>
+          <span class="nav-item__short" aria-hidden="true">Keluar</span>
+        </button>
+      </div>
+    </aside>
+
+    <div class="app__main">
+
+      <!-- ===================== TOP APP BAR ===================== -->
+      <header class="top-app-bar">
+        <button type="button" class="icon-btn" data-nav-toggle aria-controls="nav-drawer" aria-expanded="true" aria-label="Tampilkan atau sembunyikan menu">
+          <span class="icon" aria-hidden="true">menu</span>
+        </button>
+
+        <div class="top-app-bar__heading">
+          <nav aria-label="Breadcrumb">
+            <ol class="breadcrumb">
+              <li><a href="dashboard.html">PPDB Online</a></li>
+              <li><span aria-current="page">Hasil &amp; Peringkat</span></li>
+            </ol>
+          </nav>
+          <p class="top-app-bar__title">Hasil &amp; Peringkat</p>
+        </div>
+
+        <div class="top-app-bar__actions">
+          <span class="phase-chip" data-phase-chip><span class="icon" aria-hidden="true">event</span><span data-phase-text>Pendaftaran</span></span>
+
+          <div class="account">
+            <button type="button" class="account__button" data-account-toggle aria-expanded="false" aria-controls="account-menu">
+              <span class="avatar" aria-hidden="true" data-user-initials></span>
+              <span class="account__name" data-user-name></span>
+              <span class="icon icon--sm" aria-hidden="true">expand_more</span>
+              <span class="sr-only">Menu akun</span>
+            </button>
+            <div class="menu account__menu" id="account-menu" hidden>
+              <div class="menu__header">
+                <p class="text-label-lg" data-user-name></p>
+                <p class="text-body-sm text-variant" data-user-role></p>
+              </div>
+              <button type="button" class="menu__item" data-action="logout">
+                <span class="icon" aria-hidden="true">logout</span>Keluar
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===================== KONTEN ===================== -->
+      <main class="content" id="konten" tabindex="-1">
+        <div class="page-header">
+          <div>
+            <h1>Hasil &amp; Peringkat</h1>
+            <p class="page-header__desc">Siapa yang masuk kuota saat ini, berapa batasnya, dan siapa yang tergeser.</p>
+          </div>
+          <div class="page-header__actions">
+            <button type="button" class="btn btn--outlined" data-aksi="ekspor-csv"><span class="icon" aria-hidden="true">download</span>Ekspor CSV</button>
+          </div>
+        </div>
+
+        <div class="alert alert--info">
+          <span class="icon" aria-hidden="true">schedule</span>
+          <p class="alert__body" data-catatan-sementara>Peringkat sementara. Hanya pendaftar terverifikasi yang ikut peringkat.</p>
+        </div>
+
+        <section class="card card--flush data-list" aria-labelledby="judul-peringkat">
+          <h2 class="sr-only" id="judul-peringkat">Peringkat per jalur</h2>
+          <div class="tabs" role="tablist" aria-label="Jalur pendaftaran" data-tabs></div>
+
+          <div id="panel-jalur" role="tabpanel" data-panel>
+            <dl class="rank-stats" data-statistik></dl>
+
+            <div class="data-list__toolbar rank-toolbar" role="search" aria-label="Cari di peringkat">
+              <div class="field">
+                <label class="field__label" for="cari">Cari nama</label>
+                <div class="field__box">
+                  <span class="icon field__icon" aria-hidden="true">search</span>
+                  <input class="field__control" type="search" id="cari" maxlength="60" autocomplete="off" spellcheck="false" placeholder="Nama, NISN, atau no. pendaftaran" aria-describedby="cari-hasil">
+                </div>
+              </div>
+              <label class="check rank-toolbar__check"><input type="checkbox" id="sekitar-batas"> <span>Hanya sekitar garis batas</span></label>
+            </div>
+            <p class="data-list__summary" id="cari-hasil" data-ringkasan aria-live="polite"></p>
+
+            <div class="table-wrap" data-tabel-wrap>
+              <table class="table table--stack rank-table">
+                <caption class="sr-only" data-caption>Peringkat sementara</caption>
+                <thead>
+                  <tr>
+                    <th scope="col" class="table__num">Peringkat</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col" class="rank-table__sekolah">Asal sekolah</th>
+                    <th scope="col" class="table__num" data-kolom-nilai>Jarak</th>
+                    <th scope="col">Status seleksi</th>
+                  </tr>
+                </thead>
+                <tbody data-tbody></tbody>
+              </table>
+            </div>
+            <div class="empty" data-kosong hidden>
+              <span class="icon" aria-hidden="true">leaderboard</span>
+              <p class="empty__title">Belum ada pendaftar terverifikasi di jalur ini</p>
+              <p>Peringkat muncul setelah berkas diverifikasi.</p>
+              <a class="btn btn--tonal" href="verifikasi.html">Buka Verifikasi Berkas</a>
+            </div>
+            <p class="rank-note" data-dasar></p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="app-footer">
+        <p>PPDB Online · SMA Negeri 1 Harapan Bangsa (fiktif) · Data simulasi · v1.0</p>
+      </footer>
+    </div>
+  </div>
+
+  <script src="../assets/js/core/rules.js"></script>
+  <script src="../assets/js/core/seed.js"></script>
+  <script src="../assets/js/core/store.js"></script>
+  <script src="../assets/js/core/ui.js"></script>
+  <script src="../assets/js/core/shell.js"></script>
+  <script src="../assets/js/pages/hasil-seleksi.js"></script>
+</body>
+</html>

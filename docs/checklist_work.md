@@ -27,8 +27,8 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **Tahap 9 — Hasil & Peringkat** (berikutnya) |
-| **Tahap terakhir selesai** | Tahap 8 — Verifikasi Berkas (2 Okt 2026) |
+| **Tahap aktif** | **Tahap 10 — Dashboard** (berikutnya) |
+| **Tahap terakhir selesai** | Tahap 9 — Hasil & Peringkat (2 Okt 2026) |
 | **Menunggu dari pengembang** | Kirim tautan M1 & M2 ke LMS (2.8, 3.8) |
 
 ## Ringkasan Progres
@@ -43,12 +43,12 @@
 | [6](#tahap-6--data-pendaftar) | Data Pendaftar | M3 | 7 | 7 | 0 | 100% |
 | [7](#tahap-7--form-pendaftar-stepper) | Form Pendaftar | M3 | 6 | 6 | 0 | 100% |
 | [8](#tahap-8--verifikasi-berkas) | Verifikasi Berkas | M3 | 5 | 5 | 0 | 100% |
-| [9](#tahap-9--hasil--peringkat) | Hasil & Peringkat | M3 | 5 | 0 | 5 | 0% |
+| [9](#tahap-9--hasil--peringkat) | Hasil & Peringkat | M3 | 5 | 5 | 0 | 100% |
 | [10](#tahap-10--dashboard) | Dashboard | M3 | 4 | 0 | 4 | 0% |
 | [11](#tahap-11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 5 | 0 | 5 | 0% |
 | [12](#tahap-12--qa-menyeluruh) | QA menyeluruh | M3 | 7 | 0 | 7 | 0% |
 | [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 1 | 6 | 14% |
-| | **Total** | | **86** | **57** | **29** | **66%** |
+| | **Total** | | **86** | **62** | **24** | **72%** |
 
 **Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 🔄 Tahap 4–5 selesai
 
@@ -181,11 +181,11 @@ Ref: [perencanaan P-06](perencanaan.md#p-06--pageshasil-seleksihtml--hasil--peri
 
 | No | Langkah | Ref | Status | Catatan |
 |---|---|---|---|---|
-| 9.1 | Tab jalur + ringkasan: kuota, terverifikasi, keketatan, batas sementara | P-06, FR-05, BR-11 | ⬜ | |
-| 9.2 | Tabel peringkat + baris garis batas kuota + status masuk/tergeser | FR-13, BR-10 | ⬜ | |
-| 9.3 | Cari & sorot baris, filter "sekitar garis batas", ekspor CSV | FR-16, TC-18 | ⬜ | |
-| 9.4 | Uji alur: verifikasi → peringkat berubah | TC-17 | ⬜ | |
-| 9.5 | Penutupan | §11.3 | ⬜ | |
+| 9.1 | Tab jalur + ringkasan: kuota, terverifikasi, keketatan, batas sementara | P-06, FR-05, BR-11 | ✅ | Tab 4 jalur (dengan kuota, panah/Home/End). Ringkasan dari `R.peringkat`: kuota, terverifikasi dari total pendaftar jalur, keketatan + kursi tersisa, batas sementara ("Belum ada" bila kuota belum penuh, BR-11). Catatan "sementara" memakai tanggal tutup verifikasi dari jadwal |
+| 9.2 | Tabel peringkat + baris garis batas kuota + status masuk/tergeser | FR-13, BR-10 | ✅ | Tabel peringkat (BR-10), nama menaut ke bukti pendaftaran, baris garis batas setelah peringkat = kuota ("jarak terjauh"/"skor terendah"). Kartu < 840 px |
+| 9.3 | Cari & sorot baris, filter "sekitar garis batas", ekspor CSV | FR-16, TC-18 | ✅ | Cari nama/NISN/no. daftar → baris disorot & digulir, Enter untuk kecocokan berikutnya; pendaftar di jalur lain → tombol pindah jalur; belum terverifikasi → dijelaskan (TC-18 ✅). "Hanya sekitar garis batas" (±10 baris). Ekspor CSV jalur aktif (TC-21 ✅). Status di URL (`?jalur=&batas=&q=`) |
+| 9.4 | Uji alur: verifikasi → peringkat berubah | TC-17 | ✅ | Verifikasi pendaftar zonasi terdekat di halaman Verifikasi → di halaman Hasil batas zonasi berubah (3.639 → 3.621 m) dan peringkat 216 lama menjadi 217 Tergeser (TC-17 ✅) |
+| 9.5 | Penutupan | §11.3 | ✅ | Uji hasil 12/12 + regresi (inti 34, Data Pendaftar 36, form 26, verifikasi 22), konsol bersih. 5 lebar layar tanpa scroll horizontal. W3C HTML 0 pesan, CSS 0 error. Uji Anti-Slop 7/7. Audit S-01…S-07 lulus |
 
 ---
 
@@ -248,10 +248,10 @@ Ref: [perencanaan §12](perencanaan.md#12-strategi-pengujian), [§5.3 NFR](peren
 | TC-15 | Tombol terverifikasi nonaktif jika berkas belum dicentang | 8 | ✅ Tahap 8 (2 Okt) | ⬜ |
 | TC-16 | Perbaikan/tolak tanpa catatan | 8 | ✅ Tahap 8 (2 Okt) | ⬜ |
 | TC-17 | Verifikasi mengubah peringkat | 4, 9 | ✅ Tahap 4 (26 Sep, uji otomatis) · Tahap 8 (2 Okt, lewat halaman) | ⬜ |
-| TC-18 | Cari nama di peringkat | 9 | – | ⬜ |
+| TC-18 | Cari nama di peringkat | 9 | ✅ Tahap 9 (2 Okt) | ⬜ |
 | TC-19 | Rentang tanggal laporan terbalik | 11 | – | ⬜ |
 | TC-20 | Cetak laporan & bukti | 11 | – | ⬜ |
-| TC-21 | Ekspor CSV | 6, 9, 11 | ✅ Tahap 6 (2 Okt, data pendaftar) | ⬜ |
+| TC-21 | Ekspor CSV | 6, 9, 11 | ✅ Tahap 6 (data pendaftar) · Tahap 9 (peringkat) | ⬜ |
 | TC-22 | Reset data simulasi | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
 | TC-23 | Logout | 5 | ✅ Tahap 6 (2 Okt) | ⬜ |
 
@@ -417,6 +417,11 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-109 | 2 Okt 2026 | UPDATE | `assets/css/pages.css` | 8.1–8.5 | Blok Verifikasi: grid 1/2/3 kolom, antrean, pratinjau, baris cek (label di atas pada panel sempit), tombol keputusan |
 | F-110 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md`, `README.md` | 8.5 | v0.3.4: P-05 (antrean perbaikan, pemeriksaan otomatis, tata letak). README: fitur verifikasi |
 | F-111 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 8.5 | Tahap 8 selesai (5/5), TC-15/16/17, progres 57/86 |
+| F-112 | 2 Okt 2026 | CREATE | `pages/hasil-seleksi.html` | 9.1–9.3 | Tab jalur, ringkasan 4 angka, cari, filter sekitar garis batas, tabel peringkat |
+| F-113 | 2 Okt 2026 | CREATE | `assets/js/pages/hasil-seleksi.js` | 9.1–9.3 | Peringkat dari `R.peringkat`, garis batas, cari & sorot, penjelasan bila tidak ada di peringkat, CSV, URL |
+| F-114 | 2 Okt 2026 | UPDATE | `assets/css/pages.css`, `components.css` | 9.5 | Blok Hasil & Peringkat. Perbaikan komponen: angka `.table__num` di sel data kini rata kanan (sebelumnya kalah spesifisitas) |
+| F-115 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md`, `README.md` | 9.5 | v0.3.5: catatan hasil Tahap 9 di P-06. README: fitur peringkat |
+| F-116 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 9.5 | Tahap 9 selesai (5/5), TC-17/18/21, progres 62/86 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -429,15 +434,15 @@ PROGRAMWEB_2/
 ├── assets/
 │   ├── css/  main.css · tokens.css · base.css · layout.css · components.css · pages.css
 │   ├── js/core/  rules.js · seed.js · store.js · ui.js · shell.js
-│   ├── js/pages/ login.js · data-master.js · form.js · verifikasi.js
+│   ├── js/pages/ login.js · data-master.js · form.js · verifikasi.js · hasil-seleksi.js
 │   └── img/  logo.svg
 ├── docs/
-│   ├── perencanaan.md          (v0.3.4)
+│   ├── perencanaan.md          (v0.3.5)
 │   ├── checklist_work.md       (v0.3)
 │   ├── perancangan.md          (M1)
 │   ├── styleguide.html / .css / .js   (etalase design system, M2)
 │   └── img/referensi-stitch/   (8 screenshot)
-└── pages/  data-master.html · form.html · verifikasi.html
+└── pages/  data-master.html · form.html · verifikasi.html · hasil-seleksi.html
 ```
 
 ---
@@ -496,3 +501,4 @@ Satu baris per sesi kerja.
 | 2 Okt 2026 | 6.1–6.7 | **Tahap 6: Data Pendaftar.** Halaman + skrip halaman + `ui.pasangMenu` + komponen 16. Uji otomatis lewat Chrome headless (DevTools Protocol, profil sementara di scratchpad lalu dihapus): 36/36 lulus setelah 3 perbaikan pada skrip uji (bukan halaman). Uji tampilan 7 lebar: temuan & perbaikan — tombol Tambah terpotong di 360 px, nomor & tanggal di kartu berantakan, tabel 600–840 px berdesakan + scroll halaman di 600 px, garis bawah ikon edit, padding riwayat tertimpa reset daftar. Semua diperbaiki dan diuji ulang. W3C HTML 0 pesan, CSS 0 error. Audit keamanan lulus | ✅ (F-85…F-95) |
 | 2 Okt 2026 | 7.1–7.6 | **Tahap 7: Form Pendaftar.** Form 4 langkah + nilai semester di model data + pesan titipan antarhalaman. Temuan saat uji: (1) event `blur` tidak terpicu di Chrome headless → harness memakai emulasi fokus, validasi blur kini benar-benar teruji; (2) label langkah aktif & tombol Simpan terpotong di 360 px; (3) legend terlalu rapat. Semua diperbaiki & diuji ulang. Uji XSS: nama berisi tag tampil sebagai teks. Audit keamanan lulus | ✅ (F-96…F-106) |
 | 2 Okt 2026 | 8.1–8.5 | **Tahap 8: Verifikasi Berkas.** Halaman 3 panel lengkap dengan aturan keputusan. Temuan uji tampilan: label cek berkas terjepit di panel sempit (360 px & 3 kolom) → label dipindah ke atas pilihan; judul kosong sebelum JS (info validator) → diberi teks awal. Semua diuji ulang. Audit keamanan lulus | ✅ (F-107…F-111) |
+| 2 Okt 2026 | 9.1–9.5 | **Tahap 9: Hasil & Peringkat.** Temuan uji: tombol pindah jalur belum menyorot baris & spasi berlebih di teks ringkasan (diperbaiki); angka di kolom numerik tabel tidak rata kanan di semua halaman (bug komponen, diperbaiki). Alur verifikasi → peringkat berubah diuji lintas halaman. Audit keamanan lulus | ✅ (F-112…F-116) |

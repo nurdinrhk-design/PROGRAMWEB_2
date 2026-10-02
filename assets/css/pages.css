@@ -867,3 +867,102 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+
+/* =====================================================================
+   HASIL & PERINGKAT — pages/hasil-seleksi.html (P-06)
+   ===================================================================== */
+.rank-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom: 1px solid var(--md-outline-variant);
+}
+
+.rank-stats__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4);
+}
+
+.rank-stats__item + .rank-stats__item {
+  border-inline-start: 1px solid var(--md-outline-variant);
+}
+
+.rank-stats__item:nth-child(3) {
+  border-inline-start: 0;
+  border-top: 1px solid var(--md-outline-variant);
+}
+
+.rank-stats__item:nth-child(4) {
+  border-top: 1px solid var(--md-outline-variant);
+}
+
+.rank-stats dt {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-label-md-size);
+  line-height: var(--type-label-md-line);
+  font-weight: var(--weight-semibold);
+}
+
+.rank-stats__value {
+  font-size: var(--type-headline-sm-size);
+  line-height: var(--type-headline-sm-line);
+  font-weight: var(--weight-semibold);
+  font-variant-numeric: tabular-nums;
+}
+
+.rank-stats__meta {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.rank-toolbar__check {
+  align-self: end;
+  min-height: var(--control-height);
+}
+
+.rank-table__rank {
+  font-weight: var(--weight-semibold);
+}
+
+.rank-table tr.is-current {
+  outline: 2px solid var(--md-primary);
+  outline-offset: -2px;
+}
+
+.rank-note {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--md-outline-variant);
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+@media (min-width: 600px) {
+  .rank-toolbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+@media (min-width: 840px) {
+  .rank-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .rank-stats__item:nth-child(3) {
+    border-inline-start: 1px solid var(--md-outline-variant);
+  }
+
+  .rank-stats__item:nth-child(3),
+  .rank-stats__item:nth-child(4) {
+    border-top: 0;
+  }
+}
+
+@media (min-width: 840px) {
+  .rank-table th:first-child {
+    width: 7rem;
+  }
+}

@@ -10,10 +10,10 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **0.3.4** |
+| Versi dokumen | **0.3.5** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1) · [referensi Stitch](img/referensi-stitch/) |
-| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–8 selesai. Berikutnya: Tahap 9 |
+| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–9 selesai. Berikutnya: Tahap 10 |
 
 ---
 
@@ -496,6 +496,7 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 - **Pertanyaan:** "Siapa yang masuk kuota saat ini, berapa batasnya, dan siapa yang tergeser?"
 - **Konten:** tab jalur (dengan kuota). Ringkasan: kuota · terverifikasi · keketatan · batas sementara. Tabel peringkat (peringkat, nama, asal sekolah, jarak/skor, status seleksi) dengan **baris pemisah garis batas kuota**. Keterangan dasar peringkat (BR-10). Label "Peringkat sementara, berubah sampai verifikasi ditutup 22 Juni".
 - **Interaksi:** ganti tab, cari nama (lompat ke baris & sorot), tampilkan "hanya sekitar garis batas", ekspor CSV, tautan ke bukti pendaftaran.
+- **Hasil Tahap 9:** pencarian juga menjelaskan pendaftar yang tidak ada di peringkat jalur aktif (belum terverifikasi, atau ada di jalur lain dengan tombol pindah jalur). Batas sementara tampil "Belum ada" bila kuota belum penuh, dan filter "sekitar garis batas" (±10 baris) dinonaktifkan.
 
 ### P-07 · `pages/laporan.html` — Rekap & Cetak (Tahap 11)
 - **Pertanyaan:** "Apa yang saya bawa ke rapat panitia?"
@@ -845,3 +846,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | 0.3.2 | 2 Okt 2026 | Hasil Tahap 6: tabel menjadi kartu di < 840px karena 6 kolom tidak muat bersama navigation rail (R-05, P-03, §9). P-03: semua status tampilan disimpan di URL, menu cadangan & reset. §9: komponen daftar info/berkas/riwayat dan menu tarik-turun. §10.1: fungsi `ui.js` | Nurdin & Claude |
 | 0.3.3 | 2 Okt 2026 | Hasil Tahap 7: ERD tambah `nilai_semester`; P-04 asal sekolah memakai `<select>` (bukan datalist), tahun lulus 2024–2026, penanganan data lama tanpa nilai semester | Nurdin & Claude |
 | 0.3.4 | 2 Okt 2026 | Hasil Tahap 8: P-05 antrean perlu perbaikan, panduan & pemeriksaan otomatis, titik henti tata letak | Nurdin & Claude |
+| 0.3.5 | 2 Okt 2026 | Hasil Tahap 9: P-06 penjelasan hasil cari di luar peringkat, perilaku saat kuota belum penuh | Nurdin & Claude |
