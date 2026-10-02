@@ -1,0 +1,44 @@
+# CI — Admin Panel PPDB Online (Tahap 13.2, D-18, R-08)
+# 1. Validasi HTML & CSS dengan W3C Nu Validator (gagal bila ada error)
+# 2. Pemindaian rahasia (token, kunci API) di seluruh riwayat git dengan Gitleaks
+# Action dikunci ke SHA commit agar tidak berubah diam-diam (keamanan rantai pasok).
+name: CI
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validasi:
+    name: Validasi HTML & CSS (W3C)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil kode
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Jalankan W3C Nu Validator
+        run: |
+          npm install --no-save --no-audit --no-fund vnu-jar@26.10.2
+          java -jar node_modules/vnu-jar/build/dist/vnu.jar --errors-only --also-check-css \
+            index.html layout.html 404.html pages docs tests assets/css
+
+  rahasia:
+    name: Pindai rahasia (Gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil kode beserta seluruh riwayat
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Jalankan Gitleaks
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

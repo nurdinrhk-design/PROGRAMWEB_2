@@ -1,0 +1,3 @@
+# Situs tugas dengan data simulasi: jangan diindeks mesin pencari (D-19)
+User-agent: *
+Disallow: /
