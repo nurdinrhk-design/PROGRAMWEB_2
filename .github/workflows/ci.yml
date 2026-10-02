@@ -27,8 +27,11 @@ jobs:
           java -version
           npm install --no-save --no-audit --no-fund vnu-jar@26.10.2
           status=0
-          java -jar node_modules/vnu-jar/build/dist/vnu.jar --errors-only --also-check-css --format gnu \
-            index.html layout.html 404.html pages docs tests assets/css > vnu.txt 2>&1 || status=$?
+          # Hanya berkas HTML & CSS yang terlacak git (bukan .md/.js/gambar)
+          git ls-files '*.html' '*.css' > daftar.txt
+          echo "Diperiksa: $(wc -l < daftar.txt) berkas"
+          xargs -a daftar.txt java -jar node_modules/vnu-jar/build/dist/vnu.jar --errors-only --also-check-css --format gnu \
+            > vnu.txt 2>&1 || status=$?
           # Setiap error menjadi anotasi agar terlihat di halaman Actions & lewat API
           while IFS= read -r baris; do echo "::error::$baris"; done < vnu.txt
           echo "Jumlah error: $(wc -l < vnu.txt)"
