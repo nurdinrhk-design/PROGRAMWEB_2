@@ -27,9 +27,9 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **Tahap 6 — Data Pendaftar** (berikutnya) · 13.1 menunggu izin token pengembang |
+| **Tahap aktif** | **Tahap 6 — Data Pendaftar** (berikutnya) |
 | **Tahap terakhir selesai** | Tahap 5 — Login (26 Sep 2026) |
-| **Menunggu dari pengembang** | Izin langkah kredensial push (13.1) · izin tambahan token `delete_repo, workflow` · konfirmasi hapus & buat ulang repo |
+| **Menunggu dari pengembang** | Kirim tautan M1 & M2 ke LMS (2.8, 3.8) |
 
 ## Ringkasan Progres
 
@@ -47,8 +47,8 @@
 | [10](#tahap-10--dashboard) | Dashboard | M3 | 4 | 0 | 4 | 0% |
 | [11](#tahap-11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 5 | 0 | 5 | 0% |
 | [12](#tahap-12--qa-menyeluruh) | QA menyeluruh | M3 | 7 | 0 | 7 | 0% |
-| [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 0 | 7 | 0% |
-| | **Total** | | **86** | **38** | **48** | **44%** |
+| [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 1 | 6 | 14% |
+| | **Total** | | **86** | **39** | **47** | **45%** |
 
 **Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 🔄 Tahap 4–5 selesai
 
@@ -262,7 +262,7 @@ Ref: [perencanaan D-09, D-18, D-19, D-24](perencanaan.md#3-keputusan--asumsi) ·
 
 | No | Langkah | Ref | Status | Catatan |
 |---|---|---|---|---|
-| 13.1 | Operasi repo dari akun Nurdin + pembersihan jejak akun lain (lihat B-04) | D-24, D-18 | 🔄 | Dikerjakan lebih awal atas persetujuan pengembang (26 Sep). ✅ login `gh` Nurdin (ADMIN) · ✅ riwayat lokal disamarkan · ✅ kredit README · ⬜ kredensial push repo · ⬜ buat ulang repo & push · ⬜ hapus collaborator |
+| 13.1 | Operasi repo dari akun Nurdin + pembersihan jejak akun lain (lihat B-04) | D-24, D-18 | ✅ | 26 Sep: login `gh` Nurdin, riwayat lokal disamarkan, kredit README. 2 Okt: izin token `delete_repo`+`workflow`, audit S-01…S-07 lulus, repo dihapus & dibuat ulang (publik, wiki nonaktif), 12 commit bersih di-push, collaborator & kontributor hanya Nurdin, `refs/original` dihapus + `git gc` |
 | 13.2 | CI GitHub Actions (W3C Nu Validator + pemindaian rahasia) + perlindungan branch `main` | D-18, R-08 | ⬜ | |
 | 13.3 | GitHub Pages + CSP `<meta>` + `noindex` + halaman 404 | D-09, D-19 | ⬜ | |
 | 13.4 | README final (fitur, screenshot, link situs) + rilis `v1.0` | G-06 | ⬜ | Melanjutkan 1.7 |
@@ -388,6 +388,8 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-80 | 26 Sep 2026 | UPDATE | `assets/css/components.css` | 5.3 | Komponen 'alert' (info, error, warning, sukses) |
 | F-81 | 26 Sep 2026 | UPDATE | `assets/js/core/shell.js` | 5.4 | Logout ke `index.html?keluar=1` |
 | F-82 | 26 Sep 2026 | UPDATE | `docs/checklist_work.md` | 5.5 | Tahap 5 selesai, TC-01 & TC-02 |
+| F-83 | 2 Okt 2026 | DELETE + CREATE | GitHub `nurdinrhk-design/PROGRAMWEB_2` | 13.1 | Repo lama (riwayat berjejak + collaborator akun lain) dihapus, dibuat ulang publik, riwayat bersih di-push |
+| F-84 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 13.1 | 13.1 ✅, B-04 selesai, progres 39/86, posisi saat ini |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -420,7 +422,7 @@ PROGRAMWEB_2/
 | B-01 | Desain dari pengembang | T1–T3 | ✅ Selesai | Referensi Stitch diterima 23 Sep 2026. Figma dibatalkan (D-20). Tinggal link publik Stitch (T1-17) |
 | B-02 | Tema visual belum ditentukan | T2 | ✅ Selesai | D-01: Material Design 3 |
 | B-03 | **Push ditolak (403).** Kredensial Git di komputer ini adalah akun login kedua pengembang (disamarkan), yang tidak punya hak tulis ke `nurdinrhk-design/PROGRAMWEB_2` | T0-07, T0-R3, semua push berikutnya | ✅ Selesai | Kedua akun milik pengembang. akun kedua pengembang (disamarkan) ditambahkan sebagai collaborator. Push berhasil |
-| B-04 | Operasi GitHub (push, PR, CI, Pages) belum bisa dijalankan dari akun Nurdin | Push & deploy (D-24), 13.1–13.3 | 🔄 Sebagian | 26 Sep: `gh` sudah login akun Nurdin (ADMIN). Sisa: kredensial push repo, izin token `delete_repo`/`workflow`, buat ulang repo |
+| B-04 | Operasi GitHub (push, PR, CI, Pages) belum bisa dijalankan dari akun Nurdin | Push & deploy (D-24), 13.1–13.3 | ✅ Selesai | 2 Okt 2026: token Nurdin punya izin `repo, workflow, delete_repo`; push dari akun Nurdin berhasil. Akun aktif `gh` tetap akun utama pengembang |
 | Q-01 | `localStorage` atau Google Spreadsheet? | T4 | ✅ Selesai | D-03: `localStorage` |
 | Q-02 | CSS murni atau Tailwind? | T2 | ✅ Selesai | D-04: CSS murni modular |
 | Q-03 | Nama sekolah? | T1 | ✅ Selesai | D-02: SMA Negeri 1 Harapan Bangsa (fiktif) |
@@ -462,3 +464,5 @@ Satu baris per sesi kerja.
 | 26 Sep 2026 | 13.1 | Pengembang menyetujui 13.1 dikerjakan lebih awal. Rencana v0.3 di-commit lokal. `gh` akun Nurdin terverifikasi (ADMIN, 0 fork, 0 star), akun aktif `gh` dikembalikan ke akun utama pengembang. Riwayat lokal disamarkan & diverifikasi. Langkah kredensial push **ditolak pengaman otomatis Claude Code** → menunggu keputusan pengembang | 🔄 (F-62…F-64) |
 | 26 Sep 2026 | 4.1–4.9 | **Tahap 4: fondasi data & modul inti.** `rules.js`, `seed.js`, `store.js`, `ui.js`, login di `shell.js`, 32 uji otomatis (lulus semua, percobaan pertama). Temuan: teks chip di dokumen ("hari ke-9") ternyata salah hitung, diganti hasil perhitungan (hari ke-11). Pengamanan: tanpa innerHTML, CSV anti formula, impor ketat, anti open-redirect, batas percobaan login | ✅ (F-65…F-75) |
 | 26 Sep 2026 | 5.1–5.5 | **Tahap 5: Login.** `index.html` + `login.js` + `pages.css` + komponen alert. Uji skenario otomatis: kosong, salah, toggle sandi, isi demo, login benar → sesi & log. Perbaikan tampilan: kotak akun demo di 360 px | ✅ (F-76…F-82) |
+| 29 Sep 2026 | 13.1 | Atas permintaan pengembang, akun aktif `gh` dikembalikan ke akun utama pengembang. Penambahan izin token akun Nurdin (`delete_repo`, `workflow`) **belum selesai** dan izinnya tetap seperti semula. Sisa pekerjaan 13.1 ditunda sampai pengembang siap mengurus akun Nurdin. Berkas log sementara di scratchpad sudah dihapus | ⏸️ Ditunda |
+| 2 Okt 2026 | 13.1 | Pengembang menyetujui izin token akun Nurdin (`delete_repo`, `workflow`) lewat device login; `gh` otomatis kembali ke akun utama. Isi repo lama dicocokkan dengan riwayat lokal (selisih hanya 6 baris yang disamarkan). Audit keamanan lulus: 0 jejak akun lain, 0 pola rahasia, 0 file terlarang, 12/12 commit beridentitas Nurdin. **Atas konfirmasi pengembang**, repo dihapus & dibuat ulang, lalu di-push. Verifikasi remote: 12 commit, kontributor & collaborator hanya Nurdin. Cadangan `refs/original` dihapus + `git gc`; log sementara di scratchpad dihapus | ✅ (F-83, F-84) |
