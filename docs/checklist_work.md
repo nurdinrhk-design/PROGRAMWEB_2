@@ -27,8 +27,8 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **Tahap 10 — Dashboard** (berikutnya) |
-| **Tahap terakhir selesai** | Tahap 9 — Hasil & Peringkat (2 Okt 2026) |
+| **Tahap aktif** | **Tahap 11 — Laporan & Bukti Pendaftaran** (berikutnya) |
+| **Tahap terakhir selesai** | Tahap 10 — Dashboard (2 Okt 2026) |
 | **Menunggu dari pengembang** | Kirim tautan M1 & M2 ke LMS (2.8, 3.8) |
 
 ## Ringkasan Progres
@@ -44,11 +44,11 @@
 | [7](#tahap-7--form-pendaftar-stepper) | Form Pendaftar | M3 | 6 | 6 | 0 | 100% |
 | [8](#tahap-8--verifikasi-berkas) | Verifikasi Berkas | M3 | 5 | 5 | 0 | 100% |
 | [9](#tahap-9--hasil--peringkat) | Hasil & Peringkat | M3 | 5 | 5 | 0 | 100% |
-| [10](#tahap-10--dashboard) | Dashboard | M3 | 4 | 0 | 4 | 0% |
+| [10](#tahap-10--dashboard) | Dashboard | M3 | 4 | 4 | 0 | 100% |
 | [11](#tahap-11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 5 | 0 | 5 | 0% |
 | [12](#tahap-12--qa-menyeluruh) | QA menyeluruh | M3 | 7 | 0 | 7 | 0% |
 | [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 1 | 6 | 14% |
-| | **Total** | | **86** | **62** | **24** | **72%** |
+| | **Total** | | **86** | **66** | **20** | **77%** |
 
 **Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 🔄 Tahap 4–5 selesai
 
@@ -194,10 +194,10 @@ Ref: [perencanaan P-02](perencanaan.md#p-02--pagesdashboardhtml--dashboard-tahap
 
 | No | Langkah | Ref | Status | Catatan |
 |---|---|---|---|---|
-| 10.1 | Page header + 4 KPI dari data | FR-03, AS-02, AS-04, TC-05 | ⬜ | |
-| 10.2 | Grafik pendaftar per hari (Chart.js + SRI) + fallback jika CDN gagal | FR-04, D-06, D-19, R-03 | ⬜ | |
-| 10.3 | Tabel keketatan jalur, antrean terlama, jadwal PPDB | FR-05, FR-06 | ⬜ | |
-| 10.4 | Penutupan | §11.3 | ⬜ | |
+| 10.1 | Page header + 4 KPI dari data | FR-03, AS-02, AS-04, TC-05 | ✅ | Header "Ringkasan" + tanggal simulasi, satu aksi utama "Mulai verifikasi (n)". 4 KPI dari data: total (+hari ini), menunggu (terlama n hari), perlu perbaikan, terverifikasi (% + jumlah masuk kuota), masing-masing menaut ke Data Pendaftar sesuai status (TC-05 ✅). Login kini berakhir di dashboard (TC-01 ✅ penuh) |
+| 10.2 | Grafik pendaftar per hari (Chart.js + SRI) + fallback jika CDN gagal | FR-04, D-06, D-19, R-03 | ✅ | Chart.js 4.5.1 dari jsDelivr, versi dikunci + SRI sha384 (dihitung dari berkas asli). Batang bertumpuk per jalur 8–18 Jun, warna dari token `--chart-*`, gerak dimatikan bila *reduced motion*. Data selalu tersedia sebagai tabel (`<details>`); CDN diblokir → tabel terbuka otomatis + keterangan (R-03 diuji) |
+| 10.3 | Tabel keketatan jalur, antrean terlama, jadwal PPDB | FR-05, FR-06 | ✅ | Tabel jalur dari `R.peringkat` (kuota, terverifikasi, keketatan, batas, `<progress>` keterisian) menaut ke Hasil & Peringkat. 5 antrean terlama menaut ke Verifikasi. Jadwal: tahap berlangsung ditandai (hari ke-n), tahap mendatang "n hari lagi". Semua ikut berubah saat data berubah |
+| 10.4 | Penutupan | §11.3 | ✅ | Uji dashboard 10/10 + regresi (inti 34, Data Pendaftar 36, form 26, verifikasi 22, hasil 12), konsol bersih. 5 lebar layar tanpa scroll horizontal. W3C HTML 0 pesan, CSS 0 error. Uji Anti-Slop 7/7. Audit S-01…S-07 lulus |
 
 ---
 
@@ -231,11 +231,11 @@ Ref: [perencanaan §12](perencanaan.md#12-strategi-pengujian), [§5.3 NFR](peren
 
 | TC | Skenario ringkas | Tahap terkait | Pertama diuji | Hasil QA |
 |---|---|---|---|---|
-| TC-01 | Login benar | 5 | ✅ Tahap 5 (26 Sep) | ⬜ |
+| TC-01 | Login benar | 5 | ✅ Tahap 5 (26 Sep) · Tahap 10 (sampai dashboard) | ⬜ |
 | TC-02 | Login kosong/salah | 5 | ✅ Tahap 5 (26 Sep) | ⬜ |
 | TC-03 | Halaman admin tanpa sesi | 4, 5 | ✅ Tahap 6 (2 Okt) | ⬜ |
 | TC-04 | Drawer/rail/modal per lebar layar | 3 | ✅ Tahap 3 (23 Sep) | ⬜ |
-| TC-05 | KPI = jumlah di Data Pendaftar | 10 | – | ⬜ |
+| TC-05 | KPI = jumlah di Data Pendaftar | 10 | ✅ Tahap 10 (2 Okt) | ⬜ |
 | TC-06 | Cari NISN | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
 | TC-07 | Filter berlapis + chip | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
 | TC-08 | Hapus lalu Urungkan | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
@@ -422,6 +422,11 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-114 | 2 Okt 2026 | UPDATE | `assets/css/pages.css`, `components.css` | 9.5 | Blok Hasil & Peringkat. Perbaikan komponen: angka `.table__num` di sel data kini rata kanan (sebelumnya kalah spesifisitas) |
 | F-115 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md`, `README.md` | 9.5 | v0.3.5: catatan hasil Tahap 9 di P-06. README: fitur peringkat |
 | F-116 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 9.5 | Tahap 9 selesai (5/5), TC-17/18/21, progres 62/86 |
+| F-117 | 2 Okt 2026 | CREATE | `pages/dashboard.html` | 10.1–10.3 | Dashboard: KPI, grafik + tabel data, antrean, tabel jalur, jadwal. Chart.js 4.5.1 + SRI |
+| F-118 | 2 Okt 2026 | CREATE | `assets/js/pages/dashboard.js` | 10.1–10.3 | KPI, data harian per jalur, grafik bertumpuk (warna dari token), cadangan tabel bila CDN gagal, keketatan, antrean, jadwal |
+| F-119 | 2 Okt 2026 | UPDATE | `assets/css/pages.css` | 10.1–10.3 | Blok Dashboard: tautan KPI, grafik, antrean ringkas, keterisian, jadwal |
+| F-120 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md`, `README.md` | 10.4 | v0.3.6: catatan hasil Tahap 10 di P-02. README: fitur dashboard, versi Chart.js |
+| F-121 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 10.4 | Tahap 10 selesai (4/4), TC-01/05, progres 66/86 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -434,15 +439,15 @@ PROGRAMWEB_2/
 ├── assets/
 │   ├── css/  main.css · tokens.css · base.css · layout.css · components.css · pages.css
 │   ├── js/core/  rules.js · seed.js · store.js · ui.js · shell.js
-│   ├── js/pages/ login.js · data-master.js · form.js · verifikasi.js · hasil-seleksi.js
+│   ├── js/pages/ login.js · dashboard.js · data-master.js · form.js · verifikasi.js · hasil-seleksi.js
 │   └── img/  logo.svg
 ├── docs/
-│   ├── perencanaan.md          (v0.3.5)
+│   ├── perencanaan.md          (v0.3.6)
 │   ├── checklist_work.md       (v0.3)
 │   ├── perancangan.md          (M1)
 │   ├── styleguide.html / .css / .js   (etalase design system, M2)
 │   └── img/referensi-stitch/   (8 screenshot)
-└── pages/  data-master.html · form.html · verifikasi.html · hasil-seleksi.html
+└── pages/  dashboard.html · data-master.html · form.html · verifikasi.html · hasil-seleksi.html
 ```
 
 ---
@@ -502,3 +507,4 @@ Satu baris per sesi kerja.
 | 2 Okt 2026 | 7.1–7.6 | **Tahap 7: Form Pendaftar.** Form 4 langkah + nilai semester di model data + pesan titipan antarhalaman. Temuan saat uji: (1) event `blur` tidak terpicu di Chrome headless → harness memakai emulasi fokus, validasi blur kini benar-benar teruji; (2) label langkah aktif & tombol Simpan terpotong di 360 px; (3) legend terlalu rapat. Semua diperbaiki & diuji ulang. Uji XSS: nama berisi tag tampil sebagai teks. Audit keamanan lulus | ✅ (F-96…F-106) |
 | 2 Okt 2026 | 8.1–8.5 | **Tahap 8: Verifikasi Berkas.** Halaman 3 panel lengkap dengan aturan keputusan. Temuan uji tampilan: label cek berkas terjepit di panel sempit (360 px & 3 kolom) → label dipindah ke atas pilihan; judul kosong sebelum JS (info validator) → diberi teks awal. Semua diuji ulang. Audit keamanan lulus | ✅ (F-107…F-111) |
 | 2 Okt 2026 | 9.1–9.5 | **Tahap 9: Hasil & Peringkat.** Temuan uji: tombol pindah jalur belum menyorot baris & spasi berlebih di teks ringkasan (diperbaiki); angka di kolom numerik tabel tidak rata kanan di semua halaman (bug komponen, diperbaiki). Alur verifikasi → peringkat berubah diuji lintas halaman. Audit keamanan lulus | ✅ (F-112…F-116) |
+| 2 Okt 2026 | 10.1–10.4 | **Tahap 10: Dashboard.** Hash SRI dihitung dari berkas Chart.js asli (bukan disalin dari internet). Uji lintas halaman: login → dashboard, KPI = tab Data Pendaftar, CDN diblokir → tabel pengganti. Penyesuaian: penanda `aria-current` dihapus dari jadwal karena dua tahap bisa berlangsung bersamaan (teks "Berlangsung" sudah cukup). Audit keamanan lulus | ✅ (F-117…F-121) |

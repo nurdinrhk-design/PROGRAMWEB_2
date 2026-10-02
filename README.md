@@ -36,6 +36,7 @@ Rincian progres setiap tugas ada di [docs/checklist_work.md](docs/checklist_work
   - rail ikon di tablet,
   - drawer permanen yang bisa diciutkan di layar besar.
 - Bisa dipakai dengan keyboard: tautan lewati-ke-konten, fokus yang jelas, dan tombol `Esc` untuk menutup menu.
+- Dashboard: 4 angka utama yang menaut ke data, grafik pendaftar per hari per jalur (dengan tabel data), keketatan tiap jalur, antrean terlama, dan jadwal PPDB.
 - Login panitia (simulasi) dengan batas percobaan, pilihan "Ingat saya", dan halaman admin yang terkunci tanpa sesi.
 - Data pendaftar: tab status, cari, filter berlapis, urutkan, paginasi, tampilan kartu di HP, detail, hapus dengan pilihan "Urungkan", ekspor CSV, serta cadangan dan pemulihan data (JSON).
 - Form tambah/ubah pendaftar 4 langkah: validasi aturan PPDB (NISN unik, usia, KK zonasi, nilai, berkas), berkas wajib mengikuti jalur, rata-rata rapor otomatis, ringkasan sebelum simpan, dan peringatan jika keluar sebelum menyimpan.
@@ -43,7 +44,6 @@ Rincian progres setiap tugas ada di [docs/checklist_work.md](docs/checklist_work
 - Hasil & peringkat per jalur: kuota, keketatan, batas sementara, garis batas kuota di tabel, cari nama yang langsung disorot, dan ekspor CSV.
 
 **Direncanakan (Milestone 3)**
-- Dashboard: ringkasan kerja harian, grafik pendaftar per hari, dan keketatan tiap jalur.
 - Rekap siap cetak dan bukti pendaftaran.
 
 ## Teknologi
@@ -53,7 +53,7 @@ Rincian progres setiap tugas ada di [docs/checklist_work.md](docs/checklist_work
 | Struktur | HTML5 semantik |
 | Tampilan | CSS3 murni, modular, berbasis design token (tanpa framework) |
 | Interaksi | JavaScript murni (tanpa framework, tanpa proses build) |
-| Grafik | Chart.js 4 (mulai M3) |
+| Grafik | Chart.js 4.5.1 (CDN jsDelivr dengan Subresource Integrity) |
 | Font & ikon | Plus Jakarta Sans · Material Symbols Outlined |
 | Data | `localStorage` + 900 data simulasi yang dibuat otomatis |
 | Hosting | GitHub Pages |
@@ -69,6 +69,7 @@ Proyek ini tidak memerlukan instalasi atau proses build.
 2. Buka folder di VS Code, lalu jalankan ekstensi **Live Server**. Bisa juga dengan membuka file HTML langsung di browser.
 3. Halaman yang bisa dicoba saat ini:
    - `index.html`: halaman masuk. Gunakan akun demo di bawah.
+   - `pages/dashboard.html`: ringkasan (halaman pertama setelah masuk).
    - `pages/data-master.html`: data pendaftar (wajib masuk lebih dulu).
    - `pages/form.html`: tambah pendaftar, atau `pages/form.html?id=pd-0001` untuk mengubah data.
    - `pages/verifikasi.html`: verifikasi berkas dari antrean.

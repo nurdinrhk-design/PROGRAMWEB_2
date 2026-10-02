@@ -966,3 +966,155 @@
     width: 7rem;
   }
 }
+
+
+/* =====================================================================
+   DASHBOARD — pages/dashboard.html (P-02)
+   ===================================================================== */
+.kpi__link {
+  margin-top: auto;
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+  font-weight: var(--weight-semibold);
+}
+
+/* Grafik + tabel data pengganti */
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.chart__canvas {
+  position: relative;
+  height: 18rem;
+}
+
+.chart__data summary {
+  width: fit-content;
+  color: var(--md-primary);
+  font-size: var(--type-body-sm-size);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+}
+
+.chart__data[open] summary {
+  margin-bottom: var(--space-2);
+}
+
+.chart__table th,
+.chart__table td {
+  padding: var(--space-2) var(--space-3);
+}
+
+/* Antrean ringkas */
+.mini-queue {
+  display: flex;
+  flex-direction: column;
+}
+
+.mini-queue__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--md-outline-variant);
+  color: var(--md-on-surface);
+  text-decoration: none;
+}
+
+.mini-queue__item:hover .mini-queue__name {
+  color: var(--md-primary);
+  text-decoration: underline;
+}
+
+.mini-queue__name {
+  font-weight: var(--weight-semibold);
+}
+
+.mini-queue__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+}
+
+.mini-queue__age {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  align-self: center;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  white-space: nowrap;
+}
+
+/* Keterisian jalur */
+.lane-table__fill {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 8rem;
+}
+
+.lane-table__fill .num {
+  min-width: 2.75rem;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  text-align: end;
+}
+
+/* Jadwal */
+.agenda {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.agenda__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0 var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-inline-start: 3px solid var(--md-outline-variant);
+}
+
+.agenda__name {
+  font-weight: var(--weight-medium);
+}
+
+.agenda__date {
+  color: var(--md-on-surface-variant);
+  white-space: nowrap;
+}
+
+.agenda__state {
+  grid-column: 1 / -1;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.agenda__item--selesai {
+  color: var(--md-on-surface-variant);
+}
+
+.agenda__item--aktif {
+  border-inline-start-color: var(--md-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background-color: var(--md-primary-container);
+  color: var(--md-on-primary-container);
+}
+
+.agenda__item--aktif .agenda__state,
+.agenda__item--aktif .agenda__date {
+  color: var(--md-on-primary-container);
+  font-weight: var(--weight-semibold);
+}
+
+@media (max-width: 839.98px) {
+  .lane-table__fill {
+    min-width: 10rem;
+  }
+}

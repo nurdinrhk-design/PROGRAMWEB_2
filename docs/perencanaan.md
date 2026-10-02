@@ -10,10 +10,10 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **0.3.5** |
+| Versi dokumen | **0.3.6** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1) · [referensi Stitch](img/referensi-stitch/) |
-| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–9 selesai. Berikutnya: Tahap 10 |
+| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–10 selesai. Berikutnya: Tahap 11 |
 
 ---
 
@@ -469,6 +469,7 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
   5. Antrean verifikasi: 5 pendaftar yang paling lama menunggu.
   6. Jadwal PPDB (tahap aktif ditandai).
 - **Anti-slop:** tanpa banner hero, "real-time", agenda palsu, atau metrik teknis.
+- **Hasil Tahap 10:** setiap KPI menaut ke Data Pendaftar dengan filter status yang sama (TC-05). Grafik batang bertumpuk per jalur memakai Chart.js 4.5.1 + SRI; datanya selalu tersedia sebagai tabel dan menjadi pengganti bila CDN gagal (R-03).
 
 ### P-03 · `pages/data-master.html` — Data Pendaftar (Tahap 6)
 - **Pertanyaan:** "Di mana data pendaftar X, dan bagaimana kondisinya?"
@@ -847,3 +848,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | 0.3.3 | 2 Okt 2026 | Hasil Tahap 7: ERD tambah `nilai_semester`; P-04 asal sekolah memakai `<select>` (bukan datalist), tahun lulus 2024–2026, penanganan data lama tanpa nilai semester | Nurdin & Claude |
 | 0.3.4 | 2 Okt 2026 | Hasil Tahap 8: P-05 antrean perlu perbaikan, panduan & pemeriksaan otomatis, titik henti tata letak | Nurdin & Claude |
 | 0.3.5 | 2 Okt 2026 | Hasil Tahap 9: P-06 penjelasan hasil cari di luar peringkat, perilaku saat kuota belum penuh | Nurdin & Claude |
+| 0.3.6 | 2 Okt 2026 | Hasil Tahap 10: P-02 tautan KPI, grafik per jalur + tabel pengganti | Nurdin & Claude |
