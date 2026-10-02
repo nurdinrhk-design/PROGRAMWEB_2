@@ -171,3 +171,147 @@
     line-height: var(--type-title-md-line);
   }
 }
+
+
+/* =====================================================================
+   DATA PENDAFTAR — pages/data-master.html (P-03)
+   < 840px: tabel menjadi kartu (.table--stack, components.css)
+   ===================================================================== */
+.data-list__toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.data-list__chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-4) var(--space-3);
+}
+
+.data-list__summary {
+  padding: var(--space-2) var(--space-4);
+  border-top: 1px solid var(--md-outline-variant);
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+}
+
+.data-list__summary:focus {
+  outline: none;
+}
+
+.data-table__nomor .table__primary {
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+}
+
+.data-table__nama .table__secondary {
+  white-space: nowrap;
+}
+
+/* Kartu: nama di baris paling atas */
+@media (max-width: 839.98px) {
+  .data-table tr {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .data-table .data-table__nama {
+    order: -1;
+    padding-bottom: var(--space-2);
+  }
+
+  .data-table .data-table__nama .table__primary {
+    font-size: var(--type-title-md-size);
+    line-height: var(--type-title-md-line);
+  }
+}
+
+@media (min-width: 600px) {
+  .data-list__toolbar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .data-list__search {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1200px) {
+  .data-list__toolbar {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .data-list__search {
+    grid-column: auto;
+  }
+}
+
+/* Mode tabel di bawah 1280px: kolom asal sekolah disembunyikan
+   (tetap terlihat di kartu dan di dialog detail) */
+@media (min-width: 840px) and (max-width: 1279.98px) {
+  .data-table__sekolah {
+    display: none;
+  }
+
+  /* Jarak antarkolom dirapatkan agar 6 kolom muat bersama navigation rail */
+  .data-table th,
+  .data-table td {
+    padding-inline: var(--space-2);
+  }
+
+  .data-table th:first-child,
+  .data-table td:first-child {
+    padding-inline-start: var(--space-4);
+  }
+
+  .data-table th:last-child,
+  .data-table td:last-child {
+    padding-inline-end: var(--space-4);
+  }
+}
+
+/* Dialog detail pendaftar */
+.detail__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.detail__head .icon-btn {
+  flex-shrink: 0;
+  margin: -0.5rem -0.5rem 0 0;           /* -0.5rem = -1 × --space-2: sejajar tepi dialog */
+}
+
+.detail__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+.detail__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.detail__heading {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-label-lg-size);
+  line-height: var(--type-label-lg-line);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 720px) {
+  .detail__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: var(--space-6);
+  }
+}

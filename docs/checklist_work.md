@@ -6,7 +6,7 @@
 > - Aturan pencatatan: [perencanaan §15](perencanaan.md#15-alur-kerja--aturan-pencatatan). Definition of Done: [§14](perencanaan.md#14-definition-of-done).
 > - ID lama (`T0-01`…`T14-R3`) dipakai sampai v0.2. Padanannya ada di [Padanan ID Lama](#padanan-id-lama--baru).
 
-**Versi checklist:** 0.3 · **Terakhir diperbarui:** 25 September 2026
+**Versi checklist:** 0.3 · **Terakhir diperbarui:** 2 Oktober 2026
 
 ---
 
@@ -27,8 +27,8 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | **Tahap 6 — Data Pendaftar** (berikutnya) |
-| **Tahap terakhir selesai** | Tahap 5 — Login (26 Sep 2026) |
+| **Tahap aktif** | **Tahap 7 — Form Pendaftar** (berikutnya) |
+| **Tahap terakhir selesai** | Tahap 6 — Data Pendaftar (2 Okt 2026) |
 | **Menunggu dari pengembang** | Kirim tautan M1 & M2 ke LMS (2.8, 3.8) |
 
 ## Ringkasan Progres
@@ -40,7 +40,7 @@
 | [3](#tahap-3--design-system--layout) | Design system & layout | M2 | 9 | 8 | 1 | 89% |
 | [4](#tahap-4--fondasi-data--modul-inti) | Fondasi data & modul inti | M3 | 9 | 9 | 0 | 100% |
 | [5](#tahap-5--login) | Login | M3 | 5 | 5 | 0 | 100% |
-| [6](#tahap-6--data-pendaftar) | Data Pendaftar | M3 | 7 | 0 | 7 | 0% |
+| [6](#tahap-6--data-pendaftar) | Data Pendaftar | M3 | 7 | 7 | 0 | 100% |
 | [7](#tahap-7--form-pendaftar-stepper) | Form Pendaftar | M3 | 6 | 0 | 6 | 0% |
 | [8](#tahap-8--verifikasi-berkas) | Verifikasi Berkas | M3 | 5 | 0 | 5 | 0% |
 | [9](#tahap-9--hasil--peringkat) | Hasil & Peringkat | M3 | 5 | 0 | 5 | 0% |
@@ -48,7 +48,7 @@
 | [11](#tahap-11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 5 | 0 | 5 | 0% |
 | [12](#tahap-12--qa-menyeluruh) | QA menyeluruh | M3 | 7 | 0 | 7 | 0% |
 | [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 1 | 6 | 14% |
-| | **Total** | | **86** | **39** | **47** | **45%** |
+| | **Total** | | **86** | **46** | **40** | **53%** |
 
 **Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 🔄 Tahap 4–5 selesai
 
@@ -139,13 +139,13 @@ Ref: [perencanaan P-03](perencanaan.md#p-03--pagesdata-masterhtml--data-pendafta
 
 | No | Langkah | Ref | Status | Catatan |
 |---|---|---|---|---|
-| 6.1 | Halaman dari template + aksi header + tab status dengan jumlah | P-03, FR-07, AS-04 | ⬜ | |
-| 6.2 | Cari (debounce), filter jalur & sekolah, chip filter aktif, filter lewat URL | FR-07, TC-06, TC-07 | ⬜ | |
-| 6.3 | Tabel: urutkan, paginasi, mode kartu di HP, tampilan kosong | FR-07, NFR-01, R-05, R-06 | ⬜ | |
-| 6.4 | Dialog detail (tautan ke Verifikasi & Bukti) | FR-08 | ⬜ | |
-| 6.5 | Hapus + dialog konfirmasi + snackbar "Urungkan" | FR-09, TC-08 | ⬜ | |
-| 6.6 | Ekspor CSV, reset data, ekspor/impor cadangan | FR-16, FR-17, TC-21, TC-22 | ⬜ | |
-| 6.7 | Penutupan | §11.3 | ⬜ | |
+| 6.1 | Halaman dari template + aksi header + tab status dengan jumlah | P-03, FR-07, AS-04 | ✅ | Tab status (pola tab ARIA, panah/Home/End) dengan jumlah dari data sesuai filter lain. Satu tombol *filled* (Tambah), Ekspor CSV *outlined*, menu ⋮ untuk cadangan & reset |
+| 6.2 | Cari (debounce), filter jalur & sekolah, chip filter aktif, filter lewat URL | FR-07, TC-06, TC-07 | ✅ | Debounce 250 ms (Enter langsung). Cari nama tanpa peka huruf, NISN & no. daftar. Chip per filter + "Hapus semua filter". Semua status tampilan di URL (`?status=&q=&jalur=&sekolah=&urut=&arah=&hal=&per=`), nilai URL divalidasi (TC-06, TC-07 ✅) |
+| 6.3 | Tabel: urutkan, paginasi, mode kartu di HP, tampilan kosong | FR-07, NFR-01, R-05, R-06 | ✅ | Urut no. daftar/nama/jarak-skor (`aria-sort`; jarak/skor aktif setelah memilih jalur, terbaik dulu sesuai BR-10). Paginasi 10/20/50 dengan elipsis. **Kartu < 840 px** (2 kolom di 600–839), kolom sekolah disembunyikan di 840–1279. Tampilan kosong + hapus filter |
+| 6.4 | Dialog detail (tautan ke Verifikasi & Bukti) | FR-08 | ✅ | Dialog `<dialog>`: data diri, domisili, sekolah & prestasi, orang tua, berkas + hasil cek, riwayat verifikasi, status seleksi sementara (terverifikasi). Tautan Ubah, Bukti, Verifikasi. Esc/klik luar menutup, fokus kembali ke nama |
+| 6.5 | Hapus + dialog konfirmasi + snackbar "Urungkan" | FR-09, TC-08 | ✅ | Konfirmasi (fokus awal di Batal) → hapus → snackbar "Urungkan" 8 detik → data, riwayat & posisi kembali utuh (TC-08 ✅) |
+| 6.6 | Ekspor CSV, reset data, ekspor/impor cadangan | FR-16, FR-17, TC-21, TC-22 | ✅ | CSV sesuai filter aktif (BOM, pemisah `;`, anti formula) (TC-21 ✅). Cadangan JSON unduh/pulihkan (konfirmasi, validasi ketat, berkas rusak ditolak). Reset ke data awal (TC-22 ✅). Semua tercatat di log |
+| 6.7 | Penutupan | §11.3 | ✅ | Uji otomatis 36/36 + uji inti 32/32, konsol bersih. 7 lebar layar (360–1440) tanpa scroll horizontal & teks terpotong. W3C HTML 0 pesan, CSS 0 error. Uji Anti-Slop 7/7. Audit S-01…S-07 lulus |
 
 ---
 
@@ -233,12 +233,12 @@ Ref: [perencanaan §12](perencanaan.md#12-strategi-pengujian), [§5.3 NFR](peren
 |---|---|---|---|---|
 | TC-01 | Login benar | 5 | ✅ Tahap 5 (26 Sep) | ⬜ |
 | TC-02 | Login kosong/salah | 5 | ✅ Tahap 5 (26 Sep) | ⬜ |
-| TC-03 | Halaman admin tanpa sesi | 4, 5 | – (diuji di Tahap 5, butuh halaman admin) | ⬜ |
+| TC-03 | Halaman admin tanpa sesi | 4, 5 | ✅ Tahap 6 (2 Okt) | ⬜ |
 | TC-04 | Drawer/rail/modal per lebar layar | 3 | ✅ Tahap 3 (23 Sep) | ⬜ |
 | TC-05 | KPI = jumlah di Data Pendaftar | 10 | – | ⬜ |
-| TC-06 | Cari NISN | 6 | – | ⬜ |
-| TC-07 | Filter berlapis + chip | 6 | – | ⬜ |
-| TC-08 | Hapus lalu Urungkan | 6 | – | ⬜ |
+| TC-06 | Cari NISN | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
+| TC-07 | Filter berlapis + chip | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
+| TC-08 | Hapus lalu Urungkan | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
 | TC-09 | Lanjut langkah dengan kolom kosong | 7 | – | ⬜ |
 | TC-10 | NISN duplikat | 7 | – | ⬜ |
 | TC-11 | Zonasi dengan KK < 1 tahun | 7 | – | ⬜ |
@@ -251,9 +251,9 @@ Ref: [perencanaan §12](perencanaan.md#12-strategi-pengujian), [§5.3 NFR](peren
 | TC-18 | Cari nama di peringkat | 9 | – | ⬜ |
 | TC-19 | Rentang tanggal laporan terbalik | 11 | – | ⬜ |
 | TC-20 | Cetak laporan & bukti | 11 | – | ⬜ |
-| TC-21 | Ekspor CSV | 6, 9, 11 | – | ⬜ |
-| TC-22 | Reset data simulasi | 6 | – | ⬜ |
-| TC-23 | Logout | 5 | – | ⬜ |
+| TC-21 | Ekspor CSV | 6, 9, 11 | ✅ Tahap 6 (2 Okt, data pendaftar) | ⬜ |
+| TC-22 | Reset data simulasi | 6 | ✅ Tahap 6 (2 Okt) | ⬜ |
+| TC-23 | Logout | 5 | ✅ Tahap 6 (2 Okt) | ⬜ |
 
 ---
 
@@ -390,6 +390,17 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-82 | 26 Sep 2026 | UPDATE | `docs/checklist_work.md` | 5.5 | Tahap 5 selesai, TC-01 & TC-02 |
 | F-83 | 2 Okt 2026 | DELETE + CREATE | GitHub `nurdinrhk-design/PROGRAMWEB_2` | 13.1 | Repo lama (riwayat berjejak + collaborator akun lain) dihapus, dibuat ulang publik, riwayat bersih di-push |
 | F-84 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 13.1 | 13.1 ✅, B-04 selesai, progres 39/86, posisi saat ini |
+| F-85 | 2 Okt 2026 | CREATE | `pages/data-master.html` | 6.1 | Halaman Data Pendaftar dari template master (penjaga sesi, tab, toolbar cari, tabel, paginasi, menu cadangan) |
+| F-86 | 2 Okt 2026 | CREATE | `assets/js/pages/data-master.js` | 6.1–6.6 | Logika halaman: status di URL, saring/urut/paginasi, dialog detail, hapus + urungkan, ekspor CSV, cadangan, reset |
+| F-87 | 2 Okt 2026 | UPDATE | `assets/js/core/ui.js` | 6.6 | `pasangMenu()`: menu tarik-turun (klik luar, Esc, panah atas/bawah) |
+| F-88 | 2 Okt 2026 | UPDATE | `assets/css/components.css` | 6.3, 6.4 | `.link-btn`, kolom urut nonaktif, `.menu--anchored`, paginasi (elipsis, ukuran), kartu tabel < 840 px (2 kolom di 600–839), komponen 16: `.info-list`, `.file-list`, `.timeline`. `.icon-btn` tanpa garis bawah saat berupa tautan |
+| F-89 | 2 Okt 2026 | UPDATE | `assets/css/pages.css` | 6.3, 6.4 | Blok Data Pendaftar: toolbar, chip, ringkasan, kartu, kolom responsif, dialog detail |
+| F-90 | 2 Okt 2026 | UPDATE | `assets/css/layout.css` | 6.7 | Compact: tombol *filled* di page header satu baris penuh (label tidak terpotong di 360 px) |
+| F-91 | 2 Okt 2026 | UPDATE | `assets/css/base.css` | 6.7 | Reset daftar memakai `:where()` (spesifisitas 0) agar padding komponen daftar tidak tertimpa |
+| F-92 | 2 Okt 2026 | DELETE | `pages/.gitkeep` | 6.1 | Tidak diperlukan lagi, folder sudah berisi halaman |
+| F-93 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md` | 6.7 | v0.3.2: kartu < 840 px (R-05), komponen 16, `ui.pasangMenu` |
+| F-94 | 2 Okt 2026 | UPDATE | `docs/checklist_work.md` | 6.7 | Tahap 6 selesai (7/7), TC-03/06/07/08/21/22/23, progres 46/86 |
+| F-95 | 2 Okt 2026 | UPDATE | `README.md` | 6.7 | Fitur login & data pendaftar pindah ke "Sudah tersedia", hosting GitHub Pages, halaman yang bisa dicoba, akun demo |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -402,15 +413,15 @@ PROGRAMWEB_2/
 ├── assets/
 │   ├── css/  main.css · tokens.css · base.css · layout.css · components.css · pages.css
 │   ├── js/core/  rules.js · seed.js · store.js · ui.js · shell.js
-│   ├── js/pages/ login.js
+│   ├── js/pages/ login.js · data-master.js
 │   └── img/  logo.svg
 ├── docs/
-│   ├── perencanaan.md          (v0.3.1)
+│   ├── perencanaan.md          (v0.3.2)
 │   ├── checklist_work.md       (v0.3)
 │   ├── perancangan.md          (M1)
 │   ├── styleguide.html / .css / .js   (etalase design system, M2)
 │   └── img/referensi-stitch/   (8 screenshot)
-└── pages/.gitkeep
+└── pages/  data-master.html
 ```
 
 ---
@@ -466,3 +477,4 @@ Satu baris per sesi kerja.
 | 26 Sep 2026 | 5.1–5.5 | **Tahap 5: Login.** `index.html` + `login.js` + `pages.css` + komponen alert. Uji skenario otomatis: kosong, salah, toggle sandi, isi demo, login benar → sesi & log. Perbaikan tampilan: kotak akun demo di 360 px | ✅ (F-76…F-82) |
 | 29 Sep 2026 | 13.1 | Atas permintaan pengembang, akun aktif `gh` dikembalikan ke akun utama pengembang. Penambahan izin token akun Nurdin (`delete_repo`, `workflow`) **belum selesai** dan izinnya tetap seperti semula. Sisa pekerjaan 13.1 ditunda sampai pengembang siap mengurus akun Nurdin. Berkas log sementara di scratchpad sudah dihapus | ⏸️ Ditunda |
 | 2 Okt 2026 | 13.1 | Pengembang menyetujui izin token akun Nurdin (`delete_repo`, `workflow`) lewat device login; `gh` otomatis kembali ke akun utama. Isi repo lama dicocokkan dengan riwayat lokal (selisih hanya 6 baris yang disamarkan). Audit keamanan lulus: 0 jejak akun lain, 0 pola rahasia, 0 file terlarang, 12/12 commit beridentitas Nurdin. **Atas konfirmasi pengembang**, repo dihapus & dibuat ulang, lalu di-push. Verifikasi remote: 12 commit, kontributor & collaborator hanya Nurdin. Cadangan `refs/original` dihapus + `git gc`; log sementara di scratchpad dihapus | ✅ (F-83, F-84) |
+| 2 Okt 2026 | 6.1–6.7 | **Tahap 6: Data Pendaftar.** Halaman + skrip halaman + `ui.pasangMenu` + komponen 16. Uji otomatis lewat Chrome headless (DevTools Protocol, profil sementara di scratchpad lalu dihapus): 36/36 lulus setelah 3 perbaikan pada skrip uji (bukan halaman). Uji tampilan 7 lebar: temuan & perbaikan — tombol Tambah terpotong di 360 px, nomor & tanggal di kartu berantakan, tabel 600–840 px berdesakan + scroll halaman di 600 px, garis bawah ikon edit, padding riwayat tertimpa reset daftar. Semua diperbaiki dan diuji ulang. W3C HTML 0 pesan, CSS 0 error. Audit keamanan lulus | ✅ (F-85…F-95) |

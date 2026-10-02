@@ -10,10 +10,10 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **0.3.1** |
+| Versi dokumen | **0.3.2** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1) · [referensi Stitch](img/referensi-stitch/) |
-| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–3 selesai. Berikutnya: Tahap 4 |
+| Status | ✅ Rencana v0.3 disetujui (25 Sep 2026). Tahap 1–6 selesai. Berikutnya: Tahap 7 |
 
 ---
 
@@ -472,7 +472,7 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 ### P-03 · `pages/data-master.html` — Data Pendaftar (Tahap 6)
 - **Pertanyaan:** "Di mana data pendaftar X, dan bagaimana kondisinya?"
 - **Konten:** tab status (Semua · Menunggu · Perbaikan · Terverifikasi · Ditolak) dengan jumlah. Toolbar: cari (nama/NISN/no. daftar), filter jalur, filter asal sekolah, chip filter aktif + "Hapus filter". Tabel kolom: No. daftar & tanggal · Nama & NISN · Asal sekolah · Jalur · Jarak/Skor · Status · Aksi. Paginasi. Aksi header: Ekspor CSV (outlined), **Tambah pendaftar** (filled), Reset data simulasi (menu).
-- **Interaksi:** cari dengan debounce, filter berlapis, sort kolom (`aria-sort`), paginasi, dialog detail (dengan tautan ke Verifikasi & Bukti), edit, hapus dengan dialog konfirmasi, snackbar dengan **Urungkan** untuk hapus. Parameter URL (`?status=menunggu`) agar bisa dibuka dari dashboard. Di < 600px tabel menjadi daftar kartu.
+- **Interaksi:** cari dengan debounce, filter berlapis, sort kolom (`aria-sort`), paginasi, dialog detail (dengan tautan ke Verifikasi & Bukti), edit, hapus dengan dialog konfirmasi, snackbar dengan **Urungkan** untuk hapus. Parameter URL (`?status=menunggu`, juga `q`, `jalur`, `sekolah`, `urut`, `arah`, `hal`, `per`) agar bisa dibuka dari dashboard dan tampilan bertahan saat dimuat ulang. Di < 840px tabel menjadi daftar kartu (dua kolom di 600–839px). Urut jarak/skor aktif setelah satu jalur dipilih (BR-10). Menu ⋮: unduh/pulihkan cadangan JSON dan kembalikan data awal.
 - **Anti-slop:** tanpa aksi massal "validasi sekaligus", tanpa panel status integrasi.
 
 ### P-04 · `pages/form.html` — Tambah/Edit Pendaftar (Tahap 7)
@@ -585,11 +585,12 @@ Angka (NISN, jarak, skor, tanggal) memakai `font-variant-numeric: tabular-nums`.
 | Chip | filter · input (filter aktif) · jalur |
 | Badge status | 4 status verifikasi + 2 status seleksi |
 | Card | standar · KPI |
-| Data table | sortable · baris pemisah garis batas · kartu di compact |
+| Data table | sortable · baris pemisah garis batas · kartu di < 840px |
 | Tabs, pagination, stepper, linear progress | |
 | Dialog | konfirmasi · detail |
 | Snackbar | dengan aksi "Urungkan" |
-| Navigation drawer / rail, top app bar, menu | |
+| Navigation drawer / rail, top app bar, menu | menu akun · menu tarik-turun (`ui.pasangMenu`) |
+| Daftar info, berkas, riwayat | `.info-list` · `.file-list` · `.timeline` (detail, verifikasi, bukti) |
 | Empty state, skeleton | |
 
 ---
@@ -625,7 +626,7 @@ PROGRAMWEB_2/
 │   │   │   ├── store.js          # PPDB.store: localStorage, CRUD, log, cadangan JSON
 │   │   │   ├── seed.js           # PPDB.seed: generator data simulasi
 │   │   │   ├── rules.js          # PPDB.rules: konstanta, validasi BR, peringkat
-│   │   │   ├── ui.js             # PPDB.ui: snackbar, dialog, format, escape
+│   │   │   ├── ui.js             # PPDB.ui: el, format, snackbar, dialog, menu, CSV
 │   │   │   └── shell.js          # PPDB.shell: auth guard, drawer/rail, menu, badge
 │   │   └── pages/
 │   │       ├── login.js  dashboard.js  data-master.js  form.js
@@ -766,7 +767,7 @@ Langkah terakhir setiap tahap (mis. 6.7) berisi empat hal berurutan:
 | R-02 | Hasil terlihat generik lagi | Uji Anti-Slop di setiap tahap halaman |
 | R-03 | CDN gagal dimuat | Fallback font sistem. Pesan jelas di area grafik |
 | R-04 | `localStorage` diblokir | Fallback ke memori + snackbar peringatan |
-| R-05 | Tabel lebar di mobile | Pola kartu di compact + kolom prioritas |
+| R-05 | Tabel lebar di mobile | Pola kartu di < 840px + kolom prioritas (asal sekolah disembunyikan di 840–1279px) |
 | R-06 | ±900 data terasa lambat | Paginasi, debounce pencarian, render hanya halaman aktif |
 | R-07 | Lingkup melebar | Fitur di luar §1.3 harus melalui keputusan baru (D-xx) terlebih dulu |
 | R-08 | Token GitHub atau kunci rahasia terbawa ke repo publik | Audit S-01…S-07 sebelum setiap push + pemindaian rahasia di CI (13.2). Token tidak pernah ditulis ke file proyek |
@@ -839,3 +840,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | 0.2.6 | 23 Sep 2026 | §6.1: label pendek untuk mode rail (temuan uji T3: label penuh terpotong) | Nurdin & Claude |
 | **0.3** | 25 Sep 2026 | **Revisi rencana pengembangan website:** penomoran tahap 1–13 dengan langkah x.y (D-22). Urutan halaman baru, Dashboard setelah Hasil (D-23). Database hanya lokal, Supabase & adapter dibatalkan (D-21). Hosting GitHub Pages + domain dari pengembang (D-09, D-19). Push & deploy menunggu akun Nurdin (D-24). §11 ditulis ulang, rujukan tahap lama di §2, §3, §5, §8, §9, §10, §13 diperbarui, R-08 diganti | Nurdin & Claude |
 | 0.3.1 | 26 Sep 2026 | Hasil Tahap 4: chip tahap dihitung = "hari ke-11 dari 12" (teks lama "ke-9" salah hitung). Tambah BR-13 (ubah data terperiksa → verifikasi ulang). §10.1 folder `tests/`, §10.3 pembuat elemen aman `PPDB.ui.el`, §10.4 kunci `meta` & `login-gagal`, §12.1 uji otomatis | Nurdin & Claude |
+| 0.3.2 | 2 Okt 2026 | Hasil Tahap 6: tabel menjadi kartu di < 840px karena 6 kolom tidak muat bersama navigation rail (R-05, P-03, §9). P-03: semua status tampilan disimpan di URL, menu cadangan & reset. §9: komponen daftar info/berkas/riwayat dan menu tarik-turun. §10.1: fungsi `ui.js` | Nurdin & Claude |

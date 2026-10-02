@@ -29,18 +29,18 @@ Rincian progres setiap tugas ada di [docs/checklist_work.md](docs/checklist_work
 ## Fitur
 
 **Sudah tersedia**
-- Design system Material Design 3: warna, tipografi, bentuk, elevasi, dan 14 kelompok komponen ([styleguide](docs/styleguide.html)).
+- Design system Material Design 3: warna, tipografi, bentuk, elevasi, dan 16 kelompok komponen ([styleguide](docs/styleguide.html)).
 - Semua pasangan warna lolos uji kontras WCAG 2.1. Hasil ujinya tampil langsung di styleguide.
 - Template layout dengan navigasi yang menyesuaikan lebar layar:
   - drawer modal di HP,
   - rail ikon di tablet,
   - drawer permanen yang bisa diciutkan di layar besar.
 - Bisa dipakai dengan keyboard: tautan lewati-ke-konten, fokus yang jelas, dan tombol `Esc` untuk menutup menu.
+- Login panitia (simulasi) dengan batas percobaan, pilihan "Ingat saya", dan halaman admin yang terkunci tanpa sesi.
+- Data pendaftar: tab status, cari, filter berlapis, urutkan, paginasi, tampilan kartu di HP, detail, hapus dengan pilihan "Urungkan", ekspor CSV, serta cadangan dan pemulihan data (JSON).
 
 **Direncanakan (Milestone 3)**
-- Login panitia (simulasi).
 - Dashboard: ringkasan kerja harian, grafik pendaftar per hari, dan keketatan tiap jalur.
-- Data pendaftar: cari, filter, urutkan, detail, hapus dengan pilihan "Urungkan", dan ekspor CSV.
 - Form tambah/edit pendaftar 4 langkah dengan validasi aturan PPDB.
 - Verifikasi berkas dengan checklist per dokumen.
 - Hasil & peringkat otomatis per jalur, lengkap dengan garis batas kuota.
@@ -55,8 +55,8 @@ Rincian progres setiap tugas ada di [docs/checklist_work.md](docs/checklist_work
 | Interaksi | JavaScript murni (tanpa framework, tanpa proses build) |
 | Grafik | Chart.js 4 (mulai M3) |
 | Font & ikon | Plus Jakarta Sans · Material Symbols Outlined |
-| Data | `localStorage` + data simulasi (mulai M3) |
-| Hosting | GitHub + Vercel |
+| Data | `localStorage` + 900 data simulasi yang dibuat otomatis |
+| Hosting | GitHub Pages |
 
 ## Cara Menjalankan
 
@@ -68,12 +68,14 @@ Proyek ini tidak memerlukan instalasi atau proses build.
    ```
 2. Buka folder di VS Code, lalu jalankan ekstensi **Live Server**. Bisa juga dengan membuka file HTML langsung di browser.
 3. Halaman yang bisa dicoba saat ini:
+   - `index.html`: halaman masuk. Gunakan akun demo di bawah.
+   - `pages/data-master.html`: data pendaftar (wajib masuk lebih dulu).
    - `layout.html`: template dasar Admin Panel. Coba ubah lebar jendela browser.
    - `docs/styleguide.html`: etalase design system dan hasil uji kontras.
 
 Diperlukan koneksi internet untuk memuat font dan ikon dari Google Fonts.
 
-**Akun demo** (tersedia setelah halaman login dibuat): username `panitia`, kata sandi `ppdb2026`. Akun ini hanya simulasi dan sengaja dipublikasikan.
+**Akun demo:** username `panitia`, kata sandi `ppdb2026`. Akun ini hanya simulasi dan sengaja dipublikasikan.
 
 ## Struktur Folder
 

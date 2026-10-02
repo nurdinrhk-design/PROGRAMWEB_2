@@ -455,6 +455,12 @@ body[data-auth="required"]:not(.is-authed) .app {
   .page-header__actions .btn {
     flex: 1;
   }
+
+  /* Aksi utama di baris sendiri agar labelnya tidak terpotong */
+  .page-header__actions .btn--filled {
+    flex-basis: 100%;
+    order: -1;
+  }
 }
 
 /* =====================================================================

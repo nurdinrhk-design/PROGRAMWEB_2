@@ -225,7 +225,49 @@
   }
 
   /* ---------------------------------------------------------------
-     7. Lain-lain
+     7. Menu tarik-turun (pola disclosure, sama dengan menu akun)
+     <button data-menu-toggle aria-expanded="false" aria-controls="id-menu">
+     <div class="menu menu--anchored" id="id-menu" hidden> … .menu__item …
+     Menu tertutup sendiri saat item dipilih, klik di luar, atau Escape.
+     --------------------------------------------------------------- */
+  function pasangMenu(tombol) {
+    var menu = document.getElementById(tombol.getAttribute('aria-controls'));
+    if (!menu) return null;
+
+    function atur(buka, kembalikanFokus) {
+      menu.hidden = !buka;
+      tombol.setAttribute('aria-expanded', String(buka));
+      if (buka) {
+        var pertama = menu.querySelector('.menu__item');
+        if (pertama) pertama.focus();
+      } else if (kembalikanFokus) {
+        tombol.focus();
+      }
+    }
+
+    tombol.addEventListener('click', function () { atur(menu.hidden, false); });
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest('.menu__item')) atur(false, false);
+    });
+    menu.addEventListener('keydown', function (e) {
+      var item = Array.prototype.slice.call(menu.querySelectorAll('.menu__item'));
+      var i = item.indexOf(document.activeElement);
+      if (e.key === 'Escape') {
+        atur(false, true);
+      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        var arah = e.key === 'ArrowDown' ? 1 : -1;
+        item[(i + arah + item.length) % item.length].focus();
+      }
+    });
+    document.addEventListener('click', function (e) {
+      if (!menu.hidden && !menu.contains(e.target) && !tombol.contains(e.target)) atur(false, false);
+    });
+    return { tutup: function () { atur(false, false); } };
+  }
+
+  /* ---------------------------------------------------------------
+     8. Lain-lain
      --------------------------------------------------------------- */
   function debounce(fn, ms) {
     var t = null;
@@ -258,6 +300,7 @@
     unduh: unduh,
     csv: csv,
     unduhCsv: unduhCsv,
+    pasangMenu: pasangMenu,
     debounce: debounce
   };
 })(window, document);

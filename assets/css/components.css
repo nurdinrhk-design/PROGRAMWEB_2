@@ -10,6 +10,7 @@
      6. Card & KPI               13. Menu
      7. Data table & pagination  14. Empty state & skeleton
                                  15. Alert
+                                 16. Daftar info, berkas, riwayat
    ===================================================================== */
 
 
@@ -123,6 +124,7 @@
 /* Icon button (40×40, bulat) */
 .icon-btn {
   position: relative;
+  text-decoration: none;
   display: inline-grid;
   place-items: center;
   width: 2.5rem;
@@ -728,6 +730,34 @@ th[aria-sort="descending"] .table__sort {
   color: var(--md-on-surface);
 }
 
+/* Kolom yang hanya bisa diurutkan dalam kondisi tertentu */
+.table__sort:disabled {
+  cursor: default;
+}
+
+.table__sort:disabled .icon {
+  display: none;
+}
+
+/* Teks yang membuka detail (mis. nama pendaftar di tabel) */
+.link-btn {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--md-primary);
+  font: inherit;
+  text-align: start;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--duration-short) var(--easing-standard);
+}
+
+.link-btn:hover,
+.link-btn:focus-visible {
+  text-decoration-color: currentColor;
+}
+
 th[aria-sort="ascending"] .table__sort .icon,
 th[aria-sort="descending"] .table__sort .icon {
   opacity: 1;
@@ -746,8 +776,9 @@ th[aria-sort="descending"] .table__sort .icon {
   text-align: center;
 }
 
-/* Mode kartu untuk layar compact (< 600px) */
-@media (max-width: 599px) {
+/* Mode kartu untuk layar compact & medium sempit (< 840px):
+   tabel berkolom banyak tidak muat bersama navigation rail */
+@media (max-width: 839.98px) {
   .table--stack thead {
     position: absolute;
     width: 1px;
@@ -780,6 +811,7 @@ th[aria-sort="descending"] .table__sort .icon {
 
   .table--stack td::before {
     content: attr(data-label);
+    flex-shrink: 0;
     color: var(--md-on-surface-variant);
     font-size: var(--type-label-md-size);
     font-weight: var(--weight-semibold);
@@ -793,6 +825,18 @@ th[aria-sort="descending"] .table__sort .icon {
 
   .table--stack td.table__cell--full::before {
     content: none;
+  }
+}
+
+/* Medium sempit: kartu tersusun dua kolom */
+@media (min-width: 600px) and (max-width: 839.98px) {
+  .table--stack tbody {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .table--stack tr:nth-child(odd) {
+    border-inline-end: 1px solid var(--md-outline-variant);
   }
 }
 
@@ -839,6 +883,20 @@ th[aria-sort="descending"] .table__sort .icon {
   color: var(--md-disabled-content);
   cursor: not-allowed;
   background: transparent;
+}
+
+.pagination__page .icon {
+  vertical-align: middle;
+}
+
+.pagination__gap {
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.pagination__size {
+  min-height: var(--control-height-sm);
+  padding-block: 0;
 }
 
 
@@ -1205,6 +1263,19 @@ th[aria-sort="descending"] .table__sort .icon {
   font-size: var(--icon-size-sm);
 }
 
+/* Menu yang menempel pada tombol pemicunya (ui.pasangMenu) */
+.menu-anchor {
+  position: relative;
+}
+
+.menu--anchored {
+  position: absolute;
+  top: calc(100% + 0.25rem);          /* 0.25rem = --space-1 */
+  right: 0;
+  z-index: var(--z-drawer);
+  min-width: 16rem;
+}
+
 
 /* =====================================================================
    14. EMPTY STATE & SKELETON
@@ -1301,4 +1372,103 @@ th[aria-sort="descending"] .table__sort .icon {
   border-color: var(--status-success-border);
   background-color: var(--status-success-bg);
   color: var(--status-success-text);
+}
+
+
+/* =====================================================================
+   16. DAFTAR INFO, DAFTAR BERKAS, RIWAYAT
+   Dipakai di dialog detail, verifikasi, dan bukti pendaftaran
+   ===================================================================== */
+/* Pasangan label–nilai (<dl>) */
+.info-list {
+  display: grid;
+  grid-template-columns: minmax(7rem, max-content) minmax(0, 1fr);
+  gap: var(--space-2) var(--space-4);
+}
+
+.info-list dt {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-md-line);
+}
+
+.info-list dd {
+  overflow-wrap: anywhere;
+}
+
+/* Berkas & hasil cek: ikon + teks, tidak hanya warna */
+.file-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.file-list__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--radius-md);
+}
+
+.file-list__icon {
+  flex-shrink: 0;
+  color: var(--md-on-surface-variant);
+}
+
+.file-list__item--sesuai .file-list__icon {
+  color: var(--status-success-text);
+}
+
+.file-list__item--tidak_sesuai .file-list__icon {
+  color: var(--status-danger-text);
+}
+
+.file-list__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.file-list__name {
+  font-weight: var(--weight-semibold);
+}
+
+.file-list__meta {
+  overflow: hidden;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-list__status {
+  flex-shrink: 0;
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-label-md-size);
+  font-weight: var(--weight-semibold);
+}
+
+/* Riwayat (terbaru di atas) */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-inline-start: var(--space-4);
+  border-inline-start: 2px solid var(--md-outline-variant);
+}
+
+.timeline__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.timeline__note {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
 }
