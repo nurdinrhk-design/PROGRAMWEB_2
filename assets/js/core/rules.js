@@ -99,6 +99,11 @@
   var USIA_MAKS = 21;
   var TAHUN_LULUS = ['2026', '2025', '2024'];    // lulusan maksimal 2 tahun sebelumnya
   var JUMLAH_SEMESTER = 5;                       // rapor semester 1–5
+  var MAKS_ANAK = 3;                             // calon peserta per akun orang tua (Tahap 14)
+  var SUMBER = {
+    online: { label: 'Online', labelPanjang: 'Didaftarkan orang tua secara online' },
+    loket: { label: 'Loket', labelPanjang: 'Didaftarkan panitia di sekolah' }
+  };
 
   /* ---------------------------------------------------------------
      2. Tanggal
@@ -290,6 +295,24 @@
       return '';
     },
 
+    // Akun orang tua (Tahap 14). `sudahDipakai(email)` disediakan pemanggil.
+    email: function (v, sudahDipakai) {
+      var s = String(v || '').trim().toLowerCase();
+      if (!s) return 'Email wajib diisi.';
+      if (s.length > 80 || !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(s)) return 'Format email tidak valid, contoh: nama@contoh.com.';
+      if (typeof sudahDipakai === 'function' && sudahDipakai(s)) return 'Email ini sudah terdaftar. Silakan masuk.';
+      return '';
+    },
+
+    // Kata sandi akun baru: 8–64 karakter, ada huruf dan angka
+    sandiBaru: function (v) {
+      var s = String(v || '');
+      if (!s) return 'Kata sandi wajib diisi.';
+      if (s.length < 8 || s.length > 64) return 'Kata sandi harus 8–64 karakter.';
+      if (!/[A-Za-z]/.test(s) || !/\d/.test(s)) return 'Kata sandi harus memuat huruf dan angka.';
+      return '';
+    },
+
     tahunLulus: function (v) {
       if (!v) return 'Tahun lulus wajib dipilih.';
       return TAHUN_LULUS.indexOf(String(v)) > -1 ? '' : 'Tahun lulus harus ' + TAHUN_LULUS.join(', ') + '.';
@@ -399,6 +422,8 @@
     BERKAS_MAKS_KB: BERKAS_MAKS_KB,
     BERKAS_FORMAT: BERKAS_FORMAT,
     TAHUN_LULUS: TAHUN_LULUS,
+    MAKS_ANAK: MAKS_ANAK,
+    SUMBER: SUMBER,
     JUMLAH_SEMESTER: JUMLAH_SEMESTER,
     STATUS_VERIFIKASI: STATUS_VERIFIKASI,
     STATUS_SELEKSI: STATUS_SELEKSI,

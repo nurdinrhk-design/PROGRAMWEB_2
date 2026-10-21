@@ -1,12 +1,12 @@
 # ✅ Checklist Pekerjaan — Admin Panel PPDB Online
 
-> **Dokumen pelacakan (tracker)**, pasangan dari **[perencanaan.md](perencanaan.md)** (v0.3).
-> - **Penomoran (D-22):** tahap **1–13**, langkah **x.y**. Langkah terakhir setiap tahap adalah **Penutupan**: uji → catat → review → simpan ([perencanaan §11.3](perencanaan.md#113-langkah-penutupan-setiap-tahap)).
+> **Dokumen pelacakan (tracker)**, pasangan dari **[perencanaan.md](perencanaan.md)** (v1.1).
+> - **Penomoran (D-22):** tahap **1–14** (Tahap 14 = revisi dosen), langkah **x.y**. Langkah terakhir setiap tahap adalah **Penutupan**: uji → catat → review → simpan ([perencanaan §11.3](perencanaan.md#113-langkah-penutupan-setiap-tahap)).
 > - Kolom **Ref** menunjuk ke ID di perencanaan.md: `FR` kebutuhan · `NFR` non-fungsional · `BR` aturan bisnis · `AS` anti-slop · `P` halaman · `D` keputusan · `TC` kasus uji · `R` risiko · `§` bagian.
 > - Aturan pencatatan: [perencanaan §15](perencanaan.md#15-alur-kerja--aturan-pencatatan). Definition of Done: [§14](perencanaan.md#14-definition-of-done).
 > - ID lama (`T0-01`…`T14-R3`) dipakai sampai v0.2. Padanannya ada di [Padanan ID Lama](#padanan-id-lama--baru).
 
-**Versi checklist:** 1.0 · **Terakhir diperbarui:** 2 Oktober 2026
+**Versi checklist:** 1.1 · **Terakhir diperbarui:** 21 Oktober 2026
 
 ---
 
@@ -27,8 +27,8 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | ✅ Semua tahap selesai (v1.0 online di https://nurdinrhk-design.github.io/PROGRAMWEB_2/) |
-| **Tahap terakhir selesai** | Tahap 13 — Rilis & Online (2 Okt 2026) |
+| **Tahap aktif** | ✅ Semua tahap selesai (v1.1 online di https://nurdinrhk-design.github.io/PROGRAMWEB_2/) |
+| **Tahap terakhir selesai** | Tahap 14 — Dua peran: orang tua & panitia (21 Okt 2026) |
 | **Menunggu dari pengembang** | Kirim tautan M1, M2 & M3 ke LMS (2.8, 3.8, 13.5) · cek sekilas di Firefox · pasang domain sendiri bila diinginkan ([panduan](panduan-domain.md)) |
 
 ## Ringkasan Progres
@@ -48,9 +48,10 @@
 | [11](#tahap-11--laporan--bukti-pendaftaran) | Laporan & Bukti | M3 | 5 | 5 | 0 | 100% |
 | [12](#tahap-12--qa-menyeluruh) | QA menyeluruh | M3 | 7 | 7 | 0 | 100% |
 | [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 7 | 0 | 100% |
-| | **Total** | | **86** | **84** | **2** | **98%** |
+| [14](#tahap-14--dua-peran-orang-tua--panitia-revisi-dosen) | Dua peran (revisi dosen) | M3 | 8 | 8 | 0 | 100% |
+| | **Total** | | **94** | **92** | **2** | **98%** |
 
-**Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 🔄 Tahap 4–5 selesai
+**Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 ✅ v1.1 online, termasuk revisi dosen (kirim LMS 👤)
 
 ---
 
@@ -254,6 +255,11 @@ Ref: [perencanaan §12](perencanaan.md#12-strategi-pengujian), [§5.3 NFR](peren
 | TC-21 | Ekspor CSV | 6, 9, 11 | ✅ Tahap 6 (data pendaftar) · 9 (peringkat) · 11 (rekap) | ✅ Chrome & Edge (2 Okt) |
 | TC-22 | Reset data simulasi | 6 | ✅ Tahap 6 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
 | TC-23 | Logout | 5 | ✅ Tahap 6 (2 Okt) | ✅ Chrome & Edge (2 Okt) |
+| TC-24 | Buat akun: validasi & akun valid | 14 | ✅ Tahap 14 (21 Okt) | ✅ Chrome & Edge (21 Okt) |
+| TC-25 | Orang tua mendaftarkan anak | 14 | ✅ Tahap 14 (21 Okt) | ✅ Chrome & Edge (21 Okt) |
+| TC-26 | Perbaikan oleh orang tua → Menunggu | 14 | ✅ Tahap 14 (21 Okt) | ✅ Chrome & Edge (21 Okt) |
+| TC-27 | Pemisahan akses antarperan | 14 | ✅ Tahap 14 (21 Okt) | ✅ Chrome & Edge (21 Okt) |
+| TC-28 | Pendaftaran loket & filter sumber | 14 | ✅ Tahap 14 (21 Okt) | ✅ Chrome & Edge (21 Okt) |
 
 ---
 
@@ -269,6 +275,24 @@ Ref: [perencanaan D-09, D-18, D-19, D-24](perencanaan.md#3-keputusan--asumsi) ·
 | 13.5 | Naskah demo 5–7 menit + jawaban tanya-jawab + kirim link M3 ke LMS | §2.2 | ✅ | `docs/presentasi.md`: naskah demo 7 menit per bagian + 10 tanya-jawab + tautan untuk LMS. 👤 Pengiriman ke LMS oleh pengembang |
 | 13.6 | Panduan pemasangan domain (DNS + `CNAME` + HTTPS) → serah terima | D-09, D-19 | ✅ | `docs/panduan-domain.md`: verifikasi domain, record DNS (IP diverifikasi dari dokumentasi resmi GitHub), custom domain, HTTPS, daftar uji, batasan GitHub Pages. 👤 Pemasangan oleh pengembang |
 | 13.7 | Penutupan | §11.3 | ✅ | Uji online lulus, audit S-01…S-07 lulus, dicatat, rilis v1.0 |
+
+---
+
+## Tahap 14 — Dua Peran: Orang Tua & Panitia (Revisi Dosen)
+Ref: [perencanaan D-25, FR-19…FR-24, P-09…P-12](perencanaan.md#3-keputusan--asumsi) · **Output:** `daftar.html`, `portal/beranda.html`, `portal/form.html`, `portal/bukti.html`, `assets/js/pages/daftar.js`, `portal.js`, login dua peran, rilis `v1.1`
+
+Revisi dosen (21 Okt 2026): website harus punya dua pengguna, **admin/panitia** dan **orang tua/calon peserta**. Orang tua membuat akun dan mendaftarkan anaknya sendiri; panitia tetap bisa mendaftarkan calon peserta yang datang ke sekolah. Keputusan pengembang (dari opsi rekomendasi): maks. **3 anak per akun**, orang tua boleh mengubah data saat **Menunggu/Perlu perbaikan**, portal **bertema sama dengan tata letak lebih sederhana**.
+
+| No | Langkah | Ref | Status | Catatan |
+|---|---|---|---|---|
+| 14.1 | Login dua peran: pilihan peran, sesi berperan, penjaga halaman per peran | FR-19, FR-23, D-25 | ✅ | *Segmented button* Orang tua / Panitia sekolah (pola tab ARIA). Peran awal mengikuti `?peran=` atau halaman yang diminta. Sesi menyimpan `peran`; sesi lama dianggap panitia. `data-auth="peserta"` untuk portal; peran yang salah dialihkan ke halaman awal perannya sendiri. Tujuan `?kembali=` hanya halaman milik peran itu (anti open-redirect) |
+| 14.2 | Buat akun orang tua + hash kata sandi | FR-19, TC-24 | ✅ | `daftar.html` + `daftar.js`: validasi per kolom, email unik (huruf kecil), sandi ≥ 8 berisi huruf & angka, ulangi sandi. PBKDF2-SHA256 100.000 iterasi + salt acak (Web Crypto); teks sandi tidak pernah disimpan. Akun baru langsung masuk portal |
+| 14.3 | Portal orang tua: beranda, daftarkan anak, bukti | FR-20, FR-21, TC-25 | ✅ | Beranda: kartu per anak (status, catatan panitia, posisi antrean atau peringkat sementara, berkas, aksi), jadwal. Form 4 langkah memakai `form.js` yang sama (nama & HP orang tua dari akun, tombol "Kirim pendaftaran"). Bukti memakai `bukti.js`. Batas 3 anak di tampilan, form, dan `store.tambah`. Di HP menu menjadi navigation bar bawah |
+| 14.4 | Perbaikan oleh orang tua → kirim ulang | FR-22, TC-26 | ✅ | Catatan panitia tampil di beranda & form; berkas "tidak sesuai" ditandai dan wajib diganti; `store.ubah(..., {kirimUlang})` mengembalikan status ke Menunggu tanpa mereset berkas yang sudah sesuai; tercatat di log |
+| 14.5 | Sisi panitia: sumber pendaftaran online/loket | FR-24, TC-28 | ✅ | Data simulasi: ±60% pendaftar ditautkan ke 495 akun orang tua fiktif (sebaran status & peringkat tidak berubah), akun demo `orangtua@ppdb.test`. Data Pendaftar: filter & label Sumber, detail menyebut akun orang tua, kolom CSV. Dashboard: % daftar online. Form panitia = pendaftaran loket |
+| 14.6 | Pemisahan akses & keamanan | FR-23, TC-27, D-18 | ✅ | Orang tua tidak bisa membuka halaman panitia, bukti/form anak lain, atau mengubah data terverifikasi/ditolak; panitia dialihkan dari portal. Akun seed tanpa sandi tidak bisa dipakai masuk. Batas 5 percobaan berlaku untuk kedua peran. Skema data v3; cadangan v2 tetap bisa dipulihkan (semua dianggap loket) |
+| 14.7 | Uji & dokumen | §12, TC-24…TC-28 | ✅ | Uji inti 40/40 (+6), uji dua peran 18/18, regresi panitia 20/20 — Chrome & Edge, konsol bersih. 5 halaman × 5 lebar tanpa scroll horizontal. W3C 0 error. Lighthouse 100/100 (index, daftar, portal beranda & form, data pendaftar). Perencanaan v1.1, perancangan (aktor, alur, ERD `AKUN`, wireframe portal), README, naskah demo |
+| 14.8 | Penutupan: audit, push, CI, rilis `v1.1` | §11.3 | ✅ | Audit S-01…S-07 lulus, CI hijau, GitHub Pages diperbarui, rilis v1.1 |
 
 ---
 
@@ -446,6 +470,16 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-138 | 2 Okt 2026 | UPDATE | `README.md` | 13.4 | README final |
 | F-139 | 2 Okt 2026 | CREATE | `docs/presentasi.md`, `docs/panduan-domain.md` | 13.5, 13.6 | Naskah demo & tanya-jawab, panduan domain |
 | F-140 | 2 Okt 2026 | UPDATE | `docs/perencanaan.md`, `docs/checklist_work.md` | 13.7 | Versi 1.0, Tahap 13 selesai, progres 84/86 |
+| F-141 | 21 Okt 2026 | UPDATE | `assets/js/core/rules.js`, `seed.js`, `store.js` | 14.2–14.6 | `MAKS_ANAK`, `SUMBER`, validasi email & sandi baru; akun orang tua fiktif + akun demo (hash PBKDF2 dihitung di Node); kunci `ppdb.v2.akun`, skema v3, fungsi akun, `tambah(…, {akunId})`, `ubah(…, {kirimUlang})`, cadangan memuat akun & menerima v2 |
+| F-142 | 21 Okt 2026 | UPDATE | `assets/js/core/shell.js` | 14.1, 14.6 | Sesi berperan, `loginPeserta`, `daftarAkun`, `hashSandi` (Web Crypto), penjaga halaman per peran, menu akun & menu aktif untuk portal |
+| F-143 | 21 Okt 2026 | UPDATE | `index.html`, `assets/js/pages/login.js` | 14.1 | Pilihan peran, kolom email/username, tautan buat akun, akun demo per peran |
+| F-144 | 21 Okt 2026 | CREATE | `daftar.html`, `assets/js/pages/daftar.js` | 14.2 | Halaman buat akun orang tua |
+| F-145 | 21 Okt 2026 | CREATE | `portal/beranda.html`, `portal/form.html`, `portal/bukti.html`, `assets/js/pages/portal.js` | 14.3, 14.4 | Portal orang tua |
+| F-146 | 21 Okt 2026 | UPDATE | `assets/js/pages/form.js`, `bukti.js` | 14.3, 14.4, 14.6 | Dipakai dua peran: kepemilikan data, kunci status, batas anak, mode perbaikan & berkas tidak sesuai |
+| F-147 | 21 Okt 2026 | UPDATE | `pages/data-master.html`, `assets/js/pages/data-master.js`, `dashboard.js`, `pages/form.html` | 14.5 | Filter & label sumber, detail akun orang tua, kolom CSV, % daftar online |
+| F-148 | 21 Okt 2026 | UPDATE | `assets/css/components.css`, `layout.css`, `pages.css` | 14.1–14.5 | Komponen 17 *segmented button*, tata letak portal (+ navigation bar bawah di HP), kartu anak, toolbar 4 kolom, `alert--success` dipakai lagi, jadwal satu kolom di HP |
+| F-149 | 21 Okt 2026 | UPDATE | `tests/core.test.js` | 14.7 | +6 uji: validasi akun, seed akun, tambahAkun, batas anak & sumber, kirim ulang, cadangan v2 (40 uji) |
+| F-150 | 21 Okt 2026 | UPDATE | `docs/perencanaan.md`, `docs/perancangan.md`, `docs/checklist_work.md`, `docs/presentasi.md`, `README.md` | 14.7 | Dokumentasi revisi dua peran, v1.1 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -458,7 +492,7 @@ PROGRAMWEB_2/
 ├── assets/
 │   ├── css/  main.css · tokens.css · base.css · layout.css · components.css · pages.css · print.css
 │   ├── js/core/  rules.js · seed.js · store.js · ui.js · shell.js
-│   ├── js/pages/ login.js · dashboard.js · data-master.js · form.js · verifikasi.js · hasil-seleksi.js · laporan.js · bukti.js
+│   ├── js/pages/ login.js · daftar.js · portal.js · dashboard.js · data-master.js · form.js · verifikasi.js · hasil-seleksi.js · laporan.js · bukti.js
 │   └── img/  logo.svg
 ├── docs/
 │   ├── perencanaan.md          (v1.0)
@@ -468,7 +502,8 @@ PROGRAMWEB_2/
 │   ├── panduan-domain.md       (DNS & HTTPS)
 │   ├── styleguide.html / .css / .js   (etalase design system, M2)
 │   └── img/referensi-stitch/   (8 screenshot)
-└── pages/  dashboard.html · data-master.html · form.html · verifikasi.html · hasil-seleksi.html · laporan.html · bukti.html
+├── pages/  dashboard.html · data-master.html · form.html · verifikasi.html · hasil-seleksi.html · laporan.html · bukti.html (panitia)
+└── portal/ beranda.html · form.html · bukti.html (orang tua)
 ```
 
 ---
@@ -533,3 +568,4 @@ Satu baris per sesi kerja.
 | 2 Okt 2026 | – | **Pembersihan lingkungan kerja** atas permintaan pengembang. Diperiksa: folder proyek, file yang diabaikan git, Downloads, folder Temp, proses Chrome uji. Dihapus: 32 folder sesi Claude kosong yang lama (Temp, hanya folder tanpa file), 4 skrip uji usang & 4 log tugas latar di scratchpad. Git dirapikan (`git gc`, 4,8 → 4,3 MB, `fsck` bersih). **Tidak disentuh:** bahan desain Stitch milik pengembang (folder + zip, diabaikan git, masih dirujuk dokumen), file Temp milik aplikasi lain (VS Code, puppeteer), folder sesi hari ini. Tidak ada file hasil uji di Downloads, tidak ada proses Chrome uji tersisa | ✅ |
 | 2 Okt 2026 | 12.1–12.7 | **Tahap 12: QA menyeluruh.** CSP dipasang & diuji. Uji lintas browser (Chrome, Edge), Lighthouse 100/100 di 8 halaman, keamanan (XSS, open-redirect, sesi, penguncian), pemindaian kode mati. Alat bantu sementara (server statis lokal, Lighthouse via `npx` dengan cache terpisah) dihapus setelah dipakai — cache npm pengguna tidak tersentuh. Firefox tidak terpasang → dicatat untuk dicek pengembang. Audit keamanan lulus | ✅ (F-129…F-132) |
 | 2 Okt 2026 | 13.2–13.7 | **Tahap 13: Rilis & online.** CI hijau setelah 2 perbaikan (log CI tidak bisa diunduh dari jaringan ini → error dijadikan anotasi yang terbaca lewat API). Pages aktif: https://nurdinrhk-design.github.io/PROGRAMWEB_2/ (build pertama tertahan di antrean GitHub, diminta ulang). Seluruh suite uji dijalankan ulang terhadap situs online: lulus, konsol bersih. Rilis v1.0. Sisa: 2.8, 3.8 & pengiriman M3 ke LMS (👤) | ✅ (F-133…F-140) |
+| 21 Okt 2026 | 14.1–14.8 | **Tahap 14: revisi dosen — dua peran.** Rencana & 3 keputusan disetujui pengembang. Uji dua peran lulus 18/18 pada percobaan pertama. Temuan: skrip uji otomatis lama (di folder Temp) ikut terhapus pembersihan sistem → harness dibuat ulang dan regresi panitia ditulis ulang ringkas (20 uji); disarankan memindahkan uji ke dalam repo. Profil Edge uji sempat terkunci → tiap run memakai folder profil sendiri. Statistik data simulasi (status, peringkat, batas) tetap sama. Audit keamanan lulus | ✅ (F-141…F-150) |

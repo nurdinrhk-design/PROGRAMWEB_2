@@ -1,7 +1,8 @@
 # Naskah Demo & Tanya-Jawab — Admin Panel PPDB Online
 
-> Bahan presentasi Milestone 3 (Tahap 13.5). Durasi demo **5–7 menit**. Semua data adalah **simulasi** (sekolah, siswa, dan angka fiktif).
-> Situs: <https://nurdinrhk-design.github.io/PROGRAMWEB_2/> · Akun demo: `panitia` / `ppdb2026`
+> Bahan presentasi Milestone 3 (Tahap 13.5). Durasi demo **8–9 menit** (v1.1). Semua data adalah **simulasi** (sekolah, siswa, dan angka fiktif).
+> Situs: <https://nurdinrhk-design.github.io/PROGRAMWEB_2/> · Akun demo orang tua: `orangtua@ppdb.test` / `orangtua2026` · panitia: `panitia` / `ppdb2026`
+> Versi v1.1 (revisi dosen): dua peran pengguna, orang tua dan panitia.
 
 ## Persiapan (sebelum presentasi)
 
@@ -13,15 +14,18 @@
 
 | Waktu | Bagian | Yang ditunjukkan | Yang diucapkan (inti) |
 |---|---|---|---|
-| 0:00–0:45 | **Pembuka** | Halaman login | "Ini admin panel PPDB untuk panitia sekolah. Pertanyaan utamanya: *berkas siapa yang harus diperiksa dulu, dan siapa yang masuk kuota?* Semua data fiktif dan disimpan di browser (localStorage)." |
-| 0:45–1:15 | **Login** | Isi salah sekali → pesan error di kolom; lalu login benar | "Validasi per kolom, dan setelah 5 kali salah login dikunci 30 detik." |
-| 1:15–2:15 | **Dashboard** | 4 angka utama, grafik per hari, tabel keketatan, antrean, jadwal | "Semua angka dihitung dari data, tidak ada angka hiasan. Klik *Lihat pendaftar menunggu* di kartu angka → langsung ke Data Pendaftar yang sudah tersaring. Grafik memakai Chart.js; kalau CDN gagal, datanya tetap tampil sebagai tabel." |
-| 2:15–3:15 | **Data Pendaftar** | Tab status, cari NISN, filter jalur, klik nama → detail, hapus → *Urungkan* | "900 data dengan paginasi. Hapus selalu lewat konfirmasi dan bisa diurungkan. Di HP tabel berubah jadi kartu." |
-| 3:15–4:15 | **Tambah Pendaftar** | Form 4 langkah: pilih *Zonasi* + tanggal KK 2026 → error; ganti *Afirmasi* → berkas KIP jadi wajib | "Aturan PPDB dicek langsung: NISN unik, usia maksimal 21 tahun, KK zonasi minimal 1 tahun, berkas mengikuti jalur." |
-| 4:15–5:15 | **Verifikasi Berkas** | Antrean terlama, cek berkas *Sesuai*, klik *Terverifikasi* | "Tombol Terverifikasi baru aktif kalau semua berkas sesuai. Perbaikan dan Tolak wajib catatan. Setelah memutuskan, langsung lanjut ke pendaftar berikutnya." |
-| 5:15–6:00 | **Hasil & Peringkat** | Tab Zonasi, garis batas kuota, cari nama yang tadi diverifikasi | "Peringkat dihitung ulang otomatis: jarak terdekat, lalu usia, lalu waktu daftar. Baris garis batas kuota memisahkan yang masuk kuota dan yang tergeser." |
-| 6:00–6:40 | **Rekap & Cetak** | Ubah rentang tanggal, *Cetak rekap* (pratinjau), buka bukti pendaftaran | "Rekap siap dibawa ke rapat panitia. Kop sekolah fiktif tanpa lambang, kolom tanda tangan kosong." |
-| 6:40–7:00 | **Penutup** | Kembali ke Dashboard | "Dibuat dengan HTML, CSS, dan JavaScript murni bertema Material Design 3, diuji otomatis 150+ kasus, Lighthouse aksesibilitas 100." |
+| 0:00–0:45 | **Pembuka** | Halaman login dengan pilihan peran | "Ada dua pengguna: orang tua yang mendaftarkan anaknya sendiri, dan panitia yang memverifikasi serta mendaftarkan calon peserta yang datang langsung ke sekolah. Semua data fiktif dan disimpan di browser (localStorage)." |
+| 0:45–1:45 | **Orang tua: buat akun** | *Buat akun orang tua* → isi sandi lemah dulu → error → isi benar | "Email harus unik, sandi minimal 8 karakter berisi huruf dan angka. Sandi tidak disimpan apa adanya, hanya hash PBKDF2." |
+| 1:45–2:45 | **Orang tua: portal** | Keluar, masuk dengan akun demo orang tua → beranda: anak *Perlu perbaikan* & anak *Terverifikasi* | "Orang tua melihat status, catatan panitia, posisi antrean, dan peringkat sementara anaknya. Maksimal 3 anak per akun, dan hanya anaknya sendiri." |
+| 2:45–3:15 | **Orang tua: perbaikan** | *Perbaiki pendaftaran* → berkas *tidak sesuai* ditandai → ganti → *Kirim perbaikan* | "Berkas yang dinilai tidak sesuai wajib diganti. Setelah dikirim, status kembali Menunggu dan masuk antrean panitia lagi." |
+| 3:15–3:45 | **Login panitia** | Keluar, pilih tab *Panitia sekolah*, isi salah sekali → error; lalu benar | "Validasi per kolom, dan setelah 5 kali salah login dikunci 30 detik. Orang tua tidak bisa membuka halaman panitia, dan sebaliknya." |
+| 3:45–4:30 | **Dashboard** | 4 angka utama, grafik per hari, tabel keketatan, antrean, jadwal | "Semua angka dihitung dari data, tidak ada angka hiasan. Klik *Lihat pendaftar menunggu* di kartu angka → langsung ke Data Pendaftar yang sudah tersaring. Grafik memakai Chart.js; kalau CDN gagal, datanya tetap tampil sebagai tabel." |
+| 4:30–5:15 | **Data Pendaftar** | Tab status, cari NISN, filter jalur, klik nama → detail, hapus → *Urungkan* | "900 data dengan paginasi. Hapus selalu lewat konfirmasi dan bisa diurungkan. Di HP tabel berubah jadi kartu." |
+| 5:15–6:00 | **Tambah Pendaftar (loket)** | Form 4 langkah: pilih *Zonasi* + tanggal KK 2026 → error; ganti *Afirmasi* → berkas KIP jadi wajib | "Aturan PPDB dicek langsung: NISN unik, usia maksimal 21 tahun, KK zonasi minimal 1 tahun, berkas mengikuti jalur." |
+| 6:00–6:45 | **Verifikasi Berkas** | Antrean terlama, cek berkas *Sesuai*, klik *Terverifikasi* | "Tombol Terverifikasi baru aktif kalau semua berkas sesuai. Perbaikan dan Tolak wajib catatan. Setelah memutuskan, langsung lanjut ke pendaftar berikutnya." |
+| 6:45–7:30 | **Hasil & Peringkat** | Tab Zonasi, garis batas kuota, cari nama yang tadi diverifikasi | "Peringkat dihitung ulang otomatis: jarak terdekat, lalu usia, lalu waktu daftar. Baris garis batas kuota memisahkan yang masuk kuota dan yang tergeser." |
+| 7:30–8:15 | **Rekap & Cetak** | Ubah rentang tanggal, *Cetak rekap* (pratinjau), buka bukti pendaftaran | "Rekap siap dibawa ke rapat panitia. Kop sekolah fiktif tanpa lambang, kolom tanda tangan kosong." |
+| 8:15–8:30 | **Penutup** | Kembali ke Dashboard | "Dibuat dengan HTML, CSS, dan JavaScript murni bertema Material Design 3, diuji otomatis 150+ kasus, Lighthouse aksesibilitas 100." |
 
 ## Tanya-jawab yang mungkin muncul
 
@@ -56,11 +60,17 @@ Ya. Navigasi berubah: drawer modal di HP, rail ikon di tablet, drawer penuh di l
 **9. Kenapa desain Google Stitch tidak dipakai mentah-mentah?**
 Desain awal banyak "hiasan" yang tidak jujur (status integrasi Dapodik, akurasi OCR, peta GPS, aksi massal). Semua itu dibuang karena tidak ada fungsinya. Yang dipertahankan hanya yang membantu kerja panitia, misalnya garis batas kuota.
 
-**10. Apa yang bisa dikembangkan selanjutnya?**
+**10. Bagaimana pemisahan orang tua dan panitia dijaga?**
+Setiap halaman menyatakan peran yang boleh membukanya (`data-auth`). Sesi menyimpan peran; orang tua yang membuka halaman panitia dialihkan ke portalnya, dan data anak lain tidak ditampilkan walau ID-nya ditebak. Karena semua masih di browser, ini **simulasi**; pada sistem nyata pemeriksaan yang sama wajib dilakukan di server.
+
+**11. Kenapa panitia tetap bisa mendaftarkan siswa?**
+Untuk orang tua yang tidak terbiasa memakai HP: mereka datang ke sekolah dan panitia menginput di loket. Di Data Pendaftar terlihat sumbernya, **Online** atau **Loket**, dan bisa disaring.
+
+**12. Apa yang bisa dikembangkan selanjutnya?**
 Database & autentikasi server, unggah berkas sungguhan, notifikasi ke pendaftar, dan peran pengguna (verifikator, ketua panitia).
 
 ## Tautan untuk dikirim ke LMS (Milestone 3)
 
 - Situs: <https://nurdinrhk-design.github.io/PROGRAMWEB_2/>
 - Repositori: <https://github.com/nurdinrhk-design/PROGRAMWEB_2>
-- Rilis: <https://github.com/nurdinrhk-design/PROGRAMWEB_2/releases/tag/v1.0>
+- Rilis: <https://github.com/nurdinrhk-design/PROGRAMWEB_2/releases/tag/v1.1>

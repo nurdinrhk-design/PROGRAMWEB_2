@@ -55,10 +55,12 @@
       return n + R.peringkat(S.semua(), j.kode).daftar.filter(function (b) { return b.status === 'masuk'; }).length;
     }, 0);
     var persen = h.total ? Math.round(h.terverifikasi / h.total * 100) : 0;
+    var online = S.semua().filter(function (p) { return p.sumber === 'online'; }).length;
+    var persenOnline = h.total ? Math.round(online / h.total * 100) : 0;
 
     var host = U.kosongkan($('[data-kpi]'));
     [
-      { ikon: 'groups', label: 'Total pendaftar', nilai: h.total, meta: '+' + U.angka(baru) + ' hari ini', href: 'data-master.html', tautan: 'Lihat semua pendaftar' },
+      { ikon: 'groups', label: 'Total pendaftar', nilai: h.total, meta: '+' + U.angka(baru) + ' hari ini · ' + persenOnline + '% daftar online', href: 'data-master.html', tautan: 'Lihat semua pendaftar' },
       { ikon: 'hourglass_top', label: 'Menunggu verifikasi', nilai: h.menunggu,
         meta: antre.length ? 'Terlama menunggu ' + U.lamaMenunggu(antre[0].tglDaftar) : 'Antrean kosong', href: 'data-master.html?status=menunggu', tautan: 'Lihat pendaftar menunggu' },
       { ikon: 'edit_note', label: 'Perlu perbaikan', nilai: h.perbaikan, meta: 'Menunggu unggah ulang dari pendaftar', href: 'data-master.html?status=perbaikan', tautan: 'Lihat pendaftar perlu perbaikan' },

@@ -78,6 +78,63 @@
     return [-0.6, -0.3, 0, 0.3, 0.6].map(function (d) { return Math.round((rata + d) * 100) / 100; });
   }
 
+  // Akun demo orang tua (Tahap 14). Kata sandi "orangtua2026" sengaja publik
+  // (simulasi); yang disimpan hanya hash PBKDF2-SHA256 100.000 iterasi.
+  var AKUN_DEMO = {
+    email: 'orangtua@ppdb.test',
+    salt: 'pJfbZJCXi6Iu8rhGwS+D+A==',
+    sandiHash: 'NtepA5/56TCx4k8PcFJ1q4MZRmmPMEHv58I/fff7zqQ='
+  };
+  var PORSI_ONLINE = 0.6;   // ±60% pendaftar mendaftar sendiri secara online
+
+  function slug(s) {
+    return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z]+/g, '.').replace(/^\.|\.$/g, '');
+  }
+
+  // Menautkan sebagian pendaftar ke akun orang tua fiktif. Memakai pembangkit
+  // acak terpisah agar data pendaftar yang sudah ada tidak berubah urutannya.
+  function buatAkun(pendaftar) {
+    var rnd = mulberry32(SEED + 1);
+    var akun = [];
+    var tambahAkun = function (p) {
+      var no = pad(akun.length + 1, 4);
+      var a = { id: 'ak-' + no, nama: p.namaOrtu, email: slug(p.namaOrtu) + '.' + no + '@ppdb.test',
+        noHp: p.noHp, salt: '', sandiHash: '', dibuat: p.tglDaftar };
+      akun.push(a);
+      return a;
+    };
+
+    // Akun demo: satu anak perlu perbaikan + satu anak terverifikasi
+    var anak1 = pendaftar.filter(function (p) { return p.status === 'perbaikan' && p.jalur === 'zonasi'; })[0];
+    var anak2 = pendaftar.filter(function (p) { return p.status === 'terverifikasi' && p.jalur === 'prestasi' && p.id > anak1.id; })[0];
+    var demo = tambahAkun(anak1);
+    demo.email = AKUN_DEMO.email;
+    demo.salt = AKUN_DEMO.salt;
+    demo.sandiHash = AKUN_DEMO.sandiHash;
+    [anak1, anak2].forEach(function (p) {
+      p.akunId = demo.id; p.sumber = 'online'; p.namaOrtu = demo.nama; p.noHp = demo.noHp;
+    });
+
+    var sebelumnya = null;
+    pendaftar.forEach(function (p) {
+      if (p.akunId) return;
+      if (rnd() >= PORSI_ONLINE) { p.akunId = ''; p.sumber = 'loket'; return; }
+      // ±8% akun mendaftarkan dua anak (kakak-adik)
+      var a = sebelumnya && sebelumnya.anak < 2 && rnd() < 0.08 ? sebelumnya.akun : null;
+      if (a) {
+        sebelumnya.anak += 1;
+        p.namaOrtu = a.nama;
+        p.noHp = a.noHp;
+      } else {
+        a = tambahAkun(p);
+        sebelumnya = { akun: a, anak: 1 };
+      }
+      p.akunId = a.id;
+      p.sumber = 'online';
+    });
+    return akun;
+  }
+
   function pad(n, len) {
     return String(n).padStart(len, '0');
   }
@@ -88,7 +145,7 @@
 
   /**
    * Membangun data simulasi.
-   * @returns {{pendaftar: Array, verifikasi: Array, log: Array}}
+   * @returns {{pendaftar: Array, verifikasi: Array, log: Array, akun: Array}}
    */
   function generate() {
     var rnd = mulberry32(SEED);
@@ -243,12 +300,14 @@
         };
       });
 
-    return { pendaftar: pendaftar, verifikasi: verifikasi, log: log };
+    var akun = buatAkun(pendaftar);
+    return { pendaftar: pendaftar, verifikasi: verifikasi, log: log, akun: akun };
   }
 
   PPDB.seed = {
     SEED: SEED,
     JUMLAH: JUMLAH,
+    AKUN_DEMO: AKUN_DEMO,
     generate: generate
   };
 })(window);

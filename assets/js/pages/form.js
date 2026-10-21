@@ -1,5 +1,7 @@
 /* =====================================================================
-   form.js — Tambah / Ubah Pendaftar (P-04, Tahap 7)
+   form.js — Tambah / Ubah Pendaftar (P-04, Tahap 7; dua peran Tahap 14)
+   Dipakai panitia (pages/form.html, pendaftaran loket) dan orang tua
+   (portal/form.html, pendaftaran online milik akunnya sendiri).
    FR-10 tambah · FR-11 ubah (?id=pd-0001) · BR-01…BR-06, BR-13
    Stepper 4 langkah. Validasi saat kolom ditinggalkan (blur), saat
    pindah langkah, dan lintas kolom (jalur ↔ tanggal KK, prestasi ↔ berkas).
@@ -28,7 +30,16 @@
   /* ---------- Mode tambah / ubah ---------- */
   var idParam = new URLSearchParams(window.location.search).get('id');
   var editId = /^pd-\d{4,6}$/.test(idParam || '') ? idParam : null;
+  var peserta = document.body.getAttribute('data-auth') === 'peserta';
+  var ortu = peserta ? PPDB.auth.pesertaAktif() : null;
   var asli = editId ? S.ambil(editId) : null;
+  // Orang tua hanya boleh membuka data anaknya sendiri
+  if (peserta && asli && asli.akunId !== ortu.id) asli = null;
+  // Orang tua hanya boleh mengubah data yang belum diputuskan panitia
+  var terkunci = peserta && asli && asli.status !== 'menunggu' && asli.status !== 'perbaikan';
+  var penuh = peserta && !editId && S.pendaftarAkun(ortu.id).length >= R.MAKS_ANAK;
+  // Orang tua memperbaiki data berstatus "perlu perbaikan" → dikirim ulang ke antrean
+  var kirimUlang = peserta && asli && asli.status === 'perbaikan';
   var modeUbah = !!asli;
   // Data lama (sebelum nilai per semester dicatat) hanya punya rata-rata
   var semesterLama = modeUbah && !(Array.isArray(asli.nilaiSemester) && asli.nilaiSemester.length === R.JUMLAH_SEMESTER);
@@ -146,6 +157,8 @@
     return berkasWajib().map(function (jenis) {
       var b = berkas[jenis];
       var pesan = b ? R.validasi.berkas(b.namaFile, b.ukuranKb) : R.BERKAS[jenis] + ' wajib diunggah.';
+      // Saat memperbaiki, berkas yang dinilai "tidak sesuai" harus diganti
+      if (!pesan && kirimUlang && b.hasilCek === 'tidak_sesuai') pesan = R.BERKAS[jenis] + ' dinilai tidak sesuai oleh panitia. Ganti dengan berkas yang benar.';
       if (tampil) tampilkanError('berkas-' + jenis, pesan);
       return { nama: 'berkas-' + jenis, pesan: pesan };
     }).filter(function (x) { return x.pesan; });
@@ -171,7 +184,8 @@
   /* =================================================================
      3. Stepper
      ================================================================= */
-  var JUDUL_LANJUT = ['Lanjut', 'Lanjut', 'Lanjut', modeUbah ? 'Simpan perubahan' : 'Simpan pendaftar'];
+  var JUDUL_LANJUT = ['Lanjut', 'Lanjut', 'Lanjut',
+    kirimUlang ? 'Kirim perbaikan' : (modeUbah ? 'Simpan perubahan' : (peserta ? 'Kirim pendaftaran' : 'Simpan pendaftar'))];
 
   function renderStepper() {
     document.querySelectorAll('.stepper__item').forEach(function (li, i) {
@@ -324,7 +338,10 @@
           U.icon(b ? 'task' : 'upload_file', 'upload__icon'),
           el('div', { className: 'upload__body' }, [
             el('p', { className: 'upload__title' }, [R.BERKAS[jenis], el('span', { className: 'field__required', text: ' *', attrs: { 'aria-hidden': 'true' } })]),
-            el('p', { className: 'upload__meta', text: b ? b.namaFile + ' · ' + U.angka(b.ukuranKb) + ' KB' : 'Belum ada berkas', attrs: { id: id + '-meta' } })
+            el('p', { className: 'upload__meta', text: b ? b.namaFile + ' · ' + U.angka(b.ukuranKb) + ' KB' : 'Belum ada berkas', attrs: { id: id + '-meta' } }),
+            b && modeUbah && b.hasilCek !== 'belum'
+              ? el('p', { className: 'upload__check upload__check--' + b.hasilCek, text: b.hasilCek === 'sesuai' ? 'Sudah dicek: sesuai' : 'Dinilai tidak sesuai — ganti berkas ini' })
+              : null
           ]),
           el('input', { className: 'upload__input sr-only', attrs: {
             type: 'file', id: id, 'data-jenis': jenis,
@@ -428,7 +445,10 @@
         'Prestasi yang diisi wajib dilengkapi sertifikat.'],
       ['Format ' + R.BERKAS_FORMAT.filter(function (f) { return f !== 'jpeg'; }).join(', ').toUpperCase() + ', maksimal ' + (R.BERKAS_MAKS_KB / 1024) + ' MB per berkas.',
         'Berkas wajib: KK, akta kelahiran, rapor, ditambah berkas khusus jalur.',
-        modeUbah ? 'Berkas yang diganti akan dicek ulang oleh verifikator.' : 'Pendaftar baru berstatus Menunggu dan masuk antrean verifikasi.']
+        kirimUlang ? 'Setelah perbaikan dikirim, status kembali Menunggu dan berkas dicek ulang panitia.'
+          : modeUbah ? 'Berkas yang diganti akan dicek ulang oleh verifikator.'
+          : peserta ? 'Setelah dikirim, pendaftaran masuk antrean verifikasi panitia. Pantau statusnya di Beranda.'
+          : 'Pendaftar baru berstatus Menunggu dan masuk antrean verifikasi.']
     ];
     var host = $('[data-aturan]');
     U.kosongkan(host);
@@ -459,6 +479,7 @@
   }
 
   function siapkanModeUbah(p) {
+    if (peserta) { siapkanUbahPeserta(p); return; }
     var judul = 'Ubah Data Pendaftar';
     document.title = judul + ' · PPDB Online';
     $('[data-judul]').textContent = judul;
@@ -471,6 +492,23 @@
     });
     if (p.status !== 'menunggu') {
       $('[data-peringatan-judul]').textContent = 'Pendaftar ini berstatus ' + R.STATUS_VERIFIKASI[p.status].label;
+      $('[data-peringatan-ulang]').hidden = false;
+    }
+    isiDariData(p);
+    selesai = [true, true, true, true];
+    tercapai = TERAKHIR;
+  }
+
+  // Mode ubah oleh orang tua (Tahap 14)
+  function siapkanUbahPeserta(p) {
+    var judul = kirimUlang ? 'Perbaiki Pendaftaran' : 'Ubah Data Pendaftaran';
+    document.title = judul + ' · PPDB Online';
+    $('[data-judul]').textContent = judul;
+    $('[data-deskripsi]').textContent = p.noDaftar + ' · ' + p.nama + '.';
+    if (kirimUlang) {
+      var v = S.riwayat(p.id)[0];
+      $('[data-peringatan-judul]').textContent = 'Catatan panitia: ' + (v && v.catatan ? v.catatan : 'ada data/berkas yang perlu diperbaiki.');
+      $('[data-peringatan-teks]').textContent = 'Perbaiki data atau ganti berkas yang ditandai "tidak sesuai", lalu kirim perbaikan. Status akan kembali Menunggu.';
       $('[data-peringatan-ulang]').hidden = false;
     }
     isiDariData(p);
@@ -510,19 +548,20 @@
     var isian = kumpulkanIsian();
     var pesan, noDaftar;
     if (modeUbah) {
-      var hasil = S.ubah(editId, isian);
+      var hasil = S.ubah(editId, isian, { kirimUlang: kirimUlang });
       if (!hasil) { tombolLanjut.disabled = false; U.snackbar('Data tidak ditemukan. Mungkin sudah dihapus di tab lain.'); return; }
       noDaftar = hasil.data.noDaftar;
-      pesan = 'Perubahan data ' + hasil.data.nama + ' disimpan.' +
-        (hasil.perluVerifikasiUlang ? ' Status kembali Menunggu untuk verifikasi ulang.' : '');
+      pesan = kirimUlang ? 'Perbaikan untuk ' + hasil.data.nama + ' terkirim. Status kembali Menunggu verifikasi.'
+        : 'Perubahan data ' + hasil.data.nama + ' disimpan.' + (hasil.perluVerifikasiUlang ? ' Status kembali Menunggu untuk verifikasi ulang.' : '');
     } else {
-      var baru = S.tambah(isian);
+      var baru = S.tambah(isian, peserta ? { akunId: ortu.id } : null);
+      if (!baru) { tombolLanjut.disabled = false; U.snackbar('Batas ' + R.MAKS_ANAK + ' anak per akun sudah tercapai.'); return; }
       noDaftar = baru.noDaftar;
-      pesan = 'Pendaftar ' + baru.nama + ' tersimpan dengan nomor ' + baru.noDaftar + ' dan masuk antrean verifikasi.';
+      pesan = (peserta ? 'Pendaftaran ' : 'Pendaftar ') + baru.nama + ' terkirim dengan nomor ' + baru.noDaftar + ' dan masuk antrean verifikasi.';
     }
     tersimpan = true;
     U.titipPesan(pesan);
-    window.location.href = 'data-master.html?q=' + encodeURIComponent(noDaftar);
+    window.location.href = peserta ? 'beranda.html' : 'data-master.html?q=' + encodeURIComponent(noDaftar);
   }
 
   /* =================================================================
@@ -591,13 +630,26 @@
 
   /* ---------- Mulai ---------- */
   isiPilihan();
-  if (editId && !asli) {
+  if ((editId && !asli) || terkunci || penuh) {
     $('[data-area-form]').hidden = true;
     $('[data-tidak-ditemukan]').hidden = false;
-    document.title = 'Data tidak ditemukan · PPDB Online';
+    if (terkunci || penuh) {
+      $('[data-tidak-judul]').textContent = terkunci ? 'Data pendaftaran sudah diputuskan panitia' : 'Batas ' + R.MAKS_ANAK + ' anak per akun sudah tercapai';
+      $('[data-tidak-teks]').textContent = terkunci
+        ? 'Data berstatus ' + R.STATUS_VERIFIKASI[asli.status].label + ' tidak bisa diubah lagi. Hubungi panitia di sekolah bila ada kekeliruan.'
+        : 'Satu akun orang tua bisa mendaftarkan paling banyak ' + R.MAKS_ANAK + ' anak. Hubungi panitia bila perlu bantuan.';
+      document.title = ($('[data-tidak-judul]').textContent) + ' · PPDB Online';
+    } else {
+      document.title = 'Data tidak ditemukan · PPDB Online';
+    }
     return;
   }
   if (modeUbah) siapkanModeUbah(asli);
+  // Pendaftaran online: data orang tua diambil dari akun
+  if (peserta && !modeUbah) {
+    form.elements.namaOrtu.value = ortu.nama;
+    form.elements.noHp.value = ortu.noHp;
+  }
   aturPrestasi();
   perbaruiNilai();
   perbaruiHint();

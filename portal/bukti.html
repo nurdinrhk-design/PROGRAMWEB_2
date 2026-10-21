@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <!-- CSP (D-18, D-19): hanya skrip lokal + Chart.js (jsDelivr) dan font Google; tanpa skrip/gaya inline -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Bukti pendaftaran PPDB Online SMA Negeri 1 Harapan Bangsa (fiktif). Dokumen simulasi.">
+  <title>Bukti Pendaftaran · Portal Orang Tua · PPDB Online</title>
+  <link rel="icon" href="../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,400,0..1,0&amp;display=block">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="portal-body" data-page="beranda" data-auth="peserta" data-root="../">
+  <noscript><p class="noscript-note">PPDB Online memerlukan JavaScript. Aktifkan JavaScript di browser Anda.</p></noscript>
+  <a class="skip-link" href="#konten">Lewati ke konten utama</a>
+
+  <div class="portal">
+    <!-- ===================== BAR PORTAL ORANG TUA (Tahap 14) ===================== -->
+    <header class="portal-bar">
+      <a class="portal-bar__brand" href="beranda.html">
+        <img class="portal-bar__logo" src="../assets/img/logo.svg" alt="">
+        <span class="portal-bar__brand-text">
+          <strong>PPDB Online</strong>
+          <small>Portal orang tua</small>
+        </span>
+      </a>
+
+      <nav class="portal-nav" aria-label="Menu portal">
+        <a class="portal-nav__item" href="beranda.html" data-page="beranda">
+          <span class="icon" aria-hidden="true">home</span><span>Beranda</span>
+        </a>
+        <a class="portal-nav__item" href="form.html" data-page="form">
+          <span class="icon" aria-hidden="true">person_add</span><span>Daftarkan anak</span>
+        </a>
+      </nav>
+
+      <div class="account">
+        <button type="button" class="account__button" data-account-toggle aria-expanded="false" aria-controls="account-menu">
+          <span class="avatar" aria-hidden="true" data-user-initials></span>
+          <span class="account__name" data-user-name></span>
+          <span class="icon icon--sm" aria-hidden="true">expand_more</span>
+          <span class="sr-only">Menu akun</span>
+        </button>
+        <div class="menu account__menu" id="account-menu" hidden>
+          <div class="menu__header">
+            <p class="text-label-lg" data-user-name></p>
+            <p class="text-body-sm text-variant" data-user-role></p>
+          </div>
+          <button type="button" class="menu__item" data-action="logout">
+            <span class="icon" aria-hidden="true">logout</span>Keluar
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="content portal__content" id="konten" tabindex="-1">
+      <div class="page-header no-print">
+        <div>
+          <h1>Bukti Pendaftaran</h1>
+          <p class="page-header__desc">Tanda terima untuk pendaftar. Cetak di kertas A4.</p>
+        </div>
+        <div class="page-header__actions">
+          <a class="btn btn--text" href="beranda.html"><span class="icon" aria-hidden="true">arrow_back</span>Kembali ke beranda</a>
+          <button type="button" class="btn btn--filled" data-aksi="cetak"><span class="icon" aria-hidden="true">print</span>Cetak bukti</button>
+        </div>
+      </div>
+
+      <section class="card no-print" data-tidak-ditemukan hidden aria-labelledby="judul-tidak-ada">
+        <div class="empty">
+          <span class="icon" aria-hidden="true">person_off</span>
+          <h2 class="empty__title" id="judul-tidak-ada">Data pendaftar tidak ditemukan</h2>
+          <p>Buka bukti pendaftaran dari Beranda.</p>
+          <a class="btn btn--tonal" href="beranda.html">Kembali ke beranda</a>
+        </div>
+      </section>
+
+      <article class="sheet" data-lembar hidden aria-labelledby="judul-bukti">
+        <header class="sheet__head">
+          <p class="sheet__school" data-kop-sekolah>SMA Negeri 1 Harapan Bangsa (fiktif)</p>
+          <p class="sheet__sub" data-kop-sub>Panitia PPDB · Tahun Ajaran 2026/2027</p>
+        </header>
+        <h2 class="sheet__title" id="judul-bukti">Bukti Pendaftaran PPDB</h2>
+        <p class="sheet__number num" data-no-daftar>PPDB-2026-0000</p>
+
+        <div class="sheet__grid">
+          <dl class="info-list" data-identitas></dl>
+          <dl class="info-list" data-seleksi></dl>
+        </div>
+
+        <section class="sheet__section" aria-labelledby="judul-berkas-bukti">
+          <h3 class="detail__heading" id="judul-berkas-bukti">Berkas</h3>
+          <table class="table sheet__table">
+            <thead><tr><th scope="col">Berkas</th><th scope="col">Nama berkas</th><th scope="col">Hasil cek</th></tr></thead>
+            <tbody data-berkas></tbody>
+          </table>
+        </section>
+
+        <section class="sheet__section" aria-labelledby="judul-jadwal-bukti">
+          <h3 class="detail__heading" id="judul-jadwal-bukti">Jadwal berikutnya</h3>
+          <ul class="sheet__list" data-jadwal></ul>
+        </section>
+
+        <div class="print-sign">
+          <div class="print-sign__col"><p>Pendaftar / Orang tua</p><p class="print-sign__line">(..............................)</p></div>
+          <div class="print-sign__col"><p data-tgl-cetak>Kota Nusantara,</p><p>Petugas panitia</p><p class="print-sign__line">(..............................)</p></div>
+        </div>
+        <p class="print-note">Dokumen simulasi untuk tugas Pemrograman Web 2, bukan dokumen resmi.</p>
+      </article>
+    </main>
+
+    <footer class="app-footer">
+      <p>PPDB Online · SMA Negeri 1 Harapan Bangsa (fiktif) · Data simulasi · v1.1</p>
+    </footer>
+  </div>
+
+  <script src="../assets/js/core/rules.js"></script>
+  <script src="../assets/js/core/seed.js"></script>
+  <script src="../assets/js/core/store.js"></script>
+  <script src="../assets/js/core/ui.js"></script>
+  <script src="../assets/js/core/shell.js"></script>
+  <script src="../assets/js/pages/bukti.js"></script>
+</body>
+</html>

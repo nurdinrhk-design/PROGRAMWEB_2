@@ -10,10 +10,10 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **1.0** |
+| Versi dokumen | **1.1** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1) · [referensi Stitch](img/referensi-stitch/) |
-| Status | ✅ Selesai: Tahap 1–13, rilis v1.0 online di https://nurdinrhk-design.github.io/PROGRAMWEB_2/ (2 Okt 2026) |
+| Status | ✅ v1.1: Tahap 1–14 selesai. Revisi dosen (21 Okt 2026): dua peran pengguna, orang tua & panitia (Tahap 14) |
 
 ---
 
@@ -128,6 +128,7 @@ Status: ✅ Disepakati · 🔄 Bisa ditinjau ulang
 | D-22 | Penomoran tahap | Tahap **1–13**, langkah **x.y**, langkah terakhir setiap tahap = **Penutupan**. Menggantikan ID lama `T0`–`T14` (padanan di checklist) | ✅ | Permintaan pengembang 25 Sep 2026: rapi, terstruktur, tanpa langkah sia-sia |
 | D-23 | Urutan halaman | Data Pendaftar → Form → Verifikasi → Hasil → **Dashboard** → Laporan | ✅ | Dashboard memakai hampir semua perhitungan & komponen tahap 6–9 |
 | D-24 | Push & deploy | Commit disimpan lokal per tahap. **Push, CI, dan GitHub Pages dijalankan setelah akun Nurdin siap** (langkah 13.1) | ✅ | Menghindari jejak akun lain di repo publik |
+| D-25 | Dua peran pengguna (revisi dosen, 21 Okt 2026) | **Orang tua/calon peserta** membuat akun, masuk, dan mendaftarkan anaknya sendiri (maks. 3 anak per akun); **panitia** tetap bisa mendaftarkan calon peserta yang datang ke sekolah (loket). Satu halaman masuk dengan pilihan peran; portal orang tua bertema sama tetapi lebih ringkas & ramah HP. Orang tua boleh mengubah data selama status Menunggu/Perlu perbaikan; kiriman perbaikan mengembalikan status ke Menunggu. Kata sandi akun disimpan sebagai hash PBKDF2-SHA256 (Web Crypto); tetap simulasi di browser | ✅ | Revisi dosen; pilihan pengembang (3 opsi rekomendasi) |
 
 **Asumsi:**
 - A-01: Satu peran pengguna: **Panitia PPDB** (akun demo `panitia` / `ppdb2026`).
@@ -191,7 +192,8 @@ Satu halaman lolos jika **semua** jawaban "ya":
 ### 5.1 Aktor & skenario
 | Aktor | Skenario utama |
 |---|---|
-| **Panitia PPDB** (verifikator) | Membuka dashboard setiap pagi → mengerjakan antrean verifikasi dari yang paling lama menunggu → menginput pendaftar yang datang langsung ke sekolah → memantau peringkat & keketatan jalur → mencetak rekap untuk rapat sore |
+| **Panitia PPDB** (verifikator) | Membuka dashboard setiap pagi → mengerjakan antrean verifikasi dari yang paling lama menunggu → menginput pendaftar yang datang langsung ke sekolah (loket, untuk orang tua yang tidak terbiasa memakai HP) → memantau peringkat & keketatan jalur → mencetak rekap untuk rapat sore |
+| **Orang tua / calon peserta** (Tahap 14) | Membuat akun → mendaftarkan anak (form 4 langkah) → memantau status & posisi antrean → memperbaiki data/berkas bila diminta panitia → melihat peringkat sementara → mencetak bukti pendaftaran |
 
 ### 5.2 Kebutuhan fungsional (FR)
 | ID | Kebutuhan | Halaman | Tahap |
@@ -214,6 +216,12 @@ Satu halaman lolos jika **semua** jawaban "ya":
 | FR-16 | Ekspor CSV (data pendaftar, peringkat, rekap) | P-03, P-06, P-07 | 6, 9, 11 |
 | FR-17 | Kembalikan data ke kondisi awal simulasi | P-03 | 6 |
 | FR-18 | Log aktivitas untuk setiap perubahan data | Semua | 4 |
+| FR-19 | Buat akun orang tua (nama, email unik, no. HP, kata sandi kuat) dan masuk/keluar portal | P-01, P-09 | 14 |
+| FR-20 | Orang tua mendaftarkan anak secara online (maks. 3 per akun); data orang tua terisi dari akun | P-11 | 14 |
+| FR-21 | Portal orang tua: status tiap anak, catatan panitia, posisi antrean, peringkat sementara, berkas, bukti | P-10, P-12 | 14 |
+| FR-22 | Orang tua memperbaiki data/berkas berstatus "perlu perbaikan" lalu mengirim ulang (berkas "tidak sesuai" wajib diganti) | P-11 | 14 |
+| FR-23 | Pemisahan peran: orang tua hanya melihat anaknya sendiri & tidak bisa membuka halaman panitia; panitia tidak masuk portal | Semua | 14 |
+| FR-24 | Panitia melihat sumber pendaftaran (online/loket) di Data Pendaftar, detail, CSV, dan dashboard | P-02, P-03 | 14 |
 
 ### 5.3 Kebutuhan non-fungsional (NFR)
 | ID | Kebutuhan | Ukuran keberhasilan | Tahap |
@@ -263,7 +271,12 @@ Satu halaman lolos jika **semua** jawaban "ya":
 ### 6.3 Sitemap
 ```mermaid
 flowchart TD
-    L[index.html<br/>Login] -->|berhasil| D[Dashboard]
+    L[index.html<br/>Login: pilih peran] -->|panitia| D[Dashboard]
+    L -->|orang tua| PB[portal/beranda.html]
+    L -->|buat akun| DA[daftar.html] --> PB
+    PB --> PF[portal/form.html<br/>Daftarkan / perbaiki]
+    PB --> PK[portal/bukti.html]
+    PF -->|Kirim| PB
     D --> M[Data Pendaftar]
     D --> V[Verifikasi Berkas]
     D --> H[Hasil & Peringkat]
@@ -307,7 +320,7 @@ flowchart LR
 ## 7. Model Data & Aturan Bisnis
 
 ### 7.1 ERD konseptual
-> Implementasi: `PENDAFTAR`, `BERKAS`, `VERIFIKASI`, dan `LOG_AKTIVITAS` disimpan di `localStorage`. `JALUR`, `JADWAL`, `SEKOLAH_ASAL`, dan `PANITIA` berupa konstanta JS.
+> Implementasi: `AKUN` (Tahap 14), `PENDAFTAR`, `BERKAS`, `VERIFIKASI`, dan `LOG_AKTIVITAS` disimpan di `localStorage`. `JALUR`, `JADWAL`, `SEKOLAH_ASAL`, dan `PANITIA` berupa konstanta JS.
 
 ```mermaid
 erDiagram
@@ -317,6 +330,17 @@ erDiagram
     SEKOLAH_ASAL ||--o{ PENDAFTAR : berasal
     PENDAFTAR ||--|{ BERKAS : melampirkan
     PENDAFTAR ||--o{ VERIFIKASI : diperiksa
+    AKUN |o--o{ PENDAFTAR : mendaftarkan
+
+    AKUN {
+        string id PK "ak-0001"
+        string nama
+        string email UK
+        string no_hp
+        string salt
+        string sandi_hash "PBKDF2-SHA256"
+        datetime dibuat
+    }
 
     PANITIA {
         string id PK
@@ -358,6 +382,8 @@ erDiagram
         string nama_ortu
         string no_hp
         string status_verifikasi "menunggu|perbaikan|terverifikasi|ditolak"
+        string akun_id FK "kosong bila loket"
+        string sumber "online|loket"
         datetime tgl_daftar
         datetime updated_at
     }
@@ -510,6 +536,22 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 - **Interaksi:** tombol cetak, kembali. Pesan jelas jika `id` tidak ditemukan.
 - **Hasil Tahap 11:** bukti memuat peringkat sementara (bila terverifikasi) dan catatan perbaikan terakhir (bila perlu perbaikan). Muat 1 halaman A4. Rekap & Cetak: filter dibatasi masa pendaftaran, rentang tidak valid tidak mengubah rekap yang tampil, nama petugas yang login tercetak di kolom tanda tangan (tanpa tanda tangan).
 
+### P-09 · `daftar.html` — Buat Akun Orang Tua (Tahap 14)
+- **Pertanyaan:** "Bagaimana orang tua mulai mendaftar sendiri?"
+- **Konten:** nama orang tua/wali, email, no. HP, kata sandi + ulangi; langkah pendaftaran online di panel kiri.
+- **Interaksi:** validasi per kolom (email unik, sandi ≥ 8 karakter berisi huruf & angka), sandi di-hash sebelum disimpan, langsung masuk portal.
+
+### P-10 · `portal/beranda.html` — Beranda Portal Orang Tua (Tahap 14)
+- **Pertanyaan:** "Bagaimana status pendaftaran anak saya, dan apa yang harus saya lakukan?"
+- **Konten:** sapaan, info masa pendaftaran & pengumuman, kartu per anak (status, catatan panitia, posisi antrean atau peringkat sementara, jalur & jarak/skor, berkas), jadwal PPDB.
+- **Interaksi:** Daftarkan anak (disembunyikan bila 3 anak / pendaftaran ditutup), Perbaiki pendaftaran, Ubah data, Bukti. Menu ringkas; di HP menjadi navigation bar bawah.
+
+### P-11 · `portal/form.html` — Daftarkan / Perbaiki Anak (Tahap 14)
+- Form 4 langkah yang sama dengan P-04 (`form.js` bersama). Nama & no. HP orang tua terisi dari akun. Mode perbaikan menampilkan catatan panitia dan menandai berkas "tidak sesuai" yang wajib diganti; tombol "Kirim perbaikan". Data anak lain, data terverifikasi/ditolak, dan anak ke-4 ditolak dengan pesan jelas.
+
+### P-12 · `portal/bukti.html?id=` — Bukti Pendaftaran (Tahap 14)
+- Sama dengan P-08 (`bukti.js` bersama), hanya untuk anak milik akun yang sedang masuk.
+
 ---
 
 ## 9. Design System (Material Design 3)
@@ -661,7 +703,8 @@ PROGRAMWEB_2/
 | `ppdb.v2.pendaftar` | Array pendaftar (termasuk berkas) |
 | `ppdb.v2.verifikasi` | Riwayat keputusan verifikasi |
 | `ppdb.v2.log` | Log aktivitas (≤ 100) |
-| `ppdb.v2.session` | Sesi login simulasi: 8 jam di `sessionStorage`, atau 30 hari di `localStorage` jika "Ingat saya" |
+| `ppdb.v2.akun` | Akun orang tua (Tahap 14): kata sandi hanya sebagai salt + hash PBKDF2-SHA256 100.000 iterasi. Skema data versi 3 |
+| `ppdb.v2.session` | Sesi login simulasi (berisi peran `panitia`/`peserta`): 8 jam di `sessionStorage`, atau 30 hari di `localStorage` jika "Ingat saya" |
 | `ppdb.v2.login-gagal` | Penghitung percobaan login gagal (`sessionStorage`, kunci 30 detik setelah 5 kali salah) |
 | `ppdb.v2.pref` | Preferensi UI (rail/drawer) |
 
@@ -669,23 +712,24 @@ PROGRAMWEB_2/
 
 ## 11. Tahapan Pengembangan
 
-**Penomoran (D-22):** tahap besar diberi nomor **1–13**, langkah di dalamnya **x.1, x.2, …**. Langkah terakhir setiap tahap adalah **Penutupan** (§11.3). Rincian langkah dan statusnya ada di [checklist_work.md](checklist_work.md). Satu tahap dikerjakan per sesi, lalu **berhenti menunggu review** (D-16).
+**Penomoran (D-22):** tahap besar diberi nomor **1–14** (Tahap 14 = revisi dosen), langkah di dalamnya **x.1, x.2, …**. Langkah terakhir setiap tahap adalah **Penutupan** (§11.3). Rincian langkah dan statusnya ada di [checklist_work.md](checklist_work.md). Satu tahap dikerjakan per sesi, lalu **berhenti menunggu review** (D-16).
 
 | Tahap | Nama | Milestone | Output utama | Prasyarat | Status |
 |---|---|---|---|---|---|
 | **1** | Persiapan & perencanaan | M1 | Repo bersih, `perencanaan.md`, `checklist_work.md`, `.gitignore` | – | ✅ |
 | **2** | Perancangan | M1 | `docs/perancangan.md` + link Stitch | 1 | ✅ |
 | **3** | Design system & layout | M2 | `assets/css/*`, `docs/styleguide.html`, logo, `layout.html`, `core/shell.js` | 2 | ✅ |
-| **4** | Fondasi data & modul inti | M3 | `core/rules.js`, `seed.js`, `store.js`, `ui.js`, login di `shell.js` | 3 | ⬜ |
-| **5** | Login | M3 | `index.html`, `pages/login.js` | 4 | ⬜ |
-| **6** | Data Pendaftar | M3 | `pages/data-master.html` + JS | 4 | ⬜ |
-| **7** | Form Pendaftar (stepper) | M3 | `pages/form.html` + JS | 6 | ⬜ |
-| **8** | Verifikasi Berkas | M3 | `pages/verifikasi.html` + JS | 6 | ⬜ |
-| **9** | Hasil & Peringkat | M3 | `pages/hasil-seleksi.html` + JS | 8 | ⬜ |
-| **10** | Dashboard | M3 | `pages/dashboard.html` + JS | 9 | ⬜ |
-| **11** | Laporan & Bukti Pendaftaran | M3 | `pages/laporan.html`, `pages/bukti.html` + JS, `print.css` | 9 | ⬜ |
-| **12** | QA menyeluruh | M3 | Semua uji lulus (§12) | 5–11 | ⬜ |
-| **13** | Rilis & online | M3 | Akun Nurdin, CI, GitHub Pages, README final, rilis `v1.0`, panduan domain | 12 | ⬜ |
+| **4** | Fondasi data & modul inti | M3 | `core/rules.js`, `seed.js`, `store.js`, `ui.js`, login di `shell.js` | 3 | ✅ |
+| **5** | Login | M3 | `index.html`, `pages/login.js` | 4 | ✅ |
+| **6** | Data Pendaftar | M3 | `pages/data-master.html` + JS | 4 | ✅ |
+| **7** | Form Pendaftar (stepper) | M3 | `pages/form.html` + JS | 6 | ✅ |
+| **8** | Verifikasi Berkas | M3 | `pages/verifikasi.html` + JS | 6 | ✅ |
+| **9** | Hasil & Peringkat | M3 | `pages/hasil-seleksi.html` + JS | 8 | ✅ |
+| **10** | Dashboard | M3 | `pages/dashboard.html` + JS | 9 | ✅ |
+| **11** | Laporan & Bukti Pendaftaran | M3 | `pages/laporan.html`, `pages/bukti.html` + JS, `print.css` | 9 | ✅ |
+| **12** | QA menyeluruh | M3 | Semua uji lulus (§12) | 5–11 | ✅ |
+| **13** | Rilis & online | M3 | Akun Nurdin, CI, GitHub Pages, README final, rilis `v1.0`, panduan domain | 12 | ✅ |
+| **14** | Dua peran: orang tua & panitia (revisi dosen) | M3 | `daftar.html`, `portal/*`, login dua peran, akun di `store.js`, sumber pendaftaran, rilis `v1.1` | 13 | ✅ |
 
 ```mermaid
 flowchart LR
@@ -761,6 +805,11 @@ Langkah terakhir setiap tahap (mis. 6.7) berisi empat hal berurutan:
 | TC-21 | Ekspor CSV | File terbaca benar di Excel/Sheets |
 | TC-22 | Reset data simulasi | Kembali ke kondisi awal |
 | TC-23 | Logout | Sesi terhapus, kembali ke login |
+| TC-24 | Buat akun: kolom kosong, email dipakai, sandi lemah, sandi tidak sama | Error di kolom yang tepat; akun valid dibuat & langsung masuk portal |
+| TC-25 | Orang tua mendaftarkan anak | Pendaftar baru bersumber online, milik akun, berstatus Menunggu |
+| TC-26 | Orang tua memperbaiki pendaftaran "perlu perbaikan" | Berkas tidak sesuai wajib diganti; setelah dikirim status Menunggu |
+| TC-27 | Orang tua membuka halaman panitia / data anak lain / anak ke-4 | Ditolak atau dialihkan, tanpa membocorkan data |
+| TC-28 | Panitia mendaftarkan di loket & menyaring sumber | Sumber Loket; filter Online/Loket benar |
 
 ---
 
@@ -853,3 +902,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | 0.3.7 | 2 Okt 2026 | Hasil Tahap 11: catatan P-07 & P-08; P-02 Chart.js dimuat asinkron (temuan regresi) | Nurdin & Claude |
 | 0.3.8 | 2 Okt 2026 | Hasil Tahap 12: CSP `<meta>` terpasang di semua halaman (bagian D-19 yang dikerjakan lebih awal; `noindex`, `referrer`, 404 tetap di Tahap 13). QA: Chrome & Edge, Lighthouse 100/100, 23 TC lulus | Nurdin & Claude |
 | **1.0** | 2 Okt 2026 | **Rilis.** CI (W3C + Gitleaks), GitHub Pages dengan `noindex`, referrer, 404, perlindungan branch. README final, naskah demo, panduan domain | Nurdin & Claude |
+| **1.1** | 21 Okt 2026 | **Revisi dosen — dua peran pengguna (Tahap 14):** D-25, aktor orang tua, FR-19…FR-24, sitemap & ERD (`AKUN`, `sumber`), P-09…P-12, kunci `ppdb.v2.akun`, TC-24…TC-28. Status tabel tahap 4–13 diperbarui | Nurdin & Claude |

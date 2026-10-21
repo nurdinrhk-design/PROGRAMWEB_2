@@ -7,7 +7,7 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Masuk ke Admin Panel PPDB Online SMA Negeri 1 Harapan Bangsa (fiktif). Data simulasi.">
+  <meta name="description" content="Masuk ke PPDB Online SMA Negeri 1 Harapan Bangsa (fiktif): portal orang tua dan admin panitia. Data simulasi.">
   <title>Masuk · PPDB Online</title>
   <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body data-auth="guest">
-  <noscript><p class="noscript-note">Admin Panel PPDB memerlukan JavaScript. Aktifkan JavaScript di browser Anda.</p></noscript>
+  <noscript><p class="noscript-note">PPDB Online memerlukan JavaScript. Aktifkan JavaScript di browser Anda.</p></noscript>
 
   <div class="login">
 
@@ -33,8 +33,8 @@
       <p class="login__meta" data-tahap>Tahun Ajaran 2026/2027</p>
 
       <div class="login__intro">
-        <h2 id="panel-judul">Admin panel panitia PPDB</h2>
-        <p>Verifikasi berkas, pantau keketatan setiap jalur, dan cetak rekap seleksi.</p>
+        <h2 id="panel-judul">Pendaftaran peserta didik baru</h2>
+        <p>Orang tua mendaftarkan anak secara online. Panitia memverifikasi berkas dan menyusun peringkat setiap jalur.</p>
       </div>
 
       <div class="login__schedule">
@@ -48,9 +48,19 @@
     <!-- ===================== FORM MASUK ===================== -->
     <main class="login__main">
       <div class="card login__card">
-        <div class="login__heading">
-          <h1>Masuk panitia</h1>
-          <p>Gunakan akun panitia yang diberikan sekolah.</p>
+        <!-- Pilihan peran (Tahap 14): orang tua / calon peserta atau panitia -->
+        <div class="segmented" role="tablist" aria-label="Masuk sebagai" data-peran-tabs>
+          <button type="button" class="segmented__item" role="tab" id="peran-peserta" data-peran="peserta" aria-selected="true" aria-controls="panel-masuk">
+            <span class="icon icon--sm" aria-hidden="true">family_restroom</span>Orang tua
+          </button>
+          <button type="button" class="segmented__item" role="tab" id="peran-panitia" data-peran="panitia" aria-selected="false" aria-controls="panel-masuk" tabindex="-1">
+            <span class="icon icon--sm" aria-hidden="true">badge</span>Panitia sekolah
+          </button>
+        </div>
+
+        <div class="login__heading" id="panel-masuk" role="tabpanel" aria-labelledby="peran-peserta">
+          <h1 data-judul-masuk>Masuk orang tua / wali</h1>
+          <p data-desk-masuk>Daftarkan anak Anda dan pantau status pendaftarannya.</p>
         </div>
 
         <div class="alert alert--info" role="status" data-info hidden>
@@ -65,10 +75,10 @@
 
         <form class="login__form" data-login-form novalidate>
           <div class="field" data-field="username">
-            <label class="field__label" for="username">Username</label>
+            <label class="field__label" for="username" data-label-id>Email</label>
             <div class="field__box">
-              <span class="icon field__icon" aria-hidden="true">person</span>
-              <input class="field__control" id="username" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="40" required aria-describedby="username-error">
+              <span class="icon field__icon" aria-hidden="true" data-ikon-id>mail</span>
+              <input class="field__control" id="username" name="username" type="email" inputmode="email" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="80" required aria-describedby="username-error">
             </div>
             <p class="field__error" id="username-error"></p>
           </div>
@@ -90,14 +100,16 @@
             <span>Ingat saya di perangkat ini</span>
           </label>
 
-          <button type="submit" class="btn btn--filled btn--block">Masuk</button>
+          <button type="submit" class="btn btn--filled btn--block" data-tombol-masuk>Masuk</button>
         </form>
+
+        <p class="login__daftar" data-tautan-daftar>Belum punya akun? <a href="daftar.html">Buat akun orang tua</a></p>
 
         <div class="alert alert--info login__demo">
           <span class="icon" aria-hidden="true">key</span>
           <div class="alert__body">
             <p class="alert__title">Akun demo</p>
-            <p>Username <strong>panitia</strong> · kata sandi <strong>ppdb2026</strong></p>
+            <p data-demo-teks>Email <strong>orangtua@ppdb.test</strong> · kata sandi <strong>orangtua2026</strong></p>
           </div>
           <button type="button" class="btn btn--text btn--sm" data-isi-demo>Isi otomatis</button>
         </div>

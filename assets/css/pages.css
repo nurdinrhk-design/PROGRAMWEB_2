@@ -243,7 +243,7 @@
 
 @media (min-width: 1200px) {
   .data-list__toolbar {
-    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
   }
 
   .data-list__search {
@@ -1119,6 +1119,13 @@
   }
 }
 
+/* Jadwal di layar sempit: tanggal di baris sendiri */
+@media (max-width: 599.98px) {
+  .agenda__item {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 
 /* =====================================================================
    REKAP & CETAK — pages/laporan.html (P-07)
@@ -1267,6 +1274,94 @@
   }
 
   .sheet__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Tautan buat akun di halaman masuk (Tahap 14) */
+.login__daftar {
+  color: var(--md-on-surface-variant);
+  text-align: center;
+}
+
+.login__daftar a {
+  font-weight: var(--weight-semibold);
+}
+
+
+/* =====================================================================
+   PORTAL ORANG TUA — portal/beranda.html (Tahap 14)
+   ===================================================================== */
+.portal-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.portal-section__title {
+  font-size: var(--type-headline-sm-size);
+  line-height: var(--type-headline-sm-line);
+}
+
+.child-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+.child__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+
+.child__name {
+  font-size: var(--type-title-md-size);
+  line-height: var(--type-title-md-line);
+}
+
+.child__files summary {
+  width: fit-content;
+  color: var(--md-primary);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+}
+
+.child__files[open] summary {
+  margin-bottom: var(--space-3);
+}
+
+.child__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Hasil cek berkas saat orang tua memperbaiki pendaftaran */
+.upload__check {
+  font-size: var(--type-body-sm-size);
+  line-height: var(--type-body-sm-line);
+  font-weight: var(--weight-semibold);
+}
+
+.upload__check--sesuai {
+  color: var(--status-success-text);
+}
+
+.upload__check--tidak_sesuai {
+  color: var(--status-danger-text);
+}
+
+@media (max-width: 599.98px) {
+  .child__actions .btn {
+    flex: 1 1 100%;
+  }
+}
+
+@media (min-width: 1000px) {
+  .child-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

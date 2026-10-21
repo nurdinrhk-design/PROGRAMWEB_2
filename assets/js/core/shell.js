@@ -1,14 +1,15 @@
 /* =====================================================================
    shell.js — App shell: autentikasi simulasi + navigasi adaptif
    Namespace: PPDB.auth, PPDB.shell
-   Bagian 1 — Autentikasi & widget data (Tahap 4, FR-01, FR-02)
+   Bagian 1 — Autentikasi dua peran & widget data (Tahap 4, 14; FR-01, FR-02)
    Bagian 2 — Navigasi adaptif, menu akun, menu aktif (Tahap 3)
    ===================================================================== */
 
 /* ---------------------------------------------------------------------
    BAGIAN 1 — Autentikasi simulasi & widget data
-   <body data-auth="required"> : halaman admin (wajib login)
-   <body data-auth="guest">    : halaman login (sudah login → dasbor)
+   <body data-auth="required"> : halaman admin (wajib login panitia)
+   <body data-auth="peserta">  : portal orang tua (wajib login akun orang tua)
+   <body data-auth="guest">    : halaman login/daftar (sudah login → halaman awal peran)
    <body data-root="../">      : jalur ke akar situs dari halaman ini
    --------------------------------------------------------------------- */
 (function (window, document) {
@@ -23,8 +24,10 @@
   var SESI_INGAT_MS = 30 * 24 * 3600 * 1000; // 30 hari ("Ingat saya")
   var MAKS_GAGAL = 5;
   var KUNCI_MS = 30 * 1000;
+  var PBKDF2_ITERASI = 100000;               // hash kata sandi akun orang tua
   // Hanya halaman internal yang boleh menjadi tujuan setelah login (anti open-redirect)
-  var POLA_KEMBALI = /^pages\/[a-z-]+\.html(\?[A-Za-z0-9=&%_-]{0,120})?$/;
+  var POLA_KEMBALI = /^(pages|portal)\/[a-z-]+\.html(\?[A-Za-z0-9=&%_-]{0,120})?$/;
+  var AWAL = { panitia: 'pages/dashboard.html', peserta: 'portal/beranda.html' };
 
   var body = document.body;
   var root = body.getAttribute('data-root') || '';
@@ -46,10 +49,21 @@
     return null;
   }
 
+  // Sesi lama (sebelum Tahap 14) tidak punya "peran" → dianggap panitia
+  function peranSesi(s) {
+    return s && (s.peran || (s.panitiaId ? 'panitia' : ''));
+  }
+
   function panitiaAktif() {
     var s = bacaSesi();
-    if (!s || !R) return null;
+    if (!s || !R || peranSesi(s) !== 'panitia') return null;
     return R.PANITIA.filter(function (p) { return p.id === s.panitiaId; })[0] || null;
+  }
+
+  function pesertaAktif() {
+    var s = bacaSesi();
+    if (!s || peranSesi(s) !== 'peserta' || !PPDB.store) return null;
+    return PPDB.store.akunAmbil(s.akunId);
   }
 
   function statusKunci() {
@@ -66,15 +80,56 @@
     try { window.sessionStorage.setItem(GAGAL_KEY, JSON.stringify(g)); } catch (e) { /* abaikan */ }
   }
 
+  function terkunci() {
+    var kunci = statusKunci();
+    if (kunci.sampai <= Date.now()) return null;
+    var detik = Math.ceil((kunci.sampai - Date.now()) / 1000);
+    return { ok: false, error: 'Terlalu banyak percobaan. Coba lagi dalam ' + detik + ' detik.' };
+  }
+
+  function simpanSesi(isi, ingat) {
+    var tempat = simpanan(ingat);
+    if (!tempat) return false;
+    isi.masuk = new Date().toISOString();
+    isi.kedaluwarsa = Date.now() + (ingat ? SESI_INGAT_MS : SESI_BIASA_MS);
+    tempat.setItem(SESSION_KEY, JSON.stringify(isi));
+    return true;
+  }
+
+  /* ---------- Hash kata sandi (Web Crypto, PBKDF2-SHA256) ---------- */
+  function keBase64(buf) {
+    var b = new Uint8Array(buf), s = '';
+    for (var i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
+    return window.btoa(s);
+  }
+
+  function dariBase64(teks) {
+    var s = window.atob(teks), b = new Uint8Array(s.length);
+    for (var i = 0; i < s.length; i++) b[i] = s.charCodeAt(i);
+    return b;
+  }
+
+  function hashSandi(sandi, saltB64) {
+    var c = window.crypto && window.crypto.subtle;
+    if (!c) return Promise.reject(new Error('Browser tidak mendukung Web Crypto.'));
+    return c.importKey('raw', new TextEncoder().encode(String(sandi)), 'PBKDF2', false, ['deriveBits'])
+      .then(function (kunci) {
+        return c.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt: dariBase64(saltB64), iterations: PBKDF2_ITERASI }, kunci, 256);
+      })
+      .then(keBase64);
+  }
+
+  function buatSalt() {
+    return keBase64(window.crypto.getRandomValues(new Uint8Array(16)));
+  }
+
   /**
+   * Login panitia (akun simulasi di rules.js).
    * @returns {{ok: boolean, error?: string, kolom?: 'username'|'sandi'}}
    */
   function login(username, sandi, ingat) {
-    var kunci = statusKunci();
-    if (kunci.sampai > Date.now()) {
-      var detik = Math.ceil((kunci.sampai - Date.now()) / 1000);
-      return { ok: false, error: 'Terlalu banyak percobaan. Coba lagi dalam ' + detik + ' detik.' };
-    }
+    var kunci = terkunci();
+    if (kunci) return kunci;
     var u = String(username || '').trim().toLowerCase();
     var akun = R.PANITIA.filter(function (p) { return p.username === u; })[0];
     if (!akun || akun.sandi !== String(sandi || '')) {
@@ -82,48 +137,98 @@
       return { ok: false, error: 'Username atau kata sandi salah.', kolom: 'sandi' };
     }
     try { window.sessionStorage.removeItem(GAGAL_KEY); } catch (e) { /* abaikan */ }
-    var tempat = simpanan(ingat);
-    if (!tempat) return { ok: false, error: 'Browser memblokir penyimpanan sesi. Izinkan penyimpanan situs lalu coba lagi.' };
-    tempat.setItem(SESSION_KEY, JSON.stringify({
-      panitiaId: akun.id,
-      masuk: new Date().toISOString(),
-      kedaluwarsa: Date.now() + (ingat ? SESI_INGAT_MS : SESI_BIASA_MS)
-    }));
+    if (!simpanSesi({ peran: 'panitia', panitiaId: akun.id }, ingat)) {
+      return { ok: false, error: 'Browser memblokir penyimpanan sesi. Izinkan penyimpanan situs lalu coba lagi.' };
+    }
     if (PPDB.store) PPDB.store.catatLog('login', akun.nama + ' masuk ke sistem');
     return { ok: true };
   }
 
+  /**
+   * Login orang tua / calon peserta (Tahap 14).
+   * @returns {Promise<{ok: boolean, error?: string, kolom?: 'email'|'sandi'}>}
+   */
+  function loginPeserta(email, sandi, ingat) {
+    var kunci = terkunci();
+    if (kunci) return Promise.resolve(kunci);
+    var akun = PPDB.store.akunEmail(email);
+    var gagal = { ok: false, error: 'Email atau kata sandi salah.', kolom: 'sandi' };
+    // Akun simulasi tanpa kata sandi (hasil seed) tidak bisa dipakai masuk
+    if (!akun || !akun.sandiHash) {
+      catatGagal();
+      return hashSandi(sandi, 'AAAAAAAAAAAAAAAAAAAAAA==').then(function () { return gagal; }); // waktu respons setara
+    }
+    return hashSandi(sandi, akun.salt).then(function (h) {
+      if (h !== akun.sandiHash) { catatGagal(); return gagal; }
+      try { window.sessionStorage.removeItem(GAGAL_KEY); } catch (e) { /* abaikan */ }
+      if (!simpanSesi({ peran: 'peserta', akunId: akun.id }, ingat)) {
+        return { ok: false, error: 'Browser memblokir penyimpanan sesi. Izinkan penyimpanan situs lalu coba lagi.' };
+      }
+      PPDB.store.catatLog('login', akun.nama + ' (orang tua) masuk ke portal');
+      return { ok: true };
+    });
+  }
+
+  /**
+   * Buat akun orang tua lalu langsung masuk (Tahap 14).
+   * @returns {Promise<{ok: boolean, error?: string}>}
+   */
+  function daftarAkun(d) {
+    var errSandi = R.validasi.sandiBaru(d.sandi);
+    if (errSandi) return Promise.resolve({ ok: false, error: errSandi });
+    var salt = buatSalt();
+    return hashSandi(d.sandi, salt).then(function (h) {
+      var hasil = PPDB.store.tambahAkun({ nama: d.nama, email: d.email, noHp: d.noHp, salt: salt, sandiHash: h });
+      if (!hasil.ok) return hasil;
+      simpanSesi({ peran: 'peserta', akunId: hasil.data.id }, false);
+      return { ok: true };
+    });
+  }
+
   function logout() {
     var akun = panitiaAktif();
+    var ortu = !akun && pesertaAktif();
     if (akun && PPDB.store) PPDB.store.catatLog('logout', akun.nama + ' keluar dari sistem');
+    if (ortu) PPDB.store.catatLog('logout', ortu.nama + ' (orang tua) keluar dari portal');
     [simpanan(false), simpanan(true)].forEach(function (s) {
       try { if (s) s.removeItem(SESSION_KEY); } catch (e) { /* abaikan */ }
     });
-    window.location.replace(root + 'index.html?keluar=1');
+    window.location.replace(root + 'index.html?keluar=1' + (ortu ? '&peran=peserta' : ''));
   }
 
-  function tujuanSetelahLogin() {
+  // Tujuan setelah login: halaman yang tadi diminta (hanya milik peran yang sama) atau halaman awal peran
+  function tujuanSetelahLogin(peran) {
+    var p = peran || peranSesi(bacaSesi()) || 'panitia';
     var kembali = new URLSearchParams(window.location.search).get('kembali');
-    return kembali && POLA_KEMBALI.test(kembali) ? kembali : 'pages/dashboard.html';
+    var folder = p === 'peserta' ? 'portal/' : 'pages/';
+    return kembali && POLA_KEMBALI.test(kembali) && kembali.indexOf(folder) === 0 ? kembali : AWAL[p];
   }
 
-  /* ---------- Penjaga halaman ---------- */
+  /* ---------- Penjaga halaman (berdasarkan peran) ---------- */
   var mode = body.getAttribute('data-auth');
-  if (mode === 'required' && !panitiaAktif()) {
-    var jalurIni = window.location.pathname.split('/').slice(-2).join('/') + window.location.search;
-    var q = POLA_KEMBALI.test(jalurIni) ? '?kembali=' + encodeURIComponent(jalurIni) : '';
-    window.location.replace(root + 'index.html' + q);
+  var peranAktif = panitiaAktif() ? 'panitia' : (pesertaAktif() ? 'peserta' : '');
+  var dibutuhkan = mode === 'required' ? 'panitia' : (mode === 'peserta' ? 'peserta' : '');
+  if (dibutuhkan && peranAktif !== dibutuhkan) {
+    if (peranAktif) {
+      // Sudah masuk dengan peran lain → ke halaman awal perannya sendiri
+      window.location.replace(root + AWAL[peranAktif]);
+    } else {
+      var jalurIni = window.location.pathname.split('/').slice(-2).join('/') + window.location.search;
+      var q = POLA_KEMBALI.test(jalurIni) ? '?kembali=' + encodeURIComponent(jalurIni) : '';
+      window.location.replace(root + 'index.html' + q);
+    }
     return;
   }
-  if (mode === 'guest' && panitiaAktif()) {
-    window.location.replace(root + tujuanSetelahLogin());
+  if (mode === 'guest' && peranAktif) {
+    window.location.replace(root + tujuanSetelahLogin(peranAktif));
     return;
   }
   body.classList.add('is-authed');
 
   /* ---------- Widget data di app shell ---------- */
   function isiIdentitas() {
-    var akun = panitiaAktif();
+    var ortu = pesertaAktif();
+    var akun = panitiaAktif() || (ortu && { nama: ortu.nama, peran: 'Orang tua/wali · ' + ortu.email, inisial: PPDB.ui ? PPDB.ui.inisial(ortu.nama) : '' });
     if (!akun) return;
     document.querySelectorAll('[data-user-name]').forEach(function (n) { n.textContent = akun.nama; });
     document.querySelectorAll('[data-user-role]').forEach(function (n) { n.textContent = akun.peran; });
@@ -139,7 +244,7 @@
   }
 
   function isiBadge() {
-    if (!PPDB.store) return;
+    if (!PPDB.store || !panitiaAktif()) return;
     var jumlah = PPDB.store.hitungStatus().menunggu;
     document.querySelectorAll('[data-badge="verifikasi"]').forEach(function (n) {
       n.textContent = jumlah > 99 ? '99+' : String(jumlah);
@@ -160,8 +265,12 @@
 
   PPDB.auth = {
     login: login,
+    loginPeserta: loginPeserta,
+    daftarAkun: daftarAkun,
+    hashSandi: hashSandi,
     logout: logout,
     panitiaAktif: panitiaAktif,
+    pesertaAktif: pesertaAktif,
     tujuanSetelahLogin: tujuanSetelahLogin
   };
 })(window, document);
@@ -183,7 +292,11 @@
   var largeQuery = window.matchMedia('(min-width: 1200px)');
 
   var app = document.querySelector('.app');
-  if (!app) return;
+  // Portal orang tua (Tahap 14) tidak memakai drawer: cukup menu akun & menu aktif
+  if (!app) {
+    if (document.querySelector('.portal')) { initAccountMenu(); markActivePage(); }
+    return;
+  }
 
   var drawer = document.getElementById('nav-drawer');
   var main = app.querySelector('.app__main');
@@ -320,7 +433,7 @@
   function markActivePage() {
     var page = document.body.getAttribute('data-page');
     if (!page) return;
-    document.querySelectorAll('.nav-item[data-page]').forEach(function (item) {
+    document.querySelectorAll('.nav-item[data-page], .portal-nav__item[data-page]').forEach(function (item) {
       if (item.getAttribute('data-page') === page) {
         item.setAttribute('aria-current', 'page');
       } else {

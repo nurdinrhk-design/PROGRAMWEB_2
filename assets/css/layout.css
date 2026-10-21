@@ -666,3 +666,137 @@ body[data-auth="required"]:not(.is-authed) .app {
 .is-scroll-locked {
   overflow: hidden;
 }
+
+
+/* =====================================================================
+   PORTAL ORANG TUA (Tahap 14) — portal/*.html
+   Tanpa drawer: bar atas + menu ringkas. < 600px menu pindah ke
+   navigation bar di bawah layar (pola M3 untuk HP).
+   ===================================================================== */
+.portal {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.portal-bar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-appbar);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--layout-appbar-height);
+  padding: var(--space-2) var(--layout-margin-compact);
+  border-bottom: 1px solid var(--md-outline-variant);
+  background-color: var(--md-surface);
+}
+
+.portal-bar__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-inline-end: auto;
+  color: var(--md-on-surface);
+  text-decoration: none;
+}
+
+.portal-bar__logo {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.portal-bar__brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: var(--type-body-sm-line);
+}
+
+.portal-bar__brand-text small {
+  color: var(--md-on-surface-variant);
+  font-size: var(--type-body-sm-size);
+}
+
+.portal-nav {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.portal-nav__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.5rem;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-full);
+  color: var(--md-on-surface-variant);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+}
+
+.portal-nav__item:hover {
+  background-color: var(--md-surface-container);
+  color: var(--md-on-surface);
+}
+
+.portal-nav__item[aria-current="page"] {
+  background-color: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
+}
+
+.portal .account {
+  position: relative;
+}
+
+.portal__content {
+  max-width: 64rem;
+}
+
+@media (max-width: 599.98px) {
+  .portal-body {
+    padding-bottom: 4.5rem;            /* ruang navigation bar bawah */
+  }
+
+  .portal-nav {
+    position: fixed;
+    inset: auto 0 0;
+    z-index: var(--z-appbar);
+    justify-content: space-around;
+    padding: var(--space-1) var(--space-2);
+    border-top: 1px solid var(--md-outline-variant);
+    background-color: var(--md-surface-container-lowest);
+  }
+
+  .portal-nav__item {
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    min-height: 3.5rem;
+    padding: var(--space-1);
+    border-radius: var(--radius-md);
+    font-size: var(--type-label-md-size);
+  }
+}
+
+@media (min-width: 600px) {
+  .portal-bar,
+  .portal .app-footer {
+    padding-inline: var(--layout-margin-medium);
+  }
+
+  .portal__content {
+    padding-inline: var(--layout-margin-medium);
+  }
+}
+
+@media print {
+  .portal-bar,
+  .portal-nav {
+    display: none !important;
+  }
+
+  .portal-body {
+    padding-bottom: 0;
+  }
+}

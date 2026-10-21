@@ -15,9 +15,10 @@
     meta: 'ppdb.v2.meta',
     pendaftar: 'ppdb.v2.pendaftar',
     verifikasi: 'ppdb.v2.verifikasi',
-    log: 'ppdb.v2.log'
+    log: 'ppdb.v2.log',
+    akun: 'ppdb.v2.akun'
   };
-  var VERSI = 2;
+  var VERSI = 3;                      // 3: akun orang tua + sumber pendaftaran (Tahap 14)
   var LOG_MAKS = 100;                 // BR-12
   var IMPOR_MAKS_BYTE = 5 * 1024 * 1024;
   var IMPOR_MAKS_DATA = 5000;
@@ -53,7 +54,7 @@
   }
 
   function simpan(bagian) {
-    (bagian || ['pendaftar', 'verifikasi', 'log']).forEach(function (k) { tulis(KEY[k], state[k]); });
+    (bagian || ['pendaftar', 'verifikasi', 'log', 'akun']).forEach(function (k) { tulis(KEY[k], state[k]); });
   }
 
   function beritahu(tipe) {
@@ -152,7 +153,8 @@
       state = {
         pendaftar: pendaftar,
         verifikasi: baca(KEY.verifikasi) || [],
-        log: baca(KEY.log) || []
+        log: baca(KEY.log) || [],
+        akun: baca(KEY.akun) || []
       };
     }
     return state;
@@ -160,7 +162,7 @@
 
   function isiUlang() {
     var data = PPDB.seed.generate();
-    state = { pendaftar: data.pendaftar, verifikasi: data.verifikasi, log: data.log };
+    state = { pendaftar: data.pendaftar, verifikasi: data.verifikasi, log: data.log, akun: data.akun };
     tulis(KEY.meta, { versi: VERSI, seed: PPDB.seed.SEED, dibuat: isoWaktu(new Date()) });
     simpan();
   }
@@ -194,6 +196,50 @@
     return hasil;
   }
 
+  /* ---------- Akun orang tua (Tahap 14) ---------- */
+  function akunSemua() {
+    return init().akun;
+  }
+
+  function akunAmbil(id) {
+    return akunSemua().filter(function (a) { return a.id === id; })[0] || null;
+  }
+
+  function akunEmail(email) {
+    var e = String(email || '').trim().toLowerCase();
+    return akunSemua().filter(function (a) { return a.email === e; })[0] || null;
+  }
+
+  function pendaftarAkun(akunId) {
+    return semua().filter(function (p) { return akunId && p.akunId === akunId; });
+  }
+
+  /**
+   * Menyimpan akun baru. Hash & salt kata sandi dibuat pemanggil (Web Crypto).
+   * @returns {{ok: boolean, error?: string, data?: Object}}
+   */
+  function tambahAkun(d) {
+    var nama = teks(d.nama, 80);
+    var email = teks(d.email, 80).toLowerCase();
+    var err = R.validasi.nama(nama, 'Nama orang tua/wali') || R.validasi.email(email, function (e) { return !!akunEmail(e); }) ||
+      R.validasi.noHp(d.noHp);
+    if (err) return { ok: false, error: err };
+    if (!/^[A-Za-z0-9+/=]{16,100}$/.test(d.salt || '') || !/^[A-Za-z0-9+/=]{40,100}$/.test(d.sandiHash || '')) {
+      return { ok: false, error: 'Data kata sandi tidak valid.' };
+    }
+    var maks = akunSemua().reduce(function (m, a) { var n = Number(a.id.slice(3)); return n > m ? n : m; }, 0);
+    var a = {
+      id: 'ak-' + pad(maks + 1, 4), nama: nama, email: email,
+      noHp: String(d.noHp).replace(/\D/g, '').slice(0, 13),
+      salt: d.salt, sandiHash: d.sandiHash, dibuat: isoWaktu(R.now())
+    };
+    akunSemua().push(a);
+    simpan(['akun']);
+    catatLog('akun', 'Akun orang tua baru: ' + a.nama);
+    beritahu('akun');
+    return { ok: true, data: a };
+  }
+
   function riwayat(pendaftarId) {
     return init().verifikasi.filter(function (v) { return v.pendaftarId === pendaftarId; })
       .sort(function (a, b) { return a.waktu < b.waktu ? 1 : -1; });
@@ -219,7 +265,13 @@
     return pad(maks + 1, 4);
   }
 
-  function tambah(isian) {
+  /**
+   * @param {Object} isian
+   * @param {{akunId?: string}} [opsi] akunId diisi bila didaftarkan orang tua (online)
+   */
+  function tambah(isian, opsi) {
+    var akunId = opsi && akunAmbil(opsi.akunId) ? opsi.akunId : '';
+    if (akunId && pendaftarAkun(akunId).length >= R.MAKS_ANAK) return null;
     var no = nomorBerikutnya();
     var data = saringIsian(isian, null);
     var waktu = isoWaktu(R.now());
@@ -228,28 +280,38 @@
     data.status = 'menunggu';
     data.tglDaftar = waktu;
     data.updatedAt = waktu;
+    data.akunId = akunId;
+    data.sumber = akunId ? 'online' : 'loket';
     semua().push(data);
     simpan(['pendaftar']);
-    catatLog('tambah', 'Pendaftar baru: ' + data.nama + ' (' + data.noDaftar + ')');
+    catatLog('tambah', 'Pendaftar baru (' + R.SUMBER[data.sumber].label.toLowerCase() + '): ' + data.nama + ' (' + data.noDaftar + ')');
     beritahu('tambah');
     return data;
   }
 
-  function ubah(id, isian) {
+  /**
+   * @param {{kirimUlang?: boolean}} [opsi] kirimUlang: orang tua memperbaiki data
+   *   berstatus "perlu perbaikan" → status kembali "menunggu" (Tahap 14)
+   */
+  function ubah(id, isian, opsi) {
     var p = ambil(id);
     if (!p) return null;
     var baru = saringIsian(isian, p);
+    var kirimUlang = !!(opsi && opsi.kirimUlang) && p.status === 'perbaikan';
     var perluUlang = p.status !== 'menunggu' && KOLOM_SELEKSI.some(function (k) { return String(p[k]) !== String(baru[k]); });
     Object.keys(baru).forEach(function (k) { p[k] = baru[k]; });
     if (perluUlang) {
       p.status = 'menunggu';
       p.berkas.forEach(function (b) { b.hasilCek = 'belum'; });
+    } else if (kirimUlang) {
+      p.status = 'menunggu';
     }
     p.updatedAt = isoWaktu(R.now());
     simpan(['pendaftar']);
-    catatLog('ubah', 'Data diubah: ' + p.nama + ' (' + p.noDaftar + ')' + (perluUlang ? ' — perlu verifikasi ulang' : ''));
+    catatLog('ubah', (kirimUlang ? 'Perbaikan dikirim ulang: ' : 'Data diubah: ') + p.nama + ' (' + p.noDaftar + ')' +
+      (perluUlang ? ' — perlu verifikasi ulang' : ''));
     beritahu('ubah');
-    return { data: p, perluVerifikasiUlang: perluUlang };
+    return { data: p, perluVerifikasiUlang: perluUlang || kirimUlang };
   }
 
   // Mengembalikan "snapshot" agar bisa diurungkan (FR-09, TC-08)
@@ -339,7 +401,8 @@
       diekspor: isoWaktu(new Date()),
       pendaftar: state.pendaftar,
       verifikasi: state.verifikasi,
-      log: state.log
+      log: state.log,
+      akun: state.akun
     }, null, 2);
   }
 
@@ -349,7 +412,9 @@
     nisn: /^\d{10}$/,
     waktu: /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/,
     vfId: /^vf-[a-z0-9-]{2,30}$/,
-    lgId: /^lg-[a-z0-9-]{2,30}$/
+    lgId: /^lg-[a-z0-9-]{2,30}$/,
+    akId: /^ak-\d{4,6}$/,
+    b64: /^[A-Za-z0-9+/=]{0,100}$/
   };
 
   function periksaPendaftar(p, i) {
@@ -375,8 +440,25 @@
     }
     var d;
     try { d = JSON.parse(teksJson); } catch (e) { return { ok: false, error: 'Berkas bukan JSON yang valid.' }; }
-    if (!d || d.format !== FORMAT_CADANGAN || d.versi !== VERSI) return { ok: false, error: 'Berkas bukan cadangan PPDB Online versi ini.' };
-    if (!Array.isArray(d.pendaftar) || !Array.isArray(d.verifikasi) || !Array.isArray(d.log)) return { ok: false, error: 'Struktur cadangan tidak lengkap.' };
+    // Versi 2 (sebelum Tahap 14) tetap diterima: semua pendaftar dianggap dari loket
+    if (!d || d.format !== FORMAT_CADANGAN || (d.versi !== VERSI && d.versi !== 2)) return { ok: false, error: 'Berkas bukan cadangan PPDB Online versi ini.' };
+    if (d.versi === 2) d.akun = [];
+    if (!Array.isArray(d.pendaftar) || !Array.isArray(d.verifikasi) || !Array.isArray(d.log) || !Array.isArray(d.akun)) return { ok: false, error: 'Struktur cadangan tidak lengkap.' };
+    if (d.akun.length > IMPOR_MAKS_DATA) return { ok: false, error: 'Jumlah akun di cadangan tidak wajar.' };
+
+    var akunIds = {}, emails = {};
+    var akun = [];
+    for (var k = 0; k < d.akun.length; k++) {
+      var x = d.akun[k];
+      var em = x && typeof x.email === 'string' ? x.email.trim().toLowerCase() : '';
+      if (!x || !POLA.akId.test(x.id) || akunIds[x.id] || emails[em] || R.validasi.email(em) ||
+          !POLA.b64.test(x.salt || '') || !POLA.b64.test(x.sandiHash || '')) {
+        return { ok: false, error: 'akun ke-' + (k + 1) + ' tidak valid.' };
+      }
+      akunIds[x.id] = emails[em] = true;
+      akun.push({ id: x.id, nama: teks(x.nama, 80), email: em, noHp: String(x.noHp || '').replace(/\D/g, '').slice(0, 13),
+        salt: x.salt || '', sandiHash: x.sandiHash || '', dibuat: POLA.waktu.test(x.dibuat) ? x.dibuat : isoWaktu(new Date()) });
+    }
     if (d.pendaftar.length === 0 || d.pendaftar.length > IMPOR_MAKS_DATA) return { ok: false, error: 'Jumlah pendaftar di cadangan tidak wajar.' };
 
     var ids = {}, nisns = {};
@@ -393,6 +475,8 @@
       bersih.status = asli.status;
       bersih.tglDaftar = asli.tglDaftar;
       bersih.updatedAt = asli.updatedAt;
+      bersih.akunId = akunIds[asli.akunId] ? asli.akunId : '';
+      bersih.sumber = bersih.akunId ? 'online' : 'loket';
       pendaftar.push(bersih);
     }
 
@@ -409,7 +493,7 @@
       return { id: l.id, waktu: l.waktu, tipe: teks(l.tipe, 20), pesan: teks(l.pesan, 200) };
     });
 
-    state = { pendaftar: pendaftar, verifikasi: verif, log: log };
+    state = { pendaftar: pendaftar, verifikasi: verif, log: log, akun: akun };
     tulis(KEY.meta, { versi: VERSI, seed: 'impor', dibuat: isoWaktu(new Date()) });
     simpan();
     catatLog('impor', 'Data dipulihkan dari cadangan (' + pendaftar.length + ' pendaftar)');
@@ -424,6 +508,11 @@
     ambil: ambil,
     nisnDipakai: nisnDipakai,
     hitungStatus: hitungStatus,
+    akunSemua: akunSemua,
+    akunAmbil: akunAmbil,
+    akunEmail: akunEmail,
+    pendaftarAkun: pendaftarAkun,
+    tambahAkun: tambahAkun,
     riwayat: riwayat,
     log: daftarLog,
     catatLog: catatLog,

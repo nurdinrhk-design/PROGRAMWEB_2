@@ -2,6 +2,7 @@
    bukti.js — Bukti Pendaftaran (P-08, Tahap 11)
    FR-15 cetak · AS-06/D-17: identitas fiktif, tanpa lambang, stempel,
    tanda tangan, QR, atau barcode. ?id=pd-0001
+   Dipakai panitia (pages/) dan orang tua (portal/, hanya anaknya sendiri).
    ===================================================================== */
 (function (window, document) {
   'use strict';
@@ -80,6 +81,11 @@
 
   var id = new URLSearchParams(window.location.search).get('id');
   var p = /^pd-\d{4,6}$/.test(id || '') ? S.ambil(id) : null;
+  // Portal orang tua: hanya bukti anak dari akun yang sedang masuk (Tahap 14)
+  if (p && document.body.getAttribute('data-auth') === 'peserta') {
+    var ortu = PPDB.auth.pesertaAktif();
+    if (!ortu || p.akunId !== ortu.id) p = null;
+  }
   if (!p) {
     $('[data-tidak-ditemukan]').hidden = false;
     $('[data-aksi="cetak"]').hidden = true;

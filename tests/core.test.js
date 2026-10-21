@@ -245,6 +245,68 @@
       sama(S.semua().length, 900);
     });
 
+    /* ================= DUA PERAN (Tahap 14) ================= */
+    uji('Akun: validasi email & kata sandi baru', function () {
+      pastikan(R.validasi.email('bukan-email') !== '', 'format salah ditolak');
+      pastikan(R.validasi.email('a@b.test', function () { return true; }) !== '', 'email dipakai ditolak');
+      sama(R.validasi.email('Orang.Tua@Contoh.test'), '');
+      pastikan(R.validasi.sandiBaru('abcdefgh') !== '', 'tanpa angka ditolak');
+      pastikan(R.validasi.sandiBaru('a1b2') !== '', 'kurang dari 8 ditolak');
+      sama(R.validasi.sandiBaru('rahasia123'), '');
+    });
+
+    uji('Seed: akun orang tua, akun demo, ≤ 3 anak per akun, sumber tercatat', function () {
+      var akun = S.akunSemua();
+      var demo = S.akunEmail(PPDB.seed.AKUN_DEMO.email);
+      pastikan(akun.length > 400 && demo && demo.sandiHash, 'akun & demo ada');
+      sama(S.pendaftarAkun(demo.id).length, 2, 'anak akun demo');
+      var per = {};
+      S.semua().forEach(function (p) {
+        pastikan(p.sumber === (p.akunId ? 'online' : 'loket'), 'sumber sesuai akun: ' + p.id);
+        if (p.akunId) per[p.akunId] = (per[p.akunId] || 0) + 1;
+      });
+      pastikan(Object.keys(per).every(function (k) { return per[k] <= R.MAKS_ANAK; }), 'maksimal 3 anak');
+      sama(akun.filter(function (a) { return a.sandiHash; }).length, 1, 'hanya akun demo yang bisa dipakai masuk');
+    });
+
+    uji('Akun: tambahAkun menolak email ganda & data sandi tidak valid', function () {
+      var dasar = { nama: 'Uji Orang Tua', email: 'uji.ortu@contoh.test', noHp: '081234567890', salt: 'AAAAAAAAAAAAAAAAAAAAAA==', sandiHash: 'A'.repeat(43) + '=' };
+      var r1 = S.tambahAkun(dasar);
+      pastikan(r1.ok, r1.error);
+      pastikan(!S.tambahAkun(dasar).ok, 'email ganda ditolak');
+      pastikan(!S.tambahAkun(Object.assign({}, dasar, { email: 'lain@contoh.test', sandiHash: 'teks-polos' })).ok, 'hash tidak valid ditolak');
+      pastikan(JSON.stringify(r1.data).indexOf('sandi"') === -1, 'tidak ada kolom sandi teks');
+    });
+
+    uji('Pendaftaran online: milik akun, maks. 3 anak; loket tanpa akun', function () {
+      var a = S.akunEmail('uji.ortu@contoh.test');
+      var p1 = S.tambah({ nama: 'Anak Satu', nisn: '9000001001', jalur: 'zonasi' }, { akunId: a.id });
+      sama(p1.sumber, 'online'); sama(p1.akunId, a.id);
+      S.tambah({ nama: 'Anak Dua', nisn: '9000001002', jalur: 'zonasi' }, { akunId: a.id });
+      S.tambah({ nama: 'Anak Tiga', nisn: '9000001003', jalur: 'zonasi' }, { akunId: a.id });
+      sama(S.tambah({ nama: 'Anak Empat', nisn: '9000001004', jalur: 'zonasi' }, { akunId: a.id }), null, 'anak ke-4 ditolak');
+      var loket = S.tambah({ nama: 'Anak Loket', nisn: '9000001005', jalur: 'zonasi' });
+      sama(loket.sumber, 'loket'); sama(loket.akunId, '');
+    });
+
+    uji('Perbaikan oleh orang tua: kirim ulang → status menunggu', function () {
+      var p = S.semua().filter(function (x) { return x.status === 'perbaikan'; })[0];
+      var r = S.ubah(p.id, p, { kirimUlang: true });
+      sama(r.data.status, 'menunggu');
+      pastikan(r.perluVerifikasiUlang, 'ditandai perlu verifikasi ulang');
+    });
+
+    uji('Cadangan versi lama (v2) tetap bisa dipulihkan sebagai pendaftaran loket', function () {
+      var d = JSON.parse(S.ekspor());
+      d.versi = 2;
+      delete d.akun;
+      d.pendaftar.forEach(function (p) { delete p.akunId; delete p.sumber; });
+      var r = S.impor(JSON.stringify(d));
+      pastikan(r.ok, r.error);
+      pastikan(S.semua().every(function (p) { return p.sumber === 'loket' && p.akunId === ''; }), 'semua loket');
+      S.reset();
+    });
+
     /* ================= UI ================= */
     uji('Keamanan: ui.el memakai textContent (tidak mengeksekusi HTML)', function () {
       var n = PPDB.ui.el('div', { text: '<img src=x onerror=alert(1)>' });
@@ -272,8 +334,10 @@
       sama(PPDB.auth.panitiaAktif().nama, 'Rina Kartika');
     });
 
-    uji('Keamanan: tujuan setelah login hanya halaman internal', function () {
+    uji('Keamanan: tujuan setelah login hanya halaman internal & milik perannya', function () {
       sama(PPDB.auth.tujuanSetelahLogin(), 'pages/dashboard.html');
+      sama(PPDB.auth.tujuanSetelahLogin('peserta'), 'portal/beranda.html');
+      sama(PPDB.auth.pesertaAktif(), null, 'sesi panitia bukan sesi orang tua');
     });
   } finally {
     pulihkanSemua();

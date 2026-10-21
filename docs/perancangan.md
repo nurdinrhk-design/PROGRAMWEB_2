@@ -31,12 +31,14 @@
 
 **Masalah.** Selama 12 hari pendaftaran, panitia PPDB menerima ratusan pendaftar untuk **432 kursi**. Setiap hari panitia harus memeriksa berkas, memantau jalur mana yang paling ketat, mengetahui siapa yang masuk dan siapa yang tergeser dari kuota, lalu membawa rekap ke rapat.
 
-**Solusi.** Admin Panel yang menjawab tiga pertanyaan kerja harian:
+**Solusi.** Portal pendaftaran untuk orang tua dan Admin Panel untuk panitia. Admin Panel menjawab tiga pertanyaan kerja harian:
 1. *Apa yang harus saya kerjakan dulu?* → antrean verifikasi, diurutkan dari yang paling lama menunggu.
 2. *Bagaimana kondisi seleksi saat ini?* → keketatan dan batas nilai/jarak sementara per jalur.
 3. *Apa yang saya bawa ke rapat?* → rekap siap cetak.
 
-**Pengguna.** Satu peran: **Panitia PPDB (verifikator)**.
+**Pengguna.** Dua peran (revisi dosen, Tahap 14):
+- **Orang tua / calon peserta**: membuat akun, mendaftarkan anaknya sendiri (maks. 3 anak per akun), memantau status, memperbaiki berkas bila diminta, dan mencetak bukti pendaftaran.
+- **Panitia PPDB (verifikator)**: memverifikasi berkas, memantau seleksi, mencetak rekap, dan **mendaftarkan calon peserta yang datang langsung ke sekolah** (pendaftaran loket, untuk orang tua yang tidak terbiasa memakai HP).
 
 **Batasan.** Aplikasi berjalan sepenuhnya di browser (HTML, CSS, JavaScript) dengan data simulasi di `localStorage`. Tidak ada server, sehingga integrasi Dapodik/Dukcapil, peta GPS, dan notifikasi WhatsApp **sengaja tidak ditampilkan** agar tidak memberi kesan palsu.
 
@@ -132,7 +134,12 @@ Isinya hanya empat elemen:
 
 ```mermaid
 flowchart TD
-    L["Login<br/>index.html"] -->|berhasil| D["Dashboard"]
+    L["Login<br/>index.html<br/>pilih peran"] -->|panitia| D["Dashboard"]
+    L -->|orang tua| PB["Portal: Beranda"]
+    L -->|buat akun| DA["Buat akun<br/>daftar.html"] --> PB
+    PB --> PF["Daftarkan / perbaiki anak"]
+    PB --> PK["Bukti pendaftaran"]
+    PF -->|Kirim| PB
     D --> M["Data Pendaftar"]
     D --> V["Verifikasi Berkas"]
     D --> H["Hasil & Peringkat"]
@@ -190,15 +197,31 @@ flowchart LR
     V -->|Ya| OK[Simpan: nomor PPDB-2026-xxxx<br/>status Menunggu verifikasi]
 ```
 
-### 4.4 Siklus status pendaftar
+### 4.4 Pendaftaran online oleh orang tua (Tahap 14)
+
+```mermaid
+flowchart LR
+    A[Buat akun<br/>daftar.html] --> B[Beranda portal]
+    B --> C[Daftarkan anak<br/>form 4 langkah]
+    C --> D[Status Menunggu<br/>+ posisi antrean]
+    D --> E{Hasil verifikasi panitia}
+    E -->|Perlu perbaikan| F[Baca catatan,<br/>ganti berkas, kirim ulang]
+    F --> D
+    E -->|Terverifikasi| G[Lihat peringkat sementara<br/>& cetak bukti]
+    E -->|Ditolak| H[Baca alasan,<br/>hubungi panitia]
+```
+
+Orang tua hanya melihat anaknya sendiri. Data bisa diubah selama status **Menunggu** atau **Perlu perbaikan**; setelah diputuskan panitia, data terkunci.
+
+### 4.5 Siklus status pendaftar
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Menunggu: pendaftar disimpan
+    [*] --> Menunggu: didaftarkan orang tua (online) / panitia (loket)
     Menunggu --> Terverifikasi: semua berkas sesuai
     Menunggu --> Perbaikan: ada berkas bermasalah
     Menunggu --> Ditolak: tidak memenuhi syarat
-    Perbaikan --> Menunggu: berkas diunggah ulang
+    Perbaikan --> Menunggu: orang tua mengirim perbaikan
     Terverifikasi --> MasukKuota: peringkat ≤ kuota
     Terverifikasi --> Tergeser: peringkat > kuota
     MasukKuota --> Tergeser: tersalip pendaftar lain
@@ -222,6 +245,14 @@ erDiagram
     SEKOLAH_ASAL ||--o{ PENDAFTAR : berasal
     PENDAFTAR ||--|{ BERKAS : melampirkan
     PENDAFTAR ||--o{ VERIFIKASI : diperiksa
+    AKUN |o--o{ PENDAFTAR : mendaftarkan
+    AKUN {
+        string id PK
+        string nama
+        string email UK
+        string no_hp
+        string sandi_hash
+    }
 
     PANITIA {
         string id PK
@@ -250,6 +281,8 @@ erDiagram
         string alamat
         date tgl_terbit_kk
         int jarak_meter
+        string akun_id FK
+        string sumber
         string jalur_kode FK
         string npsn_asal FK
         float nilai_rapor
@@ -285,13 +318,16 @@ erDiagram
 ### 5.2 Kamus data ringkas
 | Entitas | Fungsi | Penyimpanan |
 |---|---|---|
-| `PENDAFTAR` | Data calon siswa & status verifikasi | `localStorage` |
+| `AKUN` | Akun orang tua (Tahap 14). Kata sandi hanya disimpan sebagai hash PBKDF2-SHA256 + salt | `localStorage` |
+| `PENDAFTAR` | Data calon siswa & status verifikasi, plus `sumber` (online/loket) dan `akun_id` | `localStorage` |
 | `BERKAS` | Berkas per pendaftar (KK, akta, rapor, KIP, surat tugas, sertifikat) + hasil cek | `localStorage` (disimpan di dalam data pendaftar) |
 | `VERIFIKASI` | Riwayat keputusan panitia beserta catatan | `localStorage` |
 | `LOG_AKTIVITAS` | Jejak setiap perubahan data (maks. 100 entri) | `localStorage` |
 | `JALUR` | 4 jalur, kuota, dasar peringkat | Konstanta JavaScript |
 | `SEKOLAH_ASAL` | Daftar SMP/MTs asal | Konstanta JavaScript |
 | `PANITIA` | Akun simulasi (`panitia` / `ppdb2026`) | Konstanta JavaScript |
+
+Akun demo orang tua: `orangtua@ppdb.test` / `orangtua2026` (dua anak: satu perlu perbaikan, satu terverifikasi).
 
 | Nilai kode | Arti |
 |---|---|
@@ -374,9 +410,9 @@ Wireframe low-fidelity ini menunjukkan **susunan dan prioritas**, bukan ukuran a
 ### 6.2 P-01 · Login (`index.html`)
 ```
 ┌──────────────────────────────────┬───────────────────────────────────┐
-│ PPDB Online                      │ Masuk Panitia                     │
-│ SMA Negeri 1 Harapan Bangsa      │                                   │
-│ Tahun Ajaran 2026/2027           │ Username                          │
+│ PPDB Online                      │ ( Orang tua ) ( Panitia sekolah ) │
+│ SMA Negeri 1 Harapan Bangsa      │ Masuk orang tua / wali            │
+│ Tahun Ajaran 2026/2027           │ Email / Username (sesuai peran)   │
 │                                  │ [                               ] │
 │ Jadwal PPDB                      │ Kata sandi                        │
 │ > 8–19 Jun   Pendaftaran (aktif) │ [                           (o) ] │
@@ -384,11 +420,11 @@ Wireframe low-fidelity ini menunjukkan **susunan dan prioritas**, bukan ukuran a
 │   26 Jun     Pengumuman          │                                   │
 │   29 Jun–1 Jul  Daftar ulang     │ ((            Masuk            )) │
 │                                  │                                   │
-│                                  │ Akun demo: panitia / ppdb2026     │
-│ Data simulasi                    │                                   │
+│                                  │ Belum punya akun? Buat akun       │
+│ Data simulasi                    │ Akun demo sesuai peran            │
 └──────────────────────────────────┴───────────────────────────────────┘
 ```
-Di mobile, panel kiri diringkas menjadi satu baris di atas form. **Tidak ada:** pilihan peran, loket, CAPTCHA, status server.
+Di mobile, panel kiri diringkas menjadi satu baris di atas form. Pilihan peran (Tahap 14) memakai *segmented button*; peran awal mengikuti halaman yang diminta. **Tidak ada:** CAPTCHA, status server.
 
 ### 6.3 P-02 · Dashboard
 ```
@@ -539,6 +575,26 @@ Saat dicetak, navigasi disembunyikan dan muncul **kop sekolah fiktif tanpa lamba
 **Tidak ada:** lambang pemerintah, stempel, tanda tangan palsu, QR code, barcode, atau hash.
 
 ---
+
+### 6.10 P-10 · Beranda Portal Orang Tua (Tahap 14)
+```
+┌──────────────────────────────────────────────────────────────────────┐
+│ [logo] PPDB Online · Portal orang tua   (Beranda) (Daftarkan anak) SS│
+├──────────────────────────────────────────────────────────────────────┤
+│ Halo, Nama Orang Tua                              ((Daftarkan anak)) │
+│ (i) Pendaftaran dibuka sampai 19 Jun · Pengumuman 26 Jun             │
+│ Anak yang didaftarkan (2 dari 3)                                     │
+│ ┌─────────────────────────────┐ ┌─────────────────────────────┐      │
+│ │ Nama Anak       [Perbaikan] │ │ Nama Anak   [Terverifikasi] │      │
+│ │ ! Catatan panitia …         │ │ ✓ Peringkat sementara 3/130 │      │
+│ │ Jalur · Jarak · Sekolah     │ │ Jalur · Skor · Sekolah      │      │
+│ │ > Berkas (2 dari 3 sesuai)  │ │ > Berkas (4 dari 4 sesuai)  │      │
+│ │ (Perbaiki) ( Bukti )        │ │ ( Bukti )                   │      │
+│ └─────────────────────────────┘ └─────────────────────────────┘      │
+│ Jadwal PPDB 2026                                                     │
+└──────────────────────────────────────────────────────────────────────┘
+```
+Di HP, menu pindah ke *navigation bar* di bawah layar dan kartu anak tersusun satu kolom.
 
 ## 7. Design System
 

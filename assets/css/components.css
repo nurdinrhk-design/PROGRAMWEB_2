@@ -11,6 +11,7 @@
      7. Data table & pagination  14. Empty state & skeleton
                                  15. Alert
                                  16. Daftar info, berkas, riwayat
+                                 17. Segmented button (pilihan peran)
    ===================================================================== */
 
 
@@ -1329,7 +1330,7 @@ th[aria-sort="descending"] .table__sort .icon {
 
 
 /* =====================================================================
-   15. ALERT — pesan di dalam halaman (info, error, peringatan)
+   15. ALERT — pesan di dalam halaman (info, error, peringatan, sukses)
    Pesan error form memakai role="alert" pada elemen ini.
    ===================================================================== */
 .alert {
@@ -1372,6 +1373,12 @@ th[aria-sort="descending"] .table__sort .icon {
   border-color: var(--status-warning-border);
   background-color: var(--status-warning-bg);
   color: var(--status-warning-text);
+}
+
+.alert--success {
+  border-color: var(--status-success-border);
+  background-color: var(--status-success-bg);
+  color: var(--status-success-text);
 }
 
 
@@ -1471,4 +1478,46 @@ th[aria-sort="descending"] .table__sort .icon {
   color: var(--md-on-surface-variant);
   font-size: var(--type-body-sm-size);
   line-height: var(--type-body-sm-line);
+}
+
+
+/* =====================================================================
+   17. SEGMENTED BUTTON — pilihan peran di halaman masuk (Tahap 14)
+   Pola tab ARIA: <div role="tablist"><button role="tab" aria-selected>
+   ===================================================================== */
+.segmented {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  border: 1px solid var(--md-outline);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.segmented__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  padding: 0 var(--space-3);
+  border: 0;
+  background: transparent;
+  color: var(--md-on-surface);
+  font: inherit;
+  font-size: var(--type-label-lg-size);
+  font-weight: var(--weight-semibold);
+}
+
+.segmented__item + .segmented__item {
+  border-inline-start: 1px solid var(--md-outline);
+}
+
+.segmented__item:hover {
+  background-color: var(--md-surface-container-low);
+}
+
+.segmented__item[aria-selected="true"] {
+  background-color: var(--md-secondary-container);
+  color: var(--md-on-secondary-container);
 }

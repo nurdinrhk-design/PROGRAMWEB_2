@@ -28,7 +28,7 @@
   var urutNama = new Intl.Collator('id', { sensitivity: 'base' });
 
   var st = {
-    status: '', q: '', jalur: '', sekolah: '',
+    status: '', q: '', jalur: '', sekolah: '', sumber: '',
     urut: 'daftar', arah: 'desc', hal: 1, per: 20
   };
 
@@ -39,6 +39,7 @@
   var inputCari = $('#cari');
   var selJalur = $('#filter-jalur');
   var selSekolah = $('#filter-sekolah');
+  var selSumber = $('#filter-sumber');
   var selPer = $('#per-halaman');
   var chipsHost = $('[data-chips]');
   var ringkasan = $('[data-ringkasan]');
@@ -60,6 +61,7 @@
     st.q = (p.get('q') || '').slice(0, 60);
     st.jalur = R.jalur(p.get('jalur')) ? p.get('jalur') : '';
     st.sekolah = R.sekolahAsal(p.get('sekolah')) ? p.get('sekolah') : '';
+    st.sumber = R.SUMBER.hasOwnProperty(p.get('sumber')) ? p.get('sumber') : '';
     var urut = p.get('urut');
     st.urut = urut === 'nama' || (urut === 'nilai' && st.jalur) ? urut : 'daftar';
     var arah = p.get('arah');
@@ -75,6 +77,7 @@
     if (st.q) p.set('q', st.q);
     if (st.jalur) p.set('jalur', st.jalur);
     if (st.sekolah) p.set('sekolah', st.sekolah);
+    if (st.sumber) p.set('sumber', st.sumber);
     if (st.urut !== 'daftar' || st.arah !== 'desc') { p.set('urut', st.urut); p.set('arah', st.arah); }
     if (st.per !== 20) p.set('per', String(st.per));
     if (st.hal > 1) p.set('hal', String(st.hal));
@@ -107,6 +110,7 @@
     return S.semua().filter(function (p) {
       return (!st.jalur || p.jalur === st.jalur) &&
         (!st.sekolah || p.sekolahAsal === st.sekolah) &&
+        (!st.sumber || p.sumber === st.sumber) &&
         cocokKataKunci(p, q);
     });
   }
@@ -213,6 +217,7 @@
     if (st.q.trim()) chip.push({ label: 'Kata kunci: “' + st.q.trim() + '”', hapus: function () { st.q = ''; inputCari.value = ''; } });
     if (st.jalur) chip.push({ label: 'Jalur: ' + R.jalur(st.jalur).singkat, hapus: function () { st.jalur = ''; selJalur.value = ''; } });
     if (st.sekolah) chip.push({ label: 'Sekolah: ' + R.sekolahAsal(st.sekolah).nama, hapus: function () { st.sekolah = ''; selSekolah.value = ''; } });
+    if (st.sumber) chip.push({ label: 'Sumber: ' + R.SUMBER[st.sumber].label, hapus: function () { st.sumber = ''; selSumber.value = ''; } });
 
     chip.forEach(function (c) {
       chipsHost.appendChild(el('span', { className: 'chip chip--input' }, [
@@ -235,8 +240,8 @@
   }
 
   function hapusSemuaFilter() {
-    st.q = ''; st.jalur = ''; st.sekolah = ''; st.hal = 1;
-    inputCari.value = ''; selJalur.value = ''; selSekolah.value = '';
+    st.q = ''; st.jalur = ''; st.sekolah = ''; st.sumber = ''; st.hal = 1;
+    inputCari.value = ''; selJalur.value = ''; selSekolah.value = ''; selSumber.value = '';
     if (st.urut === 'nilai') { st.urut = 'daftar'; st.arah = 'desc'; }
     render();
     inputCari.focus();
@@ -306,7 +311,7 @@
             text: p.nama,
             attrs: { type: 'button', 'data-detail': p.id, 'aria-haspopup': 'dialog' }
           }),
-          el('span', { className: 'table__secondary', text: 'NISN ' + p.nisn })
+          el('span', { className: 'table__secondary', text: 'NISN ' + p.nisn + ' · ' + R.SUMBER[p.sumber === 'online' ? 'online' : 'loket'].label })
         ]),
         el('td', { className: 'data-table__sekolah', text: sekolah ? sekolah.nama : '–', attrs: { 'data-label': 'Asal sekolah' } }),
         el('td', { attrs: { 'data-label': 'Jalur' } }, [U.chipJalur(p.jalur)]),
@@ -435,6 +440,13 @@
     ]);
   }
 
+  // Siapa yang mendaftarkan (Tahap 14)
+  function sumberTeks(p) {
+    if (p.sumber !== 'online') return R.SUMBER.loket.labelPanjang + '.';
+    var a = S.akunAmbil(p.akunId);
+    return R.SUMBER.online.labelPanjang + (a ? ' · akun ' + a.nama + ' (' + a.email + ')' : '') + '.';
+  }
+
   function bukaDetail(id, pemicu) {
     var p = S.ambil(id);
     if (!p) { U.snackbar('Data pendaftar tidak ditemukan. Mungkin sudah dihapus.'); return; }
@@ -463,6 +475,7 @@
           el('button', { className: 'icon-btn', attrs: { type: 'button', 'aria-label': 'Tutup detail', 'data-tutup': '' } }, [U.icon('close')])
         ]),
         el('div', { className: 'cluster' }, [U.badgeStatus(p.status), U.chipJalur(p.jalur), ringkasSeleksi(p)]),
+        el('p', { className: 'text-body-sm text-variant', text: sumberTeks(p) }),
         el('div', { className: 'detail__grid' }, [
           bagian('Data diri', [daftarInfo([
             info('NISN', p.nisn),
@@ -539,7 +552,7 @@
     if (!list.length) { U.snackbar('Tidak ada data untuk diekspor.'); return; }
     var baris = [[
       'No. Pendaftaran', 'Tanggal Daftar', 'Nama', 'NISN', 'Jenis Kelamin', 'Tanggal Lahir',
-      'Asal Sekolah', 'Jalur', 'Jarak (m)', 'Nilai Rapor', 'Prestasi', 'Skor Prestasi', 'Status Verifikasi'
+      'Asal Sekolah', 'Jalur', 'Jarak (m)', 'Nilai Rapor', 'Prestasi', 'Skor Prestasi', 'Status Verifikasi', 'Sumber'
     ]];
     list.forEach(function (p) {
       var sekolah = R.sekolahAsal(p.sekolahAsal);
@@ -547,7 +560,7 @@
         p.noDaftar, p.tglDaftar.replace('T', ' '), p.nama, p.nisn, p.jk, p.tglLahir,
         sekolah ? sekolah.nama : '', R.jalur(p.jalur).nama, p.jarakMeter,
         U.desimal(p.nilaiRapor), p.prestasiTingkat ? R.PRESTASI_LABEL[p.prestasiTingkat] : '',
-        p.jalur === 'prestasi' ? U.desimal(R.skorPrestasi(p)) : '', R.STATUS_VERIFIKASI[p.status].label
+        p.jalur === 'prestasi' ? U.desimal(R.skorPrestasi(p)) : '', R.STATUS_VERIFIKASI[p.status].label, R.SUMBER[p.sumber === 'online' ? 'online' : 'loket'].label
       ]);
     });
     U.unduhCsv('pendaftar-ppdb-' + R.TANGGAL_SIMULASI + '.csv', baris);
@@ -601,12 +614,14 @@
   function isiPilihan() {
     R.JALUR.forEach(function (j) { selJalur.appendChild(el('option', { text: j.nama, attrs: { value: j.kode } })); });
     R.SEKOLAH_ASAL.forEach(function (s) { selSekolah.appendChild(el('option', { text: s.nama, attrs: { value: s.kode } })); });
+    Object.keys(R.SUMBER).forEach(function (k) { selSumber.appendChild(el('option', { text: R.SUMBER[k].label + ' saja', attrs: { value: k } })); });
   }
 
   function sinkronKontrol() {
     inputCari.value = st.q;
     selJalur.value = st.jalur;
     selSekolah.value = st.sekolah;
+    selSumber.value = st.sumber;
     selPer.value = String(st.per);
   }
 
@@ -627,6 +642,7 @@
     render();
   });
   selSekolah.addEventListener('change', function () { st.sekolah = selSekolah.value; st.hal = 1; render(); });
+  selSumber.addEventListener('change', function () { st.sumber = selSumber.value; st.hal = 1; render(); });
   selPer.addEventListener('change', function () { st.per = Number(selPer.value); st.hal = 1; render(); });
 
   document.querySelectorAll('th[data-kolom] .table__sort').forEach(function (b) {
