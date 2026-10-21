@@ -159,11 +159,13 @@
           </div>
           <div class="page-header__actions">
             <button type="button" class="btn btn--outlined" data-aksi="ekspor-csv"><span class="icon" aria-hidden="true">download</span>Ekspor CSV</button>
+            <button type="button" class="btn btn--filled" data-aksi="umumkan"><span class="icon" aria-hidden="true">campaign</span>Umumkan hasil</button>
+            <button type="button" class="btn btn--danger-outlined" data-aksi="batalkan" hidden><span class="icon" aria-hidden="true">undo</span>Batalkan pengumuman</button>
           </div>
         </div>
 
-        <div class="alert alert--info">
-          <span class="icon" aria-hidden="true">schedule</span>
+        <div class="alert alert--info" data-kotak-status>
+          <span class="icon" aria-hidden="true" data-ikon-status>schedule</span>
           <p class="alert__body" data-catatan-sementara>Peringkat sementara. Hanya pendaftar terverifikasi yang ikut peringkat.</p>
         </div>
 
@@ -213,7 +215,7 @@
       </main>
 
       <footer class="app-footer">
-        <p>PPDB Online · SMA Negeri 1 Harapan Bangsa (fiktif) · Data simulasi · v1.2</p>
+        <p>PPDB Online · SMA Negeri 1 Harapan Bangsa (fiktif) · Data simulasi · v1.3</p>
       </footer>
     </div>
   </div>

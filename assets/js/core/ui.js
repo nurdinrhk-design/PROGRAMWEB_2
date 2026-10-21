@@ -114,6 +114,11 @@
     return el('span', { className: 'badge ' + (s ? s.badge : ''), text: s ? s.label : status });
   }
 
+  function badgePengumuman(status) {
+    var s = R.STATUS_PENGUMUMAN[status];
+    return el('span', { className: 'badge ' + (s ? s.badge : ''), text: s ? s.label : status });
+  }
+
   function badgeSeleksi(status) {
     var s = R.STATUS_SELEKSI[status];
     return el('span', { className: 'badge ' + (s ? s.badge : ''), text: s ? s.label : status });
@@ -311,6 +316,7 @@
     inisial: inisial,
     badgeStatus: badgeStatus,
     badgeSeleksi: badgeSeleksi,
+    badgePengumuman: badgePengumuman,
     chipJalur: chipJalur,
     snackbar: snackbar,
     titipPesan: titipPesan,

@@ -35,6 +35,7 @@
     var j = R.jalur(p.jalur);
     var sekolah = R.sekolahAsal(p.sekolahAsal);
     var seleksi = R.statusSeleksi(S.semua(), p.id);
+    var akhir = S.hasilPendaftar(p.id);   // ada bila hasil sudah diumumkan (Tahap 16)
 
     document.title = 'Bukti ' + p.noDaftar + ' · PPDB Online';
     $('[data-kop-sekolah]').textContent = R.SEKOLAH.nama + ' (fiktif)';
@@ -53,7 +54,10 @@
       j.dasar === 'skor' ? info('Skor', U.desimal(R.skorPrestasi(p))) : info('Jarak', U.jarak(p.jarakMeter)),
       info('Tanggal daftar', U.tanggalWaktu(p.tglDaftar)),
       info('Status verifikasi', R.STATUS_VERIFIKASI[p.status].labelPanjang),
-      info('Peringkat sementara', seleksi ? seleksi.peringkat + ' dari kuota ' + seleksi.kuota + ' (' + R.STATUS_SELEKSI[seleksi.status].label.toLowerCase() + ')' : 'Belum ikut peringkat')
+      akhir
+        ? info('Hasil seleksi', R.STATUS_PENGUMUMAN[akhir.status].label + (akhir.peringkat ? ' · peringkat ' + akhir.peringkat + ' dari kuota ' + akhir.kuota : '') +
+          (akhir.alasan ? ' (' + R.ALASAN_TIDAK[akhir.alasan].toLowerCase() + ')' : '') + (akhir.daftarUlang ? ' · daftar ulang ' + U.tanggalWaktu(akhir.daftarUlang) : ''))
+        : info('Peringkat sementara', seleksi ? seleksi.peringkat + ' dari kuota ' + seleksi.kuota + ' (' + R.STATUS_SELEKSI[seleksi.status].label.toLowerCase() + ')' : 'Belum ikut peringkat')
     ]);
 
     var berkas = U.kosongkan($('[data-berkas]'));

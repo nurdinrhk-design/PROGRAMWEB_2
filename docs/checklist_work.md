@@ -1,12 +1,12 @@
 # ✅ Checklist Pekerjaan — Admin Panel PPDB Online
 
-> **Dokumen pelacakan (tracker)**, pasangan dari **[perencanaan.md](perencanaan.md)** (v1.2).
-> - **Penomoran (D-22):** tahap **1–15** (Tahap 14 = revisi dosen, Tahap 15 = perbaikan kecil), langkah **x.y**. Langkah terakhir setiap tahap adalah **Penutupan**: uji → catat → review → simpan ([perencanaan §11.3](perencanaan.md#113-langkah-penutupan-setiap-tahap)).
+> **Dokumen pelacakan (tracker)**, pasangan dari **[perencanaan.md](perencanaan.md)** (v1.3).
+> - **Penomoran (D-22):** tahap **1–16** (Tahap 14 = revisi dosen, 15 = perbaikan kecil, 16 = pengumuman hasil), langkah **x.y**. Langkah terakhir setiap tahap adalah **Penutupan**: uji → catat → review → simpan ([perencanaan §11.3](perencanaan.md#113-langkah-penutupan-setiap-tahap)).
 > - Kolom **Ref** menunjuk ke ID di perencanaan.md: `FR` kebutuhan · `NFR` non-fungsional · `BR` aturan bisnis · `AS` anti-slop · `P` halaman · `D` keputusan · `TC` kasus uji · `R` risiko · `§` bagian.
 > - Aturan pencatatan: [perencanaan §15](perencanaan.md#15-alur-kerja--aturan-pencatatan). Definition of Done: [§14](perencanaan.md#14-definition-of-done).
 > - ID lama (`T0-01`…`T14-R3`) dipakai sampai v0.2. Padanannya ada di [Padanan ID Lama](#padanan-id-lama--baru).
 
-**Versi checklist:** 1.2 · **Terakhir diperbarui:** 21 Oktober 2026
+**Versi checklist:** 1.3 · **Terakhir diperbarui:** 21 Oktober 2026
 
 ---
 
@@ -27,8 +27,8 @@
 
 | | |
 |---|---|
-| **Tahap aktif** | ✅ Semua tahap selesai (v1.2 online di https://nurdinrhk-design.github.io/PROGRAMWEB_2/) |
-| **Tahap terakhir selesai** | Tahap 15 — Perbaikan kecil v1.2 (21 Okt 2026) |
+| **Tahap aktif** | ✅ Semua tahap selesai (v1.3 online di https://nurdinrhk-design.github.io/PROGRAMWEB_2/) |
+| **Tahap terakhir selesai** | Tahap 16 — Pengumuman hasil & daftar ulang (21 Okt 2026) |
 | **Menunggu dari pengembang** | Kirim tautan M1, M2 & M3 ke LMS (2.8, 3.8, 13.5) · cek sekilas di Firefox · pasang domain sendiri bila diinginkan ([panduan](panduan-domain.md)) |
 
 ## Ringkasan Progres
@@ -50,9 +50,10 @@
 | [13](#tahap-13--rilis--online) | Rilis & online | M3 | 7 | 7 | 0 | 100% |
 | [14](#tahap-14--dua-peran-orang-tua--panitia-revisi-dosen) | Dua peran (revisi dosen) | M3 | 8 | 8 | 0 | 100% |
 | [15](#tahap-15--perbaikan-kecil-v12) | Perbaikan kecil v1.2 | M3 | 6 | 6 | 0 | 100% |
-| | **Total** | | **100** | **98** | **2** | **98%** |
+| [16](#tahap-16--pengumuman-hasil--daftar-ulang) | Pengumuman hasil | M3 | 5 | 5 | 0 | 100% |
+| | **Total** | | **105** | **103** | **2** | **98%** |
 
-**Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 ✅ v1.2 online, termasuk revisi dosen (kirim LMS 👤)
+**Milestone:** M1 ✅ dokumen lengkap (kirim LMS 👤) · M2 ✅ kode lengkap (kirim LMS 👤) · M3 ✅ v1.3 online, termasuk revisi dosen & pengumuman hasil (kirim LMS 👤)
 
 ---
 
@@ -263,6 +264,9 @@ Ref: [perencanaan §12](perencanaan.md#12-strategi-pengujian), [§5.3 NFR](peren
 | TC-28 | Pendaftaran loket & filter sumber | 14 | ✅ Tahap 14 (21 Okt) | ✅ Chrome & Edge (21 Okt) |
 | TC-29 | Akun Orang Tua (panitia) | 15 | ✅ Tahap 15 (21 Okt) | ✅ Chrome & Edge (21 Okt) |
 | TC-30 | Ubah profil & ganti sandi orang tua | 15 | ✅ Tahap 15 (21 Okt) | ✅ Chrome & Edge (21 Okt) |
+| TC-31 | Panitia mengumumkan hasil | 16 | ✅ Tahap 16 (21 Okt) | ✅ Chrome (21 Okt) |
+| TC-32 | Hasil & daftar ulang orang tua | 16 | ✅ Tahap 16 (21 Okt) | ✅ Chrome (21 Okt) |
+| TC-33 | Batalkan pengumuman | 16 | ✅ Tahap 16 (21 Okt) | ✅ Chrome (21 Okt) |
 
 ---
 
@@ -312,6 +316,19 @@ Pengembang memutuskan database **tetap lokal** (Supabase dibandingkan, tidak dip
 | 15.4 | Rekap per sumber | FR-27 | ✅ | Kolom Online & Loket di rekap per jalur, baris total, CSV, cetak |
 | 15.5 | Styleguide & tampilan | NFR-01 | ✅ | Contoh *segmented button* di styleguide. Navigation bar bawah portal kini sampai 839 px (di 600 px bar atas meluap setelah ada 3 menu) |
 | 15.6 | Penutupan | §11.3 | ✅ | Uji e2e 4 berkas (akun 8, inti 40, orang tua 18, regresi 21) lulus di Chrome & Edge; Lighthouse 100/100 di 7 halaman; W3C 0 error. Audit, push, CI, rilis v1.2 |
+
+---
+
+## Tahap 16 — Pengumuman Hasil & Daftar Ulang
+Ref: [perencanaan D-27, FR-28…FR-30](perencanaan.md#3-keputusan--asumsi) · **Output:** pengumuman di `store.js`, Hasil & Peringkat, portal, bukti, rilis `v1.3`
+
+| No | Langkah | Ref | Status | Catatan |
+|---|---|---|---|---|
+| 16.1 | Data pengumuman | FR-28, D-27 | ✅ | `store.umumkan/batalkanPengumuman/hasilPendaftar/konfirmasiDaftarUlang`, kunci `ppdb.v2.pengumuman`: peringkat dibekukan (masuk kuota = diterima; alasan kuota/belum/ditolak), daftar ulang per pendaftar. `R.STATUS_PENGUMUMAN`, `R.ALASAN_TIDAK`, `ui.badgePengumuman`. Pemulihan cadangan mengosongkan pengumuman |
+| 16.2 | Panitia: umumkan & batalkan | FR-28, TC-31, TC-33 | ✅ | Hasil & Peringkat: tombol *Umumkan hasil* (satu-satunya filled) + dialog berisi jumlah diterima; ringkasan diterima & daftar ulang; *Batalkan pengumuman* (konfirmasi bahaya). Dashboard: "n diterima · n daftar ulang" |
+| 16.3 | Penguncian | FR-29 | ✅ | Tombol keputusan Verifikasi & `store.verifikasi` menolak; form portal tertutup; `store.tambah` online ditolak; tombol Daftarkan anak & Ubah disembunyikan |
+| 16.4 | Orang tua: hasil & daftar ulang | FR-30, TC-32 | ✅ | Badge Diterima/Tidak diterima, pesan + alasan, tombol *Konfirmasi daftar ulang* (konfirmasi) hanya untuk anak diterima milik akun; hasil & waktu daftar ulang juga di bukti pendaftaran |
+| 16.5 | Penutupan | §11.3 | ✅ | `uji-pengumuman.mjs` 9/9 + uji inti 42 (+2) + seluruh e2e lulus; tampilan 360/1440 (tombol batalkan terpotong di 360 → baris sendiri); W3C 0 error; audit, push, CI, rilis v1.3 |
 
 ---
 
@@ -508,6 +525,11 @@ Jenis: `CREATE` · `UPDATE` · `DELETE` · `RENAME` · `COPY`. Nomor `F-xx` teru
 | F-157 | 21 Okt 2026 | UPDATE | `pages/laporan.html`, `assets/js/pages/laporan.js` | 15.4 | Kolom Online/Loket |
 | F-158 | 21 Okt 2026 | UPDATE | `assets/css/layout.css`, `pages.css`, `docs/styleguide.html` | 15.5 | Gaya halaman akun, breakpoint nav portal, contoh segmented button |
 | F-159 | 21 Okt 2026 | UPDATE | `docs/perencanaan.md`, `docs/checklist_work.md`, `README.md` | 15.6 | Dokumentasi v1.2 |
+| F-160 | 21 Okt 2026 | UPDATE | `assets/js/core/rules.js`, `store.js`, `ui.js` | 16.1 | Status & data pengumuman, daftar ulang, kunci verifikasi & pendaftaran online |
+| F-161 | 21 Okt 2026 | UPDATE | `pages/hasil-seleksi.html`, `assets/js/pages/hasil-seleksi.js`, `dashboard.js`, `laporan.js` | 16.2 | Umumkan/batalkan, ringkasan, KPI, label log |
+| F-162 | 21 Okt 2026 | UPDATE | `assets/js/pages/verifikasi.js`, `form.js`, `portal.js`, `bukti.js`, `assets/css/layout.css` | 16.3, 16.4 | Penguncian, hasil & daftar ulang di portal/bukti, tombol header di HP |
+| F-163 | 21 Okt 2026 | CREATE/UPDATE | `tests/e2e/uji-pengumuman.mjs`, `tests/core.test.js` | 16.5 | Uji pengumuman (9) + 2 uji inti |
+| F-164 | 21 Okt 2026 | UPDATE | `docs/perencanaan.md`, `docs/checklist_work.md`, `docs/presentasi.md`, `README.md` | 16.5 | Dokumentasi v1.3 |
 
 **Isi proyek saat ini (di luar `.git` dan bahan Stitch):**
 ```
@@ -598,3 +620,4 @@ Satu baris per sesi kerja.
 | 2 Okt 2026 | 13.2–13.7 | **Tahap 13: Rilis & online.** CI hijau setelah 2 perbaikan (log CI tidak bisa diunduh dari jaringan ini → error dijadikan anotasi yang terbaca lewat API). Pages aktif: https://nurdinrhk-design.github.io/PROGRAMWEB_2/ (build pertama tertahan di antrean GitHub, diminta ulang). Seluruh suite uji dijalankan ulang terhadap situs online: lulus, konsol bersih. Rilis v1.0. Sisa: 2.8, 3.8 & pengiriman M3 ke LMS (👤) | ✅ (F-133…F-140) |
 | 21 Okt 2026 | 14.1–14.8 | **Tahap 14: revisi dosen — dua peran.** Rencana & 3 keputusan disetujui pengembang. Uji dua peran lulus 18/18 pada percobaan pertama. Temuan: skrip uji otomatis lama (di folder Temp) ikut terhapus pembersihan sistem → harness dibuat ulang dan regresi panitia ditulis ulang ringkas (20 uji); disarankan memindahkan uji ke dalam repo. Profil Edge uji sempat terkunci → tiap run memakai folder profil sendiri. Statistik data simulasi (status, peringkat, batas) tetap sama. Audit keamanan lulus | ✅ (F-141…F-150) |
 | 21 Okt 2026 | 15.1–15.6 | **Tahap 15: perbaikan kecil v1.2.** Database tetap lokal (keputusan pengembang). Uji e2e kini di repo & CI (jalur lokal yang dulu tertulis di skrip uji dihilangkan agar tidak bocor ke repo publik). Semua uji baru lulus pada percobaan pertama. Temuan: bar portal meluap di 600 px setelah menu bertambah → navigation bar bawah sampai 839 px. Sisa profil Edge & tangkapan layar di Temp dibersihkan; harness kini menghapusnya otomatis. Audit keamanan lulus | ✅ (F-151…F-159) |
+| 21 Okt 2026 | 16.1–16.5 | **Tahap 16: pengumuman hasil & daftar ulang.** Uji baru lulus pada percobaan pertama. Temuan tampilan: tombol *Batalkan pengumuman* terpotong di 360 px → baris sendiri. Audit keamanan lulus | ✅ (F-160…F-164) |

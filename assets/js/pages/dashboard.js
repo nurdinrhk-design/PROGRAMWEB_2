@@ -55,6 +55,9 @@
       return n + R.peringkat(S.semua(), j.kode).daftar.filter(function (b) { return b.status === 'masuk'; }).length;
     }, 0);
     var persen = h.total ? Math.round(h.terverifikasi / h.total * 100) : 0;
+    // Setelah hasil diumumkan (Tahap 16): jumlah diterima & daftar ulang
+    var u = S.pengumuman();
+    var umum = u && { diterima: Object.keys(u.hasil).filter(function (k) { return u.hasil[k].status === 'diterima'; }).length, daftarUlang: Object.keys(u.daftarUlang).length };
     var online = S.semua().filter(function (p) { return p.sumber === 'online'; }).length;
     var persenOnline = h.total ? Math.round(online / h.total * 100) : 0;
 
@@ -65,7 +68,7 @@
         meta: antre.length ? 'Terlama menunggu ' + U.lamaMenunggu(antre[0].tglDaftar) : 'Antrean kosong', href: 'data-master.html?status=menunggu', tautan: 'Lihat pendaftar menunggu' },
       { ikon: 'edit_note', label: 'Perlu perbaikan', nilai: h.perbaikan, meta: 'Menunggu unggah ulang dari pendaftar', href: 'data-master.html?status=perbaikan', tautan: 'Lihat pendaftar perlu perbaikan' },
       { ikon: 'verified', label: 'Terverifikasi', nilai: h.terverifikasi,
-        meta: persen + '% dari total · ' + U.angka(masuk) + ' masuk kuota', href: 'data-master.html?status=terverifikasi', tautan: 'Lihat pendaftar terverifikasi' }
+        meta: persen + '% dari total · ' + (umum ? U.angka(umum.diterima) + ' diterima · ' + U.angka(umum.daftarUlang) + ' daftar ulang' : U.angka(masuk) + ' masuk kuota'), href: 'data-master.html?status=terverifikasi', tautan: 'Lihat pendaftar terverifikasi' }
     ].forEach(function (o) { host.appendChild(kartu(o)); });
 
     var tombol = $('[data-mulai-verifikasi]');

@@ -18,7 +18,7 @@
 
   var AWAL = R.JADWAL[0].mulai;          // pendaftaran dibuka
   var AKHIR = R.TANGGAL_SIMULASI;        // "hari ini" simulasi
-  var JENIS_LOG = { login: 'Masuk', logout: 'Keluar', tambah: 'Tambah', ubah: 'Ubah', hapus: 'Hapus', verifikasi: 'Verifikasi', reset: 'Reset', impor: 'Impor', ekspor: 'Ekspor' };
+  var JENIS_LOG = { login: 'Masuk', logout: 'Keluar', tambah: 'Tambah', ubah: 'Ubah', hapus: 'Hapus', verifikasi: 'Verifikasi', reset: 'Reset', impor: 'Impor', ekspor: 'Ekspor', akun: 'Akun', pengumuman: 'Pengumuman', 'daftar-ulang': 'Daftar ulang' };
 
   var inputDari = $('#dari');
   var inputSampai = $('#sampai');

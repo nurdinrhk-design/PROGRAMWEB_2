@@ -10,10 +10,10 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **1.2** |
+| Versi dokumen | **1.3** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1) · [referensi Stitch](img/referensi-stitch/) |
-| Status | ✅ v1.2: Tahap 1–15 selesai. Revisi dosen (Tahap 14) + perbaikan kecil (Tahap 15). Database tetap lokal (D-21) |
+| Status | ✅ v1.3: Tahap 1–16 selesai. Revisi dosen (14), perbaikan kecil (15), pengumuman hasil & daftar ulang (16). Database tetap lokal (D-21) |
 
 ---
 
@@ -130,6 +130,7 @@ Status: ✅ Disepakati · 🔄 Bisa ditinjau ulang
 | D-24 | Push & deploy | Commit disimpan lokal per tahap. **Push, CI, dan GitHub Pages dijalankan setelah akun Nurdin siap** (langkah 13.1) | ✅ | Menghindari jejak akun lain di repo publik |
 | D-25 | Dua peran pengguna (revisi dosen, 21 Okt 2026) | **Orang tua/calon peserta** membuat akun, masuk, dan mendaftarkan anaknya sendiri (maks. 3 anak per akun); **panitia** tetap bisa mendaftarkan calon peserta yang datang ke sekolah (loket). Satu halaman masuk dengan pilihan peran; portal orang tua bertema sama tetapi lebih ringkas & ramah HP. Orang tua boleh mengubah data selama status Menunggu/Perlu perbaikan; kiriman perbaikan mengembalikan status ke Menunggu. Kata sandi akun disimpan sebagai hash PBKDF2-SHA256 (Web Crypto); tetap simulasi di browser | ✅ | Revisi dosen; pilihan pengembang (3 opsi rekomendasi) |
 | D-26 | Perbaikan kecil v1.2 (21 Okt 2026) | Database **tetap lokal** (keputusan pengembang setelah membandingkan Supabase). Uji end-to-end dipindah ke repo (`tests/e2e/`, tanpa jalur lokal, tanpa sisa berkas) dan dijalankan di CI. Ditambah menu Akun Orang Tua (panitia), Akun saya (orang tua), rekap per sumber | ✅ | Uji di folder Temp sempat hilang; dosen kemungkinan menanyakan pengelolaan akun |
+| D-27 | Pengumuman hasil (21 Okt 2026) | Panitia menekan **Umumkan hasil**: peringkat saat itu dibekukan menjadi hasil akhir (masuk kuota = Diterima; selain itu Tidak diterima dengan alasan kuota / belum terverifikasi / ditolak). Setelah diumumkan, verifikasi dan pendaftaran/perubahan oleh orang tua dikunci; orang tua yang anaknya diterima mengonfirmasi daftar ulang. Pengumuman bisa dibatalkan untuk demo. Tanggal simulasi tetap 18 Juni; jadwal resmi 26 Juni ditampilkan sebagai keterangan | ✅ | Permintaan pengembang; menggantikan kebutuhan mengubah tanggal simulasi |
 
 **Asumsi:**
 - A-01: Satu peran pengguna: **Panitia PPDB** (akun demo `panitia` / `ppdb2026`).
@@ -226,6 +227,9 @@ Satu halaman lolos jika **semua** jawaban "ya":
 | FR-25 | Panitia melihat daftar akun orang tua beserta anak yang didaftarkan (cari, filter, tanpa data sandi) | P-13 | 15 |
 | FR-26 | Orang tua mengubah nama & no. HP, serta mengganti kata sandi (sandi lama wajib benar) | P-14 | 15 |
 | FR-27 | Rekap per jalur memuat jumlah pendaftar online & loket (tampilan, CSV, cetak) | P-07 | 15 |
+| FR-28 | Panitia mengumumkan hasil seleksi (bekukan peringkat) dan bisa membatalkannya | P-06 | 16 |
+| FR-29 | Setelah diumumkan: verifikasi, pendaftaran & perubahan data oleh orang tua dikunci | P-04, P-05, P-11 | 16 |
+| FR-30 | Orang tua melihat hasil akhir (Diterima / Tidak diterima + alasan) di beranda & bukti, lalu mengonfirmasi daftar ulang | P-08, P-10, P-12 | 16 |
 
 ### 5.3 Kebutuhan non-fungsional (NFR)
 | ID | Kebutuhan | Ukuran keberhasilan | Tahap |
@@ -527,6 +531,7 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 - **Pertanyaan:** "Siapa yang masuk kuota saat ini, berapa batasnya, dan siapa yang tergeser?"
 - **Konten:** tab jalur (dengan kuota). Ringkasan: kuota · terverifikasi · keketatan · batas sementara. Tabel peringkat (peringkat, nama, asal sekolah, jarak/skor, status seleksi) dengan **baris pemisah garis batas kuota**. Keterangan dasar peringkat (BR-10). Label "Peringkat sementara, berubah sampai verifikasi ditutup 22 Juni".
 - **Interaksi:** ganti tab, cari nama (lompat ke baris & sorot), tampilkan "hanya sekitar garis batas", ekspor CSV, tautan ke bukti pendaftaran.
+- **Hasil Tahap 16:** tombol **Umumkan hasil** (aksi utama) dengan dialog konfirmasi berisi jumlah diterima; setelah diumumkan kotak status berubah menjadi ringkasan (diterima, daftar ulang) dan muncul **Batalkan pengumuman**.
 - **Hasil Tahap 9:** pencarian juga menjelaskan pendaftar yang tidak ada di peringkat jalur aktif (belum terverifikasi, atau ada di jalur lain dengan tombol pindah jalur). Batas sementara tampil "Belum ada" bila kuota belum penuh, dan filter "sekitar garis batas" (±10 baris) dinonaktifkan.
 
 ### P-07 · `pages/laporan.html` — Rekap & Cetak (Tahap 11)
@@ -714,6 +719,7 @@ PROGRAMWEB_2/
 | `ppdb.v2.pendaftar` | Array pendaftar (termasuk berkas) |
 | `ppdb.v2.verifikasi` | Riwayat keputusan verifikasi |
 | `ppdb.v2.log` | Log aktivitas (≤ 100) |
+| `ppdb.v2.pengumuman` | Hasil akhir yang diumumkan (status, alasan, peringkat per pendaftar) + waktu daftar ulang; kosong bila belum diumumkan |
 | `ppdb.v2.akun` | Akun orang tua (Tahap 14): kata sandi hanya sebagai salt + hash PBKDF2-SHA256 100.000 iterasi. Skema data versi 3 |
 | `ppdb.v2.session` | Sesi login simulasi (berisi peran `panitia`/`peserta`): 8 jam di `sessionStorage`, atau 30 hari di `localStorage` jika "Ingat saya" |
 | `ppdb.v2.login-gagal` | Penghitung percobaan login gagal (`sessionStorage`, kunci 30 detik setelah 5 kali salah) |
@@ -723,7 +729,7 @@ PROGRAMWEB_2/
 
 ## 11. Tahapan Pengembangan
 
-**Penomoran (D-22):** tahap besar diberi nomor **1–15** (Tahap 14 = revisi dosen, Tahap 15 = perbaikan kecil v1.2), langkah di dalamnya **x.1, x.2, …**. Langkah terakhir setiap tahap adalah **Penutupan** (§11.3). Rincian langkah dan statusnya ada di [checklist_work.md](checklist_work.md). Satu tahap dikerjakan per sesi, lalu **berhenti menunggu review** (D-16).
+**Penomoran (D-22):** tahap besar diberi nomor **1–16** (Tahap 14 = revisi dosen, 15 = perbaikan kecil, 16 = pengumuman hasil), langkah di dalamnya **x.1, x.2, …**. Langkah terakhir setiap tahap adalah **Penutupan** (§11.3). Rincian langkah dan statusnya ada di [checklist_work.md](checklist_work.md). Satu tahap dikerjakan per sesi, lalu **berhenti menunggu review** (D-16).
 
 | Tahap | Nama | Milestone | Output utama | Prasyarat | Status |
 |---|---|---|---|---|---|
@@ -742,6 +748,7 @@ PROGRAMWEB_2/
 | **13** | Rilis & online | M3 | Akun Nurdin, CI, GitHub Pages, README final, rilis `v1.0`, panduan domain | 12 | ✅ |
 | **14** | Dua peran: orang tua & panitia (revisi dosen) | M3 | `daftar.html`, `portal/*`, login dua peran, akun di `store.js`, sumber pendaftaran, rilis `v1.1` | 13 | ✅ |
 | **15** | Perbaikan kecil v1.2 | M3 | `pages/akun.html`, `portal/akun.html`, rekap per sumber, `tests/e2e/` + CI, rilis `v1.2` | 14 | ✅ |
+| **16** | Pengumuman hasil & daftar ulang | M3 | Umumkan/batalkan di Hasil & Peringkat, kunci verifikasi & portal, hasil & daftar ulang di portal, rilis `v1.3` | 15 | ✅ |
 
 ```mermaid
 flowchart LR
@@ -824,6 +831,9 @@ Langkah terakhir setiap tahap (mis. 6.7) berisi empat hal berurutan:
 | TC-28 | Panitia mendaftarkan di loket & menyaring sumber | Sumber Loket; filter Online/Loket benar |
 | TC-29 | Panitia membuka Akun Orang Tua, cari email, filter perbaikan | Angka ringkasan = data, akun & anak tampil, hash tidak tampil |
 | TC-30 | Orang tua mengubah profil & mengganti kata sandi | HP salah ditolak; sandi lama salah/sandi lemah ditolak; setelah diganti hanya sandi baru yang diterima |
+| TC-31 | Panitia mengumumkan hasil | Jumlah diterima = jumlah masuk kuota; semua pendaftar mendapat hasil; verifikasi dikunci |
+| TC-32 | Orang tua melihat hasil & konfirmasi daftar ulang | Diterima → daftar ulang tercatat (juga di bukti); tidak diterima → alasan; form tertutup |
+| TC-33 | Panitia membatalkan pengumuman | Hasil & daftar ulang dihapus; verifikasi dibuka lagi |
 
 ---
 
@@ -918,3 +928,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | **1.0** | 2 Okt 2026 | **Rilis.** CI (W3C + Gitleaks), GitHub Pages dengan `noindex`, referrer, 404, perlindungan branch. README final, naskah demo, panduan domain | Nurdin & Claude |
 | **1.1** | 21 Okt 2026 | **Revisi dosen — dua peran pengguna (Tahap 14):** D-25, aktor orang tua, FR-19…FR-24, sitemap & ERD (`AKUN`, `sumber`), P-09…P-12, kunci `ppdb.v2.akun`, TC-24…TC-28. Status tabel tahap 4–13 diperbarui | Nurdin & Claude |
 | **1.2** | 21 Okt 2026 | **Perbaikan kecil (Tahap 15):** D-26 (database tetap lokal, uji e2e di repo & CI), FR-25…FR-27, P-13, P-14, TC-29, TC-30 | Nurdin & Claude |
+| **1.3** | 21 Okt 2026 | **Pengumuman hasil (Tahap 16):** D-27, FR-28…FR-30, catatan P-06, kunci `ppdb.v2.pengumuman`, TC-31…TC-33 | Nurdin & Claude |

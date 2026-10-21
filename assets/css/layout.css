@@ -461,6 +461,10 @@ body[data-auth="required"]:not(.is-authed) .app {
     flex-basis: 100%;
     order: -1;
   }
+
+  .page-header__actions .btn--danger-outlined {
+    flex-basis: 100%;
+  }
 }
 
 /* =====================================================================

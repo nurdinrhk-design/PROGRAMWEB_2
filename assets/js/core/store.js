@@ -16,7 +16,8 @@
     pendaftar: 'ppdb.v2.pendaftar',
     verifikasi: 'ppdb.v2.verifikasi',
     log: 'ppdb.v2.log',
-    akun: 'ppdb.v2.akun'
+    akun: 'ppdb.v2.akun',
+    pengumuman: 'ppdb.v2.pengumuman'
   };
   var VERSI = 3;                      // 3: akun orang tua + sumber pendaftaran (Tahap 14)
   var LOG_MAKS = 100;                 // BR-12
@@ -54,7 +55,7 @@
   }
 
   function simpan(bagian) {
-    (bagian || ['pendaftar', 'verifikasi', 'log', 'akun']).forEach(function (k) { tulis(KEY[k], state[k]); });
+    (bagian || ['pendaftar', 'verifikasi', 'log', 'akun', 'pengumuman']).forEach(function (k) { tulis(KEY[k], state[k]); });
   }
 
   function beritahu(tipe) {
@@ -154,7 +155,8 @@
         pendaftar: pendaftar,
         verifikasi: baca(KEY.verifikasi) || [],
         log: baca(KEY.log) || [],
-        akun: baca(KEY.akun) || []
+        akun: baca(KEY.akun) || [],
+        pengumuman: baca(KEY.pengumuman)
       };
     }
     return state;
@@ -162,7 +164,7 @@
 
   function isiUlang() {
     var data = PPDB.seed.generate();
-    state = { pendaftar: data.pendaftar, verifikasi: data.verifikasi, log: data.log, akun: data.akun };
+    state = { pendaftar: data.pendaftar, verifikasi: data.verifikasi, log: data.log, akun: data.akun, pengumuman: null };
     tulis(KEY.meta, { versi: VERSI, seed: PPDB.seed.SEED, dibuat: isoWaktu(new Date()) });
     simpan();
   }
@@ -304,7 +306,7 @@
    */
   function tambah(isian, opsi) {
     var akunId = opsi && akunAmbil(opsi.akunId) ? opsi.akunId : '';
-    if (akunId && pendaftarAkun(akunId).length >= R.MAKS_ANAK) return null;
+    if (akunId && (pendaftarAkun(akunId).length >= R.MAKS_ANAK || init().pengumuman)) return null;
     var no = nomorBerikutnya();
     var data = saringIsian(isian, null);
     var waktu = isoWaktu(R.now());
@@ -385,6 +387,7 @@
   function verifikasi(id, input) {
     var p = ambil(id);
     if (!p) return { ok: false, error: 'Pendaftar tidak ditemukan.' };
+    if (state.pengumuman) return { ok: false, error: 'Hasil seleksi sudah diumumkan. Batalkan pengumuman untuk mengubah keputusan.' };
     var keputusan = input.keputusan;
     if (['terverifikasi', 'perbaikan', 'ditolak'].indexOf(keputusan) === -1) {
       return { ok: false, error: 'Keputusan tidak dikenal.' };
@@ -417,6 +420,62 @@
     catatLog('verifikasi', R.STATUS_VERIFIKASI[keputusan].labelPanjang + ': ' + p.nama + ' (' + p.noDaftar + ')');
     beritahu('verifikasi');
     return { ok: true, data: p };
+  }
+
+  /* ---------- Pengumuman hasil (Tahap 16) ---------- */
+  function pengumuman() {
+    return init().pengumuman || null;
+  }
+
+  // Bekukan peringkat saat ini menjadi hasil akhir: masuk kuota = diterima
+  function umumkan(panitiaId) {
+    if (init().pengumuman) return { ok: false, error: 'Hasil sudah diumumkan.' };
+    var hasil = {};
+    R.JALUR.forEach(function (j) {
+      var h = R.peringkat(state.pendaftar, j.kode);
+      h.daftar.forEach(function (b) {
+        hasil[b.data.id] = { status: b.status === 'masuk' ? 'diterima' : 'tidak', alasan: b.status === 'masuk' ? '' : 'kuota', peringkat: b.peringkat, kuota: h.kuota };
+      });
+    });
+    state.pendaftar.forEach(function (p) {
+      if (!hasil[p.id]) hasil[p.id] = { status: 'tidak', alasan: p.status === 'ditolak' ? 'ditolak' : 'belum', peringkat: 0, kuota: R.jalur(p.jalur).kuota };
+    });
+    var diterima = Object.keys(hasil).filter(function (k) { return hasil[k].status === 'diterima'; }).length;
+    state.pengumuman = { waktu: isoWaktu(R.now()), panitiaId: teks(panitiaId, 20), hasil: hasil, daftarUlang: {} };
+    simpan(['pengumuman']);
+    catatLog('pengumuman', 'Hasil seleksi diumumkan: ' + diterima + ' diterima dari ' + state.pendaftar.length + ' pendaftar');
+    beritahu('pengumuman');
+    return { ok: true, diterima: diterima };
+  }
+
+  function batalkanPengumuman() {
+    if (!init().pengumuman) return false;
+    state.pengumuman = null;
+    simpan(['pengumuman']);
+    catatLog('pengumuman', 'Pengumuman hasil dibatalkan (data kembali bisa diubah)');
+    beritahu('pengumuman');
+    return true;
+  }
+
+  /** @returns {{status, alasan, peringkat, kuota, daftarUlang}|null} */
+  function hasilPendaftar(id) {
+    var u = pengumuman();
+    if (!u || !u.hasil[id]) return null;
+    var h = u.hasil[id];
+    return { status: h.status, alasan: h.alasan, peringkat: h.peringkat, kuota: h.kuota, daftarUlang: u.daftarUlang[id] || '' };
+  }
+
+  // Konfirmasi daftar ulang oleh orang tua (hanya anak yang diterima, milik akunnya)
+  function konfirmasiDaftarUlang(id, akunId) {
+    var p = ambil(id);
+    var h = hasilPendaftar(id);
+    if (!p || !h || h.status !== 'diterima' || (akunId && p.akunId !== akunId)) return { ok: false, error: 'Daftar ulang tidak tersedia untuk pendaftar ini.' };
+    if (h.daftarUlang) return { ok: true, waktu: h.daftarUlang };
+    state.pengumuman.daftarUlang[id] = isoWaktu(R.now());
+    simpan(['pengumuman']);
+    catatLog('daftar-ulang', 'Daftar ulang dikonfirmasi: ' + p.nama + ' (' + p.noDaftar + ')');
+    beritahu('daftar-ulang');
+    return { ok: true, waktu: state.pengumuman.daftarUlang[id] };
   }
 
   function reset() {
@@ -526,7 +585,7 @@
       return { id: l.id, waktu: l.waktu, tipe: teks(l.tipe, 20), pesan: teks(l.pesan, 200) };
     });
 
-    state = { pendaftar: pendaftar, verifikasi: verif, log: log, akun: akun };
+    state = { pendaftar: pendaftar, verifikasi: verif, log: log, akun: akun, pengumuman: null }; // hasil diumumkan ulang setelah pemulihan
     tulis(KEY.meta, { versi: VERSI, seed: 'impor', dibuat: isoWaktu(new Date()) });
     simpan();
     catatLog('impor', 'Data dipulihkan dari cadangan (' + pendaftar.length + ' pendaftar)');
@@ -548,6 +607,11 @@
     tambahAkun: tambahAkun,
     ubahAkun: ubahAkun,
     gantiSandiAkun: gantiSandiAkun,
+    pengumuman: pengumuman,
+    umumkan: umumkan,
+    batalkanPengumuman: batalkanPengumuman,
+    hasilPendaftar: hasilPendaftar,
+    konfirmasiDaftarUlang: konfirmasiDaftarUlang,
     riwayat: riwayat,
     log: daftarLog,
     catatLog: catatLog,

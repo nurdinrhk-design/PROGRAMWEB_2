@@ -307,6 +307,36 @@
       S.reset();
     });
 
+    /* ================= PENGUMUMAN (Tahap 16) ================= */
+    uji('Pengumuman: hasil = masuk kuota, mengunci verifikasi & pendaftaran online', function () {
+      S.reset();
+      var masuk = R.JALUR.reduce(function (n, j) {
+        return n + R.peringkat(S.semua(), j.kode).daftar.filter(function (b) { return b.status === 'masuk'; }).length;
+      }, 0);
+      var r = S.umumkan('pnt-01');
+      pastikan(r.ok, r.error);
+      sama(r.diterima, masuk, 'jumlah diterima');
+      pastikan(!S.umumkan('pnt-01').ok, 'tidak bisa diumumkan dua kali');
+      var tunggu = S.semua().filter(function (p) { return p.status === 'menunggu'; })[0];
+      sama(S.hasilPendaftar(tunggu.id).alasan, 'belum');
+      pastikan(!S.verifikasi(tunggu.id, { keputusan: 'perbaikan', catatan: 'Tidak boleh lagi' }).ok, 'verifikasi dikunci');
+      var a = S.akunEmail(PPDB.seed.AKUN_DEMO.email);
+      S.hapus(S.pendaftarAkun(a.id)[0].id);
+      sama(S.tambah({ nama: 'Terlambat Daftar', nisn: '9000002001', jalur: 'zonasi' }, { akunId: a.id }), null, 'pendaftaran online ditutup');
+    });
+
+    uji('Daftar ulang: hanya anak diterima milik akun; batalkan mengembalikan semula', function () {
+      var u = S.pengumuman();
+      var idTerima = Object.keys(u.hasil).filter(function (k) { return u.hasil[k].status === 'diterima' && S.ambil(k) && S.ambil(k).akunId; })[0];
+      var p = S.ambil(idTerima);
+      pastikan(!S.konfirmasiDaftarUlang(idTerima, 'ak-9999').ok, 'akun lain ditolak');
+      pastikan(S.konfirmasiDaftarUlang(idTerima, p.akunId).ok, 'pemilik diterima');
+      pastikan(S.hasilPendaftar(idTerima).daftarUlang, 'waktu daftar ulang tercatat');
+      pastikan(S.batalkanPengumuman(), 'dibatalkan');
+      sama(S.pengumuman(), null);
+      S.reset();
+    });
+
     /* ================= UI ================= */
     uji('Keamanan: ui.el memakai textContent (tidak mengeksekusi HTML)', function () {
       var n = PPDB.ui.el('div', { text: '<img src=x onerror=alert(1)>' });

@@ -82,6 +82,17 @@
     tergeser: { label: 'Tergeser', badge: 'badge--tergeser' }
   };
 
+  // Hasil akhir setelah panitia mengumumkan (Tahap 16)
+  var STATUS_PENGUMUMAN = {
+    diterima: { label: 'Diterima', badge: 'badge--masuk' },
+    tidak: { label: 'Tidak diterima', badge: 'badge--tergeser' }
+  };
+  var ALASAN_TIDAK = {
+    kuota: 'Peringkat di luar kuota jalur',
+    belum: 'Berkas belum terverifikasi sampai pengumuman',
+    ditolak: 'Pendaftaran ditolak saat verifikasi'
+  };
+
   var PRESTASI_BONUS = { kota: 2, provinsi: 3, nasional: 5 };
   var PRESTASI_LABEL = { kota: 'Kota/Kabupaten', provinsi: 'Provinsi', nasional: 'Nasional' };
 
@@ -424,6 +435,8 @@
     TAHUN_LULUS: TAHUN_LULUS,
     MAKS_ANAK: MAKS_ANAK,
     SUMBER: SUMBER,
+    STATUS_PENGUMUMAN: STATUS_PENGUMUMAN,
+    ALASAN_TIDAK: ALASAN_TIDAK,
     JUMLAH_SEMESTER: JUMLAH_SEMESTER,
     STATUS_VERIFIKASI: STATUS_VERIFIKASI,
     STATUS_SELEKSI: STATUS_SELEKSI,

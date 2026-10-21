@@ -257,12 +257,69 @@
   });
   cekBatas.addEventListener('change', function () { st.batas = cekBatas.checked; render(false); });
   $('[data-aksi="ekspor-csv"]').addEventListener('click', eksporCsv);
-  window.addEventListener('ppdb:change', function () { render(false); });
+  window.addEventListener('ppdb:change', function () { render(false); renderPengumuman(); });
+
+  /* =================================================================
+     6. Pengumuman hasil (Tahap 16): bekukan peringkat menjadi hasil akhir
+     ================================================================= */
+  var tutup = R.JADWAL.filter(function (j) { return j.kode === 'verifikasi'; })[0];
+  var hariUmum = R.JADWAL.filter(function (j) { return j.kode === 'pengumuman'; })[0];
+
+  function renderPengumuman() {
+    var u = S.pengumuman();
+    var kotak = $('[data-kotak-status]');
+    $('[data-aksi="umumkan"]').hidden = !!u;
+    $('[data-aksi="batalkan"]').hidden = !u;
+    kotak.className = 'alert ' + (u ? 'alert--success' : 'alert--info');
+    $('[data-ikon-status]').textContent = u ? 'campaign' : 'schedule';
+    if (!u) {
+      $('[data-catatan-sementara]').textContent = 'Peringkat sementara, berubah sampai verifikasi ditutup ' + U.tanggalPanjang(tutup.selesai) +
+        '. Hanya pendaftar terverifikasi yang ikut peringkat. Jadwal pengumuman: ' + U.tanggalPanjang(hariUmum.mulai) + '.';
+      return;
+    }
+    var hasil = Object.keys(u.hasil).map(function (k) { return u.hasil[k]; });
+    var diterima = hasil.filter(function (h) { return h.status === 'diterima'; }).length;
+    $('[data-catatan-sementara]').textContent = 'Hasil diumumkan ' + U.tanggalWaktu(u.waktu) + ': ' + U.angka(diterima) + ' diterima dari ' +
+      U.angka(hasil.length) + ' pendaftar · ' + U.angka(Object.keys(u.daftarUlang).length) + ' sudah daftar ulang. Hasil akhir tersimpan saat diumumkan; verifikasi dikunci.';
+  }
+
+  function umumkan() {
+    var masuk = R.JALUR.reduce(function (n, j) {
+      return n + R.peringkat(S.semua(), j.kode).daftar.filter(function (b) { return b.status === 'masuk'; }).length;
+    }, 0);
+    var belum = S.hitungStatus();
+    U.konfirmasi({
+      judul: 'Umumkan hasil seleksi?',
+      isi: 'Peringkat saat ini menjadi hasil akhir: ' + U.angka(masuk) + ' pendaftar diterima. ' +
+        U.angka(belum.menunggu + belum.perbaikan) + ' pendaftar yang belum terverifikasi dinyatakan tidak diterima. ' +
+        'Setelah diumumkan, verifikasi dan perubahan data oleh orang tua dikunci. (Simulasi: jadwal resminya ' + U.tanggalPanjang(hariUmum.mulai) + '.)',
+      labelYa: 'Umumkan',
+      ikon: 'campaign'
+    }).then(function (ya) {
+      if (!ya) return;
+      var akun = PPDB.auth.panitiaAktif();
+      var r = S.umumkan(akun ? akun.id : '');
+      U.snackbar(r.ok ? 'Hasil diumumkan: ' + U.angka(r.diterima) + ' diterima. Orang tua kini bisa melihat hasilnya.' : r.error);
+    });
+  }
+
+  function batalkan() {
+    U.konfirmasi({
+      judul: 'Batalkan pengumuman?',
+      isi: 'Hasil akhir dan konfirmasi daftar ulang dihapus. Verifikasi dan perubahan data kembali dibuka.',
+      labelYa: 'Batalkan pengumuman',
+      bahaya: true,
+      ikon: 'undo'
+    }).then(function (ya) {
+      if (ya && S.batalkanPengumuman()) U.snackbar('Pengumuman dibatalkan.');
+    });
+  }
+
+  $('[data-aksi="umumkan"]').addEventListener('click', umumkan);
+  $('[data-aksi="batalkan"]').addEventListener('click', batalkan);
 
   /* ---------- Mulai ---------- */
-  var tutup = R.JADWAL.filter(function (j) { return j.kode === 'verifikasi'; })[0];
-  $('[data-catatan-sementara]').textContent = 'Peringkat sementara, berubah sampai verifikasi ditutup ' + U.tanggalPanjang(tutup.selesai) +
-    '. Hanya pendaftar terverifikasi yang ikut peringkat.';
+  renderPengumuman();
 
   var p = new URLSearchParams(window.location.search);
   if (R.jalur(p.get('jalur'))) st.jalur = p.get('jalur');

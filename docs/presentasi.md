@@ -1,6 +1,6 @@
 # Naskah Demo & Tanya-Jawab — Admin Panel PPDB Online
 
-> Bahan presentasi Milestone 3 (Tahap 13.5). Durasi demo **8–9 menit** (v1.1). Semua data adalah **simulasi** (sekolah, siswa, dan angka fiktif).
+> Bahan presentasi Milestone 3 (Tahap 13.5). Durasi demo **9–10 menit** (v1.3). Semua data adalah **simulasi** (sekolah, siswa, dan angka fiktif).
 > Situs: <https://nurdinrhk-design.github.io/PROGRAMWEB_2/> · Akun demo orang tua: `orangtua@ppdb.test` / `orangtua2026` · panitia: `panitia` / `ppdb2026`
 > Versi v1.1 (revisi dosen): dua peran pengguna, orang tua dan panitia.
 
@@ -25,7 +25,8 @@
 | 6:00–6:45 | **Verifikasi Berkas** | Antrean terlama, cek berkas *Sesuai*, klik *Terverifikasi* | "Tombol Terverifikasi baru aktif kalau semua berkas sesuai. Perbaikan dan Tolak wajib catatan. Setelah memutuskan, langsung lanjut ke pendaftar berikutnya." |
 | 6:45–7:30 | **Hasil & Peringkat** | Tab Zonasi, garis batas kuota, cari nama yang tadi diverifikasi | "Peringkat dihitung ulang otomatis: jarak terdekat, lalu usia, lalu waktu daftar. Baris garis batas kuota memisahkan yang masuk kuota dan yang tergeser." |
 | 7:30–8:15 | **Rekap & Cetak** | Ubah rentang tanggal, *Cetak rekap* (pratinjau), buka bukti pendaftaran | "Rekap siap dibawa ke rapat panitia. Kop sekolah fiktif tanpa lambang, kolom tanda tangan kosong." |
-| 8:15–8:30 | **Penutup** | Kembali ke Dashboard | "Dibuat dengan HTML, CSS, dan JavaScript murni bertema Material Design 3, diuji otomatis 150+ kasus, Lighthouse aksesibilitas 100." |
+| 8:15–9:00 | **Pengumuman hasil** | Hasil & Peringkat → *Umumkan hasil* → masuk sebagai orang tua: anak *Diterima* → *Konfirmasi daftar ulang*; anak lain *Tidak diterima* + alasan | "Peringkat dibekukan saat diumumkan; verifikasi dan perubahan data dikunci. Orang tua langsung melihat hasilnya dan mengonfirmasi daftar ulang. Untuk demo, pengumuman bisa dibatalkan." |
+| 9:00–9:15 | **Penutup** | Kembali ke Dashboard | "Dibuat dengan HTML, CSS, dan JavaScript murni bertema Material Design 3, diuji otomatis 150+ kasus, Lighthouse aksesibilitas 100." |
 
 ## Tanya-jawab yang mungkin muncul
 
@@ -73,4 +74,4 @@ Database & autentikasi server, unggah berkas sungguhan, notifikasi ke pendaftar,
 
 - Situs: <https://nurdinrhk-design.github.io/PROGRAMWEB_2/>
 - Repositori: <https://github.com/nurdinrhk-design/PROGRAMWEB_2>
-- Rilis: <https://github.com/nurdinrhk-design/PROGRAMWEB_2/releases/tag/v1.1>
+- Rilis: <https://github.com/nurdinrhk-design/PROGRAMWEB_2/releases/tag/v1.3>

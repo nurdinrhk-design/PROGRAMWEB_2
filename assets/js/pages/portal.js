@@ -40,6 +40,37 @@
     return antre.map(function (x) { return x.id; }).indexOf(p.id) + 1;
   }
 
+  /* ---------- Hasil akhir setelah diumumkan (Tahap 16) ---------- */
+  function pesanHasil(p, h) {
+    var du = jadwal('daftar_ulang');
+    if (h.status === 'diterima') {
+      return el('div', { className: 'alert alert--success' }, [U.icon('celebration'), el('div', { className: 'alert__body' }, [
+        el('p', { className: 'alert__title', text: 'Selamat, ' + p.nama + ' diterima di jalur ' + R.jalur(p.jalur).nama }),
+        el('p', { text: h.daftarUlang
+          ? 'Daftar ulang sudah dikonfirmasi pada ' + U.tanggalWaktu(h.daftarUlang) + '. Bawa berkas asli ke sekolah pada ' + U.tanggal(du.mulai) + ' – ' + U.tanggal(du.selesai) + '.'
+          : 'Peringkat ' + U.angka(h.peringkat) + ' dari kuota ' + U.angka(h.kuota) + '. Konfirmasi daftar ulang paling lambat ' + U.tanggalPanjang(du.selesai) + ', lalu bawa berkas asli ke sekolah.' })
+      ])]);
+    }
+    return el('div', { className: 'alert alert--info' }, [U.icon('info'), el('div', { className: 'alert__body' }, [
+      el('p', { className: 'alert__title', text: 'Tidak diterima' }),
+      el('p', { text: R.ALASAN_TIDAK[h.alasan] + (h.peringkat ? ' (peringkat ' + U.angka(h.peringkat) + ', kuota ' + U.angka(h.kuota) + ')' : '') +
+        '. Terima kasih telah mendaftar. Hubungi panitia di sekolah bila ada pertanyaan.' })
+    ])]);
+  }
+
+  function konfirmasiDaftarUlang(p) {
+    U.konfirmasi({
+      judul: 'Konfirmasi daftar ulang ' + p.nama + '?',
+      isi: 'Dengan konfirmasi ini, ' + p.nama + ' menyatakan akan bersekolah di ' + R.SEKOLAH.nama + '. Berkas asli tetap dibawa ke sekolah saat jadwal daftar ulang.',
+      labelYa: 'Konfirmasi',
+      ikon: 'how_to_reg'
+    }).then(function (ya) {
+      if (!ya) return;
+      var r = S.konfirmasiDaftarUlang(p.id, ortu.id);
+      U.snackbar(r.ok ? 'Daftar ulang ' + p.nama + ' dikonfirmasi.' : r.error);
+    });
+  }
+
   /* ---------- Pesan status (bahasa untuk orang tua) ---------- */
   function pesanStatus(p) {
     var v = S.riwayat(p.id)[0];
@@ -72,11 +103,17 @@
 
   function kartuAnak(p) {
     var j = R.jalur(p.jalur);
-    var bisaUbah = p.status === 'menunggu' || p.status === 'perbaikan';
+    var h = S.hasilPendaftar(p.id);
+    var bisaUbah = !h && (p.status === 'menunggu' || p.status === 'perbaikan');
     var aksi = [
       el('a', { className: 'btn btn--outlined', attrs: { href: 'bukti.html?id=' + encodeURIComponent(p.id) } }, [U.icon('receipt_long'), 'Bukti pendaftaran'])
     ];
-    if (p.status === 'perbaikan') {
+    if (h && h.status === 'diterima' && !h.daftarUlang) {
+      aksi.unshift(el('button', { className: 'btn btn--tonal', attrs: { type: 'button' }, on: { click: function () { konfirmasiDaftarUlang(p); } } },
+        [U.icon('how_to_reg'), 'Konfirmasi daftar ulang']));
+    } else if (!bisaUbah) {
+      // Sudah diputuskan / diumumkan: hanya bukti
+    } else if (p.status === 'perbaikan') {
       aksi.unshift(el('a', { className: 'btn btn--tonal', attrs: { href: 'form.html?id=' + encodeURIComponent(p.id) } }, [U.icon('edit_note'), 'Perbaiki pendaftaran']));
     } else if (bisaUbah) {
       aksi.push(el('a', { className: 'btn btn--text', attrs: { href: 'form.html?id=' + encodeURIComponent(p.id) } }, [U.icon('edit'), 'Ubah data']));
@@ -88,9 +125,9 @@
           el('h3', { className: 'child__name', text: p.nama, attrs: { id: 'anak-' + p.id } }),
           el('p', { className: 'text-body-sm text-variant num', text: p.noDaftar + ' · didaftarkan ' + U.tanggalWaktu(p.tglDaftar) })
         ]),
-        el('div', { className: 'cluster' }, [U.badgeStatus(p.status), U.chipJalur(p.jalur)])
+        el('div', { className: 'cluster' }, [h ? U.badgePengumuman(h.status) : U.badgeStatus(p.status), U.chipJalur(p.jalur)])
       ]),
-      pesanStatus(p),
+      h ? pesanHasil(p, h) : pesanStatus(p),
       el('dl', { className: 'info-list' }, [
         el('dt', { text: 'Jalur' }), el('dd', { text: j.nama }),
         el('dt', { text: j.dasar === 'skor' ? 'Skor' : 'Jarak' }), el('dd', { text: j.dasar === 'skor' ? U.desimal(R.skorPrestasi(p)) : U.jarak(p.jarakMeter) }),
@@ -118,7 +155,8 @@
     ortu = PPDB.auth.pesertaAktif();
     if (!ortu) return;
     var anak = S.pendaftarAkun(ortu.id);
-    var buka = pendaftaranBuka();
+    var diumumkan = !!S.pengumuman();
+    var buka = pendaftaranBuka() && !diumumkan;
     var penuh = anak.length >= R.MAKS_ANAK;
 
     $('[data-sapaan]').textContent = 'Halo, ' + ortu.nama;
@@ -130,11 +168,12 @@
     });
 
     var tutup = jadwal('pendaftaran').selesai;
-    $('[data-info-jadwal-teks]').textContent = (buka
-      ? 'Pendaftaran dibuka sampai ' + U.tanggalPanjang(tutup) + '. '
-      : 'Masa pendaftaran sudah ditutup. ') +
-      'Pengumuman hasil: ' + U.tanggalPanjang(jadwal('pengumuman').mulai) + '.' +
-      (penuh ? ' Akun ini sudah mendaftarkan ' + R.MAKS_ANAK + ' anak (batas maksimal).' : '');
+    var du = jadwal('daftar_ulang');
+    $('[data-info-jadwal-teks]').textContent = diumumkan
+      ? 'Hasil seleksi sudah diumumkan. Daftar ulang: ' + U.tanggal(du.mulai) + ' – ' + U.tanggal(du.selesai) + '.'
+      : (buka ? 'Pendaftaran dibuka sampai ' + U.tanggalPanjang(tutup) + '. ' : 'Masa pendaftaran sudah ditutup. ') +
+        'Pengumuman hasil: ' + U.tanggalPanjang(jadwal('pengumuman').mulai) + '.' +
+        (penuh ? ' Akun ini sudah mendaftarkan ' + R.MAKS_ANAK + ' anak (batas maksimal).' : '');
 
     var host = U.kosongkan($('[data-daftar-anak]'));
     anak.forEach(function (p) { host.appendChild(kartuAnak(p)); });

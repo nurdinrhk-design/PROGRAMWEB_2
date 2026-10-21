@@ -265,10 +265,15 @@
     var total = p.berkas.length;
     var sesuai = p.berkas.filter(function (b) { return hasilCek(b.jenis) === 'sesuai'; }).length;
     var boleh = sesuai === total;
-    $('[data-keputusan="terverifikasi"]').disabled = !boleh;
-    $('[data-syarat-verif]').textContent = boleh
-      ? 'Semua ' + total + ' berkas sesuai.'
-      : 'Aktif setelah semua berkas bertanda Sesuai (' + sesuai + ' dari ' + total + ').';
+    var diumumkan = !!S.pengumuman();
+    $('[data-keputusan="terverifikasi"]').disabled = !boleh || diumumkan;
+    $('[data-keputusan="perbaikan"]').disabled = diumumkan;
+    $('[data-keputusan="ditolak"]').disabled = diumumkan;
+    $('[data-syarat-verif]').textContent = diumumkan
+      ? 'Hasil seleksi sudah diumumkan. Batalkan pengumuman di Hasil & Peringkat untuk mengubah keputusan.'
+      : boleh
+        ? 'Semua ' + total + ' berkas sesuai.'
+        : 'Aktif setelah semua berkas bertanda Sesuai (' + sesuai + ' dari ' + total + ').';
     $('[data-hitung-catatan]').textContent = inputCatatan.value.length + '/500';
   }
 

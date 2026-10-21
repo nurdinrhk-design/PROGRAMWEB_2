@@ -38,6 +38,8 @@
   // Orang tua hanya boleh mengubah data yang belum diputuskan panitia
   var terkunci = peserta && asli && asli.status !== 'menunggu' && asli.status !== 'perbaikan';
   var penuh = peserta && !editId && S.pendaftarAkun(ortu.id).length >= R.MAKS_ANAK;
+  // Setelah hasil diumumkan, orang tua tidak bisa mendaftar/mengubah data lagi (Tahap 16)
+  var ditutup = peserta && !!S.pengumuman() && !(editId && !asli);
   // Orang tua memperbaiki data berstatus "perlu perbaikan" → dikirim ulang ke antrean
   var kirimUlang = peserta && asli && asli.status === 'perbaikan';
   var modeUbah = !!asli;
@@ -630,10 +632,14 @@
 
   /* ---------- Mulai ---------- */
   isiPilihan();
-  if ((editId && !asli) || terkunci || penuh) {
+  if ((editId && !asli) || terkunci || penuh || ditutup) {
     $('[data-area-form]').hidden = true;
     $('[data-tidak-ditemukan]').hidden = false;
-    if (terkunci || penuh) {
+    if (ditutup) {
+      $('[data-tidak-judul]').textContent = 'Hasil seleksi sudah diumumkan';
+      $('[data-tidak-teks]').textContent = 'Pendaftaran dan perubahan data sudah ditutup. Lihat hasilnya di Beranda.';
+      document.title = 'Pendaftaran ditutup · PPDB Online';
+    } else if (terkunci || penuh) {
       $('[data-tidak-judul]').textContent = terkunci ? 'Data pendaftaran sudah diputuskan panitia' : 'Batas ' + R.MAKS_ANAK + ' anak per akun sudah tercapai';
       $('[data-tidak-teks]').textContent = terkunci
         ? 'Data berstatus ' + R.STATUS_VERIFIKASI[asli.status].label + ' tidak bisa diubah lagi. Hubungi panitia di sekolah bila ada kekeliruan.'
