@@ -1,6 +1,7 @@
 # CI — Admin Panel PPDB Online (Tahap 13.2, D-18, R-08)
 # 1. Validasi HTML & CSS dengan W3C Nu Validator (gagal bila ada error)
-# 2. Pemindaian rahasia (token, kunci API) di seluruh riwayat git dengan Gitleaks
+# 2. Uji otomatis end-to-end di Chrome headless (tests/e2e, sejak v1.2)
+# 3. Pemindaian rahasia (token, kunci API) di seluruh riwayat git dengan Gitleaks
 # Action dikunci ke SHA commit agar tidak berubah diam-diam (keamanan rantai pasok).
 name: CI
 
@@ -36,6 +37,23 @@ jobs:
           while IFS= read -r baris; do echo "::error::$baris"; done < vnu.txt
           echo "Jumlah error: $(wc -l < vnu.txt)"
           exit $status
+
+  uji:
+    name: Uji otomatis (Chrome headless)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ambil kode
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Siapkan Node 22 (WebSocket bawaan)
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+
+      - name: Jalankan uji modul inti, alur orang tua, akun, & regresi panitia
+        run: node tests/e2e/jalankan.mjs
 
   rahasia:
     name: Pindai rahasia (Gitleaks)

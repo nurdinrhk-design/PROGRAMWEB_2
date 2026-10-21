@@ -240,6 +240,39 @@
     return { ok: true, data: a };
   }
 
+  /**
+   * Ubah profil akun orang tua (nama & no. HP; email tetap sebagai identitas masuk).
+   * @returns {{ok: boolean, error?: string, data?: Object}}
+   */
+  function ubahAkun(id, d) {
+    var a = akunAmbil(id);
+    if (!a) return { ok: false, error: 'Akun tidak ditemukan.' };
+    var nama = teks(d.nama, 80);
+    var err = R.validasi.nama(nama, 'Nama orang tua/wali') || R.validasi.noHp(d.noHp);
+    if (err) return { ok: false, error: err };
+    a.nama = nama;
+    a.noHp = String(d.noHp).replace(/\D/g, '').slice(0, 13);
+    simpan(['akun']);
+    catatLog('akun', 'Profil akun orang tua diubah: ' + a.nama);
+    beritahu('akun');
+    return { ok: true, data: a };
+  }
+
+  // Ganti kata sandi: salt & hash baru dibuat pemanggil (Web Crypto)
+  function gantiSandiAkun(id, salt, sandiHash) {
+    var a = akunAmbil(id);
+    if (!a) return { ok: false, error: 'Akun tidak ditemukan.' };
+    if (!/^[A-Za-z0-9+/=]{16,100}$/.test(salt || '') || !/^[A-Za-z0-9+/=]{40,100}$/.test(sandiHash || '')) {
+      return { ok: false, error: 'Data kata sandi tidak valid.' };
+    }
+    a.salt = salt;
+    a.sandiHash = sandiHash;
+    simpan(['akun']);
+    catatLog('akun', 'Kata sandi akun orang tua diganti: ' + a.nama);
+    beritahu('akun');
+    return { ok: true };
+  }
+
   function riwayat(pendaftarId) {
     return init().verifikasi.filter(function (v) { return v.pendaftarId === pendaftarId; })
       .sort(function (a, b) { return a.waktu < b.waktu ? 1 : -1; });
@@ -513,6 +546,8 @@
     akunEmail: akunEmail,
     pendaftarAkun: pendaftarAkun,
     tambahAkun: tambahAkun,
+    ubahAkun: ubahAkun,
+    gantiSandiAkun: gantiSandiAkun,
     riwayat: riwayat,
     log: daftarLog,
     catatLog: catatLog,

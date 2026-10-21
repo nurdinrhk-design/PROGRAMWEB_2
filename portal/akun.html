@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <!-- CSP (D-18, D-19): hanya skrip lokal + Chart.js (jsDelivr) dan font Google; tanpa skrip/gaya inline -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ubah profil dan kata sandi akun orang tua PPDB Online SMA Negeri 1 Harapan Bangsa (fiktif). Data simulasi.">
+  <title>Akun Saya · Portal Orang Tua · PPDB Online</title>
+  <link rel="icon" href="../assets/img/logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,400,0..1,0&amp;display=block">
+  <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body class="portal-body" data-page="akun" data-auth="peserta" data-root="../">
+  <noscript><p class="noscript-note">PPDB Online memerlukan JavaScript. Aktifkan JavaScript di browser Anda.</p></noscript>
+  <a class="skip-link" href="#konten">Lewati ke konten utama</a>
+
+  <div class="portal">
+    <!-- ===================== BAR PORTAL ORANG TUA (Tahap 14) ===================== -->
+    <header class="portal-bar">
+      <a class="portal-bar__brand" href="beranda.html">
+        <img class="portal-bar__logo" src="../assets/img/logo.svg" alt="">
+        <span class="portal-bar__brand-text">
+          <strong>PPDB Online</strong>
+          <small>Portal orang tua</small>
+        </span>
+      </a>
+
+      <nav class="portal-nav" aria-label="Menu portal">
+        <a class="portal-nav__item" href="beranda.html" data-page="beranda">
+          <span class="icon" aria-hidden="true">home</span><span>Beranda</span>
+        </a>
+        <a class="portal-nav__item" href="form.html" data-page="form">
+          <span class="icon" aria-hidden="true">person_add</span><span>Daftarkan anak</span>
+        </a>
+        <a class="portal-nav__item" href="akun.html" data-page="akun">
+          <span class="icon" aria-hidden="true">manage_accounts</span><span>Akun</span>
+        </a>
+      </nav>
+
+      <div class="account">
+        <button type="button" class="account__button" data-account-toggle aria-expanded="false" aria-controls="account-menu">
+          <span class="avatar" aria-hidden="true" data-user-initials></span>
+          <span class="account__name" data-user-name></span>
+          <span class="icon icon--sm" aria-hidden="true">expand_more</span>
+          <span class="sr-only">Menu akun</span>
+        </button>
+        <div class="menu account__menu" id="account-menu" hidden>
+          <div class="menu__header">
+            <p class="text-label-lg" data-user-name></p>
+            <p class="text-body-sm text-variant" data-user-role></p>
+          </div>
+          <a class="menu__item" href="akun.html">
+            <span class="icon" aria-hidden="true">manage_accounts</span>Akun saya
+          </a>
+          <button type="button" class="menu__item" data-action="logout">
+            <span class="icon" aria-hidden="true">logout</span>Keluar
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="content portal__content" id="konten" tabindex="-1">
+      <div class="page-header">
+        <div>
+          <h1>Akun saya</h1>
+          <p class="page-header__desc">Ubah data orang tua/wali dan kata sandi.</p>
+        </div>
+      </div>
+
+      <div class="grid grid--halves">
+        <section class="card" aria-labelledby="judul-profil">
+          <h2 class="card__title" id="judul-profil">Profil</h2>
+          <form class="login__form" data-form-profil novalidate>
+            <div class="field">
+              <label class="field__label" for="email">Email (untuk masuk)</label>
+              <div class="field__box">
+                <span class="icon field__icon" aria-hidden="true">mail</span>
+                <input class="field__control" id="email" type="email" readonly aria-describedby="email-hint">
+              </div>
+              <p class="field__hint" id="email-hint">Email tidak bisa diubah. Hubungi panitia bila salah.</p>
+            </div>
+            <div class="field" data-field="nama">
+              <label class="field__label" for="nama">Nama lengkap orang tua/wali</label>
+              <div class="field__box">
+                <span class="icon field__icon" aria-hidden="true">person</span>
+                <input class="field__control" id="nama" name="nama" type="text" autocomplete="name" maxlength="80" required aria-describedby="nama-error">
+              </div>
+              <p class="field__error" id="nama-error"></p>
+            </div>
+            <div class="field" data-field="noHp">
+              <label class="field__label" for="noHp">No. HP</label>
+              <div class="field__box">
+                <span class="icon field__icon" aria-hidden="true">call</span>
+                <input class="field__control num" id="noHp" name="noHp" type="tel" autocomplete="tel" maxlength="16" required aria-describedby="noHp-hint noHp-error">
+              </div>
+              <p class="field__hint" id="noHp-hint">Diawali 08, 10–13 digit. Data anak yang sudah didaftarkan tidak ikut berubah.</p>
+              <p class="field__error" id="noHp-error"></p>
+            </div>
+            <button type="submit" class="btn btn--filled">Simpan profil</button>
+          </form>
+        </section>
+
+        <section class="card" aria-labelledby="judul-sandi">
+          <h2 class="card__title" id="judul-sandi">Ganti kata sandi</h2>
+          <p class="text-body-sm text-variant" data-info-simulasi hidden>Akun simulasi ini tidak punya kata sandi, jadi kata sandi tidak bisa diganti di sini.</p>
+          <form class="login__form" data-form-sandi novalidate>
+            <div class="field" data-field="sandiLama">
+              <label class="field__label" for="sandiLama">Kata sandi saat ini</label>
+              <div class="field__box">
+                <span class="icon field__icon" aria-hidden="true">lock</span>
+                <input class="field__control" id="sandiLama" name="sandiLama" type="password" autocomplete="current-password" maxlength="64" required aria-describedby="sandiLama-error">
+              </div>
+              <p class="field__error" id="sandiLama-error"></p>
+            </div>
+            <div class="field" data-field="sandiBaru">
+              <label class="field__label" for="sandiBaru">Kata sandi baru</label>
+              <div class="field__box">
+                <span class="icon field__icon" aria-hidden="true">lock_reset</span>
+                <input class="field__control" id="sandiBaru" name="sandiBaru" type="password" autocomplete="new-password" maxlength="64" required aria-describedby="sandiBaru-hint sandiBaru-error">
+              </div>
+              <p class="field__hint" id="sandiBaru-hint">Minimal 8 karakter, berisi huruf dan angka.</p>
+              <p class="field__error" id="sandiBaru-error"></p>
+            </div>
+            <div class="field" data-field="sandiUlang">
+              <label class="field__label" for="sandiUlang">Ulangi kata sandi baru</label>
+              <div class="field__box">
+                <span class="icon field__icon" aria-hidden="true">lock_reset</span>
+                <input class="field__control" id="sandiUlang" name="sandiUlang" type="password" autocomplete="new-password" maxlength="64" required aria-describedby="sandiUlang-error">
+              </div>
+              <p class="field__error" id="sandiUlang-error"></p>
+            </div>
+            <button type="submit" class="btn btn--tonal" data-tombol-sandi>Ganti kata sandi</button>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <footer class="app-footer">
+      <p>PPDB Online · SMA Negeri 1 Harapan Bangsa (fiktif) · Data simulasi · v1.2</p>
+    </footer>
+  </div>
+
+  <script src="../assets/js/core/rules.js"></script>
+  <script src="../assets/js/core/seed.js"></script>
+  <script src="../assets/js/core/store.js"></script>
+  <script src="../assets/js/core/ui.js"></script>
+  <script src="../assets/js/core/shell.js"></script>
+  <script src="../assets/js/pages/portal-akun.js"></script>
+</body>
+</html>

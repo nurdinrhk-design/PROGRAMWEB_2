@@ -670,8 +670,8 @@ body[data-auth="required"]:not(.is-authed) .app {
 
 /* =====================================================================
    PORTAL ORANG TUA (Tahap 14) — portal/*.html
-   Tanpa drawer: bar atas + menu ringkas. < 600px menu pindah ke
-   navigation bar di bawah layar (pola M3 untuk HP).
+   Tanpa drawer: bar atas + menu ringkas. < 840px menu pindah ke
+   navigation bar di bawah layar (pola M3 untuk HP & tablet kecil).
    ===================================================================== */
 .portal {
   display: flex;
@@ -752,7 +752,7 @@ body[data-auth="required"]:not(.is-authed) .app {
   max-width: 64rem;
 }
 
-@media (max-width: 599.98px) {
+@media (max-width: 839.98px) {
   .portal-body {
     padding-bottom: 4.5rem;            /* ruang navigation bar bawah */
   }

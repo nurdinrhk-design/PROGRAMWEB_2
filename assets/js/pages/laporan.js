@@ -65,14 +65,14 @@
     });
 
     var jalur = R.JALUR.filter(function (j) { return !st.jalur || j.kode === st.jalur; }).map(function (j) {
-      var r = { jalur: j, kuota: j.kuota, pendaftar: 0, menunggu: 0, perbaikan: 0, terverifikasi: 0, ditolak: 0 };
-      semua.forEach(function (p) { if (p.jalur === j.kode) { r.pendaftar += 1; r[p.status] += 1; } });
+      var r = { jalur: j, kuota: j.kuota, pendaftar: 0, menunggu: 0, perbaikan: 0, terverifikasi: 0, ditolak: 0, online: 0, loket: 0 };
+      semua.forEach(function (p) { if (p.jalur === j.kode) { r.pendaftar += 1; r[p.status] += 1; r[p.sumber === 'online' ? 'online' : 'loket'] += 1; } });
       return r;
     });
     var total = jalur.reduce(function (t, r) {
-      ['kuota', 'pendaftar', 'menunggu', 'perbaikan', 'terverifikasi', 'ditolak'].forEach(function (k) { t[k] += r[k]; });
+      ['kuota', 'pendaftar', 'menunggu', 'perbaikan', 'terverifikasi', 'ditolak', 'online', 'loket'].forEach(function (k) { t[k] += r[k]; });
       return t;
-    }, { kuota: 0, pendaftar: 0, menunggu: 0, perbaikan: 0, terverifikasi: 0, ditolak: 0 });
+    }, { kuota: 0, pendaftar: 0, menunggu: 0, perbaikan: 0, terverifikasi: 0, ditolak: 0, online: 0, loket: 0 });
 
     var perSekolah = {};
     semua.forEach(function (p) {
@@ -118,6 +118,8 @@
       sel(U.angka(r.perbaikan), true, 'Perlu perbaikan'),
       sel(U.angka(r.terverifikasi), true, 'Terverifikasi'),
       sel(U.angka(r.ditolak), true, 'Ditolak'),
+      sel(U.angka(r.online), true, 'Online'),
+      sel(U.angka(r.loket), true, 'Loket'),
       sel(total ? '–' : ketat, true, 'Keketatan')
     ]);
   }
@@ -137,7 +139,7 @@
     $('[data-periode-teks]').textContent = 'Periode daftar ' + U.tanggal(st.dari) + ' – ' + U.tanggal(st.sampai) +
       ' · ' + (j ? 'jalur ' + j.nama : 'semua jalur') + ' · ' + U.angka(data.total.pendaftar) + ' pendaftar.';
 
-    isiTabel($('[data-rekap-jalur]'), data.jalur.map(function (r) { return barisJalur(r, false); }), '', 8);
+    isiTabel($('[data-rekap-jalur]'), data.jalur.map(function (r) { return barisJalur(r, false); }), '', 10);
     U.kosongkan($('[data-rekap-total]'));
     if (data.jalur.length > 1) $('[data-rekap-total]').appendChild(barisJalur(data.total, true));
 
@@ -168,13 +170,13 @@
      ================================================================= */
   function eksporCsv() {
     var b = [['Rekap PPDB ' + R.SEKOLAH.nama + ' (fiktif)'], ['Periode daftar', st.dari, st.sampai], ['Jalur', st.jalur ? R.jalur(st.jalur).nama : 'Semua jalur'], [],
-      ['Rekap per jalur'], ['Jalur', 'Kuota', 'Pendaftar', 'Menunggu', 'Perlu perbaikan', 'Terverifikasi', 'Ditolak', 'Keketatan']];
+      ['Rekap per jalur'], ['Jalur', 'Kuota', 'Pendaftar', 'Menunggu', 'Perlu perbaikan', 'Terverifikasi', 'Ditolak', 'Online', 'Loket', 'Keketatan']];
     data.jalur.forEach(function (r) {
-      b.push([r.jalur.nama, r.kuota, r.pendaftar, r.menunggu, r.perbaikan, r.terverifikasi, r.ditolak, U.desimal(r.terverifikasi / r.kuota)]);
+      b.push([r.jalur.nama, r.kuota, r.pendaftar, r.menunggu, r.perbaikan, r.terverifikasi, r.ditolak, r.online, r.loket, U.desimal(r.terverifikasi / r.kuota)]);
     });
     if (data.jalur.length > 1) {
       var t = data.total;
-      b.push(['Total', t.kuota, t.pendaftar, t.menunggu, t.perbaikan, t.terverifikasi, t.ditolak, '']);
+      b.push(['Total', t.kuota, t.pendaftar, t.menunggu, t.perbaikan, t.terverifikasi, t.ditolak, t.online, t.loket, '']);
     }
     b.push([], ['10 asal sekolah terbanyak'], ['No.', 'Asal sekolah', 'Pendaftar', 'Terverifikasi']);
     data.sekolah.forEach(function (s, i) { var sk = R.sekolahAsal(s.kode); b.push([i + 1, sk ? sk.nama : s.kode, s.pendaftar, s.terverifikasi]); });

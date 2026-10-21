@@ -33,7 +33,7 @@ Sistem **Penerimaan Peserta Didik Baru** dengan dua peran: **orang tua/calon pes
 |---|---|---|---|
 | **M1** · Perencanaan & wireframe | Menu, ERD, user flow, wireframe, design system | ✅ Selesai | [docs/perancangan.md](docs/perancangan.md) |
 | **M2** · Slicing & layouting | Design token, komponen CSS, template dasar | ✅ Selesai | [layout.html](layout.html) · [docs/styleguide.html](docs/styleguide.html) |
-| **M3** · Komponen & interaktivitas | 8 halaman panitia + 4 halaman orang tua + JavaScript + deploy | ✅ Selesai ([v1.1](https://github.com/nurdinrhk-design/PROGRAMWEB_2/releases/tag/v1.1), termasuk revisi dosen: dua peran) | [Situs](https://nurdinrhk-design.github.io/PROGRAMWEB_2/) · [docs/checklist_work.md](docs/checklist_work.md) |
+| **M3** · Komponen & interaktivitas | 8 halaman panitia + 5 halaman orang tua + login + JavaScript + deploy | ✅ Selesai ([v1.2](https://github.com/nurdinrhk-design/PROGRAMWEB_2/releases/tag/v1.2), termasuk revisi dosen: dua peran) | [Situs](https://nurdinrhk-design.github.io/PROGRAMWEB_2/) · [docs/checklist_work.md](docs/checklist_work.md) |
 
 ## Fitur
 
@@ -41,13 +41,15 @@ Sistem **Penerimaan Peserta Didik Baru** dengan dua peran: **orang tua/calon pes
 |---|---|
 | **Login** | Pilihan peran (orang tua / panitia), validasi per kolom, batas 5 percobaan, "Ingat saya", setiap halaman hanya bisa dibuka peran yang benar |
 | **Buat akun orang tua** | Nama, email unik, no. HP, kata sandi kuat; kata sandi disimpan sebagai hash PBKDF2 (Web Crypto) |
+| **Akun saya (orang tua)** | Ubah nama & no. HP, ganti kata sandi (sandi lama wajib benar) |
 | **Portal orang tua** | Daftarkan hingga 3 anak (form 4 langkah yang sama), pantau status & posisi antrean, baca catatan panitia, perbaiki berkas lalu kirim ulang, lihat peringkat sementara, cetak bukti. Ramah HP (menu di bawah layar) |
 | **Dashboard** | 4 angka utama yang menaut ke data, grafik pendaftar per hari per jalur (+ tabel data), keketatan jalur, 5 antrean terlama, jadwal PPDB |
 | **Data Pendaftar** | Tab status, cari, filter berlapis (termasuk sumber **online/loket**), urutkan, paginasi, kartu di HP, detail, hapus + "Urungkan", ekspor CSV, cadangan & pemulihan JSON, kembalikan data awal |
 | **Tambah/Ubah Pendaftar** | Pendaftaran loket oleh panitia untuk calon peserta yang datang ke sekolah. Form 4 langkah dengan validasi aturan PPDB (NISN unik, usia ≤ 21 tahun, KK zonasi ≥ 1 tahun, nilai, berkas), berkas wajib mengikuti jalur, rata-rata rapor otomatis, ringkasan, peringatan sebelum keluar |
 | **Verifikasi Berkas** | Antrean terlama dulu, cek per berkas dengan data pembanding, Terverifikasi hanya bila semua sesuai, catatan wajib untuk Perbaikan/Tolak, lanjut otomatis ke pendaftar berikutnya |
 | **Hasil & Peringkat** | Per jalur: kuota, keketatan, batas sementara, garis batas kuota, cari nama yang langsung disorot, ekspor CSV |
-| **Rekap & Cetak** | Filter periode & jalur, rekap per jalur, 10 asal sekolah terbanyak, rekap harian, log aktivitas, ekspor CSV, cetak A4 |
+| **Akun Orang Tua (panitia)** | Daftar akun beserta anak yang didaftarkan dan statusnya, cari, filter (belum mendaftarkan / ada perbaikan); data sandi tidak pernah ditampilkan |
+| **Rekap & Cetak** | Filter periode & jalur, rekap per jalur (termasuk jumlah online/loket), 10 asal sekolah terbanyak, rekap harian, log aktivitas, ekspor CSV, cetak A4 |
 | **Bukti Pendaftaran** | Siap cetak A4, tanpa lambang, stempel, QR, atau tanda tangan palsu |
 
 | Data Pendaftar | Verifikasi Berkas |
@@ -75,13 +77,13 @@ Rincian aturan BR-01…BR-13 ada di [perencanaan §7](docs/perencanaan.md#7-mode
 | Grafik | Chart.js 4.5.1 dari jsDelivr, versi dikunci + Subresource Integrity, dimuat asinkron |
 | Font & ikon | Plus Jakarta Sans · Material Symbols Outlined (Google Fonts) |
 | Data | `localStorage` + 900 data simulasi dari generator ber-*seed* |
-| Hosting & CI | GitHub Pages · GitHub Actions (W3C Nu Validator + Gitleaks) |
+| Hosting & CI | GitHub Pages · GitHub Actions (W3C Nu Validator, uji end-to-end Chrome headless, Gitleaks) |
 
 ## Kualitas & Keamanan
 
 | Pemeriksaan | Hasil |
 |---|---|
-| Uji otomatis | 40 uji modul inti, 18 uji alur orang tua, 20 uji regresi panitia (v1.1), sebelumnya 152 uji halaman + 27 uji QA (v1.0); lulus di Chrome dan Edge |
+| Uji otomatis | `node tests/e2e/jalankan.mjs`: 40 uji modul inti, 18 uji alur orang tua, 8 uji akun, 21 uji regresi panitia; lulus di Chrome & Edge dan **dijalankan otomatis di CI** setiap push |
 | Kasus uji fungsional | 23/23 lulus ([daftar TC](docs/checklist_work.md)) |
 | Lighthouse | Aksesibilitas **100** · Praktik terbaik **100** di semua halaman yang diuji (termasuk portal orang tua) |
 | Validator W3C | 0 error HTML & CSS (juga dicek CI di setiap push) |
@@ -105,6 +107,12 @@ Login di aplikasi ini **simulasi** (akun sengaja dipublikasikan). Untuk PPDB sun
 
 Butuh internet untuk font, ikon, dan grafik. Tanpa internet aplikasi tetap berjalan; grafik diganti tabel. Data tersimpan di browser masing-masing; kembalikan ke awal lewat *Data Pendaftar → menu ⋮ → Kembalikan data awal simulasi*. Uji modul inti bisa dibuka di `tests/index.html`.
 
+**Uji otomatis** (butuh Node 22+ dan Chrome atau Edge, tanpa instalasi paket):
+```bash
+node tests/e2e/jalankan.mjs                                   # semua uji
+node tests/e2e/jalankan.mjs tests/e2e/uji-lighthouse.mjs      # Lighthouse (opsional, butuh internet)
+```
+
 ## Struktur Folder
 
 ```
@@ -118,9 +126,9 @@ PROGRAMWEB_2/
 │   ├── js/core/            # rules (aturan PPDB), seed (data simulasi), store (data & akun), ui, shell (login dua peran & navigasi)
 │   ├── js/pages/           # satu skrip per halaman
 │   └── img/                # logo.svg
-├── pages/                  # panitia: dashboard, data-master, form, verifikasi, hasil-seleksi, laporan, bukti
-├── portal/                 # orang tua: beranda, form (daftarkan/perbaiki anak), bukti
-├── tests/                  # uji otomatis modul inti (buka index.html di browser)
+├── pages/                  # panitia: dashboard, data-master, form, verifikasi, hasil-seleksi, laporan, bukti, akun
+├── portal/                 # orang tua: beranda, form (daftarkan/perbaiki anak), bukti, akun
+├── tests/                  # index.html: uji modul inti di browser · e2e/: uji end-to-end (node tests/e2e/jalankan.mjs)
 ├── docs/                   # perancangan (M1), perencanaan, checklist, styleguide (M2), presentasi, panduan domain
 └── .github/workflows/      # CI: validasi W3C + pemindaian rahasia
 ```

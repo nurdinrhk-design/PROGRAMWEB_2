@@ -185,6 +185,25 @@
     });
   }
 
+  /**
+   * Ganti kata sandi orang tua yang sedang masuk (sandi lama wajib benar).
+   * @returns {Promise<{ok: boolean, error?: string, kolom?: string}>}
+   */
+  function gantiSandi(lama, baru) {
+    var akun = pesertaAktif();
+    if (!akun) return Promise.resolve({ ok: false, error: 'Sesi berakhir. Silakan masuk lagi.' });
+    var errBaru = R.validasi.sandiBaru(baru);
+    if (errBaru) return Promise.resolve({ ok: false, error: errBaru, kolom: 'sandiBaru' });
+    if (lama === baru) return Promise.resolve({ ok: false, error: 'Kata sandi baru harus berbeda dari yang lama.', kolom: 'sandiBaru' });
+    return hashSandi(lama, akun.salt).then(function (h) {
+      if (h !== akun.sandiHash) return { ok: false, error: 'Kata sandi saat ini salah.', kolom: 'sandiLama' };
+      var salt = buatSalt();
+      return hashSandi(baru, salt).then(function (hBaru) {
+        return PPDB.store.gantiSandiAkun(akun.id, salt, hBaru);
+      });
+    });
+  }
+
   function logout() {
     var akun = panitiaAktif();
     var ortu = !akun && pesertaAktif();
@@ -267,6 +286,7 @@
     login: login,
     loginPeserta: loginPeserta,
     daftarAkun: daftarAkun,
+    gantiSandi: gantiSandi,
     hashSandi: hashSandi,
     logout: logout,
     panitiaAktif: panitiaAktif,

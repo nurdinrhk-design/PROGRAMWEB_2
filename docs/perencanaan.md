@@ -10,10 +10,10 @@
 | Nama proyek | Admin Panel PPDB Online — SMA Negeri 1 Harapan Bangsa (fiktif) |
 | Mata kuliah | Pemrograman Web 2 (Client-Side Programming) — Tugas 1 (Project-Based Learning) |
 | Pengembang | Nurdin (akun GitHub `nurdinrhk-design`) |
-| Versi dokumen | **1.1** |
+| Versi dokumen | **1.2** |
 | Tanggal | 23 September 2026 |
 | Dokumen terkait | [checklist_work.md](checklist_work.md) · `docs/perancangan.md` (deliverable M1) · [referensi Stitch](img/referensi-stitch/) |
-| Status | ✅ v1.1: Tahap 1–14 selesai. Revisi dosen (21 Okt 2026): dua peran pengguna, orang tua & panitia (Tahap 14) |
+| Status | ✅ v1.2: Tahap 1–15 selesai. Revisi dosen (Tahap 14) + perbaikan kecil (Tahap 15). Database tetap lokal (D-21) |
 
 ---
 
@@ -129,6 +129,7 @@ Status: ✅ Disepakati · 🔄 Bisa ditinjau ulang
 | D-23 | Urutan halaman | Data Pendaftar → Form → Verifikasi → Hasil → **Dashboard** → Laporan | ✅ | Dashboard memakai hampir semua perhitungan & komponen tahap 6–9 |
 | D-24 | Push & deploy | Commit disimpan lokal per tahap. **Push, CI, dan GitHub Pages dijalankan setelah akun Nurdin siap** (langkah 13.1) | ✅ | Menghindari jejak akun lain di repo publik |
 | D-25 | Dua peran pengguna (revisi dosen, 21 Okt 2026) | **Orang tua/calon peserta** membuat akun, masuk, dan mendaftarkan anaknya sendiri (maks. 3 anak per akun); **panitia** tetap bisa mendaftarkan calon peserta yang datang ke sekolah (loket). Satu halaman masuk dengan pilihan peran; portal orang tua bertema sama tetapi lebih ringkas & ramah HP. Orang tua boleh mengubah data selama status Menunggu/Perlu perbaikan; kiriman perbaikan mengembalikan status ke Menunggu. Kata sandi akun disimpan sebagai hash PBKDF2-SHA256 (Web Crypto); tetap simulasi di browser | ✅ | Revisi dosen; pilihan pengembang (3 opsi rekomendasi) |
+| D-26 | Perbaikan kecil v1.2 (21 Okt 2026) | Database **tetap lokal** (keputusan pengembang setelah membandingkan Supabase). Uji end-to-end dipindah ke repo (`tests/e2e/`, tanpa jalur lokal, tanpa sisa berkas) dan dijalankan di CI. Ditambah menu Akun Orang Tua (panitia), Akun saya (orang tua), rekap per sumber | ✅ | Uji di folder Temp sempat hilang; dosen kemungkinan menanyakan pengelolaan akun |
 
 **Asumsi:**
 - A-01: Satu peran pengguna: **Panitia PPDB** (akun demo `panitia` / `ppdb2026`).
@@ -222,6 +223,9 @@ Satu halaman lolos jika **semua** jawaban "ya":
 | FR-22 | Orang tua memperbaiki data/berkas berstatus "perlu perbaikan" lalu mengirim ulang (berkas "tidak sesuai" wajib diganti) | P-11 | 14 |
 | FR-23 | Pemisahan peran: orang tua hanya melihat anaknya sendiri & tidak bisa membuka halaman panitia; panitia tidak masuk portal | Semua | 14 |
 | FR-24 | Panitia melihat sumber pendaftaran (online/loket) di Data Pendaftar, detail, CSV, dan dashboard | P-02, P-03 | 14 |
+| FR-25 | Panitia melihat daftar akun orang tua beserta anak yang didaftarkan (cari, filter, tanpa data sandi) | P-13 | 15 |
+| FR-26 | Orang tua mengubah nama & no. HP, serta mengganti kata sandi (sandi lama wajib benar) | P-14 | 15 |
+| FR-27 | Rekap per jalur memuat jumlah pendaftar online & loket (tampilan, CSV, cetak) | P-07 | 15 |
 
 ### 5.3 Kebutuhan non-fungsional (NFR)
 | ID | Kebutuhan | Ukuran keberhasilan | Tahap |
@@ -552,6 +556,13 @@ Setiap halaman ditulis dengan pola: **Tujuan · Pertanyaan yang dijawab · Konte
 ### P-12 · `portal/bukti.html?id=` — Bukti Pendaftaran (Tahap 14)
 - Sama dengan P-08 (`bukti.js` bersama), hanya untuk anak milik akun yang sedang masuk.
 
+### P-13 · `pages/akun.html` — Akun Orang Tua (Tahap 15)
+- **Pertanyaan:** "Siapa yang mendaftar online, dan siapa yang perlu ditindaklanjuti?"
+- **Konten:** 4 angka ringkasan dari data, tabel akun (nama & email, no. HP, anak + status, tanggal dibuat). Cari, filter (sudah/belum mendaftarkan anak, ada anak perlu perbaikan), paginasi, status di URL. Hanya baca; salt & hash tidak pernah ditampilkan.
+
+### P-14 · `portal/akun.html` — Akun Saya (Tahap 15)
+- Ubah nama & no. HP (email tetap). Ganti kata sandi: sandi lama wajib benar, sandi baru kuat & berbeda, di-hash ulang dengan salt baru.
+
 ---
 
 ## 9. Design System (Material Design 3)
@@ -712,7 +723,7 @@ PROGRAMWEB_2/
 
 ## 11. Tahapan Pengembangan
 
-**Penomoran (D-22):** tahap besar diberi nomor **1–14** (Tahap 14 = revisi dosen), langkah di dalamnya **x.1, x.2, …**. Langkah terakhir setiap tahap adalah **Penutupan** (§11.3). Rincian langkah dan statusnya ada di [checklist_work.md](checklist_work.md). Satu tahap dikerjakan per sesi, lalu **berhenti menunggu review** (D-16).
+**Penomoran (D-22):** tahap besar diberi nomor **1–15** (Tahap 14 = revisi dosen, Tahap 15 = perbaikan kecil v1.2), langkah di dalamnya **x.1, x.2, …**. Langkah terakhir setiap tahap adalah **Penutupan** (§11.3). Rincian langkah dan statusnya ada di [checklist_work.md](checklist_work.md). Satu tahap dikerjakan per sesi, lalu **berhenti menunggu review** (D-16).
 
 | Tahap | Nama | Milestone | Output utama | Prasyarat | Status |
 |---|---|---|---|---|---|
@@ -730,6 +741,7 @@ PROGRAMWEB_2/
 | **12** | QA menyeluruh | M3 | Semua uji lulus (§12) | 5–11 | ✅ |
 | **13** | Rilis & online | M3 | Akun Nurdin, CI, GitHub Pages, README final, rilis `v1.0`, panduan domain | 12 | ✅ |
 | **14** | Dua peran: orang tua & panitia (revisi dosen) | M3 | `daftar.html`, `portal/*`, login dua peran, akun di `store.js`, sumber pendaftaran, rilis `v1.1` | 13 | ✅ |
+| **15** | Perbaikan kecil v1.2 | M3 | `pages/akun.html`, `portal/akun.html`, rekap per sumber, `tests/e2e/` + CI, rilis `v1.2` | 14 | ✅ |
 
 ```mermaid
 flowchart LR
@@ -773,7 +785,7 @@ Langkah terakhir setiap tahap (mis. 6.7) berisi empat hal berurutan:
 |---|---|
 | Responsif | DevTools: 360, 600, 840, 1200, 1440 px |
 | Validasi | validator.w3.org (HTML), jigsaw.w3.org (CSS) |
-| Fungsional | Kasus uji TC di bawah + **uji otomatis modul inti** (`tests/index.html`, dibuka di browser) |
+| Fungsional | Kasus uji TC di bawah + **uji otomatis modul inti** (`tests/index.html`) + **uji end-to-end** `node tests/e2e/jalankan.mjs` (Chrome/Edge headless, juga di CI sejak v1.2) |
 | Aksesibilitas | Keyboard saja, Lighthouse, cek kontras |
 | Lintas browser | Chrome, Edge, Firefox |
 | Cetak | Print preview A4 |
@@ -810,6 +822,8 @@ Langkah terakhir setiap tahap (mis. 6.7) berisi empat hal berurutan:
 | TC-26 | Orang tua memperbaiki pendaftaran "perlu perbaikan" | Berkas tidak sesuai wajib diganti; setelah dikirim status Menunggu |
 | TC-27 | Orang tua membuka halaman panitia / data anak lain / anak ke-4 | Ditolak atau dialihkan, tanpa membocorkan data |
 | TC-28 | Panitia mendaftarkan di loket & menyaring sumber | Sumber Loket; filter Online/Loket benar |
+| TC-29 | Panitia membuka Akun Orang Tua, cari email, filter perbaikan | Angka ringkasan = data, akun & anak tampil, hash tidak tampil |
+| TC-30 | Orang tua mengubah profil & mengganti kata sandi | HP salah ditolak; sandi lama salah/sandi lemah ditolak; setelah diganti hanya sandi baru yang diterima |
 
 ---
 
@@ -903,3 +917,4 @@ Hasil audit dicatat di Log Kerja checklist. Jika ada temuan, **jangan push**: pe
 | 0.3.8 | 2 Okt 2026 | Hasil Tahap 12: CSP `<meta>` terpasang di semua halaman (bagian D-19 yang dikerjakan lebih awal; `noindex`, `referrer`, 404 tetap di Tahap 13). QA: Chrome & Edge, Lighthouse 100/100, 23 TC lulus | Nurdin & Claude |
 | **1.0** | 2 Okt 2026 | **Rilis.** CI (W3C + Gitleaks), GitHub Pages dengan `noindex`, referrer, 404, perlindungan branch. README final, naskah demo, panduan domain | Nurdin & Claude |
 | **1.1** | 21 Okt 2026 | **Revisi dosen — dua peran pengguna (Tahap 14):** D-25, aktor orang tua, FR-19…FR-24, sitemap & ERD (`AKUN`, `sumber`), P-09…P-12, kunci `ppdb.v2.akun`, TC-24…TC-28. Status tabel tahap 4–13 diperbarui | Nurdin & Claude |
+| **1.2** | 21 Okt 2026 | **Perbaikan kecil (Tahap 15):** D-26 (database tetap lokal, uji e2e di repo & CI), FR-25…FR-27, P-13, P-14, TC-29, TC-30 | Nurdin & Claude |

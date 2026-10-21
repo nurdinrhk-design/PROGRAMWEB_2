@@ -382,6 +382,14 @@
           <div class="text-body-sm text-variant" role="tabpanel" id="sg-tabpanel" aria-labelledby="sg-tab-1" tabindex="0">Tabel akan menampilkan pendaftar dengan status: <strong data-tab-label>Semua</strong>.</div>
         </div>
         <div class="sg-demo">
+          <span class="sg-demo__label">Segmented button: pilihan peran di halaman masuk (v1.1)</span>
+          <div class="segmented" role="tablist" aria-label="Contoh pilihan peran">
+            <button type="button" class="segmented__item" role="tab" id="sg-peran-1" aria-controls="sg-peran-panel" aria-selected="true"><span class="icon icon--sm" aria-hidden="true">family_restroom</span>Orang tua</button>
+            <button type="button" class="segmented__item" role="tab" id="sg-peran-2" aria-controls="sg-peran-panel" aria-selected="false" tabindex="-1"><span class="icon icon--sm" aria-hidden="true">badge</span>Panitia sekolah</button>
+          </div>
+          <p class="text-body-sm text-variant" role="tabpanel" id="sg-peran-panel" aria-labelledby="sg-peran-1">Peran terpilih memakai warna <code>secondary-container</code>. Portal orang tua memakai navigation bar di bawah layar pada HP.</p>
+        </div>
+        <div class="sg-demo">
           <span class="sg-demo__label">Stepper form (langkah 2 aktif)</span>
           <ol class="stepper" aria-label="Langkah pengisian">
             <li class="stepper__item is-done"><button type="button" class="stepper__button"><span class="stepper__index" aria-hidden="true"></span><span class="stepper__label">Identitas</span></button></li>
